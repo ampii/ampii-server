@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CSML defaultLocale="en-US" xmlns="http://bacnet.org/csml/1.2"   >
+
+    <Collection name="histories">
+        <Real name="real" value="75.0" >
+            <Extensions>
+                <String name="..historyLocation" value="/examples/histories/log-buffer-1"/>
+            </Extensions>
+        </Real>
+        <List name="log-buffer-1">
+            <Sequence name="1">
+                <DateTime name="timestamp" value="2014-04-02T13:01:00-04:00"/>
+                <Choice name="log-datum">
+                    <Real name="real-value" value="75.1"/>
+                </Choice>
+                <BitString name="status-flags"/>
+            </Sequence>
+            <Sequence name="2">
+                <DateTime name="timestamp" value="2014-04-02T13:02:00-04:00"/>
+                <Choice name="log-datum">
+                    <Real name="real-value" value="75.2"/>
+                </Choice>
+                <BitString name="status-flags"/>
+            </Sequence>
+            <Sequence name="3">
+                <DateTime name="timestamp" value="2014-04-02T13:03:00-04:00"/>
+                <Choice name="log-datum">
+                    <Real name="real-value" value="75.3"/>
+                </Choice>
+                <BitString name="status-flags"/>
+            </Sequence>
+            <Sequence name="4">
+                <DateTime name="timestamp" value="2014-04-02T13:04:00-04:00"/>
+                <Choice name="log-datum">
+                    <Real name="real-value" value="75.4"/>
+                </Choice>
+                <BitString name="status-flags"/>
+            </Sequence>
+            <Sequence name="5">
+                <DateTime name="timestamp" value="2014-04-02T13:05:00-04:00"/>
+                <Choice name="log-datum">
+                    <Real name="real-value" value="75.5"/>
+                </Choice>
+                <BitString name="status-flags"/>
+            </Sequence>
+        </List>
+    </Collection>
+
+</CSML>
+

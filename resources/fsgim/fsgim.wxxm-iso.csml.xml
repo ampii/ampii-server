@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CSML xmlns="http://bacnet.org/csml/1.2">
+    <Definitions>
+    <Sequence name="WXXM-ISO.AbstractFeature" extends="WXXM-ISO.AbstractGML" documentation="
+            Abstract class representing all classes stereotyped &lt;&lt;FeatureType>> i.e., classes that realize GF_FeatureType, representing features of all types from all application schemas. This class may be used as a &quot;wildcard&quot; when it is necessary to refer to a feature of any type. 
+            N.B. Any class stereotyped &lt;&lt;FeatureType>> is implicitly substitutable for AnyFeature. 
+            Implemented by gml:AbstractFeature (gml 3.2) or gml:_Feature (earlier versions). 
+            ">
+        <Sequence name="boundedBy" type="WXXM-ISO.GM_Envelope" optional="true" documentation="Bounding envelope of feature."/>
+        <Sequence name="position" type="WXXM-ISO.DirectPosition" optional="true" documentation="The point location of the feature."/>
+    </Sequence>
+
+    <Sequence name="WXXM-ISO.AbstractGML" extends="WXXM-ISO.AbstractObject" documentation="Abstract class representing all classes stereotyped &lt;&lt;ObjectType>> i.e., classes that represent objects with identity that may be externally referenced. Implemented by gml:AbstractGML (gml 3.2) or gml:_GML (earlier versions). ">
+        <String name="description" optional="true" documentation="Text description of object."/>
+    </Sequence>
+
+    <Sequence name="WXXM-ISO.AbstractObject" extends="Fsgim.FSGIMIdentifiedObject" documentation="Abstract object class.">
+        <Enumerated name="languageCode" type="WXXM-ISO.LanguageCode" documentation="The language code of the locale."/>
+        <Enumerated name="country" type="WXXM-ISO.CountryCode" documentation="The country code of the locale."/>
+        <Enumerated name="characterSetCode" type="WXXM-ISO.MD_CharacterSetCode" documentation="The character set code of the locale."/>
+        <!-- associations -->
+        <Sequence name="CRS" type="WXXM-ISO.SC_CRS" optional="true" documentation="The coordinate system for this position."/>
+    </Sequence>
+
+    <Enumerated name="WXXM-ISO.CountryCode" documentation="ISO 03166 Country Code enumeration.">
+        <NamedValues>
+        </NamedValues>
+    </Enumerated>
+
+    <Sequence name="WXXM-ISO.PT_Locale" documentation="A class describing the cultural locale for a location including language, country, and character set.">
+        <Enumerated name="languageCode" type="WXXM-ISO.LanguageCode" documentation="The language code of the locale."/>
+        <Enumerated name="country" type="WXXM-ISO.CountryCode" documentation="The country code of the locale."/>
+        <Enumerated name="characterSetCode" type="WXXM-ISO.MD_CharacterSetCode" documentation="The character set code of the locale."/>
+    </Sequence>
+
+    <Enumerated name="WXXM-ISO.LanguageCode" documentation="ISO standard enumeration for language codes.">
+        <NamedValues>
+            <Unsigned name="Afrikaans" value="1" documentation="Afrikaans."/>
+            <Unsigned name="Albanian" value="2" documentation="Albanian."/>
+            <Unsigned name="Arabic" value="3" documentation="Arabic."/>
+            <Unsigned name="Basque" value="4" documentation="Basque."/>
+            <Unsigned name="Belarusian" value="5" documentation="Belarusian."/>
+            <Unsigned name="Bulgarian" value="6" documentation="Bulgarian."/>
+            <Unsigned name="Catalan" value="7" documentation="Catalan."/>
+            <Unsigned name="Chinese" value="8" documentation="Chinese."/>
+            <Unsigned name="Croatian" value="9" documentation="Croatian."/>
+            <Unsigned name="Czech" value="10" documentation="Czech."/>
+            <Unsigned name="Danish" value="11" documentation="Danish."/>
+            <Unsigned name="Dutch" value="12" documentation="Dutch."/>
+            <Unsigned name="English" value="13" documentation="English."/>
+            <Unsigned name="Estonian" value="14" documentation="Estonian."/>
+            <Unsigned name="Faeroese" value="15" documentation="Faeroese."/>
+            <Unsigned name="Finnish" value="16" documentation="Finnish."/>
+            <Unsigned name="French" value="17" documentation="French."/>
+            <Unsigned name="FrenchCanadian" value="18" documentation="French(Canadian)."/>
+            <Unsigned name="German" value="19" documentation="German."/>
+            <Unsigned name="Greek" value="20" documentation="Greek."/>
+            <Unsigned name="Hawaian" value="21" documentation="Hawaian."/>
+            <Unsigned name="Hebrew" value="22" documentation="Hebrew."/>
+            <Unsigned name="Hungarian" value="23" documentation="Hungarian."/>
+            <Unsigned name="Icelandic" value="24" documentation="Icelandic."/>
+            <Unsigned name="Indonesian" value="25" documentation="Indonesian."/>
+            <Unsigned name="Italian" value="26" documentation="Italian."/>
+            <Unsigned name="Japanese" value="27" documentation="Japanese."/>
+            <Unsigned name="Korean" value="28" documentation="Korean."/>
+            <Unsigned name="Latvian" value="29" documentation="Latvian."/>
+            <Unsigned name="Lithuanian" value="30" documentation="Lithuanian."/>
+            <Unsigned name="Malaysian" value="31" documentation="Malaysian."/>
+            <Unsigned name="Norwegian" value="32" documentation="Norwegian."/>
+            <Unsigned name="Polish" value="33" documentation="Polish."/>
+            <Unsigned name="Portuguese" value="34" documentation="Portuguese."/>
+            <Unsigned name="Romanian" value="35" documentation="Romanian."/>
+            <Unsigned name="Russian" value="36" documentation="Russian."/>
+            <Unsigned name="Serbian" value="37" documentation="Serbian."/>
+            <Unsigned name="Slovak" value="38" documentation="Slovak."/>
+            <Unsigned name="Slovenian" value="39" documentation="Slovenian."/>
+            <Unsigned name="Spanish" value="40" documentation="Spanish."/>
+            <Unsigned name="Swahili" value="41" documentation="Swahili."/>
+            <Unsigned name="Swedish" value="42" documentation="Swedish."/>
+            <Unsigned name="Turkish" value="43" documentation="Turkish."/>
+            <Unsigned name="Ukranian" value="44" documentation="Ukranian."/>
+        </NamedValues>
+    </Enumerated>
+
+    <Sequence name="WXXM-ISO.DirectPosition" documentation="DirectPosition object data types (Figure 14) hold the coordinates for a position within some coordinate reference system. The coordinate reference system is described in ISO 19111. Since DirectPositions, as data types, will often be included in larger objects (such as GM_Objects) that have references to ISO19111::SC_CRS, the DirectPosition::cordinateReferenceSystem may be left NULL if this particular DirectPosition is included in a larger object with such a reference to a SC_CRS. In this case, the DirectPosition::cordinateReferenceSystem is implicitly assumed to take on the value of the containing object's SC_CRS. ">
+        <Array name="coordinate" memberType="Fsgim.Real" minimumSize="1" documentation="Array of coordinates for the direct position in the Coordinate Reference System units."/>
+        <Integer name="dimension" documentation="Number of coordinates."/>
+        <!-- associations -->
+        <Sequence name="CRS" type="WXXM-ISO.SC_CRS" optional="true" documentation="The coordinate system for this position."/>
+    </Sequence>
+
+    <Sequence name="WXXM-ISO.GM_Envelope" documentation="GM_Envelope is often referred to as a minimum bounding box or rectangle. Regardless of dimension, a GM_Envelope can be represented without ambiguity as two direct positions (coordinate points). To encode a GM_Envelope, it is sufficient to encode these two points. This is consistent with all of the data types in this standard, their state is represented by their publicly accessible attributes. ">
+        <Sequence name="lowerCorner" type="WXXM-ISO.DirectPosition" documentation="
+            A coordinate consisting of all minimal values of the ordinates of all points within the GM_Envelope.
+            The &quot;lowerCorner&quot; of a GM_Envelope is a coordinate position consisting of all the minimal ordinates for each dimension for all points within the GM_Envelope.
+            GM_Envelope::lowerCorner : DirectPosition
+            "/>
+        <Sequence name="upperCorner" type="WXXM-ISO.DirectPosition" documentation="
+            A coordinate consisting of all maximal values of the ordinates of all points within the GM_Envelope.
+            The &quot;upperCorner&quot; of a GM_Envelope is a coordinate position consisting of all the maximal ordinates for each dimension for all points within the GM_Envelope.
+            GM_Envelope::upperCorner : DirectPosition
+            "/>
+    </Sequence>
+
+    <Sequence name="WXXM-ISO.SC_CRS" documentation="Coordinate reference system which is usually single but may be compound.">
+    </Sequence>
+
+    <Sequence name="WXXM-ISO.CI_Address" documentation="Location of the responsible individual or organisation.">
+        <String name="administrativeArea[0..1]" documentation="State, province of the physical address."/>
+        <String name="city[0..1]" documentation="City of the physical address."/>
+        <String name="country[0..1]" documentation="Country of the physical address."/>
+        <String name="deliveryPoint[0..*]" documentation="Address line for the physical address (Street name, box number, suite)."/>
+        <String name="electronicMailAddress[0..*]" documentation="Address of the electronic mailbox of the responsible organisation or individual."/>
+        <String name="postalCode[0..1]" documentation="ZIP or other postal code."/>
+    </Sequence>
+
+    <Sequence name="WXXM-ISO.CI_Citation" documentation="Standardized resource reference.">
+        <String name="alternateTitle[0..*]" documentation="
+            Short name or other language name by which the cited information is known.
+            -Example: &quot;Digital Chart of the World&quot; or &quot;DCW&quot;.
+            "/>
+        <Sequence name="citedResponsibleParty[0..*]" type="WXXM-ISO.CI_ResponsibleParty" documentation="Name and position information for an individual or organisation that is responsible for the resource."/>
+        <String name="collectiveTitle[0..1]" documentation="Common title with holdings note."/>
+        <DateTime name="date[1..*]" documentation="Reference date for the cited information."/>
+        <String name="edition[0..1]" documentation="Version of the dataset."/>
+        <DateTime name="editionDate[0..1]" documentation="Date of the edition."/>
+        <Sequence name="identifier[0..*]" type="WXXM-ISO.MD_Identifier" documentation="value uniquely identifying an object within a namespace."/>
+        <String name="ISBN[0..1]" documentation="International Standard Book Number."/>
+        <String name="ISSN[0..1]" documentation="International Standard Serial Number."/>
+        <String name="otherCitationDetails[0..1]" documentation="Other information required to complete the citation."/>
+        <Enumerated name="presentationForm[0..*]" type="WXXM-ISO.CI_PresentationFormCode" documentation="Mode in which the data is represented."/>
+        <Sequence name="series[0..1]" type="WXXM-ISO.CI_Series" documentation="Name of the series of which the dataset is a part."/>
+        <String name="title" documentation="Name by which the cited information is known."/>
+    </Sequence>
+
+    <Sequence name="WXXM-ISO.CI_Contact" documentation="Information required enabling contact with the  responsible person and/or organisation">
+        <Sequence name="address[0..1]" type="WXXM-ISO.CI_Address" documentation="Physical and email address at which the organisation or individual may be contacted."/>
+        <String name="contactInstructions[0..1]" documentation="Supplemental instructions on how or when to contact the individual or organisation."/>
+        <String name="hoursOfService[0..1]" documentation="Time period (including time zone) when individuals can contact the organisation or individual."/>
+        <Sequence name="onlineResource[0..1]" type="WXXM-ISO.CI_OnlineResource" documentation="Online information that can be used to contact the individual or organisation."/>
+        <Sequence name="phone[0..1]" type="WXXM-ISO.CI_Telephone" documentation="Telephone numbers at which the organisation or individual may be contacted."/>
+    </Sequence>
+
+    <Sequence name="WXXM-ISO.CI_OnlineResource" documentation="Information about online sources from which the dataset, specification, or community profile name and extended metadata elements can be obtained.">
+        <String name="applicationProfile[0..1]" documentation="Name of an application profile that can be used with the resource."/>
+        <String name="description[0..1]" documentation="Description of what the resource is/does."/>
+        <Enumerated name="function[0..1]" type="WXXM-ISO.CI_OnLineFunctionCode" documentation="Function performed by the resource."/>
+        <String name="linkage" type="Fsgim.AnyURI" documentation="
+            Method, source, or location for online access.
+            Example: a Uniform Resource Locator (URL) such as http://www,gii.getty.edu/tgn_browser/
+            "/>
+        <String name="name[0..1]" documentation="Name of the resource."/>
+        <String name="protocol[0..1]" documentation="Connection protocol to be used."/>
+    </Sequence>
+
+    <Sequence name="WXXM-ISO.CI_ResponsibleParty" documentation="Identification of, and means of communication with, person(s) and organisations associated with the dataset.">
+        <Sequence name="contactInfo[0..1]" type="WXXM-ISO.CI_Contact" documentation="Address of the responsible party."/>
+        <String name="individualName[0..1]" documentation="Name of the responsible person-  SURNAME, given name, title separated by a delimiter."/>
+        <String name="organisationName[0..1]" documentation="Name of the responsible organisation."/>
+        <String name="positionName[0..1]" documentation="Role or position of the responsible person."/>
+        <Enumerated name="role" type="WXXM-ISO.CI_RoleCode" documentation="Function performed by the responsible party."/>
+    </Sequence>
+
+    <Sequence name="WXXM-ISO.CI_Series" documentation="Information about the series, or aggregate resource, to which a resource belongs.">
+        <String name="issueIdentification[0..1]" documentation="Information identifying the issue of the series."/>
+        <String name="name[0..1]" documentation="Name of the series, or aggregate resource, of which the resource is a part."/>
+        <String name="page[0..1]" documentation="Details on which pages of the publication the article was published."/>
+    </Sequence>
+
+    <Sequence name="WXXM-ISO.CI_Telephone" documentation="Telephone numbers for contacting the responsible individual or organisation.">
+        <String name="facsimile[0..*]" documentation="Telephone number of a facsimile machine for the responsible organisation or individual."/>
+        <String name="voice[0..*]" documentation="Telephone number by which individuals can speak to the responsible organisation or individual."/>
+    </Sequence>
+
+    <Enumerated name="WXXM-ISO.CI_OnLineFunctionCode" documentation="Function performed by the resource">
+        <NamedValues>
+            <Unsigned name="download" value="1" documentation="Online instructions provide the information necessary to acquire data"/>
+            <Unsigned name="information" value="2" documentation="Online instructions provide more information about the data"/>
+            <Unsigned name="offlineAccess" value="3" documentation="Online instructions provide the ability to transfer data from one storage device or system to another"/>
+            <Unsigned name="order" value="4" documentation="Online instructions provide the ability to acquire data"/>
+            <Unsigned name="search" value="5" documentation="Online instructions provide the ability to seek out information about a dataset"/>
+        </NamedValues>
+    </Enumerated>
+
+    <Enumerated name="WXXM-ISO.CI_PresentationFormCode" documentation="Mode in which the data is represented">
+        <NamedValues>
+            <Unsigned name="documentDigital" value="1" documentation="Piece of written or printed matter that provides a record or evidence of events, an agreement, ownership, identification, etc.."/>
+            <Unsigned name="documentHardcopy" value="2" documentation="Representation of a map which is printed on paper, photographic material, or other media and can be interpreted directly by the human user"/>
+            <Unsigned name="imageDigital" value="3" documentation="Permanent record of the likeness of any natural or man-made features, objects, and activities reproduced on photographic materials.  This image can be acquired through the sensing of visual or any other segment of the electromagnetic spectrum by sensors, such as thermal infrared, and high resolution radar."/>
+            <Unsigned name="imageHardcopy" value="4" documentation="Hard-copy of image."/>
+            <Unsigned name="mapDigital" value="5" documentation="Digital map."/>
+            <Unsigned name="mapHardcopy" value="6" documentation="Hard copy of map."/>
+            <Unsigned name="modelDigital" value="7" documentation="Representation in three dimensions of geospatial data."/>
+            <Unsigned name="modelHardcopy" value="8" documentation="Hard copy of model."/>
+            <Unsigned name="profileDigital" value="9" documentation="Vertical cross-section of geospatial data"/>
+            <Unsigned name="profileHardcopy" value="10" documentation="Hard copy of profile."/>
+            <Unsigned name="tableDigital" value="11" documentation="Digital table representation."/>
+            <Unsigned name="tableHardcopy" value="12" documentation="Hard copy representation of table."/>
+            <Unsigned name="videoDigital" value="13" documentation="Digital video."/>
+            <Unsigned name="videoHardcopy" value="14" documentation="Hard copy of digital video."/>
+        </NamedValues>
+    </Enumerated>
+
+    <Enumerated name="WXXM-ISO.CI_RoleCode" documentation="Function performed by the responsible party.">
+        <NamedValues>
+            <Unsigned name="author" value="1" documentation="Author role."/>
+            <Unsigned name="custodian" value="2" documentation="Guardian or keeper responsible for maintaining the data."/>
+            <Unsigned name="distributor" value="3" documentation="Person or organisation who distributes the data."/>
+            <Unsigned name="originator" value="4" documentation="Responsible party who created the dataset or metadata "/>
+            <Unsigned name="owner" value="5" documentation="Person who owns the data."/>
+            <Unsigned name="pointOfContact" value="6" documentation="Responsible party who can be contacted for acquiring knowledge about or acquisition of the data."/>
+            <Unsigned name="principalInvestigator" value="7" documentation="Key person responsible for gathering information and conducting research."/>
+            <Unsigned name="processor" value="8" documentation="Responsible party who has processed the data in a manner in which the data has been modified."/>
+            <Unsigned name="publisher" value="9" documentation="Responsible party who published the data."/>
+            <Unsigned name="resourceProvider" value="10" documentation="Party that supplies the data."/>
+            <Unsigned name="user" value="11" documentation="Person who uses the data."/>
+        </NamedValues>
+    </Enumerated>
+
+    <Sequence name="WXXM-ISO.DQ_Element" documentation="Used to provide user specific quality information about a dataset’s suitability for a particular application.">
+        <DateTime name="dateTime[0..*]" documentation="%%%% Time of quality evaluation."/>
+        <String name="evaluationMethodDescription[0..1]" documentation="Evaluation method description."/>
+        <Enumerated name="evaluationMethodType[0..1]" type="WXXM-ISO.DQ_EvaluationMethodTypeCode" documentation="Evaluation method type."/>
+        <Sequence name="evaluationProcedure[0..1]" type="WXXM-ISO.CI_Citation" documentation="Evaluation procedure."/>
+        <String name="measureDescription[0..1]" documentation="Measurement description."/>
+        <Sequence name="measureIdentification[0..1]" type="WXXM-ISO.MD_Identifier" documentation="Measurement identification."/>
+        <String name="nameOfMeasure[0..*]" documentation="Name of measurement."/>
+        <Sequence name="result[1..2]" type="WXXM-ISO.DQ_Result" documentation="Result."/>
+    </Sequence>
+
+    <Sequence name="WXXM-ISO.DQ_Result" documentation="Abstract class to hold result.">
+    </Sequence>
+
+    <Enumerated name="WXXM-ISO.DQ_EvaluationMethodTypeCode" documentation="Evaluation method type code.">
+        <NamedValues>
+            <Unsigned name="directExternal" value="1" documentation="Evaluation is direct external."/>
+            <Unsigned name="directInternal" value="2" documentation="Evaluation is direct internal."/>
+            <Unsigned name="indirect" value="3" documentation="Evaluation is indirect."/>
+        </NamedValues>
+    </Enumerated>
+
+    <Sequence name="WXXM-ISO.EX_Extent" documentation="Information about spatial, vertical, and temporal extent.">
+        <String name="description[0..1]" documentation="Spatial and temporal extent for the referring object."/>
+    </Sequence>
+
+    <Enumerated name="WXXM-ISO.MD_CharacterSetCode" documentation="Character set code list.">
+        <NamedValues>
+            <Unsigned name="(reservedforfutureuse)" value="1" documentation="Reserved for future use."/>
+            <Unsigned name="ucs2" value="2" documentation="16-bit fixed size Universal Character Set, based on ISO/IEC 10646."/>
+            <Unsigned name="ucs4" value="3" documentation="32-bit fixed size Universal Character Set, based on ISO/IEC 10646."/>
+            <Unsigned name="utf7" value="4" documentation="7-bit variable size UCS Transfer Format, based on ISO/IEC 10646."/>
+            <Unsigned name="utf8" value="5" documentation="8-bit variable size UCS Transfer Format, based on ISO/IEC 10646."/>
+            <Unsigned name="utf16" value="6" documentation="16-bit variable size UCS Transfer Format, based on ISO/IEC 10646."/>
+            <Unsigned name="8859part1" value="7" documentation="ISO/IEC 8859-1, Information technology - 8-bit single byte coded graphic character sets - Part 1Â : Latin alphabet No.1."/>
+            <Unsigned name="8859part2" value="8" documentation="ISO/IEC 8859-2, Information technology - 8-bit single byte coded graphic character sets - Part 2Â : Latin alphabet No.2."/>
+            <Unsigned name="8859part3" value="9" documentation="ISO/IEC 8859-3, Information technology - 8-bit single byte coded graphic character sets - Part 3Â : Latin alphabet No.3."/>
+            <Unsigned name="8859part4" value="10" documentation="ISO/IEC 8859-4, Information technology - 8-bit single byte coded graphic character sets - Part 4Â : Latin alphabet No.4."/>
+            <Unsigned name="8859part5" value="11" documentation="ISO/IEC 8859-5, Information technology - 8-bit single byte coded graphic character sets - Part 5Â : Latin/Cyrillic alphabet."/>
+            <Unsigned name="8859part6" value="12" documentation="ISO/IEC 8859-6, Information technology - 8-bit single byte coded graphic character sets - Part 6Â : Latin/Arabic alphabet."/>
+            <Unsigned name="8859part7" value="13" documentation="ISO/IEC 8859-7, Information technology - 8-bit single byte coded graphic character sets - Part 7Â : Latin/Greek alphabet."/>
+            <Unsigned name="8859part8" value="14" documentation="ISO/IEC 8859-8, Information technology - 8-bit single byte coded graphic character sets - Part 8Â : Latin/Hebrew alphabet."/>
+            <Unsigned name="8859part9" value="15" documentation="ISO/IEC 8859-9, Information technology - 8-bit single byte coded graphic character sets - Part 9Â : Latin alphabet No.5."/>
+            <Unsigned name="8859part10" value="16" documentation="ISO/IEC 8859-10, Information technology - 8-bit single byte coded graphic character sets - Part 10Â : Latin alphabet No.6."/>
+            <Unsigned name="8859part11" value="17" documentation="ISO/IEC 8859-11, Information technology - 8-bit single byte coded graphic character sets - Part 11Â : Latin/Thai alphabet."/>
+            <Unsigned name="8859part13" value="18" documentation="ISO/IEC 8859-13, Information technology - 8-bit single byte coded graphic character sets - Part 13Â : Latin alphabet No.7."/>
+            <Unsigned name="8859part14" value="19" documentation="ISO/IEC 8859-14, Information technology - 8-bit single byte coded graphic character sets - Part 14Â : Latin alphabet No.8 (Celtic)."/>
+            <Unsigned name="8859part15" value="20" documentation="ISO/IEC 8859-15, Information technology - 8-bit single byte coded graphic character sets - Part 15Â : Latin alphabet No.9."/>
+            <Unsigned name="8859part16" value="21" documentation="ISO/IEC 8859-16, Information technology - 8-bit single byte coded graphic character sets - Part 16Â : Latin alphabet No.10."/>
+            <Unsigned name="jis" value="22" documentation="japanese code set used for electronic transmission."/>
+            <Unsigned name="shiftJIS" value="23" documentation="japanese code set used on MS-DOS machines."/>
+            <Unsigned name="eucJP" value="24" documentation="japanese code set used on UNIX based machines."/>
+            <Unsigned name="usAscii" value="25" documentation="United States ASCII code set (ISO 646 US)."/>
+            <Unsigned name="ebcdic" value="26" documentation="IBM mainframe code set."/>
+            <Unsigned name="eucKR" value="27" documentation="Korean code set."/>
+            <Unsigned name="big5" value="28" documentation="traditional Chinese code set used in Taiwan, Hong Kong of China and other areas."/>
+            <Unsigned name="GB2312" value="29" documentation="simplified Chinese code set."/>
+        </NamedValues>
+    </Enumerated>
+
+    <Enumerated name="WXXM-ISO.MD_ScopeCode" documentation="Class of information to which the referencing entity applies.">
+        <NamedValues>
+            <Unsigned name="attribute" value="1" documentation="Information applies to the attribute class."/>
+            <Unsigned name="attributeType" value="2" documentation="Information applies to the attribute type."/>
+            <Unsigned name="collectionHardware" value="3" documentation="Information applies to  the collection hardware class."/>
+            <Unsigned name="collectionSession" value="4" documentation="Information applies to  the collection session."/>
+            <Unsigned name="dataset" value="5" documentation="Information applies to the attribute class."/>
+            <Unsigned name="dimensionGroup" value="6" documentation="Information applies to a dimension group."/>
+            <Unsigned name="feature" value="7" documentation="Information applies to a feature."/>
+            <Unsigned name="featureType" value="8" documentation="Information applies to a feature type."/>
+            <Unsigned name="fieldSession" value="9" documentation="Information applies to a field session."/>
+            <Unsigned name="model" value="10" documentation="Information applies to a model."/>
+            <Unsigned name="nonGeographicDataset" value="11" documentation="Information applies to non-geographic data."/>
+            <Unsigned name="propertyType" value="12" documentation="Information applies to a  property type."/>
+            <Unsigned name="series" value="13" documentation="Information applies to the series."/>
+            <Unsigned name="service" value="14" documentation="Information applies to a service."/>
+            <Unsigned name="software" value="15" documentation="Information applies to software."/>
+            <Unsigned name="tile" value="16" documentation="Information applies to a tile."/>
+        </NamedValues>
+    </Enumerated>
+
+    <Sequence name="WXXM-ISO.MD_Metadata" documentation="Information about the metadata.">
+        <Enumerated name="characterSet[0..1]" type="WXXM-ISO.MD_CharacterSetCode" documentation="Full name of the ISO character coding standard used for the metadata set."/>
+        <Sequence name="contact[1..*]" type="WXXM-ISO.CI_ResponsibleParty" documentation="Party responsible for the metadata information."/>
+        <String name="dataSet[0..1]" documentation="Identifiable collection of data."/>
+        <DateTime name="dateStamp" documentation="Date that the metadata were created or last updated."/>
+        <String name="fileIdentifier[0..1]" documentation="Unique identifier for this metadata file."/>
+        <Enumerated name="hierarchyLevel[0..*]" type="WXXM-ISO.MD_ScopeCode" documentation="Scope to which the metadata applies (see informative Annex J for more information about metadata heirarchy levels)."/>
+        <String name="hierarchyLevelName[0..*]" documentation="Name of the hierarchy level."/>
+        <String name="language[0..1]" documentation="Language used for documenting metadata."/>
+        <Sequence name="locale[0..*]" type="WXXM-ISO.PT_Locale" documentation="Locale of the data set."/>
+        <String name="metadataStandardName[0..1]" documentation="Name of the metadata standard used."/>
+        <String name="metadataStandardVersion[0..1]" documentation="Version of the metadata standard used."/>
+        <String name="parentIdentifier[0..1]" documentation="Unique identifier of the parent metadata file."/>
+    </Sequence>
+
+    <Sequence name="WXXM-ISO.MD_Identifier" documentation="Generic identifer class used to associate a reference code with an identification authority.">
+        <Sequence name="authority[0..1]" type="WXXM-ISO.CI_Citation" documentation="Organization or party responsible for definition and maintenance of the code space or code. "/>
+        <String name="code" documentation="Identifier code or name, often from a controlled list or pattern defined by a code space."/>
+        <!-- associations -->
+        <Sequence name="featureOfInterest" type="WXXM-ISO.AbstractFeature" documentation="
+            The featureOfInterest is a feature of any type (ISO 19109, ISO 19101), which is a representation of the observation target, being the real-world object regarding which the observation is made, such as a specimen, station, tract, mountain, pixel, etc. 
+            The spatial properties (location) of this feature of interest are typically of most interest for spatial analysis of the observation result.
+            "/>
+        <Sequence name="procedure" type="WXXM-SWE.Process" optional="true" documentation="
+            The procedure is the description of a process used to generate the result. 
+            It must be suitable for the observed property. 
+            NOTE: At this level we do not distinguish between sensor-observations, estimations made by an observer, or algorithms, simulations, computations and complex processing chains.
+            "/>
+        <Sequence name="result" type="WXXM-ISO.AbstractObject" documentation="
+            The result contains the value generated by the procedure. 
+            The type of the observation result must be consistent with the observed property, and the scale or scope for the value must be consistent with the quantity or category type. 
+            Application profiles may choose to constrain the type of the result.
+            "/>
+    </Sequence>
+
+    </Definitions>
+</CSML>

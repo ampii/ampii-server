@@ -1,0 +1,1863 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CSML xmlns="http://bacnet.org/csml/1.2" defaultLocale="en-US">
+
+    <!-- THESE ARE NOT THE OFFICIAL DEFINITIONS. See data.ashrae.org for current definition files -->
+
+    <Definitions>
+
+        <!-- ******************************************************************************************************* -->
+        <!--                                             Object Definitions                                          -->
+        <!-- ******************************************************************************************************* -->
+
+        <!-- TBD: Display Names -->
+        <!-- TBD: check value/range restrictions -->
+        <!-- TBD: the data revisioning attributes need to be added -->
+
+        <!-- Clause 12.35 -->
+        <Object name="0-AccessCredentialObject">
+            <ObjectIdentifier name="object-identifier" propertyIdentifier="75"/>
+            <String name="object-name" propertyIdentifier="77" minimumLength="1"/>
+            <Enumerated name="object-type" propertyIdentifier="79" type="0-BACnetObjectType" value="access-credential" variability="constant"/>
+            <String name="description" propertyIdentifier="28" optional="true"/>
+            <Unsigned name="global-identifier" propertyIdentifier="323" type="0-Unsigned32" writable="true"/>
+            <BitString name="status-flags" propertyIdentifier="111" type="0-BACnetStatusFlags"/>
+            <Enumerated name="reliability" propertyIdentifier="103" type="0-BACnetReliability"/>
+            <Enumerated name="credential-status" propertyIdentifier="264" type="0-BACnetBinaryPV"/>
+            <List name="reason-for-disable" propertyIdentifier="303" memberType="0-BACnetAccessCredentialDisableReason"/>
+            <Array name="authentication-factors" propertyIdentifier="257" memberType="0-BACnetCredentialAuthenticationFactor"/>
+            <DateTime name="activation-time" propertyIdentifier="254"/>
+            <DateTime name="expiry-time" propertyIdentifier="270"/>
+            <Enumerated name="credential-disable" propertyIdentifier="263" type="0-BACnetAccessCredentialDisable"/>
+            <Integer name="days-remaining" propertyIdentifier="267" optional="true"/>
+            <Integer name="uses-remaining" propertyIdentifier="319" optional="true"/>
+            <Unsigned name="absentee-limit" propertyIdentifier="244" optional="true"/>
+            <Sequence name="belongs-to" propertyIdentifier="262" type="0-BACnetDeviceObjectReference" optional="true"/>
+            <Array name="assigned-access-rights" propertyIdentifier="256" memberType="0-BACnetAssignedAccessRights"/>
+            <Sequence name="last-access-point" propertyIdentifier="276" type="0-BACnetDeviceObjectReference" optional="true"/>
+            <Enumerated name="last-access-event" propertyIdentifier="275" type="0-BACnetAccessEvent" optional="true"/>
+            <DateTime name="last-use-time" propertyIdentifier="281" optional="true"/>
+            <Boolean name="trace-flag" propertyIdentifier="308" optional="true"/>
+            <Unsigned name="threat-authority" propertyIdentifier="306" type="0-BACnetAccessThreatLevel" optional="true"/>
+            <Boolean name="extended-time-enable" propertyIdentifier="271" optional="true"/>
+            <!--<Boolean name="master-exemption" propertyIdentifier="284" optional="true"/>-->   <!-- TBD: the data revisioning attributes need to be added -->
+            <!--<Boolean name="passback-exemption" propertyIdentifier="299" optional="true"/>-->
+            <!--<Boolean name="occupancy-exemption" propertyIdentifier="293" optional="true"/>-->
+            <List name="authorization-exemptions" propertyIdentifier="364" memberType="0-BACnetAuthorizationExemption" optional="true"/>
+            <Boolean name="reliability-evaluation-inhibit" propertyIdentifier="357" optional="true"/>
+
+            <String name="profile-name" propertyIdentifier="168" optional="true"/>
+        </Object>
+
+        <!-- Clause 12.26 -->
+        <Object name="0-AccessDoorObject">
+            <ObjectIdentifier name="object-identifier" propertyIdentifier="75"/>
+            <String name="object-name" propertyIdentifier="77" minimumLength="1"/>
+            <Enumerated name="object-type" propertyIdentifier="79" type="0-BACnetObjectType" value="access-door" variability="constant"/>
+            <Enumerated name="present-value" propertyIdentifier="85" type="0-BACnetDoorValue" writable="true"/>
+            <String name="description" propertyIdentifier="28" optional="true"/>
+            <BitString name="status-flags" propertyIdentifier="111" type="0-BACnetStatusFlags"/>
+            <Enumerated name="event-state" propertyIdentifier="36" type="0-BACnetEventState"/>
+            <Enumerated name="reliability" propertyIdentifier="103" type="0-BACnetReliability"/>
+            <Boolean name="out-of-service" propertyIdentifier="81"/>
+            <Array name="priority-array" propertyIdentifier="87" type="0-BACnetPriorityArray" writable="false"/>
+            <Enumerated name="relinquish-default" propertyIdentifier="104" type="0-BACnetDoorValue"/>
+            <Enumerated name="door-status" propertyIdentifier="231" type="0-BACnetDoorStatus" optional="true"/>
+            <Enumerated name="lock-status" propertyIdentifier="233" type="0-BACnetLockStatus" optional="true"/>
+            <Enumerated name="secured-status" propertyIdentifier="235" type="0-BACnetDoorSecuredStatus" optional="true"/>
+            <Array name="door-members" propertyIdentifier="228" memberType="0-BACnetDeviceObjectReference" optional="true"/>
+            <Unsigned name="door-pulse-time" propertyIdentifier="230"/>
+            <Unsigned name="door-extended-pulse-time" propertyIdentifier="227"/>
+            <Unsigned name="door-unlock-delay-time" propertyIdentifier="232" optional="true"/>
+            <Unsigned name="door-open-too-long-time" propertyIdentifier="229"/>
+            <Enumerated name="door-alarm-state" propertyIdentifier="226" type="0-BACnetDoorAlarmState" optional="true"/>
+            <List name="masked-alarm-values" propertyIdentifier="234" memberType="0-BACnetDoorAlarmState" optional="true"/>
+            <Enumerated name="maintenance-required" propertyIdentifier="158" type="0-BACnetMaintenance" optional="true"/>
+            <Unsigned name="time-delay" propertyIdentifier="113" optional="true"/>
+            <Unsigned name="notification-class" propertyIdentifier="17" optional="true"/>
+            <List name="alarm-values" propertyIdentifier="7" memberType="0-BACnetDoorAlarmState" optional="true"/>
+            <List name="fault-values" propertyIdentifier="39" memberType="0-BACnetDoorAlarmState" optional="true"/>
+            <BitString name="event-enable" propertyIdentifier="35" type="0-BACnetEventTransitionBits" optional="true"/>
+            <BitString name="acked-transitions" propertyIdentifier="0" type="0-BACnetEventTransitionBits" optional="true" writable="false"/>
+            <Enumerated name="notify-type" propertyIdentifier="72" type="0-BACnetNotifyType" optional="true"/>
+            <Array name="event-time-stamps" propertyIdentifier="130" memberType="0-BACnetTimeStamp" minimumSize="3" maximumSize="3" optional="true" writable="false"/>
+            <Array name="event-message-texts" propertyIdentifier="351" memberType="String" minimumSize="3" maximumSize="3" optional="true" writable="false" requiredWith="event-message-texts-config"/>
+            <Array name="event-message-texts-config" propertyIdentifier="352" memberType="String" minimumSize="3" maximumSize="3" optional="true"/>
+            <Boolean name="event-detection-enable" propertyIdentifier="353" optional="true"/>
+            <Sequence name="event-algorithm-inhibit-ref" propertyIdentifier="355" type="0-BACnetObjectPropertyReference" optional="true"/>
+            <Boolean name="event-algorithm-inhibit" propertyIdentifier="354" optional="true" requiredWith="event-algorithm-inhibit-ref"/>
+            <Unsigned name="time-delay-normal" propertyIdentifier="356" optional="true"/>
+            <Boolean name="reliability-evaluation-inhibit" propertyIdentifier="357" optional="true"/>
+
+            <String name="profile-name" propertyIdentifier="168" optional="true"/>
+        </Object>
+
+        <!-- Clause 12.31 -->
+        <Object name="0-AccessPointObject">
+            <ObjectIdentifier name="object-identifier" propertyIdentifier="75"/>
+            <String name="object-name" propertyIdentifier="77" minimumLength="1"/>
+            <Enumerated name="object-type" propertyIdentifier="79" type="0-BACnetObjectType" value="access-point" variability="constant"/>
+            <String name="description" propertyIdentifier="28" optional="true"/>
+            <BitString name="status-flags" propertyIdentifier="111" type="0-BACnetStatusFlags"/>
+            <Enumerated name="event-state" propertyIdentifier="36" type="0-BACnetEventState"/>
+            <Enumerated name="reliability" propertyIdentifier="103" type="0-BACnetReliability"/>
+            <Boolean name="out-of-service" propertyIdentifier="81"/>
+            <Enumerated name="authentication-status" propertyIdentifier="260" type="0-BACnetAuthenticationStatus"/>
+            <Unsigned name="active-authentication-policy" propertyIdentifier="255"/>
+            <Unsigned name="number-of-authentication-policies" propertyIdentifier="289"/>
+            <Array name="authentication-policy-list" propertyIdentifier="258" memberType="0-BACnetAuthenticationPolicy" optional="true"/>
+            <Array name="authentication-policy-names" propertyIdentifier="259" memberType="String" optional="true"/>
+            <Enumerated name="authorization-mode" propertyIdentifier="261" type="0-BACnetAuthorizationMode"/>
+            <Unsigned name="verification-time" propertyIdentifier="326" optional="true"/>
+            <Boolean name="lockout" propertyIdentifier="282" optional="true"/>
+            <Unsigned name="lockout-relinquish-time" propertyIdentifier="283" optional="true"/>
+            <Unsigned name="failed-attempts" propertyIdentifier="273" optional="true"/>
+            <List name="failed-attempt-events" propertyIdentifier="272" memberType="0-BACnetAccessEvent" optional="true"/>
+            <Unsigned name="max-failed-attempts" propertyIdentifier="285" optional="true"/>
+            <Unsigned name="failed-attempts-time" propertyIdentifier="274" optional="true"/>
+            <Unsigned name="threat-level" propertyIdentifier="307" type="0-BACnetAccessThreatLevel" optional="true"/>
+            <Boolean name="occupancy-upper-limit-enforced" propertyIdentifier="298" optional="true"/>
+            <Boolean name="occupancy-lower-limit-enforced" propertyIdentifier="295" optional="true"/>
+            <Boolean name="occupancy-count-adjust" propertyIdentifier="291" optional="true"/>
+            <Unsigned name="accompaniment-time" propertyIdentifier="253" optional="true"/>
+            <Enumerated name="access-event" propertyIdentifier="247" type="0-BACnetAccessEvent"/>
+            <Unsigned name="access-event-tag" propertyIdentifier="322"/>
+            <Choice name="access-event-time" propertyIdentifier="250" type="0-BACnetTimeStamp"/>
+            <Sequence name="access-event-credential" propertyIdentifier="249" type="0-BACnetDeviceObjectReference"/>
+            <Sequence name="access-event-authentication-factor" propertyIdentifier="248" type="0-BACnetAuthenticationFactor" optional="true"/>
+            <Array name="access-doors" propertyIdentifier="246" memberType="0-BACnetDeviceObjectReference"/>
+            <Unsigned name="priority-for-writing" propertyIdentifier="88" minimum="1" maximum="16"/>
+            <Boolean name="muster-point" propertyIdentifier="287" optional="true"/>
+            <Sequence name="zone-to" propertyIdentifier="321" type="0-BACnetDeviceObjectReference" optional="true"/>
+            <Sequence name="zone-from" propertyIdentifier="320" type="0-BACnetDeviceObjectReference" optional="true"/>
+            <Unsigned name="notification-class" propertyIdentifier="17" optional="true"/>
+            <Unsigned name="transaction-notification-class" propertyIdentifier="309" optional="true"/>
+            <List name="access-alarm-events" propertyIdentifier="245" memberType="0-BACnetAccessEvent" optional="true"/>
+            <List name="access-transaction-events" propertyIdentifier="251" memberType="0-BACnetAccessEvent" optional="true"/>
+            <BitString name="event-enable" propertyIdentifier="35" type="0-BACnetEventTransitionBits" optional="true"/>
+            <BitString name="acked-transitions" propertyIdentifier="0" type="0-BACnetEventTransitionBits" optional="true" writable="false"/>
+            <Enumerated name="notify-type" propertyIdentifier="72" type="0-BACnetNotifyType" optional="true"/>
+            <Array name="event-time-stamps" propertyIdentifier="130" memberType="0-BACnetTimeStamp" minimumSize="3" maximumSize="3" optional="true" writable="false"/>
+            <Array name="event-message-texts" propertyIdentifier="351" memberType="String" minimumSize="3" maximumSize="3" optional="true" writable="false" requiredWith="event-message-texts-config"/>
+            <Array name="event-message-texts-config" propertyIdentifier="352" memberType="String" minimumSize="3" maximumSize="3" optional="true"/>
+            <Boolean name="event-detection-enable" propertyIdentifier="353" optional="true"/>
+            <Sequence name="event-algorithm-inhibit-ref" propertyIdentifier="355" type="0-BACnetObjectPropertyReference" optional="true"/>
+            <Boolean name="event-algorithm-inhibit" propertyIdentifier="354" optional="true" requiredWith="event-algorithm-inhibit-ref"/>
+            <Boolean name="reliability-evaluation-inhibit" propertyIdentifier="357" optional="true"/>
+
+            <String name="profile-name" propertyIdentifier="168" optional="true"/>
+        </Object>
+
+        <!-- Clause 12.34 -->
+        <Object name="0-AccesRightsObject">
+            <ObjectIdentifier name="object-identifier" propertyIdentifier="75"/>
+            <String name="object-name" propertyIdentifier="77" minimumLength="1"/>
+            <Enumerated name="object-type" propertyIdentifier="79" type="0-BACnetObjectType" value="access-rights" variability="constant"/>
+            <String name="description" propertyIdentifier="28" optional="true"/>
+            <Unsigned name="global-identifier" propertyIdentifier="323" type="0-Unsigned32" writable="true"/>
+            <BitString name="status-flags" propertyIdentifier="111" type="0-BACnetStatusFlags"/>
+            <Enumerated name="reliability" propertyIdentifier="103" type="0-BACnetReliability"/>
+            <Boolean name="enable" propertyIdentifier="133"/>
+            <Array name="negative-access-rules" propertyIdentifier="288" memberType="0-BACnetAccessRule"/>
+            <Array name="positive-access-rules" propertyIdentifier="302" memberType="0-BACnetAccessRule"/>
+            <Sequence name="accompaniment" propertyIdentifier="252" type="0-BACnetDeviceObjectReference" optional="true"/>
+            <Boolean name="reliability-evaluation-inhibit" propertyIdentifier="357" optional="true"/>
+
+            <String name="profile-name" propertyIdentifier="168" optional="true"/>
+        </Object>
+
+        <!-- Clause 12.33 -->
+        <Object name="0-AccessUserObject">
+            <ObjectIdentifier name="object-identifier" propertyIdentifier="75"/>
+            <String name="object-name" propertyIdentifier="77" minimumLength="1"/>
+            <Enumerated name="object-type" propertyIdentifier="79" type="0-BACnetObjectType" value="access-user" variability="constant"/>
+            <String name="description" propertyIdentifier="28" optional="true"/>
+            <Unsigned name="global-identifier" propertyIdentifier="323" type="0-Unsigned32" writable="true"/>
+            <BitString name="status-flags" propertyIdentifier="111" type="0-BACnetStatusFlags"/>
+            <Enumerated name="reliability" propertyIdentifier="103" type="0-BACnetReliability"/>
+            <Enumerated name="user-type" propertyIdentifier="318" type="0-BACnetAccessUserType"/>
+            <String name="user-name" propertyIdentifier="317" optional="true"/>
+            <String name="user-external-identifier" propertyIdentifier="310" optional="true"/>
+            <String name="user-information-reference" propertyIdentifier="311" optional="true"/>
+            <List name="members" propertyIdentifier="286" memberType="0-BACnetDeviceObjectReference" optional="true"/>
+            <List name="member-of" propertyIdentifier="159" memberType="0-BACnetDeviceObjectReference" optional="true"/>
+            <List name="credentials" propertyIdentifier="265" memberType="0-BACnetDeviceObjectReference"/>
+            <Boolean name="reliability-evaluation-inhibit" propertyIdentifier="357" optional="true"/>
+
+            <String name="profile-name" propertyIdentifier="168" optional="true"/>
+        </Object>
+
+        <!-- Clause 12.32 -->
+        <Object name="0-AccessZoneObject">
+            <ObjectIdentifier name="object-identifier" propertyIdentifier="75"/>
+            <String name="object-name" propertyIdentifier="77" minimumLength="1"/>
+            <Enumerated name="object-type" propertyIdentifier="79" type="0-BACnetObjectType" value="access-zone" variability="constant"/>
+            <String name="description" propertyIdentifier="28" optional="true"/>
+            <Unsigned name="global-identifier" propertyIdentifier="323" type="0-Unsigned32" writable="true"/>
+            <Enumerated name="occupancy-state" propertyIdentifier="296" type="0-BACnetAccessZoneOccupancyState"/>
+            <BitString name="status-flags" propertyIdentifier="111" type="0-BACnetStatusFlags"/>
+            <Enumerated name="event-state" propertyIdentifier="36" type="0-BACnetEventState"/>
+            <Enumerated name="reliability" propertyIdentifier="103" type="0-BACnetReliability"/>
+            <Boolean name="out-of-service" propertyIdentifier="81"/>
+            <Unsigned name="occupancy-count" propertyIdentifier="290" optional="true"/>
+            <Boolean name="occupancy-count-enable" propertyIdentifier="292" optional="true"/>
+            <Integer name="adjust-value" propertyIdentifier="176" optional="true"/>
+            <Unsigned name="occupancy-upper-limit" propertyIdentifier="297" optional="true"/>
+            <Unsigned name="occupancy-lower-limit" propertyIdentifier="294" optional="true"/>
+            <List name="credentials-in-zone" propertyIdentifier="266" memberType="0-BACnetDeviceObjectReference" optional="true"/>
+            <Sequence name="last-credential-added" propertyIdentifier="277" type="0-BACnetDeviceObjectReference" optional="true"/>
+            <DateTime name="last-credential-added-time" propertyIdentifier="278" optional="true"/>
+            <Sequence name="last-credential-removed" propertyIdentifier="279" type="0-BACnetDeviceObjectReference" optional="true"/>
+            <DateTime name="last-credential-removed-time" propertyIdentifier="280" optional="true"/>
+            <Enumerated name="passback-mode" propertyIdentifier="300" type="0-BACnetAccessPassbackMode" optional="true"/>
+            <Unsigned name="passback-timeout" propertyIdentifier="301" optional="true"/>
+            <List name="entry-points" propertyIdentifier="268" memberType="0-BACnetDeviceObjectReference"/>
+            <List name="exit-points" propertyIdentifier="269" memberType="0-BACnetDeviceObjectReference"/>
+            <Unsigned name="time-delay" propertyIdentifier="113" optional="true"/>
+            <Unsigned name="notification-class" propertyIdentifier="17" optional="true"/>
+            <List name="alarm-values" propertyIdentifier="7" memberType="0-BACnetAccessZoneOccupancyState" optional="true"/>
+            <BitString name="event-enable" propertyIdentifier="35" type="0-BACnetEventTransitionBits" optional="true"/>
+            <BitString name="acked-transitions" propertyIdentifier="0" type="0-BACnetEventTransitionBits" optional="true" writable="false"/>
+            <Enumerated name="notify-type" propertyIdentifier="72" type="0-BACnetNotifyType" optional="true"/>
+            <Array name="event-time-stamps" propertyIdentifier="130" memberType="0-BACnetTimeStamp" minimumSize="3" maximumSize="3" optional="true" writable="false"/>
+            <Array name="event-message-texts" propertyIdentifier="351" memberType="String" minimumSize="3" maximumSize="3" optional="true" writable="false" requiredWith="event-message-texts-config"/>
+            <Array name="event-message-texts-config" propertyIdentifier="352" memberType="String" minimumSize="3" maximumSize="3" optional="true"/>
+            <Boolean name="event-detection-enable" propertyIdentifier="353" optional="true"/>
+            <Sequence name="event-algorithm-inhibit-ref" propertyIdentifier="355" type="0-BACnetObjectPropertyReference" optional="true"/>
+            <Boolean name="event-algorithm-inhibit" propertyIdentifier="354" optional="true" requiredWith="event-algorithm-inhibit-ref"/>
+            <Unsigned name="time-delay-normal" propertyIdentifier="356" optional="true"/>
+            <Boolean name="reliability-evaluation-inhibit" propertyIdentifier="357" optional="true"/>
+
+            <String name="profile-name" propertyIdentifier="168" optional="true"/>
+        </Object>
+
+        <!-- Clause 12.1 -->
+        <Object name="0-AccumulatorObject">
+            <ObjectIdentifier name="object-identifier" propertyIdentifier="75"/>
+            <String name="object-name" propertyIdentifier="77" minimumLength="1"/>
+            <Enumerated name="object-type" propertyIdentifier="79" type="0-BACnetObjectType" value="accumulator" variability="constant"/>
+            <Unsigned name="present-value" propertyIdentifier="85"/>
+            <String name="description" propertyIdentifier="28" optional="true"/>
+            <String name="device-type" propertyIdentifier="31" optional="true"/>
+            <BitString name="status-flags" propertyIdentifier="111" type="0-BACnetStatusFlags"/>
+            <Enumerated name="event-state" propertyIdentifier="36" type="0-BACnetEventState"/>
+            <Enumerated name="reliability" propertyIdentifier="103" type="0-BACnetReliability" optional="true" requiredWith="reliability-evaluation-inhibit"/>
+            <Boolean name="out-of-service" propertyIdentifier="81"/>
+            <Choice name="scale" propertyIdentifier="187" type="0-BACnetScale"/>
+            <Enumerated name="units" propertyIdentifier="117" type="0-BACnetEngineeringUnits"/>
+            <Sequence name="prescale" propertyIdentifier="185" type="0-BACnetPrescale" optional="true"/>
+            <Unsigned name="max-pres-value" propertyIdentifier="65"/>
+            <DateTime name="value-change-time" propertyIdentifier="192" optional="true" writable="false"/>
+            <Unsigned name="value-before-change" propertyIdentifier="190" optional="true"/>
+            <Unsigned name="value-set" propertyIdentifier="191" optional="true"/>
+            <Sequence name="logging-record" propertyIdentifier="184" type="0-BACnetAccumulatorRecord" optional="true" writable="false"/>
+            <ObjectIdentifier name="logging-object" propertyIdentifier="183" optional="true"/>
+            <Unsigned name="pulse-rate" propertyIdentifier="186" optional="true"/>
+            <Unsigned name="high-limit" propertyIdentifier="45" optional="true"/>
+            <Unsigned name="low-limit" propertyIdentifier="59" optional="true"/>
+            <Unsigned name="limit-monitoring-interval" propertyIdentifier="182" optional="true"/>
+            <Unsigned name="notification-class" propertyIdentifier="17" optional="true"/>
+            <Unsigned name="time-delay" propertyIdentifier="113" optional="true"/>
+            <BitString name="limit-enable" propertyIdentifier="52" type="0-BACnetLimitEnable" optional="true"/>
+            <BitString name="event-enable" propertyIdentifier="35" type="0-BACnetEventTransitionBits" optional="true"/>
+            <BitString name="acked-transitions" propertyIdentifier="0" type="0-BACnetEventTransitionBits" optional="true" writable="false"/>
+            <Enumerated name="notify-type" propertyIdentifier="72" type="0-BACnetNotifyType" optional="true"/>
+            <Array name="event-time-stamps" propertyIdentifier="130" memberType="0-BACnetTimeStamp" minimumSize="3" maximumSize="3" optional="true" writable="false"/>
+            <Array name="event-message-texts" propertyIdentifier="351" memberType="String" minimumSize="3" maximumSize="3" optional="true" writable="false" requiredWith="event-message-texts-config"/>
+            <Array name="event-message-texts-config" propertyIdentifier="352" memberType="String" minimumSize="3" maximumSize="3" optional="true"/>
+            <Boolean name="event-detection-enable" propertyIdentifier="353" optional="true"/>
+            <Sequence name="event-algorithm-inhibit-ref" propertyIdentifier="355" type="0-BACnetObjectPropertyReference" optional="true"/>
+            <Boolean name="event-algorithm-inhibit" propertyIdentifier="354" optional="true" requiredWith="event-algorithm-inhibit-ref"/>
+            <Unsigned name="time-delay-normal" propertyIdentifier="356" optional="true"/>
+            <Boolean name="reliability-evaluation-inhibit" propertyIdentifier="357" optional="true"/>
+
+             <!-- Add135-2012aw-3 Protocol_Revision 16 -->
+            <Unsigned name="fault-high-limit" propertyIdentifier="388" optional="true" requiredWith="fault-low-limit"/>
+            <Unsigned name="fault-low-limit" propertyIdentifier="389" optional="true" requiredWith="fault-high-limit"/>
+            <String name="profile-name" propertyIdentifier="168" optional="true"/>
+        </Object>
+
+        <!-- Clause 12.52 -->
+        <Object name="0-AlertEnrollmentObject">
+            <ObjectIdentifier name="object-identifier" propertyIdentifier="75"/>
+            <String name="object-name" propertyIdentifier="77" minimumLength="1"/>
+            <Enumerated name="object-type" propertyIdentifier="79" type="0-BACnetObjectType" value="alert-enrollment" variability="constant"/>
+            <String name="description" propertyIdentifier="28" optional="true"/>
+            <ObjectIdentifier name="present-value" propertyIdentifier="85" writable="false"/>
+            <Enumerated name="event-state" propertyIdentifier="36" type="0-BACnetEventState"/>
+            <Boolean name="event-detection-enable" propertyIdentifier="353"/>
+            <Unsigned name="notification-class" propertyIdentifier="17"/>
+            <BitString name="event-enable" propertyIdentifier="35" type="0-BACnetEventTransitionBits"/>
+            <BitString name="acked-transitions" propertyIdentifier="0" type="0-BACnetEventTransitionBits" writable="false"/>
+            <Enumerated name="notify-type" propertyIdentifier="72" type="0-BACnetNotifyType"/>
+            <Array name="event-time-stamps" propertyIdentifier="130" memberType="0-BACnetTimeStamp" minimumSize="3" maximumSize="3" writable="false"/>
+            <Array name="event-message-texts" propertyIdentifier="351" memberType="String" minimumSize="3" maximumSize="3" optional="true" writable="false" requiredWith="event-message-texts-config"/>
+            <Array name="event-message-texts-config" propertyIdentifier="352" memberType="String" minimumSize="3" maximumSize="3" optional="true"/>
+            <Sequence name="event-algorithm-inhibit-ref" propertyIdentifier="355" type="0-BACnetObjectPropertyReference" optional="true"/>
+            <Boolean name="event-algorithm-inhibit" propertyIdentifier="354" optional="true" requiredWith="event-algorithm-inhibit-ref"/>
+
+            <String name="profile-name" propertyIdentifier="168" optional="true"/>
+        </Object>
+
+        <!-- Clause 12.2 -->
+        <Object name="0-AnalogInputObject">
+            <ObjectIdentifier name="object-identifier" propertyIdentifier="75"/>
+            <String name="object-name" propertyIdentifier="77" minimumLength="1"/>
+            <Enumerated name="object-type" propertyIdentifier="79" type="0-BACnetObjectType" value="analog-input" variability="constant"/>
+            <Real name="present-value" propertyIdentifier="85"/>
+            <String name="description" propertyIdentifier="28" optional="true"/>
+            <String name="device-type" propertyIdentifier="31" optional="true"/>
+            <BitString name="status-flags" propertyIdentifier="111" type="0-BACnetStatusFlags"/>
+            <Enumerated name="event-state" propertyIdentifier="36" type="0-BACnetEventState"/>
+            <Enumerated name="reliability" propertyIdentifier="103" type="0-BACnetReliability" optional="true" requiredWith="reliability-evaluation-inhibit"/>
+            <Boolean name="out-of-service" propertyIdentifier="81"/>
+            <Unsigned name="update-interval" propertyIdentifier="118" optional="true"/>
+            <Enumerated name="units" propertyIdentifier="117" type="0-BACnetEngineeringUnits"/>
+            <Real name="min-pres-value" propertyIdentifier="69" optional="true"/>
+            <Real name="max-pres-value" propertyIdentifier="65" optional="true"/>
+            <Real name="resolution" propertyIdentifier="106" optional="true" writable="false"/>
+            <Real name="cov-increment" propertyIdentifier="22" optional="true"/>
+            <Unsigned name="time-delay" propertyIdentifier="113" optional="true"/>
+            <Unsigned name="notification-class" propertyIdentifier="17" optional="true"/>
+            <Real name="high-limit" propertyIdentifier="45" optional="true"/>
+            <Real name="low-limit" propertyIdentifier="59" optional="true"/>
+            <Real name="deadband" propertyIdentifier="25" optional="true"/>
+            <BitString name="limit-enable" propertyIdentifier="52" type="0-BACnetLimitEnable" optional="true"/>
+            <BitString name="event-enable" propertyIdentifier="35" type="0-BACnetEventTransitionBits" optional="true"/>
+            <BitString name="acked-transitions" propertyIdentifier="0" type="0-BACnetEventTransitionBits" optional="true" writable="false"/>
+            <Enumerated name="notify-type" propertyIdentifier="72" type="0-BACnetNotifyType" optional="true"/>
+            <Array name="event-time-stamps" propertyIdentifier="130" memberType="0-BACnetTimeStamp" minimumSize="3" maximumSize="3" optional="true" writable="false"/>
+            <Array name="event-message-texts" propertyIdentifier="351" memberType="String" minimumSize="3" maximumSize="3" optional="true" writable="false" requiredWith="event-message-texts-config"/>
+            <Array name="event-message-texts-config" propertyIdentifier="352" memberType="String" minimumSize="3" maximumSize="3" optional="true"/>
+            <Boolean name="event-detection-enable" propertyIdentifier="353" optional="true"/>
+            <Sequence name="event-algorithm-inhibit-ref" propertyIdentifier="355" type="0-BACnetObjectPropertyReference" optional="true"/>
+            <Boolean name="event-algorithm-inhibit" propertyIdentifier="354" optional="true" requiredWith="event-algorithm-inhibit-ref"/>
+            <Unsigned name="time-delay-normal" propertyIdentifier="356" optional="true"/>
+            <Boolean name="reliability-evaluation-inhibit" propertyIdentifier="357" optional="true"/>
+
+            <!-- Add135-2012at-1 Protocol_Revision 16 -->
+            <Choice name="interface-value" propertyIdentifier="387" type="0-BACnetOptionalREAL" optional="true" writable="false"/>
+             <!-- Add135-2012aw-3 Protocol_Revision 16 -->
+            <Real name="fault-high-limit" propertyIdentifier="388" optional="true" requiredWith="fault-low-limit"/>
+            <Real name="fault-low-limit" propertyIdentifier="389" optional="true" requiredWith="fault-high-limit"/>
+            <String name="profile-name" propertyIdentifier="168" optional="true"/>
+        </Object>
+
+        <!-- Clause 12.3 -->
+        <Object name="0-AnalogOutputObject">
+            <ObjectIdentifier name="object-identifier" propertyIdentifier="75"/>
+            <String name="object-name" propertyIdentifier="77" minimumLength="1"/>
+            <Enumerated name="object-type" propertyIdentifier="79" type="0-BACnetObjectType" value="analog-output" variability="constant"/>
+            <Real name="present-value" propertyIdentifier="85" writable="true"/>
+            <String name="description" propertyIdentifier="28" optional="true"/>
+            <String name="device-type" propertyIdentifier="31" optional="true"/>
+            <BitString name="status-flags" propertyIdentifier="111" type="0-BACnetStatusFlags"/>
+            <Enumerated name="event-state" propertyIdentifier="36" type="0-BACnetEventState"/>
+            <Enumerated name="reliability" propertyIdentifier="103" type="0-BACnetReliability" optional="true" requiredWith="reliability-evaluation-inhibit"/>
+            <Boolean name="out-of-service" propertyIdentifier="81"/>
+            <Enumerated name="units" propertyIdentifier="117" type="0-BACnetEngineeringUnits"/>
+            <Real name="min-pres-value" propertyIdentifier="69" optional="true"/>
+            <Real name="max-pres-value" propertyIdentifier="65" optional="true"/>
+            <Real name="resolution" propertyIdentifier="106" optional="true" writable="false"/>
+            <Array name="priority-array" propertyIdentifier="87" type="0-BACnetPriorityArray" writable="false"/>
+            <Real name="relinquish-default" propertyIdentifier="104"/>
+            <Real name="cov-increment" propertyIdentifier="22" optional="true"/>
+            <Unsigned name="time-delay" propertyIdentifier="113" optional="true"/>
+            <Unsigned name="notification-class" propertyIdentifier="17" optional="true"/>
+            <Real name="high-limit" propertyIdentifier="45" optional="true"/>
+            <Real name="low-limit" propertyIdentifier="59" optional="true"/>
+            <Real name="deadband" propertyIdentifier="25" optional="true"/>
+            <BitString name="limit-enable" propertyIdentifier="52" type="0-BACnetLimitEnable" optional="true"/>
+            <BitString name="event-enable" propertyIdentifier="35" type="0-BACnetEventTransitionBits" optional="true"/>
+            <BitString name="acked-transitions" propertyIdentifier="0" type="0-BACnetEventTransitionBits" optional="true" writable="false"/>
+            <Enumerated name="notify-type" propertyIdentifier="72" type="0-BACnetNotifyType" optional="true"/>
+            <Array name="event-time-stamps" propertyIdentifier="130" memberType="0-BACnetTimeStamp" minimumSize="3" maximumSize="3" optional="true" writable="false"/>
+            <Array name="event-message-texts" propertyIdentifier="351" memberType="String" minimumSize="3" maximumSize="3" optional="true" writable="false" requiredWith="event-message-texts-config"/>
+            <Array name="event-message-texts-config" propertyIdentifier="352" memberType="String" minimumSize="3" maximumSize="3" optional="true"/>
+            <Boolean name="event-detection-enable" propertyIdentifier="353" optional="true"/>
+            <Sequence name="event-algorithm-inhibit-ref" propertyIdentifier="355" type="0-BACnetObjectPropertyReference" optional="true"/>
+            <Boolean name="event-algorithm-inhibit" propertyIdentifier="354" optional="true" requiredWith="event-algorithm-inhibit-ref"/>
+            <Unsigned name="time-delay-normal" propertyIdentifier="356" optional="true"/>
+            <Boolean name="reliability-evaluation-inhibit" propertyIdentifier="357" optional="true"/>
+
+            <!-- Add135-2012at-1 Protocol_Revision 16 -->
+            <Choice name="interface-value" propertyIdentifier="387" type="0-BACnetOptionalREAL" optional="true" writable="false"/>
+            <String name="profile-name" propertyIdentifier="168" optional="true"/>
+        </Object>
+
+        <!-- Clause 12.4 -->
+        <Object name="0-AnalogValueObject">
+            <ObjectIdentifier name="object-identifier" propertyIdentifier="75"/>
+            <String name="object-name" propertyIdentifier="77" minimumLength="1"/>
+            <Enumerated name="object-type" propertyIdentifier="79" type="0-BACnetObjectType" value="analog-value" variability="constant"/>
+            <Real name="present-value" propertyIdentifier="85"/>
+            <String name="description" propertyIdentifier="28" optional="true"/>
+            <BitString name="status-flags" propertyIdentifier="111" type="0-BACnetStatusFlags"/>
+            <Enumerated name="event-state" propertyIdentifier="36" type="0-BACnetEventState"/>
+            <Enumerated name="reliability" propertyIdentifier="103" type="0-BACnetReliability" optional="true" requiredWith="reliability-evaluation-inhibit"/>
+            <Boolean name="out-of-service" propertyIdentifier="81"/>
+            <Enumerated name="units" propertyIdentifier="117" type="0-BACnetEngineeringUnits"/>
+            <Array name="priority-array" propertyIdentifier="87" type="0-BACnetPriorityArray" optional="true" writable="false"/>
+            <Real name="relinquish-default" propertyIdentifier="104" optional="true"/>
+            <Real name="cov-increment" propertyIdentifier="22" optional="true"/>
+            <Unsigned name="time-delay" propertyIdentifier="113" optional="true"/>
+            <Unsigned name="notification-class" propertyIdentifier="17" optional="true"/>
+            <Real name="high-limit" propertyIdentifier="45" optional="true"/>
+            <Real name="low-limit" propertyIdentifier="59" optional="true"/>
+            <Real name="deadband" propertyIdentifier="25" optional="true"/>
+            <BitString name="limit-enable" propertyIdentifier="52" type="0-BACnetLimitEnable" optional="true"/>
+            <BitString name="event-enable" propertyIdentifier="35" type="0-BACnetEventTransitionBits" optional="true"/>
+            <BitString name="acked-transitions" propertyIdentifier="0" type="0-BACnetEventTransitionBits" optional="true" writable="false"/>
+            <Enumerated name="notify-type" propertyIdentifier="72" type="0-BACnetNotifyType" optional="true"/>
+            <Array name="event-time-stamps" propertyIdentifier="130" memberType="0-BACnetTimeStamp" minimumSize="3" maximumSize="3" optional="true" writable="false"/>
+            <Array name="event-message-texts" propertyIdentifier="351" memberType="String" minimumSize="3" maximumSize="3" optional="true" writable="false" requiredWith="event-message-texts-config"/>
+            <Array name="event-message-texts-config" propertyIdentifier="352" memberType="String" minimumSize="3" maximumSize="3" optional="true"/>
+            <Boolean name="event-detection-enable" propertyIdentifier="353" optional="true"/>
+            <Sequence name="event-algorithm-inhibit-ref" propertyIdentifier="355" type="0-BACnetObjectPropertyReference" optional="true"/>
+            <Boolean name="event-algorithm-inhibit" propertyIdentifier="354" optional="true" requiredWith="event-algorithm-inhibit-ref"/>
+            <Unsigned name="time-delay-normal" propertyIdentifier="356" optional="true"/>
+            <Boolean name="reliability-evaluation-inhibit" propertyIdentifier="357" optional="true"/>
+            <Real name="min-pres-value" propertyIdentifier="69" optional="true"/>
+            <Real name="max-pres-value" propertyIdentifier="65" optional="true"/>
+            <Real name="resolution" propertyIdentifier="106" optional="true" writable="false"/>
+
+             <!-- Add135-2012aw-3 Protocol_Revision 16 -->
+            <Real name="fault-high-limit" propertyIdentifier="388" optional="true" requiredWith="fault-low-limit"/>
+            <Real name="fault-low-limit" propertyIdentifier="389" optional="true" requiredWith="fault-high-limit"/>
+            <String name="profile-name" propertyIdentifier="168" optional="true"/>
+        </Object>
+
+        <!-- Clause 12.5 -->
+        <Object name="0-AveragingObject">
+            <ObjectIdentifier name="object-identifier" propertyIdentifier="75"/>
+            <String name="object-name" propertyIdentifier="77" minimumLength="1"/>
+            <Enumerated name="object-type" propertyIdentifier="79" type="0-BACnetObjectType" value="averaging" variability="constant"/>
+            <Real name="minimum-value" propertyIdentifier="136"/>
+            <DateTime name="minimum-value-timestamp" propertyIdentifier="150" optional="true"/>
+            <Real name="average-value" propertyIdentifier="125"/>
+            <Real name="variance-value" propertyIdentifier="151" optional="true"/>
+            <Real name="maximum-value" propertyIdentifier="135"/>
+            <DateTime name="maximum-value-timestamp" propertyIdentifier="149" optional="true"/>
+            <String name="description" propertyIdentifier="28" optional="true"/>
+            <Unsigned name="attempted-samples" propertyIdentifier="124" writable="true"/>
+            <Unsigned name="valid-samples" propertyIdentifier="146" writable="false"/>
+            <Sequence name="object-property-reference" propertyIdentifier="78" type="0-BACnetDeviceObjectPropertyReference"/>
+            <Unsigned name="window-interval" propertyIdentifier="147" writable="true"/>
+            <Unsigned name="window-samples" propertyIdentifier="148" writable="true"/>
+
+            <String name="profile-name" propertyIdentifier="168" optional="true"/>
+        </Object>
+
+        <!-- Clause 12.6 -->
+        <Object name="0-BinaryInputObject">
+            <ObjectIdentifier name="object-identifier" propertyIdentifier="75"/>
+            <String name="object-name" propertyIdentifier="77" minimumLength="1"/>
+            <Enumerated name="object-type" propertyIdentifier="79" type="0-BACnetObjectType" value="binary-input" variability="constant"/>
+            <Enumerated name="present-value" propertyIdentifier="85" type="0-BACnetBinaryPV"/>
+            <String name="description" propertyIdentifier="28" optional="true"/>
+            <String name="device-type" propertyIdentifier="31" optional="true"/>
+            <BitString name="status-flags" propertyIdentifier="111" type="0-BACnetStatusFlags"/>
+            <Enumerated name="event-state" propertyIdentifier="36" type="0-BACnetEventState"/>
+            <Enumerated name="reliability" propertyIdentifier="103" type="0-BACnetReliability" optional="true" requiredWith="reliability-evaluation-inhibit"/>
+            <Boolean name="out-of-service" propertyIdentifier="81"/>
+            <Enumerated name="polarity" propertyIdentifier="84" type="0-BACnetPolarity"/>
+            <String name="inactive-text" propertyIdentifier="46" optional="true"/>
+            <String name="active-text" propertyIdentifier="4" optional="true"/>
+            <DateTime name="change-of-state-time" propertyIdentifier="16" optional="true"/>
+            <Unsigned name="change-of-state-count" propertyIdentifier="15" optional="true"/>
+            <DateTime name="time-of-state-count-reset" propertyIdentifier="115" optional="true"/>
+            <Unsigned name="elapsed-active-time" propertyIdentifier="33" type="0-Unsigned32" optional="true"/>
+            <DateTime name="time-of-active-time-reset" propertyIdentifier="114" optional="true"/>
+            <Unsigned name="time-delay" propertyIdentifier="113" optional="true"/>
+            <Unsigned name="notification-class" propertyIdentifier="17" optional="true"/>
+            <Enumerated name="alarm-value" propertyIdentifier="6" type="0-BACnetBinaryPV" optional="true"/>
+            <BitString name="event-enable" propertyIdentifier="35" type="0-BACnetEventTransitionBits" optional="true"/>
+            <BitString name="acked-transitions" propertyIdentifier="0" type="0-BACnetEventTransitionBits" optional="true" writable="false"/>
+            <Enumerated name="notify-type" propertyIdentifier="72" type="0-BACnetNotifyType" optional="true"/>
+            <Array name="event-time-stamps" propertyIdentifier="130" memberType="0-BACnetTimeStamp" minimumSize="3" maximumSize="3" optional="true" writable="false"/>
+            <Array name="event-message-texts" propertyIdentifier="351" memberType="String" minimumSize="3" maximumSize="3" optional="true" writable="false" requiredWith="event-message-texts-config"/>
+            <Array name="event-message-texts-config" propertyIdentifier="352" memberType="String" minimumSize="3" maximumSize="3" optional="true"/>
+            <Boolean name="event-detection-enable" propertyIdentifier="353" optional="true"/>
+            <Sequence name="event-algorithm-inhibit-ref" propertyIdentifier="355" type="0-BACnetObjectPropertyReference" optional="true"/>
+            <Boolean name="event-algorithm-inhibit" propertyIdentifier="354" optional="true" requiredWith="event-algorithm-inhibit-ref"/>
+            <Unsigned name="time-delay-normal" propertyIdentifier="356" optional="true"/>
+            <Boolean name="reliability-evaluation-inhibit" propertyIdentifier="357" optional="true"/>
+
+            <!-- Add135-2012at-1 Protocol_Revision 16 -->
+            <Choice name="interface-value" propertyIdentifier="387" type="0-BACnetOptionalBinaryPV" optional="true" writable="false"/>
+            <String name="profile-name" propertyIdentifier="168" optional="true"/>
+        </Object>
+
+        <!-- Add135-2012az-1 Protocol_Revision 16 -->
+        <Object name="0-BinaryLightingOutputObject">
+            <ObjectIdentifier name="object-identifier" propertyIdentifier="75"/>
+            <String name="object-name" propertyIdentifier="77" minimumLength="1"/>
+            <Enumerated name="object-type" propertyIdentifier="79" type="0-BACnetObjectType" value="binary-lighting-output" variability="constant"/>
+            <Enumerated name="present-value" propertyIdentifier="85" type="0-BACnetBinaryLightingPV" writable="true"/>
+            <String name="description" propertyIdentifier="28" optional="true"/>
+            <BitString name="status-flags" propertyIdentifier="111" type="0-BACnetStatusFlags"/>
+            <Enumerated name="reliability" propertyIdentifier="103" type="0-BACnetReliability" optional="true" requiredWith="reliability-evaluation-inhibit"/>
+            <Boolean name="out-of-service" propertyIdentifier="81"/>
+            <Boolean name="blink-warn-enable" propertyIdentifier="373"/>
+            <Unsigned name="egress-time" propertyIdentifier="377"/>
+            <Boolean name="egress-active" propertyIdentifier="386"/>
+            <Enumerated name="feedback-value" propertyIdentifier="40" type="0-BACnetBinaryLightingPV" optional="true"/>
+            <Array name="priority-array" propertyIdentifier="87" type="0-BACnetPriorityArray" writable="false"/>
+            <Enumerated name="relinquish-default" propertyIdentifier="104" type="0-BACnetBinaryLightingPV"/>
+            <Real name="power" propertyIdentifier="384" optional="true"/>
+            <Enumerated name="polarity" propertyIdentifier="84" type="0-BACnetPolarity" optional="true"/>
+            <Unsigned name="elapsed-active-time" propertyIdentifier="33" type="0-Unsigned32" optional="true" requiredWith="time-of-active-time-reset"/>
+            <DateTime name="time-of-active-time-reset" propertyIdentifier="114" optional="true" requiredWith="elapsed-active-time"/>
+            <Unsigned name="strike-count" propertyIdentifier="391" optional="true" requiredWith="time-of-strike-count-reset"/>
+            <DateTime name="time-of-strike-count-reset" propertyIdentifier="392" optional="true" requiredWith="strike-count"/>
+            <Boolean name="event-detection-enable" propertyIdentifier="353" optional="true" requiredWith="notification-class;event-enable;acked-transitions;notify-type;event-time-stamps;event-message-texts;event-message-texts-config"/>
+            <Unsigned name="notification-class" propertyIdentifier="17" optional="true" requiredWith="event-detection-enable;event-enable;acked-transitions;notify-type;event-time-stamps;event-message-texts;event-message-texts-config"/>
+            <BitString name="event-enable" propertyIdentifier="35" type="0-BACnetEventTransitionBits" optional="true" requiredWith="event-detection-enable;notification-class;acked-transitions;notify-type;event-time-stamps;event-message-texts;event-message-texts-config"/>
+            <BitString name="acked-transitions" propertyIdentifier="0" type="0-BACnetEventTransitionBits" optional="true" writable="false" requiredWith="event-detection-enable;notification-class;event-enable;notify-type;event-time-stamps;event-message-texts;event-message-texts-config"/>
+            <Enumerated name="notify-type" propertyIdentifier="72" type="0-BACnetNotifyType" optional="true" requiredWith="event-detection-enable;notification-class;event-enable;acked-transitions;event-time-stamps;event-message-texts;event-message-texts-config"/>
+            <Array name="event-time-stamps" propertyIdentifier="130" memberType="0-BACnetTimeStamp" minimumSize="3" maximumSize="3" optional="true" writable="false" requiredWith="event-detection-enable;notification-class;event-enable;acked-transitions;notify-type;event-message-texts;event-message-texts-config"/>
+            <Array name="event-message-texts" propertyIdentifier="351" memberType="String" minimumSize="3" maximumSize="3" optional="true" writable="false" requiredWith="event-message-texts-config"/>
+            <Array name="event-message-texts-config" propertyIdentifier="352" memberType="String" minimumSize="3" maximumSize="3" optional="true"/>
+            <Boolean name="reliability-evaluation-inhibit" propertyIdentifier="357" optional="true"/>
+
+            <String name="profile-name" propertyIdentifier="168" optional="true"/>
+        </Object>
+
+        <!-- Clause 12.7 -->
+        <Object name="0-BinaryOutputObject">
+            <ObjectIdentifier name="object-identifier" propertyIdentifier="75"/>
+            <String name="object-name" propertyIdentifier="77" minimumLength="1"/>
+            <Enumerated name="object-type" propertyIdentifier="79" type="0-BACnetObjectType" value="binary-output" variability="constant"/>
+            <Enumerated name="present-value" propertyIdentifier="85" type="0-BACnetBinaryPV" writable="true"/>
+            <String name="description" propertyIdentifier="28" optional="true"/>
+            <String name="device-type" propertyIdentifier="31" optional="true"/>
+            <BitString name="status-flags" propertyIdentifier="111" type="0-BACnetStatusFlags"/>
+            <Enumerated name="event-state" propertyIdentifier="36" type="0-BACnetEventState"/>
+            <Enumerated name="reliability" propertyIdentifier="103" type="0-BACnetReliability" optional="true" requiredWith="reliability-evaluation-inhibit"/>
+            <Boolean name="out-of-service" propertyIdentifier="81"/>
+            <Enumerated name="polarity" propertyIdentifier="84" type="0-BACnetPolarity"/>
+            <String name="inactive-text" propertyIdentifier="46" optional="true"/>
+            <String name="active-text" propertyIdentifier="4" optional="true"/>
+            <DateTime name="change-of-state-time" propertyIdentifier="16" optional="true"/>
+            <Unsigned name="change-of-state-count" propertyIdentifier="15" optional="true"/>
+            <DateTime name="time-of-state-count-reset" propertyIdentifier="115" optional="true"/>
+            <Unsigned name="elapsed-active-time" propertyIdentifier="33" type="0-Unsigned32" optional="true"/>
+            <DateTime name="time-of-active-time-reset" propertyIdentifier="114" optional="true"/>
+            <Unsigned name="minimum-off-time" propertyIdentifier="66" type="0-Unsigned32" optional="true"/>
+            <Unsigned name="minimum-on-time" propertyIdentifier="67" type="0-Unsigned32" optional="true"/>
+            <Array name="priority-array" propertyIdentifier="87" type="0-BACnetPriorityArray" writable="false"/>
+            <Enumerated name="relinquish-default" propertyIdentifier="104" type="0-BACnetBinaryPV"/>
+            <Unsigned name="time-delay" propertyIdentifier="113" optional="true"/>
+            <Unsigned name="notification-class" propertyIdentifier="17" optional="true"/>
+            <Enumerated name="feedback-value" propertyIdentifier="40" type="0-BACnetBinaryPV" optional="true"/>
+            <BitString name="event-enable" propertyIdentifier="35" type="0-BACnetEventTransitionBits" optional="true"/>
+            <BitString name="acked-transitions" propertyIdentifier="0" type="0-BACnetEventTransitionBits" optional="true" writable="false"/>
+            <Enumerated name="notify-type" propertyIdentifier="72" type="0-BACnetNotifyType" optional="true"/>
+            <Array name="event-time-stamps" propertyIdentifier="130" memberType="0-BACnetTimeStamp" minimumSize="3" maximumSize="3" optional="true" writable="false"/>
+            <Array name="event-message-texts" propertyIdentifier="351" memberType="String" minimumSize="3" maximumSize="3" optional="true" writable="false" requiredWith="event-message-texts-config"/>
+            <Array name="event-message-texts-config" propertyIdentifier="352" memberType="String" minimumSize="3" maximumSize="3" optional="true"/>
+            <Boolean name="event-detection-enable" propertyIdentifier="353" optional="true"/>
+            <Sequence name="event-algorithm-inhibit-ref" propertyIdentifier="355" type="0-BACnetObjectPropertyReference" optional="true"/>
+            <Boolean name="event-algorithm-inhibit" propertyIdentifier="354" optional="true" requiredWith="event-algorithm-inhibit-ref"/>
+            <Unsigned name="time-delay-normal" propertyIdentifier="356" optional="true"/>
+            <Boolean name="reliability-evaluation-inhibit" propertyIdentifier="357" optional="true"/>
+
+            <!-- Add135-2012at-1 Protocol_Revision 16 -->
+            <Choice name="interface-value" propertyIdentifier="387" type="0-BACnetOptionalBinaryPV" optional="true" writable="false"/>
+            <String name="profile-name" propertyIdentifier="168" optional="true"/>
+        </Object>
+
+        <!-- Clause 12.8 -->
+        <Object name="0-BinaryValueObject">
+            <ObjectIdentifier name="object-identifier" propertyIdentifier="75"/>
+            <String name="object-name" propertyIdentifier="77" minimumLength="1"/>
+            <Enumerated name="object-type" propertyIdentifier="79" type="0-BACnetObjectType" value="binary-value" variability="constant"/>
+            <Enumerated name="present-value" propertyIdentifier="85" type="0-BACnetBinaryPV"/>
+            <String name="description" propertyIdentifier="28" optional="true"/>
+            <BitString name="status-flags" propertyIdentifier="111" type="0-BACnetStatusFlags"/>
+            <Enumerated name="event-state" propertyIdentifier="36" type="0-BACnetEventState"/>
+            <Enumerated name="reliability" propertyIdentifier="103" type="0-BACnetReliability" optional="true" requiredWith="reliability-evaluation-inhibit"/>
+            <Boolean name="out-of-service" propertyIdentifier="81"/>
+            <String name="inactive-text" propertyIdentifier="46" optional="true"/>
+            <String name="active-text" propertyIdentifier="4" optional="true"/>
+            <DateTime name="change-of-state-time" propertyIdentifier="16" optional="true"/>
+            <Unsigned name="change-of-state-count" propertyIdentifier="15" optional="true"/>
+            <DateTime name="time-of-state-count-reset" propertyIdentifier="115" optional="true"/>
+            <Unsigned name="elapsed-active-time" propertyIdentifier="33" type="0-Unsigned32" optional="true"/>
+            <DateTime name="time-of-active-time-reset" propertyIdentifier="114" optional="true"/>
+            <Unsigned name="minimum-off-time" propertyIdentifier="66" type="0-Unsigned32" optional="true"/>
+            <Unsigned name="minimum-on-time" propertyIdentifier="67" type="0-Unsigned32" optional="true"/>
+            <Array name="priority-array" propertyIdentifier="87" type="0-BACnetPriorityArray" optional="true" writable="false"/>
+            <Enumerated name="relinquish-default" propertyIdentifier="104" type="0-BACnetBinaryPV" optional="true"/>
+            <Unsigned name="time-delay" propertyIdentifier="113" optional="true"/>
+            <Unsigned name="notification-class" propertyIdentifier="17" optional="true"/>
+            <Enumerated name="alarm-value" propertyIdentifier="6" type="0-BACnetBinaryPV" optional="true"/>
+            <BitString name="event-enable" propertyIdentifier="35" type="0-BACnetEventTransitionBits" optional="true"/>
+            <BitString name="acked-transitions" propertyIdentifier="0" type="0-BACnetEventTransitionBits" optional="true" writable="false"/>
+            <Enumerated name="notify-type" propertyIdentifier="72" type="0-BACnetNotifyType" optional="true"/>
+            <Array name="event-time-stamps" propertyIdentifier="130" memberType="0-BACnetTimeStamp" minimumSize="3" maximumSize="3" optional="true" writable="false"/>
+            <Array name="event-message-texts" propertyIdentifier="351" memberType="String" minimumSize="3" maximumSize="3" optional="true" writable="false" requiredWith="event-message-texts-config"/>
+            <Array name="event-message-texts-config" propertyIdentifier="352" memberType="String" minimumSize="3" maximumSize="3" optional="true"/>
+            <Boolean name="event-detection-enable" propertyIdentifier="353" optional="true"/>
+            <Sequence name="event-algorithm-inhibit-ref" propertyIdentifier="355" type="0-BACnetObjectPropertyReference" optional="true"/>
+            <Boolean name="event-algorithm-inhibit" propertyIdentifier="354" optional="true" requiredWith="event-algorithm-inhibit-ref"/>
+            <Unsigned name="time-delay-normal" propertyIdentifier="356" optional="true"/>
+            <Boolean name="reliability-evaluation-inhibit" propertyIdentifier="357" optional="true"/>
+
+            <String name="profile-name" propertyIdentifier="168" optional="true"/>
+        </Object>
+
+        <!-- Clause 12.40 -->
+        <Object name="0-BitstringValueObject">
+            <ObjectIdentifier name="object-identifier" propertyIdentifier="75"/>
+            <String name="object-name" propertyIdentifier="77" minimumLength="1"/>
+            <Enumerated name="object-type" propertyIdentifier="79" type="0-BACnetObjectType" value="bitstring-value" variability="constant"/>
+            <String name="description" propertyIdentifier="28" optional="true"/>
+            <BitString name="present-value" propertyIdentifier="85"/>
+            <Array name="bit-text" propertyIdentifier="343" memberType="String" optional="true"/>
+            <BitString name="status-flags" propertyIdentifier="111" type="0-BACnetStatusFlags"/>
+            <Enumerated name="event-state" propertyIdentifier="36" type="0-BACnetEventState" optional="true"/>
+            <Enumerated name="reliability" propertyIdentifier="103" type="0-BACnetReliability" optional="true" requiredWith="reliability-evaluation-inhibit"/>
+            <Boolean name="out-of-service" propertyIdentifier="81" optional="true"/>
+            <Array name="priority-array" propertyIdentifier="87" type="0-BACnetPriorityArray" optional="true" writable="false"/>
+            <BitString name="relinquish-default" propertyIdentifier="104" optional="true"/>
+            <BitString name="cov-increment" propertyIdentifier="22" optional="true"/>
+            <Unsigned name="time-delay" propertyIdentifier="113" optional="true"/>
+            <Unsigned name="notification-class" propertyIdentifier="17" optional="true"/>
+            <Array name="alarm-values" propertyIdentifier="6" memberType="BitString" optional="true"/>
+            <BitString name="bit-mask" propertyIdentifier="342" optional="true"/>
+            <BitString name="event-enable" propertyIdentifier="35" type="0-BACnetEventTransitionBits" optional="true"/>
+            <BitString name="acked-transitions" propertyIdentifier="0" type="0-BACnetEventTransitionBits" optional="true" writable="false"/>
+            <Enumerated name="notify-type" propertyIdentifier="72" type="0-BACnetNotifyType" optional="true"/>
+            <Array name="event-time-stamps" propertyIdentifier="130" memberType="0-BACnetTimeStamp" minimumSize="3" maximumSize="3" optional="true" writable="false"/>
+            <Array name="event-message-texts" propertyIdentifier="351" memberType="String" minimumSize="3" maximumSize="3" optional="true" writable="false" requiredWith="event-message-texts-config"/>
+            <Array name="event-message-texts-config" propertyIdentifier="352" memberType="String" minimumSize="3" maximumSize="3" optional="true"/>
+            <Boolean name="event-detection-enable" propertyIdentifier="353" optional="true"/>
+            <Sequence name="event-algorithm-inhibit-ref" propertyIdentifier="355" type="0-BACnetObjectPropertyReference" optional="true"/>
+            <Boolean name="event-algorithm-inhibit" propertyIdentifier="354" optional="true" requiredWith="event-algorithm-inhibit-ref"/>
+            <Unsigned name="time-delay-normal" propertyIdentifier="356" optional="true"/>
+            <Boolean name="reliability-evaluation-inhibit" propertyIdentifier="357" optional="true"/>
+
+            <String name="profile-name" propertyIdentifier="168" optional="true"/>
+        </Object>
+
+        <!-- Clause 12.9 -->
+        <Object name="0-CalendarObject">
+            <ObjectIdentifier name="object-identifier" propertyIdentifier="75"/>
+            <String name="object-name" propertyIdentifier="77" minimumLength="1"/>
+            <Enumerated name="object-type" propertyIdentifier="79" type="0-BACnetObjectType" value="calendar" variability="constant"/>
+            <String name="description" propertyIdentifier="28" optional="true"/>
+            <Boolean name="present-value" propertyIdentifier="85"/>
+            <List name="date-list" propertyIdentifier="23" memberType="0-BACnetCalendarEntry"/>
+
+            <String name="profile-name" propertyIdentifier="168" optional="true"/>
+        </Object>
+
+        <!-- Clause 12.53 -->
+        <Object name="0-ChannelObject">
+            <ObjectIdentifier name="object-identifier" propertyIdentifier="75"/>
+            <String name="object-name" propertyIdentifier="77" minimumLength="1"/>
+            <Enumerated name="object-type" propertyIdentifier="79" type="0-BACnetObjectType" value="channel" variability="constant"/>
+            <String name="description" propertyIdentifier="28" optional="true"/>
+            <Choice name="present-value" propertyIdentifier="85" type="0-BACnetChannelValue" writable="true"/>
+            <Unsigned name="last-priority" propertyIdentifier="369" writable="false"/>
+            <Enumerated name="write-status" propertyIdentifier="370" type="0-BACnetWriteStatus"/>
+            <BitString name="status-flags" propertyIdentifier="111" type="0-BACnetStatusFlags"/>
+            <Enumerated name="reliability" propertyIdentifier="103" type="0-BACnetReliability" optional="true" requiredWith="reliability-evaluation-inhibit"/>
+            <Boolean name="out-of-service" propertyIdentifier="81"/>
+            <Array name="list-of-object-property-references" propertyIdentifier="54" memberType="0-BACnetDeviceObjectPropertyReference" writable="true"/>
+            <Array name="execution-delay" propertyIdentifier="368" memberType="Unsigned" optional="true" writable="true"/>
+            <Boolean name="allow-group-delay-inhibit" propertyIdentifier="365" optional="true"/>
+            <Unsigned name="channel-number" propertyIdentifier="366" type="0-Unsigned16" writable="true"/>
+            <Array name="control-groups" propertyIdentifier="367" memberType="0-Unsigned32" writable="true"/>
+            <Boolean name="event-detection-enable" propertyIdentifier="353" optional="true"/>
+            <Unsigned name="notification-class" propertyIdentifier="17" optional="true"/>
+            <BitString name="event-enable" propertyIdentifier="35" type="0-BACnetEventTransitionBits" optional="true"/>
+            <Enumerated name="event-state" propertyIdentifier="36" type="0-BACnetEventState" optional="true"/>
+            <BitString name="acked-transitions" propertyIdentifier="0" type="0-BACnetEventTransitionBits" optional="true" writable="false"/>
+            <Enumerated name="notify-type" propertyIdentifier="72" type="0-BACnetNotifyType" optional="true"/>
+            <Array name="event-time-stamps" propertyIdentifier="130" memberType="0-BACnetTimeStamp" minimumSize="3" maximumSize="3" optional="true" writable="false"/>
+            <Array name="event-message-texts" propertyIdentifier="351" memberType="String" minimumSize="3" maximumSize="3" optional="true" writable="false" requiredWith="event-message-texts-config"/>
+            <Array name="event-message-texts-config" propertyIdentifier="352" memberType="String" minimumSize="3" maximumSize="3" optional="true"/>
+            <Boolean name="reliability-evaluation-inhibit" propertyIdentifier="357" optional="true"/>
+
+            <String name="profile-name" propertyIdentifier="168" optional="true"/>
+        </Object>
+
+        <!-- Clause 12.37 -->
+        <Object name="0-CharacterstringValueObject">
+            <ObjectIdentifier name="object-identifier" propertyIdentifier="75"/>
+            <String name="object-name" propertyIdentifier="77" minimumLength="1"/>
+            <Enumerated name="object-type" propertyIdentifier="79" type="0-BACnetObjectType" value="characterstring-value" variability="constant"/>
+            <String name="description" propertyIdentifier="28" optional="true"/>
+            <String name="present-value" propertyIdentifier="85"/>
+            <BitString name="status-flags" propertyIdentifier="111" type="0-BACnetStatusFlags"/>
+            <Enumerated name="event-state" propertyIdentifier="36" type="0-BACnetEventState" optional="true"/>
+            <Enumerated name="reliability" propertyIdentifier="103" type="0-BACnetReliability" optional="true" requiredWith="reliability-evaluation-inhibit"/>
+            <Boolean name="out-of-service" propertyIdentifier="81" optional="true"/>
+            <Array name="priority-array" propertyIdentifier="87" type="0-BACnetPriorityArray" optional="true" writable="false"/>
+            <String name="relinquish-default" propertyIdentifier="104" optional="true"/>
+            <Unsigned name="time-delay" propertyIdentifier="113" optional="true"/>
+            <Unsigned name="notification-class" propertyIdentifier="17" optional="true"/>
+            <Array name="alarm-values" propertyIdentifier="7" memberType="0-BACnetOptionalCharacterString" optional="true"/>
+            <Array name="fault-values" propertyIdentifier="39" memberType="0-BACnetOptionalCharacterString" optional="true"/>
+            <BitString name="event-enable" propertyIdentifier="35" type="0-BACnetEventTransitionBits" optional="true"/>
+            <BitString name="acked-transitions" propertyIdentifier="0" type="0-BACnetEventTransitionBits" optional="true" writable="false"/>
+            <Enumerated name="notify-type" propertyIdentifier="72" type="0-BACnetNotifyType" optional="true"/>
+            <Array name="event-time-stamps" propertyIdentifier="130" memberType="0-BACnetTimeStamp" minimumSize="3" maximumSize="3" optional="true" writable="false"/>
+            <Array name="event-message-texts" propertyIdentifier="351" memberType="String" minimumSize="3" maximumSize="3" optional="true" writable="false" requiredWith="event-message-texts-config"/>
+            <Array name="event-message-texts-config" propertyIdentifier="352" memberType="String" minimumSize="3" maximumSize="3" optional="true"/>
+            <Boolean name="event-detection-enable" propertyIdentifier="353" optional="true"/>
+            <Sequence name="event-algorithm-inhibit-ref" propertyIdentifier="355" type="0-BACnetObjectPropertyReference" optional="true"/>
+            <Boolean name="event-algorithm-inhibit" propertyIdentifier="354" optional="true" requiredWith="event-algorithm-inhibit-ref"/>
+            <Unsigned name="time-delay-normal" propertyIdentifier="356" optional="true"/>
+            <Boolean name="reliability-evaluation-inhibit" propertyIdentifier="357" optional="true"/>
+
+            <String name="profile-name" propertyIdentifier="168" optional="true"/>
+        </Object>
+
+        <!-- Clause 12.10 -->
+        <Object name="0-CommandObject">
+            <ObjectIdentifier name="object-identifier" propertyIdentifier="75"/>
+            <String name="object-name" propertyIdentifier="77" minimumLength="1"/>
+            <Enumerated name="object-type" propertyIdentifier="79" type="0-BACnetObjectType" value="command" variability="constant"/>
+            <String name="description" propertyIdentifier="28" optional="true"/>
+            <Unsigned name="present-value" propertyIdentifier="85" writable="true"/>
+            <Boolean name="in-process" propertyIdentifier="47"/>
+            <Boolean name="all-writes-successful" propertyIdentifier="9"/>
+            <Array name="action" propertyIdentifier="2" memberType="0-BACnetActionList"/>
+            <Array name="action-text" propertyIdentifier="3" memberType="String" optional="true"/>
+
+            <!-- Add135-2012aw-6 Protocol_Revision 16 -->
+            <BitString name="status-flags" propertyIdentifier="111" type="0-BACnetStatusFlags" optional="true" requiredWith="event-detection-enable;notification-class;event-enable;acked-transitions;notify-type;event-time-stamps;event-message-texts;event-message-texts-config"/>
+            <Enumerated name="event-state" propertyIdentifier="36" type="0-BACnetEventState" optional="true" requiredWith="event-detection-enable;notification-class;event-enable;acked-transitions;notify-type;event-time-stamps;event-message-texts;event-message-texts-config"/>
+            <Enumerated name="reliability" propertyIdentifier="103" type="0-BACnetReliability" optional="true" requiredWith="reliability-evaluation-inhibit;event-detection-enable;notification-class;event-enable;acked-transitions;notify-type;event-time-stamps;event-message-texts;event-message-texts-config"/>
+            <Boolean name="event-detection-enable" propertyIdentifier="353" optional="true" requiredWith="notification-class;event-enable;acked-transitions;notify-type;event-time-stamps;event-message-texts;event-message-texts-config"/>
+            <Unsigned name="notification-class" propertyIdentifier="17" optional="true" requiredWith="event-detection-enable;event-enable;acked-transitions;notify-type;event-time-stamps;event-message-texts;event-message-texts-config"/>
+            <BitString name="event-enable" propertyIdentifier="35" type="0-BACnetEventTransitionBits" optional="true" requiredWith="event-detection-enable;notification-class;acked-transitions;notify-type;event-time-stamps;event-message-texts;event-message-texts-config"/>
+            <BitString name="acked-transitions" propertyIdentifier="0" type="0-BACnetEventTransitionBits" optional="true" writable="false" requiredWith="event-detection-enable;notification-class;event-enable;notify-type;event-time-stamps;event-message-texts;event-message-texts-config"/>
+            <Enumerated name="notify-type" propertyIdentifier="72" type="0-BACnetNotifyType" optional="true" requiredWith="event-detection-enable;notification-class;event-enable;acked-transitions;event-time-stamps;event-message-texts;event-message-texts-config"/>
+            <Array name="event-time-stamps" propertyIdentifier="130" memberType="0-BACnetTimeStamp" minimumSize="3" maximumSize="3" optional="true" writable="false" requiredWith="event-detection-enable;notification-class;event-enable;acked-transitions;notify-type;event-message-texts;event-message-texts-config"/>
+            <Array name="event-message-texts" propertyIdentifier="351" memberType="String" minimumSize="3" maximumSize="3" optional="true" writable="false" requiredWith="event-message-texts-config"/>
+            <Array name="event-message-texts-config" propertyIdentifier="352" memberType="String" minimumSize="3" maximumSize="3" optional="true"/>
+            <Boolean name="reliability-evaluation-inhibit" propertyIdentifier="357" optional="true"/>
+            <String name="profile-name" propertyIdentifier="168" optional="true"/>
+        </Object>
+
+        <!-- Clause 12.36 -->
+        <Object name="0-CredentialDataInputObject">
+            <ObjectIdentifier name="object-identifier" propertyIdentifier="75"/>
+            <String name="object-name" propertyIdentifier="77" minimumLength="1"/>
+            <Enumerated name="object-type" propertyIdentifier="79" type="0-BACnetObjectType" value="credential-data-input" variability="constant"/>
+            <Sequence name="present-value" propertyIdentifier="85" type="0-BACnetAuthenticationFactor"/>
+            <String name="description" propertyIdentifier="28" optional="true"/>
+            <BitString name="status-flags" propertyIdentifier="111" type="0-BACnetStatusFlags"/>
+            <Enumerated name="reliability" propertyIdentifier="103" type="0-BACnetReliability"/>
+            <Boolean name="out-of-service" propertyIdentifier="81"/>
+            <Array name="supported-formats" propertyIdentifier="304" memberType="0-BACnetAuthenticationFactorFormat"/>
+            <Array name="supported-format-classes" propertyIdentifier="305" memberType="Unsigned" optional="true"/>
+            <Choice name="update-time" propertyIdentifier="189" type="0-BACnetTimeStamp"/>
+            <Boolean name="event-detection-enable" propertyIdentifier="353" optional="true"/>
+            <Unsigned name="notification-class" propertyIdentifier="17" optional="true"/>
+            <BitString name="event-enable" propertyIdentifier="35" type="0-BACnetEventTransitionBits" optional="true"/>
+            <Enumerated name="event-state" propertyIdentifier="36" type="0-BACnetEventState" optional="true"/>
+            <BitString name="acked-transitions" propertyIdentifier="0" type="0-BACnetEventTransitionBits" optional="true" writable="false"/>
+            <Enumerated name="notify-type" propertyIdentifier="72" type="0-BACnetNotifyType" optional="true"/>
+            <Array name="event-time-stamps" propertyIdentifier="130" memberType="0-BACnetTimeStamp" minimumSize="3" maximumSize="3" optional="true" writable="false"/>
+            <Array name="event-message-texts" propertyIdentifier="351" memberType="String" minimumSize="3" maximumSize="3" optional="true" writable="false" requiredWith="event-message-texts-config"/>
+            <Array name="event-message-texts-config" propertyIdentifier="352" memberType="String" minimumSize="3" maximumSize="3" optional="true"/>
+            <Boolean name="reliability-evaluation-inhibit" propertyIdentifier="357" optional="true"/>
+
+            <String name="profile-name" propertyIdentifier="168" optional="true"/>
+        </Object>
+
+        <!-- Clause 12.48 -->
+        <Object name="0-DatePatternValueObject">
+            <ObjectIdentifier name="object-identifier" propertyIdentifier="75"/>
+            <String name="object-name" propertyIdentifier="77" minimumLength="1"/>
+            <Enumerated name="object-type" propertyIdentifier="79" type="0-BACnetObjectType" value="datepattern-value" variability="constant"/>
+            <String name="description" propertyIdentifier="28" optional="true"/>
+            <DatePattern name="present-value" propertyIdentifier="85"/>
+            <BitString name="status-flags" propertyIdentifier="111" type="0-BACnetStatusFlags"/>
+            <Enumerated name="event-state" propertyIdentifier="36" type="0-BACnetEventState" optional="true"/>
+            <Enumerated name="reliability" propertyIdentifier="103" type="0-BACnetReliability" optional="true" requiredWith="reliability-evaluation-inhibit"/>
+            <Boolean name="out-of-service" propertyIdentifier="81" optional="true"/>
+            <Array name="priority-array" propertyIdentifier="87" type="0-BACnetPriorityArray" optional="true" writable="false"/>
+            <DatePattern name="relinquish-default" propertyIdentifier="104" optional="true"/>
+            <Boolean name="reliability-evaluation-inhibit" propertyIdentifier="357" optional="true"/>
+
+            <!-- Add135-2012aw-5 Protocol_Revision 16 -->
+            <Boolean name="event-detection-enable" propertyIdentifier="353" optional="true" requiredWith="notification-class;event-enable;acked-transitions;notify-type;event-time-stamps;event-message-texts;event-message-texts-config"/>
+            <Unsigned name="notification-class" propertyIdentifier="17" optional="true" requiredWith="event-detection-enable;event-enable;acked-transitions;notify-type;event-time-stamps;event-message-texts;event-message-texts-config"/>
+            <BitString name="event-enable" propertyIdentifier="35" type="0-BACnetEventTransitionBits" optional="true" requiredWith="event-detection-enable;notification-class;acked-transitions;notify-type;event-time-stamps;event-message-texts;event-message-texts-config"/>
+            <BitString name="acked-transitions" propertyIdentifier="0" type="0-BACnetEventTransitionBits" optional="true" writable="false" requiredWith="event-detection-enable;notification-class;event-enable;notify-type;event-time-stamps;event-message-texts;event-message-texts-config"/>
+            <Enumerated name="notify-type" propertyIdentifier="72" type="0-BACnetNotifyType" optional="true" requiredWith="event-detection-enable;notification-class;event-enable;acked-transitions;event-time-stamps;event-message-texts;event-message-texts-config"/>
+            <Array name="event-time-stamps" propertyIdentifier="130" memberType="0-BACnetTimeStamp" minimumSize="3" maximumSize="3" optional="true" writable="false" requiredWith="event-detection-enable;notification-class;event-enable;acked-transitions;notify-type;event-message-texts;event-message-texts-config"/>
+            <Array name="event-message-texts" propertyIdentifier="351" memberType="String" minimumSize="3" maximumSize="3" optional="true" writable="false" requiredWith="event-message-texts-config"/>
+            <Array name="event-message-texts-config" propertyIdentifier="352" memberType="String" minimumSize="3" maximumSize="3" optional="true"/>
+            <String name="profile-name" propertyIdentifier="168" optional="true"/>
+        </Object>
+
+        <!-- Clause 12.45 -->
+        <Object name="0-DateValueObject">
+            <ObjectIdentifier name="object-identifier" propertyIdentifier="75"/>
+            <String name="object-name" propertyIdentifier="77" minimumLength="1"/>
+            <Enumerated name="object-type" propertyIdentifier="79" type="0-BACnetObjectType" value="date-value" variability="constant"/>
+            <String name="description" propertyIdentifier="28" optional="true"/>
+            <Date name="present-value" propertyIdentifier="85"/>
+            <BitString name="status-flags" propertyIdentifier="111" type="0-BACnetStatusFlags"/>
+            <Enumerated name="event-state" propertyIdentifier="36" type="0-BACnetEventState" optional="true"/>
+            <Enumerated name="reliability" propertyIdentifier="103" type="0-BACnetReliability" optional="true" requiredWith="reliability-evaluation-inhibit"/>
+            <Boolean name="out-of-service" propertyIdentifier="81" optional="true"/>
+            <Array name="priority-array" propertyIdentifier="87" type="0-BACnetPriorityArray" optional="true" writable="false"/>
+            <Date name="relinquish-default" propertyIdentifier="104" optional="true"/>
+            <Boolean name="reliability-evaluation-inhibit" propertyIdentifier="357" optional="true"/>
+
+            <!-- Add135-2012aw-5 Protocol_Revision 16 -->
+            <Boolean name="event-detection-enable" propertyIdentifier="353" optional="true" requiredWith="notification-class;event-enable;acked-transitions;notify-type;event-time-stamps;event-message-texts;event-message-texts-config"/>
+            <Unsigned name="notification-class" propertyIdentifier="17" optional="true" requiredWith="event-detection-enable;event-enable;acked-transitions;notify-type;event-time-stamps;event-message-texts;event-message-texts-config"/>
+            <BitString name="event-enable" propertyIdentifier="35" type="0-BACnetEventTransitionBits" optional="true" requiredWith="event-detection-enable;notification-class;acked-transitions;notify-type;event-time-stamps;event-message-texts;event-message-texts-config"/>
+            <BitString name="acked-transitions" propertyIdentifier="0" type="0-BACnetEventTransitionBits" optional="true" writable="false" requiredWith="event-detection-enable;notification-class;event-enable;notify-type;event-time-stamps;event-message-texts;event-message-texts-config"/>
+            <Enumerated name="notify-type" propertyIdentifier="72" type="0-BACnetNotifyType" optional="true" requiredWith="event-detection-enable;notification-class;event-enable;acked-transitions;event-time-stamps;event-message-texts;event-message-texts-config"/>
+            <Array name="event-time-stamps" propertyIdentifier="130" memberType="0-BACnetTimeStamp" minimumSize="3" maximumSize="3" optional="true" writable="false" requiredWith="event-detection-enable;notification-class;event-enable;acked-transitions;notify-type;event-message-texts;event-message-texts-config"/>
+            <Array name="event-message-texts" propertyIdentifier="351" memberType="String" minimumSize="3" maximumSize="3" optional="true" writable="false" requiredWith="event-message-texts-config"/>
+            <Array name="event-message-texts-config" propertyIdentifier="352" memberType="String" minimumSize="3" maximumSize="3" optional="true"/>
+            <String name="profile-name" propertyIdentifier="168" optional="true"/>
+        </Object>
+
+        <!-- Clause 12.46 -->
+        <Object name="0-DatetimePatternValueObject">
+            <ObjectIdentifier name="object-identifier" propertyIdentifier="75"/>
+            <String name="object-name" propertyIdentifier="77" minimumLength="1"/>
+            <Enumerated name="object-type" propertyIdentifier="79" type="0-BACnetObjectType" value="datetimepattern-value" variability="constant"/>
+            <String name="description" propertyIdentifier="28" optional="true"/>
+            <DateTimePattern name="present-value" propertyIdentifier="85"/>
+            <BitString name="status-flags" propertyIdentifier="111" type="0-BACnetStatusFlags"/>
+            <Enumerated name="event-state" propertyIdentifier="36" type="0-BACnetEventState" optional="true"/>
+            <Enumerated name="reliability" propertyIdentifier="103" type="0-BACnetReliability" optional="true" requiredWith="reliability-evaluation-inhibit"/>
+            <Boolean name="out-of-service" propertyIdentifier="81" optional="true"/>
+            <Boolean name="is-utc" propertyIdentifier="344" optional="true"/>
+            <Array name="priority-array" propertyIdentifier="87" type="0-BACnetPriorityArray" optional="true" writable="false"/>
+            <DateTimePattern name="relinquish-default" propertyIdentifier="104" optional="true"/>
+            <Boolean name="reliability-evaluation-inhibit" propertyIdentifier="357" optional="true"/>
+
+            <!-- Add135-2012aw-5 Protocol_Revision 16 -->
+            <Boolean name="event-detection-enable" propertyIdentifier="353" optional="true" requiredWith="notification-class;event-enable;acked-transitions;notify-type;event-time-stamps;event-message-texts;event-message-texts-config"/>
+            <Unsigned name="notification-class" propertyIdentifier="17" optional="true" requiredWith="event-detection-enable;event-enable;acked-transitions;notify-type;event-time-stamps;event-message-texts;event-message-texts-config"/>
+            <BitString name="event-enable" propertyIdentifier="35" type="0-BACnetEventTransitionBits" optional="true" requiredWith="event-detection-enable;notification-class;acked-transitions;notify-type;event-time-stamps;event-message-texts;event-message-texts-config"/>
+            <BitString name="acked-transitions" propertyIdentifier="0" type="0-BACnetEventTransitionBits" optional="true" writable="false" requiredWith="event-detection-enable;notification-class;event-enable;notify-type;event-time-stamps;event-message-texts;event-message-texts-config"/>
+            <Enumerated name="notify-type" propertyIdentifier="72" type="0-BACnetNotifyType" optional="true" requiredWith="event-detection-enable;notification-class;event-enable;acked-transitions;event-time-stamps;event-message-texts;event-message-texts-config"/>
+            <Array name="event-time-stamps" propertyIdentifier="130" memberType="0-BACnetTimeStamp" minimumSize="3" maximumSize="3" optional="true" writable="false" requiredWith="event-detection-enable;notification-class;event-enable;acked-transitions;notify-type;event-message-texts;event-message-texts-config"/>
+            <Array name="event-message-texts" propertyIdentifier="351" memberType="String" minimumSize="3" maximumSize="3" optional="true" writable="false" requiredWith="event-message-texts-config"/>
+            <Array name="event-message-texts-config" propertyIdentifier="352" memberType="String" minimumSize="3" maximumSize="3" optional="true"/>
+            <String name="profile-name" propertyIdentifier="168" optional="true"/>
+        </Object>
+
+        <!-- Clause 12.38 -->
+        <Object name="0-DatetimeValueObject">
+            <ObjectIdentifier name="object-identifier" propertyIdentifier="75"/>
+            <String name="object-name" propertyIdentifier="77" minimumLength="1"/>
+            <Enumerated name="object-type" propertyIdentifier="79" type="0-BACnetObjectType" value="datetime-value" variability="constant"/>
+            <String name="description" propertyIdentifier="28" optional="true"/>
+            <DateTime name="present-value" propertyIdentifier="85"/>
+            <BitString name="status-flags" propertyIdentifier="111" type="0-BACnetStatusFlags"/>
+            <Enumerated name="event-state" propertyIdentifier="36" type="0-BACnetEventState" optional="true"/>
+            <Enumerated name="reliability" propertyIdentifier="103" type="0-BACnetReliability" optional="true" requiredWith="reliability-evaluation-inhibit"/>
+            <Boolean name="out-of-service" propertyIdentifier="81" optional="true"/>
+            <Array name="priority-array" propertyIdentifier="87" type="0-BACnetPriorityArray" optional="true" writable="false"/>
+            <DateTime name="relinquish-default" propertyIdentifier="104" optional="true"/>
+            <Boolean name="is-utc" propertyIdentifier="344" optional="true"/>
+            <Boolean name="reliability-evaluation-inhibit" propertyIdentifier="357" optional="true"/>
+
+            <!-- Add135-2012aw-5 Protocol_Revision 16 -->
+            <Boolean name="event-detection-enable" propertyIdentifier="353" optional="true" requiredWith="notification-class;event-enable;acked-transitions;notify-type;event-time-stamps;event-message-texts;event-message-texts-config"/>
+            <Unsigned name="notification-class" propertyIdentifier="17" optional="true" requiredWith="event-detection-enable;event-enable;acked-transitions;notify-type;event-time-stamps;event-message-texts;event-message-texts-config"/>
+            <BitString name="event-enable" propertyIdentifier="35" type="0-BACnetEventTransitionBits" optional="true" requiredWith="event-detection-enable;notification-class;acked-transitions;notify-type;event-time-stamps;event-message-texts;event-message-texts-config"/>
+            <BitString name="acked-transitions" propertyIdentifier="0" type="0-BACnetEventTransitionBits" optional="true" writable="false" requiredWith="event-detection-enable;notification-class;event-enable;notify-type;event-time-stamps;event-message-texts;event-message-texts-config"/>
+            <Enumerated name="notify-type" propertyIdentifier="72" type="0-BACnetNotifyType" optional="true" requiredWith="event-detection-enable;notification-class;event-enable;acked-transitions;event-time-stamps;event-message-texts;event-message-texts-config"/>
+            <Array name="event-time-stamps" propertyIdentifier="130" memberType="0-BACnetTimeStamp" minimumSize="3" maximumSize="3" optional="true" writable="false" requiredWith="event-detection-enable;notification-class;event-enable;acked-transitions;notify-type;event-message-texts;event-message-texts-config"/>
+            <Array name="event-message-texts" propertyIdentifier="351" memberType="String" minimumSize="3" maximumSize="3" optional="true" writable="false" requiredWith="event-message-texts-config"/>
+            <Array name="event-message-texts-config" propertyIdentifier="352" memberType="String" minimumSize="3" maximumSize="3" optional="true"/>
+            <String name="profile-name" propertyIdentifier="168" optional="true"/>
+        </Object>
+
+        <!-- Clause 12.11 -->
+        <Object name="0-DeviceObject">
+            <ObjectIdentifier name="object-identifier" propertyIdentifier="75"/>
+            <String name="object-name" propertyIdentifier="77" minimumLength="1"/>
+            <Enumerated name="object-type" propertyIdentifier="79" type="0-BACnetObjectType" value="device" variability="constant"/>
+            <Enumerated name="system-status" propertyIdentifier="112" type="0-BACnetDeviceStatus"/>
+            <String name="vendor-name" propertyIdentifier="121"/>
+            <Unsigned name="vendor-identifier" propertyIdentifier="120" type="0-Unsigned16" writable="false"/>
+            <String name="model-name" propertyIdentifier="70" writable="false"/>
+            <String name="firmware-revision" propertyIdentifier="44"/>
+            <String name="application-software-version" propertyIdentifier="12"/>
+            <String name="location" propertyIdentifier="58" optional="true"/>
+            <String name="description" propertyIdentifier="28" optional="true"/>
+            <Unsigned name="protocol-version" propertyIdentifier="98"/>
+            <Unsigned name="protocol-revision" propertyIdentifier="139"/>
+            <BitString name="protocol-services-supported" propertyIdentifier="97" type="0-BACnetServicesSupported"/>
+            <BitString name="protocol-object-types-supported" propertyIdentifier="96" type="0-BACnetObjectTypesSupported"/>
+            <Array name="object-list" propertyIdentifier="76" memberType="ObjectIdentifier" writable="false"/>
+            <Array name="structured-object-list" propertyIdentifier="209" memberType="ObjectIdentifier" optional="true"/>
+            <Unsigned name="max-apdu-length-accepted" propertyIdentifier="62"/>
+            <Enumerated name="segmentation-supported" propertyIdentifier="107" type="0-BACnetSegmentation"/>
+            <Unsigned name="max-segments-accepted" propertyIdentifier="167" optional="true"/>
+            <List name="vt-classes-supported" propertyIdentifier="122" memberType="0-BACnetVTClass" optional="true"/>
+            <List name="active-vt-sessions" propertyIdentifier="5" memberType="0-BACnetVTSession" optional="true"/>
+            <Time name="local-time" propertyIdentifier="57" optional="true"/>
+            <Date name="local-date" propertyIdentifier="56" optional="true"/>
+            <Integer name="utc-offset" propertyIdentifier="119" optional="true"/>
+            <Boolean name="daylight-savings-status" propertyIdentifier="24" optional="true"/>
+            <Unsigned name="apdu-segment-timeout" propertyIdentifier="10" optional="true"/>
+            <Unsigned name="apdu-timeout" propertyIdentifier="11"/>
+            <Unsigned name="number-of-apdu-retries" propertyIdentifier="73"/>
+            <List name="time-synchronization-recipients" propertyIdentifier="116" memberType="0-BACnetRecipient" optional="true" writable="true"/>
+            <Unsigned name="max-master" propertyIdentifier="64" minimum="1" maximum="127" optional="true"/>
+            <Unsigned name="max-info-frames" propertyIdentifier="63" optional="true"/>
+            <List name="device-address-binding" propertyIdentifier="30" memberType="0-BACnetAddressBinding"/>
+            <Unsigned name="database-revision" propertyIdentifier="155"/>
+            <Array name="configuration-files" propertyIdentifier="154" memberType="ObjectIdentifier" optional="true"/>
+            <Choice name="last-restore-time" propertyIdentifier="157" type="0-BACnetTimeStamp" optional="true"/>
+            <Unsigned name="backup-failure-timeout" propertyIdentifier="153" type="0-Unsigned16" optional="true" writable="true"/>
+            <Unsigned name="backup-preparation-time" propertyIdentifier="339" type="0-Unsigned16" optional="true"/>
+            <Unsigned name="restore-preparation-time" propertyIdentifier="341" type="0-Unsigned16" optional="true"/>
+            <Unsigned name="restore-completion-time" propertyIdentifier="340" type="0-Unsigned16" optional="true"/>
+            <Enumerated name="backup-and-restore-state" propertyIdentifier="338" type="0-BACnetBackupState" optional="true"/>
+            <List name="active-cov-subscriptions" propertyIdentifier="152" memberType="0-BACnetCOVSubscription" optional="true"/>
+            <Array name="slave-proxy-enable" propertyIdentifier="172" memberType="Boolean" optional="true"/>
+            <List name="manual-slave-address-binding" propertyIdentifier="170" memberType="0-BACnetAddressBinding" optional="true"/>
+            <Array name="auto-slave-discovery" propertyIdentifier="169" memberType="Boolean" optional="true"/>
+            <List name="slave-address-binding" propertyIdentifier="171" memberType="0-BACnetAddressBinding" optional="true"/>
+            <Enumerated name="last-restart-reason" propertyIdentifier="196" type="0-BACnetRestartReason" optional="true"/>
+            <Choice name="time-of-device-restart" propertyIdentifier="203" type="0-BACnetTimeStamp" optional="true"/>
+            <List name="restart-notification-recipients" propertyIdentifier="202" memberType="0-BACnetRecipient" optional="true"/>
+            <List name="utc-time-synchronization-recipients" propertyIdentifier="206" memberType="0-BACnetRecipient" optional="true" writable="true"/>
+            <Unsigned name="time-synchronization-interval" propertyIdentifier="204" optional="true" writable="true"/>
+            <Boolean name="align-intervals" propertyIdentifier="193" optional="true" writable="true"/>
+            <Unsigned name="interval-offset" propertyIdentifier="195" optional="true" writable="true"/>
+            <String name="serial-number" propertyIdentifier="372" optional="true" writable="false"/>
+
+            <!-- Add135-2012aw-6 Protocol_Revision 16 -->
+            <BitString name="status-flags" propertyIdentifier="111" type="0-BACnetStatusFlags" optional="true" requiredWith="event-detection-enable;notification-class;event-enable;acked-transitions;notify-type;event-time-stamps;event-message-texts;event-message-texts-config"/>
+            <Enumerated name="event-state" propertyIdentifier="36" type="0-BACnetEventState" optional="true" requiredWith="event-detection-enable;notification-class;event-enable;acked-transitions;notify-type;event-time-stamps;event-message-texts;event-message-texts-config"/>
+            <Enumerated name="reliability" propertyIdentifier="103" type="0-BACnetReliability" optional="true" requiredWith="reliability-evaluation-inhibit;event-detection-enable;notification-class;event-enable;acked-transitions;notify-type;event-time-stamps;event-message-texts;event-message-texts-config"/>
+            <Boolean name="event-detection-enable" propertyIdentifier="353" optional="true" requiredWith="notification-class;event-enable;acked-transitions;notify-type;event-time-stamps;event-message-texts;event-message-texts-config"/>
+            <Unsigned name="notification-class" propertyIdentifier="17" optional="true" requiredWith="event-detection-enable;event-enable;acked-transitions;notify-type;event-time-stamps;event-message-texts;event-message-texts-config"/>
+            <BitString name="event-enable" propertyIdentifier="35" type="0-BACnetEventTransitionBits" optional="true" requiredWith="event-detection-enable;notification-class;acked-transitions;notify-type;event-time-stamps;event-message-texts;event-message-texts-config"/>
+            <BitString name="acked-transitions" propertyIdentifier="0" type="0-BACnetEventTransitionBits" optional="true" writable="false" requiredWith="event-detection-enable;notification-class;event-enable;notify-type;event-time-stamps;event-message-texts;event-message-texts-config"/>
+            <Enumerated name="notify-type" propertyIdentifier="72" type="0-BACnetNotifyType" optional="true" requiredWith="event-detection-enable;notification-class;event-enable;acked-transitions;event-time-stamps;event-message-texts;event-message-texts-config"/>
+            <Array name="event-time-stamps" propertyIdentifier="130" memberType="0-BACnetTimeStamp" minimumSize="3" maximumSize="3" optional="true" writable="false" requiredWith="event-detection-enable;notification-class;event-enable;acked-transitions;notify-type;event-message-texts;event-message-texts-config"/>
+            <Array name="event-message-texts" propertyIdentifier="351" memberType="String" minimumSize="3" maximumSize="3" optional="true" writable="false" requiredWith="event-message-texts-config"/>
+            <Array name="event-message-texts-config" propertyIdentifier="352" memberType="String" minimumSize="3" maximumSize="3" optional="true"/>
+            <Boolean name="reliability-evaluation-inhibit" propertyIdentifier="357" optional="true"/>
+            <String name="profile-name" propertyIdentifier="168" optional="true"/>
+        </Object>
+
+        <!-- Clause 12.12 -->
+        <Object name="0-EventEnrollmentObject">
+            <ObjectIdentifier name="object-identifier" propertyIdentifier="75"/>
+            <String name="object-name" propertyIdentifier="77" minimumLength="1"/>
+            <Enumerated name="object-type" propertyIdentifier="79" type="0-BACnetObjectType" value="event-enrollment" variability="constant"/>
+            <String name="description" propertyIdentifier="28" optional="true"/>
+            <Enumerated name="event-type" propertyIdentifier="37" type="0-BACnetEventType" writable="false"/>
+            <Enumerated name="notify-type" propertyIdentifier="72" type="0-BACnetNotifyType"/>
+            <Choice name="event-parameters" propertyIdentifier="83" type="0-BACnetEventParameter"/>
+            <Sequence name="object-property-reference" propertyIdentifier="78" type="0-BACnetDeviceObjectPropertyReference"/>
+            <Enumerated name="event-state" propertyIdentifier="36" type="0-BACnetEventState"/>
+            <BitString name="event-enable" propertyIdentifier="35" type="0-BACnetEventTransitionBits"/>
+            <BitString name="acked-transitions" propertyIdentifier="0" type="0-BACnetEventTransitionBits" writable="false"/>
+            <Unsigned name="notification-class" propertyIdentifier="17"/>
+            <Array name="event-time-stamps" propertyIdentifier="130" memberType="0-BACnetTimeStamp" minimumSize="3" maximumSize="3" writable="false"/>
+            <Array name="event-message-texts" propertyIdentifier="351" memberType="String" minimumSize="3" maximumSize="3" optional="true" writable="false" requiredWith="event-message-texts-config"/>
+            <Array name="event-message-texts-config" propertyIdentifier="352" memberType="String" minimumSize="3" maximumSize="3" optional="true"/>
+            <Boolean name="event-detection-enable" propertyIdentifier="353"/>
+            <Sequence name="event-algorithm-inhibit-ref" propertyIdentifier="355" type="0-BACnetObjectPropertyReference" optional="true"/>
+            <Boolean name="event-algorithm-inhibit" propertyIdentifier="354" optional="true" requiredWith="event-algorithm-inhibit-ref"/>
+            <Unsigned name="time-delay-normal" propertyIdentifier="356" optional="true"/>
+            <BitString name="status-flags" propertyIdentifier="111" type="0-BACnetStatusFlags"/>
+            <Enumerated name="reliability" propertyIdentifier="103" type="0-BACnetReliability"/>
+            <Enumerated name="fault-type" propertyIdentifier="359" type="0-BACnetFaultType" optional="true" writable="false"/>
+            <Choice name="fault-parameters" propertyIdentifier="358" type="0-BACnetFaultParameter" optional="true"/>
+            <Boolean name="reliability-evaluation-inhibit" propertyIdentifier="357" optional="true"/>
+
+            <String name="profile-name" propertyIdentifier="168" optional="true"/>
+        </Object>
+
+        <!-- Clause 12.27 -->
+        <Object name="0-EventLogObject">
+            <ObjectIdentifier name="object-identifier" propertyIdentifier="75"/>
+            <String name="object-name" propertyIdentifier="77" minimumLength="1"/>
+            <Enumerated name="object-type" propertyIdentifier="79" type="0-BACnetObjectType" value="event-log" variability="constant"/>
+            <String name="description" propertyIdentifier="28" optional="true"/>
+            <BitString name="status-flags" propertyIdentifier="111" type="0-BACnetStatusFlags"/>
+            <Enumerated name="event-state" propertyIdentifier="36" type="0-BACnetEventState"/>
+            <Enumerated name="reliability" propertyIdentifier="103" type="0-BACnetReliability" optional="true" requiredWith="reliability-evaluation-inhibit"/>
+            <Boolean name="enable" propertyIdentifier="133" writable="true"/>
+            <DateTime name="start-time" propertyIdentifier="142" optional="true" writable="true"/>
+            <DateTime name="stop-time" propertyIdentifier="143" optional="true" writable="true"/>
+            <Boolean name="stop-when-full" propertyIdentifier="144"/>
+            <Unsigned name="buffer-size" propertyIdentifier="126" type="0-Unsigned32"/>
+            <List name="log-buffer" propertyIdentifier="131" memberType="0-BACnetEventLogRecord"/>
+            <Unsigned name="record-count" propertyIdentifier="141" type="0-Unsigned32" writable="true"/>
+            <Unsigned name="total-record-count" propertyIdentifier="145" type="0-Unsigned32"/>
+            <Unsigned name="notification-threshold" propertyIdentifier="137" type="0-Unsigned32" optional="true"/>
+            <Unsigned name="records-since-notification" propertyIdentifier="140" type="0-Unsigned32" optional="true"/>
+            <Unsigned name="last-notify-record" propertyIdentifier="173" type="0-Unsigned32" optional="true"/>
+            <Unsigned name="notification-class" propertyIdentifier="17" optional="true"/>
+            <BitString name="event-enable" propertyIdentifier="35" type="0-BACnetEventTransitionBits" optional="true"/>
+            <BitString name="acked-transitions" propertyIdentifier="0" type="0-BACnetEventTransitionBits" optional="true" writable="false"/>
+            <Enumerated name="notify-type" propertyIdentifier="72" type="0-BACnetNotifyType" optional="true"/>
+            <Array name="event-time-stamps" propertyIdentifier="130" memberType="0-BACnetTimeStamp" minimumSize="3" maximumSize="3" optional="true" writable="false"/>
+            <Array name="event-message-texts" propertyIdentifier="351" memberType="String" minimumSize="3" maximumSize="3" optional="true" writable="false" requiredWith="event-message-texts-config"/>
+            <Array name="event-message-texts-config" propertyIdentifier="352" memberType="String" minimumSize="3" maximumSize="3" optional="true"/>
+            <Boolean name="event-detection-enable" propertyIdentifier="353" optional="true"/>
+            <Sequence name="event-algorithm-inhibit-ref" propertyIdentifier="355" type="0-BACnetObjectPropertyReference" optional="true"/>
+            <Boolean name="event-algorithm-inhibit" propertyIdentifier="354" optional="true" requiredWith="event-algorithm-inhibit-ref"/>
+            <Boolean name="reliability-evaluation-inhibit" propertyIdentifier="357" optional="true"/>
+
+            <String name="profile-name" propertyIdentifier="168" optional="true"/>
+        </Object>
+
+        <!-- Clause 12.13 -->
+        <Object name="0-FileObject">
+            <ObjectIdentifier name="object-identifier" propertyIdentifier="75"/>
+            <String name="object-name" propertyIdentifier="77" minimumLength="1"/>
+            <Enumerated name="object-type" propertyIdentifier="79" type="0-BACnetObjectType" value="file" variability="constant"/>
+            <String name="description" propertyIdentifier="28" optional="true"/>
+            <String name="file-type" propertyIdentifier="43"/>
+            <Unsigned name="file-size" propertyIdentifier="42"/>
+            <DateTime name="modification-date" propertyIdentifier="71"/>
+            <Boolean name="archive" propertyIdentifier="13" writable="true"/>
+            <Boolean name="read-only" propertyIdentifier="99"/>
+            <Enumerated name="file-access-method" propertyIdentifier="41" type="0-BACnetFileAccessMethod"/>
+            <Unsigned name="record-count" propertyIdentifier="141" optional="true"/>
+
+            <String name="profile-name" propertyIdentifier="168" optional="true"/>
+        </Object>
+
+        <!-- Clause 12.50 -->
+        <Object name="0-GlobalGroupObject">
+            <ObjectIdentifier name="object-identifier" propertyIdentifier="75"/>
+            <String name="object-name" propertyIdentifier="77" minimumLength="1"/>
+            <Enumerated name="object-type" propertyIdentifier="79" type="0-BACnetObjectType" value="global-group" variability="constant"/>
+            <String name="description" propertyIdentifier="28" optional="true"/>
+            <Array name="group-members" propertyIdentifier="345" memberType="0-BACnetDeviceObjectPropertyReference"/>
+            <Array name="group-member-names" propertyIdentifier="346" memberType="String" optional="true"/>
+            <Array name="present-value" propertyIdentifier="85" memberType="0-BACnetPropertyAccessResult" writable="false"/>
+            <BitString name="status-flags" propertyIdentifier="111" type="0-BACnetStatusFlags"/>
+            <Enumerated name="event-state" propertyIdentifier="36" type="0-BACnetEventState"/>
+            <BitString name="member-status-flags" propertyIdentifier="347" type="0-BACnetStatusFlags"/>
+            <Enumerated name="reliability" propertyIdentifier="103" type="0-BACnetReliability" optional="true" requiredWith="reliability-evaluation-inhibit"/>
+            <Boolean name="out-of-service" propertyIdentifier="81"/>
+            <Unsigned name="update-interval" propertyIdentifier="118" optional="true"/>
+            <Unsigned name="requested-update-interval" propertyIdentifier="348" optional="true"/>
+            <Unsigned name="cov-resubscription-interval" propertyIdentifier="128" optional="true"/>
+            <Choice name="client-cov-increment" propertyIdentifier="127" type="0-BACnetClientCOV" optional="true"/>
+            <Unsigned name="time-delay" propertyIdentifier="113" optional="true"/>
+            <Unsigned name="notification-class" propertyIdentifier="17" optional="true"/>
+            <BitString name="event-enable" propertyIdentifier="35" type="0-BACnetEventTransitionBits" optional="true"/>
+            <BitString name="acked-transitions" propertyIdentifier="0" type="0-BACnetEventTransitionBits" optional="true" writable="false"/>
+            <Enumerated name="notify-type" propertyIdentifier="72" type="0-BACnetNotifyType" optional="true"/>
+            <Array name="event-time-stamps" propertyIdentifier="130" memberType="0-BACnetTimeStamp" minimumSize="3" maximumSize="3" optional="true" writable="false"/>
+            <Array name="event-message-texts" propertyIdentifier="351" memberType="String" minimumSize="3" maximumSize="3" optional="true" writable="false" requiredWith="event-message-texts-config"/>
+            <Array name="event-message-texts-config" propertyIdentifier="352" memberType="String" minimumSize="3" maximumSize="3" optional="true"/>
+            <Boolean name="event-detection-enable" propertyIdentifier="353" optional="true"/>
+            <Sequence name="event-algorithm-inhibit-ref" propertyIdentifier="355" type="0-BACnetObjectPropertyReference" optional="true"/>
+            <Boolean name="event-algorithm-inhibit" propertyIdentifier="354" optional="true" requiredWith="event-algorithm-inhibit-ref"/>
+            <Unsigned name="time-delay-normal" propertyIdentifier="356" optional="true"/>
+            <Unsigned name="covu-period" propertyIdentifier="349" optional="true"/>
+            <List name="covu-recipients" propertyIdentifier="350" memberType="0-BACnetRecipient" optional="true"/>
+            <Boolean name="reliability-evaluation-inhibit" propertyIdentifier="357" optional="true"/>
+
+            <String name="profile-name" propertyIdentifier="168" optional="true"/>
+        </Object>
+
+        <!-- Clause 12.14 -->
+        <Object name="0-GroupObject">
+            <ObjectIdentifier name="object-identifier" propertyIdentifier="75"/>
+            <String name="object-name" propertyIdentifier="77" minimumLength="1"/>
+            <Enumerated name="object-type" propertyIdentifier="79" type="0-BACnetObjectType" value="group" variability="constant"/>
+            <String name="description" propertyIdentifier="28" optional="true"/>
+            <List name="list-of-group-members" propertyIdentifier="53" memberType="0-ReadAccessSpecification"/>
+            <List name="present-value" propertyIdentifier="85" memberType="0-ReadAccessResult" writable="false"/>
+
+            <String name="profile-name" propertyIdentifier="168" optional="true"/>
+        </Object>
+
+        <!-- Clause 12.43 -->
+        <Object name="0-IntegerValueObject">
+            <ObjectIdentifier name="object-identifier" propertyIdentifier="75"/>
+            <String name="object-name" propertyIdentifier="77" minimumLength="1"/>
+            <Enumerated name="object-type" propertyIdentifier="79" type="0-BACnetObjectType" value="integer-value" variability="constant"/>
+            <String name="description" propertyIdentifier="28" optional="true"/>
+            <Integer name="present-value" propertyIdentifier="85"/>
+            <BitString name="status-flags" propertyIdentifier="111" type="0-BACnetStatusFlags"/>
+            <Enumerated name="event-state" propertyIdentifier="36" type="0-BACnetEventState" optional="true"/>
+            <Enumerated name="reliability" propertyIdentifier="103" type="0-BACnetReliability" optional="true" requiredWith="reliability-evaluation-inhibit"/>
+            <Boolean name="out-of-service" propertyIdentifier="81" optional="true"/>
+            <Enumerated name="units" propertyIdentifier="117" type="0-BACnetEngineeringUnits"/>
+            <Array name="priority-array" propertyIdentifier="87" type="0-BACnetPriorityArray" optional="true" writable="false"/>
+            <Integer name="relinquish-default" propertyIdentifier="104" optional="true"/>
+            <Unsigned name="cov-increment" propertyIdentifier="22" optional="true"/>
+            <Unsigned name="time-delay" propertyIdentifier="113" optional="true"/>
+            <Unsigned name="notification-class" propertyIdentifier="17" optional="true"/>
+            <Integer name="high-limit" propertyIdentifier="45" optional="true"/>
+            <Integer name="low-limit" propertyIdentifier="59" optional="true"/>
+            <Unsigned name="deadband" propertyIdentifier="25" optional="true"/>
+            <BitString name="limit-enable" propertyIdentifier="52" type="0-BACnetLimitEnable" optional="true"/>
+            <BitString name="event-enable" propertyIdentifier="35" type="0-BACnetEventTransitionBits" optional="true"/>
+            <BitString name="acked-transitions" propertyIdentifier="0" type="0-BACnetEventTransitionBits" optional="true" writable="false"/>
+            <Enumerated name="notify-type" propertyIdentifier="72" type="0-BACnetNotifyType" optional="true"/>
+            <Array name="event-time-stamps" propertyIdentifier="130" memberType="0-BACnetTimeStamp" minimumSize="3" maximumSize="3" optional="true" writable="false"/>
+            <Array name="event-message-texts" propertyIdentifier="351" memberType="String" minimumSize="3" maximumSize="3" optional="true" writable="false" requiredWith="event-message-texts-config"/>
+            <Array name="event-message-texts-config" propertyIdentifier="352" memberType="String" minimumSize="3" maximumSize="3" optional="true"/>
+            <Boolean name="event-detection-enable" propertyIdentifier="353" optional="true"/>
+            <Sequence name="event-algorithm-inhibit-ref" propertyIdentifier="355" type="0-BACnetObjectPropertyReference" optional="true"/>
+            <Boolean name="event-algorithm-inhibit" propertyIdentifier="354" optional="true" requiredWith="event-algorithm-inhibit-ref"/>
+            <Unsigned name="time-delay-normal" propertyIdentifier="356" optional="true"/>
+            <Boolean name="reliability-evaluation-inhibit" propertyIdentifier="357" optional="true"/>
+            <Integer name="min-pres-value" propertyIdentifier="69" optional="true"/>
+            <Integer name="max-pres-value" propertyIdentifier="65" optional="true"/>
+            <Integer name="resolution" propertyIdentifier="106" optional="true"/>
+
+            <!-- Add135-2012aw-3 Protocol_Revision 16 -->
+            <Integer name="fault-high-limit" propertyIdentifier="388" optional="true" requiredWith="fault-low-limit"/>
+            <Integer name="fault-low-limit" propertyIdentifier="389" optional="true" requiredWith="fault-high-limit"/>
+            <String name="profile-name" propertyIdentifier="168" optional="true"/>
+        </Object>
+
+        <!-- Clause 12.39 -->
+        <Object name="0-LargeAnalogValueObject">
+            <ObjectIdentifier name="object-identifier" propertyIdentifier="75"/>
+            <String name="object-name" propertyIdentifier="77" minimumLength="1"/>
+            <Enumerated name="object-type" propertyIdentifier="79" type="0-BACnetObjectType" value="large-analog-value" variability="constant"/>
+            <String name="description" propertyIdentifier="28" optional="true"/>
+            <Double name="present-value" propertyIdentifier="85"/>
+            <BitString name="status-flags" propertyIdentifier="111" type="0-BACnetStatusFlags"/>
+            <Enumerated name="event-state" propertyIdentifier="36" type="0-BACnetEventState" optional="true"/>
+            <Enumerated name="reliability" propertyIdentifier="103" type="0-BACnetReliability" optional="true" requiredWith="reliability-evaluation-inhibit"/>
+            <Boolean name="out-of-service" propertyIdentifier="81" optional="true"/>
+            <Enumerated name="units" propertyIdentifier="117" type="0-BACnetEngineeringUnits"/>
+            <Array name="priority-array" propertyIdentifier="87" type="0-BACnetPriorityArray" optional="true" writable="false"/>
+            <Double name="relinquish-default" propertyIdentifier="104" optional="true"/>
+            <Double name="cov-increment" propertyIdentifier="22" optional="true"/>
+            <Unsigned name="time-delay" propertyIdentifier="113" optional="true"/>
+            <Unsigned name="notification-class" propertyIdentifier="17" optional="true"/>
+            <Double name="high-limit" propertyIdentifier="45" optional="true"/>
+            <Double name="low-limit" propertyIdentifier="59" optional="true"/>
+            <Double name="deadband" propertyIdentifier="25" optional="true"/>
+            <BitString name="limit-enable" propertyIdentifier="52" type="0-BACnetLimitEnable" optional="true"/>
+            <BitString name="event-enable" propertyIdentifier="35" type="0-BACnetEventTransitionBits" optional="true"/>
+            <BitString name="acked-transitions" propertyIdentifier="0" type="0-BACnetEventTransitionBits" optional="true" writable="false"/>
+            <Enumerated name="notify-type" propertyIdentifier="72" type="0-BACnetNotifyType" optional="true"/>
+            <Array name="event-time-stamps" propertyIdentifier="130" memberType="0-BACnetTimeStamp" minimumSize="3" maximumSize="3" optional="true" writable="false"/>
+            <Array name="event-message-texts" propertyIdentifier="351" memberType="String" minimumSize="3" maximumSize="3" optional="true" writable="false" requiredWith="event-message-texts-config"/>
+            <Array name="event-message-texts-config" propertyIdentifier="352" memberType="String" minimumSize="3" maximumSize="3" optional="true"/>
+            <Boolean name="event-detection-enable" propertyIdentifier="353" optional="true"/>
+            <Sequence name="event-algorithm-inhibit-ref" propertyIdentifier="355" type="0-BACnetObjectPropertyReference" optional="true"/>
+            <Boolean name="event-algorithm-inhibit" propertyIdentifier="354" optional="true" requiredWith="event-algorithm-inhibit-ref"/>
+            <Unsigned name="time-delay-normal" propertyIdentifier="356" optional="true"/>
+            <Boolean name="reliability-evaluation-inhibit" propertyIdentifier="357" optional="true"/>
+            <Double name="min-pres-value" propertyIdentifier="69" optional="true"/>
+            <Double name="max-pres-value" propertyIdentifier="65" optional="true"/>
+            <Double name="resolution" propertyIdentifier="106" optional="true" writable="false"/>
+
+            <!-- Add135-2012aw-3 Protocol_Revision 16 -->
+            <Double name="fault-high-limit" propertyIdentifier="388" optional="true" requiredWith="fault-low-limit"/>
+            <Double name="fault-low-limit" propertyIdentifier="389" optional="true" requiredWith="fault-high-limit"/>
+            <String name="profile-name" propertyIdentifier="168" optional="true"/>
+        </Object>
+
+        <!-- Clause 12.15 -->
+        <Object name="0-LifeSafetyPointObject">
+            <ObjectIdentifier name="object-identifier" propertyIdentifier="75"/>
+            <String name="object-name" propertyIdentifier="77" minimumLength="1"/>
+            <Enumerated name="object-type" propertyIdentifier="79" type="0-BACnetObjectType" value="life-safety-point" variability="constant"/>
+            <Enumerated name="present-value" propertyIdentifier="85" type="0-BACnetLifeSafetyState"/>
+            <Enumerated name="tracking-value" propertyIdentifier="164" type="0-BACnetLifeSafetyState"/>
+            <String name="description" propertyIdentifier="28" optional="true"/>
+            <String name="device-type" propertyIdentifier="31" optional="true"/>
+            <BitString name="status-flags" propertyIdentifier="111" type="0-BACnetStatusFlags"/>
+            <Enumerated name="event-state" propertyIdentifier="36" type="0-BACnetEventState"/>
+            <Enumerated name="reliability" propertyIdentifier="103" type="0-BACnetReliability"/>
+            <Boolean name="out-of-service" propertyIdentifier="81"/>
+            <Enumerated name="mode" propertyIdentifier="160" type="0-BACnetLifeSafetyMode" writable="true"/>
+            <List name="accepted-modes" propertyIdentifier="175" memberType="0-BACnetLifeSafetyMode" writable="false"/>
+            <Unsigned name="time-delay" propertyIdentifier="113" optional="true"/>
+            <Unsigned name="notification-class" propertyIdentifier="17" optional="true"/>
+            <List name="life-safety-alarm-values" propertyIdentifier="166" memberType="0-BACnetLifeSafetyState" optional="true"/>
+            <List name="alarm-values" propertyIdentifier="7" memberType="0-BACnetLifeSafetyState" optional="true"/>
+            <List name="fault-values" propertyIdentifier="39" memberType="0-BACnetLifeSafetyState" optional="true"/>
+            <BitString name="event-enable" propertyIdentifier="35" type="0-BACnetEventTransitionBits" optional="true"/>
+            <BitString name="acked-transitions" propertyIdentifier="0" type="0-BACnetEventTransitionBits" optional="true" writable="false"/>
+            <Enumerated name="notify-type" propertyIdentifier="72" type="0-BACnetNotifyType" optional="true"/>
+            <Array name="event-time-stamps" propertyIdentifier="130" memberType="0-BACnetTimeStamp" minimumSize="3" maximumSize="3" optional="true" writable="false"/>
+            <Array name="event-message-texts" propertyIdentifier="351" memberType="String" minimumSize="3" maximumSize="3" optional="true" writable="false" requiredWith="event-message-texts-config"/>
+            <Array name="event-message-texts-config" propertyIdentifier="352" memberType="String" minimumSize="3" maximumSize="3" optional="true"/>
+            <Boolean name="event-detection-enable" propertyIdentifier="353" optional="true"/>
+            <Sequence name="event-algorithm-inhibit-ref" propertyIdentifier="355" type="0-BACnetObjectPropertyReference" optional="true"/>
+            <Boolean name="event-algorithm-inhibit" propertyIdentifier="354" optional="true" requiredWith="event-algorithm-inhibit-ref"/>
+            <Unsigned name="time-delay-normal" propertyIdentifier="356" optional="true"/>
+            <Boolean name="reliability-evaluation-inhibit" propertyIdentifier="357" optional="true"/>
+            <Enumerated name="silenced" propertyIdentifier="163" type="0-BACnetSilencedState"/>
+            <Enumerated name="operation-expected" propertyIdentifier="161" type="0-BACnetLifeSafetyOperation"/>
+            <Enumerated name="maintenance-required" propertyIdentifier="158" type="0-BACnetMaintenance" optional="true"/>
+            <Unsigned name="setting" propertyIdentifier="162" type="0-Unsigned8" optional="true"/>
+            <Real name="direct-reading" propertyIdentifier="156" optional="true"/>
+            <Enumerated name="units" propertyIdentifier="117" type="0-BACnetEngineeringUnits" optional="true"/>
+            <List name="member-of" propertyIdentifier="159" memberType="0-BACnetDeviceObjectReference" optional="true"/>
+
+            <String name="profile-name" propertyIdentifier="168" optional="true"/>
+        </Object>
+
+        <!-- Clause 12.16 -->
+        <Object name="0-LifeSafetyZoneObject">
+            <ObjectIdentifier name="object-identifier" propertyIdentifier="75"/>
+            <String name="object-name" propertyIdentifier="77" minimumLength="1"/>
+            <Enumerated name="object-type" propertyIdentifier="79" type="0-BACnetObjectType" value="life-safety-zone" variability="constant"/>
+            <Enumerated name="present-value" propertyIdentifier="85" type="0-BACnetLifeSafetyState"/>
+            <Enumerated name="tracking-value" propertyIdentifier="164" type="0-BACnetLifeSafetyState"/>
+            <String name="description" propertyIdentifier="28" optional="true"/>
+            <String name="device-type" propertyIdentifier="31" optional="true"/>
+            <BitString name="status-flags" propertyIdentifier="111" type="0-BACnetStatusFlags"/>
+            <Enumerated name="event-state" propertyIdentifier="36" type="0-BACnetEventState"/>
+            <Enumerated name="reliability" propertyIdentifier="103" type="0-BACnetReliability"/>
+            <Boolean name="out-of-service" propertyIdentifier="81"/>
+            <Enumerated name="mode" propertyIdentifier="160" type="0-BACnetLifeSafetyMode" writable="true"/>
+            <List name="accepted-modes" propertyIdentifier="175" memberType="0-BACnetLifeSafetyMode" writable="false"/>
+            <Unsigned name="time-delay" propertyIdentifier="113" optional="true"/>
+            <Unsigned name="notification-class" propertyIdentifier="17" optional="true"/>
+            <List name="life-safety-alarm-values" propertyIdentifier="166" memberType="0-BACnetLifeSafetyState" optional="true"/>
+            <List name="alarm-values" propertyIdentifier="7" memberType="0-BACnetLifeSafetyState" optional="true"/>
+            <List name="fault-values" propertyIdentifier="39" memberType="0-BACnetLifeSafetyState" optional="true"/>
+            <BitString name="event-enable" propertyIdentifier="35" type="0-BACnetEventTransitionBits" optional="true"/>
+            <BitString name="acked-transitions" propertyIdentifier="0" type="0-BACnetEventTransitionBits" optional="true" writable="false"/>
+            <Enumerated name="notify-type" propertyIdentifier="72" type="0-BACnetNotifyType" optional="true"/>
+            <Array name="event-time-stamps" propertyIdentifier="130" memberType="0-BACnetTimeStamp" minimumSize="3" maximumSize="3" optional="true" writable="false"/>
+            <Array name="event-message-texts" propertyIdentifier="351" memberType="String" minimumSize="3" maximumSize="3" optional="true" writable="false" requiredWith="event-message-texts-config"/>
+            <Array name="event-message-texts-config" propertyIdentifier="352" memberType="String" minimumSize="3" maximumSize="3" optional="true"/>
+            <Boolean name="event-detection-enable" propertyIdentifier="353" optional="true"/>
+            <Sequence name="event-algorithm-inhibit-ref" propertyIdentifier="355" type="0-BACnetObjectPropertyReference" optional="true"/>
+            <Boolean name="event-algorithm-inhibit" propertyIdentifier="354" optional="true" requiredWith="event-algorithm-inhibit-ref"/>
+            <Unsigned name="time-delay-normal" propertyIdentifier="356" optional="true"/>
+            <Boolean name="reliability-evaluation-inhibit" propertyIdentifier="357" optional="true"/>
+            <Enumerated name="silenced" propertyIdentifier="163" type="0-BACnetSilencedState"/>
+            <Enumerated name="operation-expected" propertyIdentifier="161" type="0-BACnetLifeSafetyOperation"/>
+            <Boolean name="maintenance-required" propertyIdentifier="158" optional="true"/>
+            <List name="zone-members" propertyIdentifier="165" memberType="0-BACnetDeviceObjectReference"/>
+            <List name="member-of" propertyIdentifier="159" memberType="0-BACnetDeviceObjectReference" optional="true"/>
+
+            <String name="profile-name" propertyIdentifier="168" optional="true"/>
+        </Object>
+
+        <!-- Clause 12.54 -->
+        <Object name="0-LightingOutputObject">
+            <ObjectIdentifier name="object-identifier" propertyIdentifier="75"/>
+            <String name="object-name" propertyIdentifier="77" minimumLength="1"/>
+            <Enumerated name="object-type" propertyIdentifier="79" type="0-BACnetObjectType" value="lighting-output" variability="constant"/>
+            <Real name="present-value" propertyIdentifier="85" writable="true"/>
+            <Real name="tracking-value" propertyIdentifier="164"/>
+            <Sequence name="lighting-command" propertyIdentifier="380" type="0-BACnetLightingCommand" writable="true"/>
+            <Enumerated name="in-progress" propertyIdentifier="378" type="0-BACnetLightingInProgress"/>
+            <String name="description" propertyIdentifier="28" optional="true"/>
+            <BitString name="status-flags" propertyIdentifier="111" type="0-BACnetStatusFlags"/>
+            <Enumerated name="reliability" propertyIdentifier="103" type="0-BACnetReliability" optional="true" requiredWith="reliability-evaluation-inhibit"/>
+            <Boolean name="out-of-service" propertyIdentifier="81"/>
+            <Boolean name="blink-warn-enable" propertyIdentifier="373"/>
+            <Unsigned name="egress-time" propertyIdentifier="377"/>
+            <Boolean name="egress-active" propertyIdentifier="386"/>
+            <Unsigned name="default-fade-time" propertyIdentifier="374"/>
+            <Real name="default-ramp-rate" propertyIdentifier="365"/>
+            <Real name="default-step-increment" propertyIdentifier="376"/>
+            <Enumerated name="transition" propertyIdentifier="385" type="0-BACnetLightingTransition" optional="true"/>
+            <Real name="feedback-value" propertyIdentifier="40" optional="true"/>
+            <Array name="priority-array" propertyIdentifier="87" type="0-BACnetPriorityArray" writable="false"/>
+            <Real name="relinquish-default" propertyIdentifier="104"/>
+            <Real name="power" propertyIdentifier="384" optional="true"/>
+            <Real name="instantaneous-power" propertyIdentifier="379" optional="true"/>
+            <Real name="min-actual-value" propertyIdentifier="383" optional="true" writable="true" requiredWith="max-actual-value"/>
+            <Real name="max-actual-value" propertyIdentifier="382" optional="true" writable="true" requiredWith="min-actual-value"/>
+            <Unsigned name="lighting-command-default-priority" propertyIdentifier="381"/>
+            <Real name="cov-increment" propertyIdentifier="22" optional="true"/>
+            <Boolean name="reliability-evaluation-inhibit" propertyIdentifier="357" optional="true"/>
+
+            <String name="profile-name" propertyIdentifier="168" optional="true"/>
+        </Object>
+
+        <!-- Clause 12.28 -->
+        <Object name="0-LoadControlObject">
+            <ObjectIdentifier name="object-identifier" propertyIdentifier="75"/>
+            <String name="object-name" propertyIdentifier="77" minimumLength="1"/>
+            <Enumerated name="object-type" propertyIdentifier="79" type="0-BACnetObjectType" value="load-control" variability="constant"/>
+            <String name="description" propertyIdentifier="28" optional="true"/>
+            <Enumerated name="present-value" propertyIdentifier="85" type="0-BACnetShedState"/>
+            <String name="state-description" propertyIdentifier="222" optional="true"/>
+            <BitString name="status-flags" propertyIdentifier="111" type="0-BACnetStatusFlags"/>
+            <Enumerated name="event-state" propertyIdentifier="36" type="0-BACnetEventState"/>
+            <Enumerated name="reliability" propertyIdentifier="103" type="0-BACnetReliability" optional="true" requiredWith="reliability-evaluation-inhibit"/>
+            <Choice name="requested-shed-level" propertyIdentifier="218" type="0-BACnetShedLevel" writable="true"/>
+            <DateTime name="start-time" propertyIdentifier="142" writable="true"/>
+            <Unsigned name="shed-duration" propertyIdentifier="219" writable="true"/>
+            <Unsigned name="duty-window" propertyIdentifier="213" writable="true"/>
+            <Boolean name="enable" propertyIdentifier="133" writable="true"/>
+            <Real name="full-duty-baseline" propertyIdentifier="215" optional="true"/>
+            <Choice name="expected-shed-level" propertyIdentifier="214" type="0-BACnetShedLevel"/>
+            <Choice name="actual-shed-level" propertyIdentifier="212" type="0-BACnetShedLevel"/>
+            <Array name="shed-levels" propertyIdentifier="221" memberType="Unsigned" writable="true"/>
+            <Array name="shed-level-descriptions" propertyIdentifier="220" memberType="String"/>
+            <Unsigned name="notification-class" propertyIdentifier="17" optional="true"/>
+            <Unsigned name="time-delay" propertyIdentifier="113" optional="true"/>
+            <BitString name="event-enable" propertyIdentifier="35" type="0-BACnetEventTransitionBits" optional="true"/>
+            <BitString name="acked-transitions" propertyIdentifier="0" type="0-BACnetEventTransitionBits" optional="true" writable="false"/>
+            <Enumerated name="notify-type" propertyIdentifier="72" type="0-BACnetNotifyType" optional="true"/>
+            <Array name="event-time-stamps" propertyIdentifier="130" memberType="0-BACnetTimeStamp" minimumSize="3" maximumSize="3" optional="true" writable="false"/>
+            <Array name="event-message-texts" propertyIdentifier="351" memberType="String" minimumSize="3" maximumSize="3" optional="true" writable="false" requiredWith="event-message-texts-config"/>
+            <Array name="event-message-texts-config" propertyIdentifier="352" memberType="String" minimumSize="3" maximumSize="3" optional="true"/>
+            <Boolean name="event-detection-enable" propertyIdentifier="353" optional="true"/>
+            <Sequence name="event-algorithm-inhibit-ref" propertyIdentifier="355" type="0-BACnetObjectPropertyReference" optional="true"/>
+            <Boolean name="event-algorithm-inhibit" propertyIdentifier="354" optional="true" requiredWith="event-algorithm-inhibit-ref"/>
+            <Unsigned name="time-delay-normal" propertyIdentifier="356" optional="true"/>
+            <Boolean name="reliability-evaluation-inhibit" propertyIdentifier="357" optional="true"/>
+
+            <String name="profile-name" propertyIdentifier="168" optional="true"/>
+        </Object>
+
+        <!-- Clause 12.17 -->
+        <Object name="0-LoopObject">
+            <ObjectIdentifier name="object-identifier" propertyIdentifier="75"/>
+            <String name="object-name" propertyIdentifier="77" minimumLength="1"/>
+            <Enumerated name="object-type" propertyIdentifier="79" type="0-BACnetObjectType" value="loop" variability="constant"/>
+            <Real name="present-value" propertyIdentifier="85"/>
+            <String name="description" propertyIdentifier="28" optional="true"/>
+            <BitString name="status-flags" propertyIdentifier="111" type="0-BACnetStatusFlags"/>
+            <Enumerated name="event-state" propertyIdentifier="36" type="0-BACnetEventState"/>
+            <Enumerated name="reliability" propertyIdentifier="103" type="0-BACnetReliability" optional="true" requiredWith="reliability-evaluation-inhibit"/>
+            <Boolean name="out-of-service" propertyIdentifier="81"/>
+            <Unsigned name="update-interval" propertyIdentifier="118" optional="true"/>
+            <Enumerated name="output-units" propertyIdentifier="82" type="0-BACnetEngineeringUnits"/>
+            <Sequence name="manipulated-variable-reference" propertyIdentifier="60" type="0-BACnetObjectPropertyReference"/>
+            <Sequence name="controlled-variable-reference" propertyIdentifier="19" type="0-BACnetObjectPropertyReference"/>
+            <Real name="controlled-variable-value" propertyIdentifier="21"/>
+            <Enumerated name="controlled-variable-units" propertyIdentifier="20" type="0-BACnetEngineeringUnits"/>
+            <Sequence name="setpoint-reference" propertyIdentifier="109" type="0-BACnetSetpointReference"/>
+            <Real name="setpoint" propertyIdentifier="108"/>
+            <Enumerated name="action" propertyIdentifier="2" type="0-BACnetAction"/>
+            <Real name="proportional-constant" propertyIdentifier="93" optional="true"/>
+            <Enumerated name="proportional-constant-units" propertyIdentifier="94" type="0-BACnetEngineeringUnits" optional="true"/>
+            <Real name="integral-constant" propertyIdentifier="49" optional="true"/>
+            <Enumerated name="integral-constant-units" propertyIdentifier="50" type="0-BACnetEngineeringUnits" optional="true"/>
+            <Real name="derivative-constant" propertyIdentifier="26" optional="true"/>
+            <Enumerated name="derivative-constant-units" propertyIdentifier="27" type="0-BACnetEngineeringUnits" optional="true"/>
+            <Real name="bias" propertyIdentifier="14" optional="true"/>
+            <Real name="maximum-output" propertyIdentifier="61" optional="true"/>
+            <Real name="minimum-output" propertyIdentifier="68" optional="true"/>
+            <Unsigned name="priority-for-writing" propertyIdentifier="88" minimum="1" maximum="16"/>
+            <Real name="cov-increment" propertyIdentifier="22" optional="true"/>
+            <Unsigned name="time-delay" propertyIdentifier="113" optional="true"/>
+            <Unsigned name="notification-class" propertyIdentifier="17" optional="true"/>
+            <Real name="error-limit" propertyIdentifier="34" optional="true"/>
+            <Real name="deadband" propertyIdentifier="25" optional="true"/>
+            <BitString name="event-enable" propertyIdentifier="35" type="0-BACnetEventTransitionBits" optional="true"/>
+            <BitString name="acked-transitions" propertyIdentifier="0" type="0-BACnetEventTransitionBits" optional="true" writable="false"/>
+            <Enumerated name="notify-type" propertyIdentifier="72" type="0-BACnetNotifyType" optional="true"/>
+            <Array name="event-time-stamps" propertyIdentifier="130" memberType="0-BACnetTimeStamp" minimumSize="3" maximumSize="3" optional="true" writable="false"/>
+            <Array name="event-message-texts" propertyIdentifier="351" memberType="String" minimumSize="3" maximumSize="3" optional="true" writable="false" requiredWith="event-message-texts-config"/>
+            <Array name="event-message-texts-config" propertyIdentifier="352" memberType="String" minimumSize="3" maximumSize="3" optional="true"/>
+            <Boolean name="event-detection-enable" propertyIdentifier="353" optional="true"/>
+            <Sequence name="event-algorithm-inhibit-ref" propertyIdentifier="355" type="0-BACnetObjectPropertyReference" optional="true"/>
+            <Boolean name="event-algorithm-inhibit" propertyIdentifier="354" optional="true" requiredWith="event-algorithm-inhibit-ref"/>
+            <Unsigned name="time-delay-normal" propertyIdentifier="356" optional="true"/>
+            <Boolean name="reliability-evaluation-inhibit" propertyIdentifier="357" optional="true"/>
+
+            <!-- Add135-2012aw-4 Protocol_Revision 16 -->
+            <Choice name="low-diff-limit" propertyIdentifier="390" type="0-BACnetOptionalREAL" optional="true"/>
+            <String name="profile-name" propertyIdentifier="168" optional="true"/>
+        </Object>
+
+        <!-- Clause 12.18 -->
+        <Object name="0-MultistateInputObject">
+            <ObjectIdentifier name="object-identifier" propertyIdentifier="75"/>
+            <String name="object-name" propertyIdentifier="77" minimumLength="1"/>
+            <Enumerated name="object-type" propertyIdentifier="79" type="0-BACnetObjectType" value="multi-state-input" variability="constant"/>
+            <Unsigned name="present-value" propertyIdentifier="85"/>
+            <String name="description" propertyIdentifier="28" optional="true"/>
+            <String name="device-type" propertyIdentifier="31" optional="true"/>
+            <BitString name="status-flags" propertyIdentifier="111" type="0-BACnetStatusFlags"/>
+            <Enumerated name="event-state" propertyIdentifier="36" type="0-BACnetEventState"/>
+            <Enumerated name="reliability" propertyIdentifier="103" type="0-BACnetReliability" optional="true" requiredWith="reliability-evaluation-inhibit"/>
+            <Boolean name="out-of-service" propertyIdentifier="81"/>
+            <Unsigned name="number-of-states" propertyIdentifier="74"/>
+            <Array name="state-text" propertyIdentifier="110" memberType="String" optional="true"/>
+            <Unsigned name="time-delay" propertyIdentifier="113" optional="true"/>
+            <Unsigned name="notification-class" propertyIdentifier="17" optional="true"/>
+            <List name="alarm-values" propertyIdentifier="7" memberType="Unsigned" optional="true"/>
+            <List name="fault-values" propertyIdentifier="39" memberType="Unsigned" optional="true"/>
+            <BitString name="event-enable" propertyIdentifier="35" type="0-BACnetEventTransitionBits" optional="true"/>
+            <BitString name="acked-transitions" propertyIdentifier="0" type="0-BACnetEventTransitionBits" optional="true" writable="false"/>
+            <Enumerated name="notify-type" propertyIdentifier="72" type="0-BACnetNotifyType" optional="true"/>
+            <Array name="event-time-stamps" propertyIdentifier="130" memberType="0-BACnetTimeStamp" minimumSize="3" maximumSize="3" optional="true" writable="false"/>
+            <Array name="event-message-texts" propertyIdentifier="351" memberType="String" minimumSize="3" maximumSize="3" optional="true" writable="false" requiredWith="event-message-texts-config"/>
+            <Array name="event-message-texts-config" propertyIdentifier="352" memberType="String" minimumSize="3" maximumSize="3" optional="true"/>
+            <Boolean name="event-detection-enable" propertyIdentifier="353" optional="true"/>
+            <Sequence name="event-algorithm-inhibit-ref" propertyIdentifier="355" type="0-BACnetObjectPropertyReference" optional="true"/>
+            <Boolean name="event-algorithm-inhibit" propertyIdentifier="354" optional="true" requiredWith="event-algorithm-inhibit-ref"/>
+            <Unsigned name="time-delay-normal" propertyIdentifier="356" optional="true"/>
+            <Boolean name="reliability-evaluation-inhibit" propertyIdentifier="357" optional="true"/>
+
+            <!-- Add135-2012at-1 Protocol_Revision 16 -->
+            <Choice name="interface-value" propertyIdentifier="387" type="0-BACnetOptionalUnsigned" optional="true" writable="false"/>
+            <String name="profile-name" propertyIdentifier="168" optional="true"/>
+        </Object>
+
+        <!-- Clause 12.19 -->
+        <Object name="0-MultistateOutputObject">
+            <ObjectIdentifier name="object-identifier" propertyIdentifier="75"/>
+            <String name="object-name" propertyIdentifier="77" minimumLength="1"/>
+            <Enumerated name="object-type" propertyIdentifier="79" type="0-BACnetObjectType" value="multi-state-output" variability="constant"/>
+            <Unsigned name="present-value" propertyIdentifier="85" writable="true"/>
+            <String name="description" propertyIdentifier="28" optional="true"/>
+            <String name="device-type" propertyIdentifier="31" optional="true"/>
+            <BitString name="status-flags" propertyIdentifier="111" type="0-BACnetStatusFlags"/>
+            <Enumerated name="event-state" propertyIdentifier="36" type="0-BACnetEventState"/>
+            <Enumerated name="reliability" propertyIdentifier="103" type="0-BACnetReliability" optional="true" requiredWith="reliability-evaluation-inhibit"/>
+            <Boolean name="out-of-service" propertyIdentifier="81"/>
+            <Unsigned name="number-of-states" propertyIdentifier="74"/>
+            <Array name="state-text" propertyIdentifier="110" memberType="String" optional="true"/>
+            <Array name="priority-array" propertyIdentifier="87" type="0-BACnetPriorityArray" writable="false"/>
+            <Unsigned name="relinquish-default" propertyIdentifier="104"/>
+            <Unsigned name="time-delay" propertyIdentifier="113" optional="true"/>
+            <Unsigned name="notification-class" propertyIdentifier="17" optional="true"/>
+            <Unsigned name="feedback-value" propertyIdentifier="40" optional="true"/>
+            <BitString name="event-enable" propertyIdentifier="35" type="0-BACnetEventTransitionBits" optional="true"/>
+            <BitString name="acked-transitions" propertyIdentifier="0" type="0-BACnetEventTransitionBits" optional="true" writable="false"/>
+            <Enumerated name="notify-type" propertyIdentifier="72" type="0-BACnetNotifyType" optional="true"/>
+            <Array name="event-time-stamps" propertyIdentifier="130" memberType="0-BACnetTimeStamp" minimumSize="3" maximumSize="3" optional="true" writable="false"/>
+            <Array name="event-message-texts" propertyIdentifier="351" memberType="String" minimumSize="3" maximumSize="3" optional="true" writable="false" requiredWith="event-message-texts-config"/>
+            <Array name="event-message-texts-config" propertyIdentifier="352" memberType="String" minimumSize="3" maximumSize="3" optional="true"/>
+            <Boolean name="event-detection-enable" propertyIdentifier="353" optional="true"/>
+            <Sequence name="event-algorithm-inhibit-ref" propertyIdentifier="355" type="0-BACnetObjectPropertyReference" optional="true"/>
+            <Boolean name="event-algorithm-inhibit" propertyIdentifier="354" optional="true" requiredWith="event-algorithm-inhibit-ref"/>
+            <Unsigned name="time-delay-normal" propertyIdentifier="356" optional="true"/>
+            <Boolean name="reliability-evaluation-inhibit" propertyIdentifier="357" optional="true"/>
+
+            <!-- Add135-2012at-1 Protocol_Revision 16 -->
+            <Choice name="interface-value" propertyIdentifier="387" type="0-BACnetOptionalUnsigned" optional="true" writable="false"/>
+            <String name="profile-name" propertyIdentifier="168" optional="true"/>
+        </Object>
+
+        <!-- Clause 12.20 -->
+        <Object name="0-MultistateValueObject">
+            <ObjectIdentifier name="object-identifier" propertyIdentifier="75"/>
+            <String name="object-name" propertyIdentifier="77" minimumLength="1"/>
+            <Enumerated name="object-type" propertyIdentifier="79" type="0-BACnetObjectType" value="multi-state-value" variability="constant"/>
+            <Unsigned name="present-value" propertyIdentifier="85"/>
+            <String name="description" propertyIdentifier="28" optional="true"/>
+            <BitString name="status-flags" propertyIdentifier="111" type="0-BACnetStatusFlags"/>
+            <Enumerated name="event-state" propertyIdentifier="36" type="0-BACnetEventState"/>
+            <Enumerated name="reliability" propertyIdentifier="103" type="0-BACnetReliability" optional="true" requiredWith="reliability-evaluation-inhibit"/>
+            <Boolean name="out-of-service" propertyIdentifier="81"/>
+            <Unsigned name="number-of-states" propertyIdentifier="74"/>
+            <Array name="state-text" propertyIdentifier="110" memberType="String" optional="true"/>
+            <Array name="priority-array" propertyIdentifier="87" type="0-BACnetPriorityArray" optional="true" writable="false"/>
+            <Unsigned name="relinquish-default" propertyIdentifier="104" optional="true"/>
+            <Unsigned name="time-delay" propertyIdentifier="113" optional="true"/>
+            <Unsigned name="notification-class" propertyIdentifier="17" optional="true"/>
+            <List name="alarm-values" propertyIdentifier="7" memberType="Unsigned" optional="true"/>
+            <List name="fault-values" propertyIdentifier="39" memberType="Unsigned" optional="true"/>
+            <BitString name="event-enable" propertyIdentifier="35" type="0-BACnetEventTransitionBits" optional="true"/>
+            <BitString name="acked-transitions" propertyIdentifier="0" type="0-BACnetEventTransitionBits" optional="true" writable="false"/>
+            <Enumerated name="notify-type" propertyIdentifier="72" type="0-BACnetNotifyType" optional="true"/>
+            <Array name="event-time-stamps" propertyIdentifier="130" memberType="0-BACnetTimeStamp" minimumSize="3" maximumSize="3" optional="true" writable="false"/>
+            <Array name="event-message-texts" propertyIdentifier="351" memberType="String" minimumSize="3" maximumSize="3" optional="true" writable="false" requiredWith="event-message-texts-config"/>
+            <Array name="event-message-texts-config" propertyIdentifier="352" memberType="String" minimumSize="3" maximumSize="3" optional="true"/>
+            <Boolean name="event-detection-enable" propertyIdentifier="353" optional="true"/>
+            <Sequence name="event-algorithm-inhibit-ref" propertyIdentifier="355" type="0-BACnetObjectPropertyReference" optional="true"/>
+            <Boolean name="event-algorithm-inhibit" propertyIdentifier="354" optional="true" requiredWith="event-algorithm-inhibit-ref"/>
+            <Unsigned name="time-delay-normal" propertyIdentifier="356" optional="true"/>
+            <Boolean name="reliability-evaluation-inhibit" propertyIdentifier="357" optional="true"/>
+
+            <String name="profile-name" propertyIdentifier="168" optional="true"/>
+        </Object>
+
+        <!-- Clause 12.49 -->
+        <Object name="0-NetworkSecurityObject">
+            <ObjectIdentifier name="object-identifier" propertyIdentifier="75"/>
+            <String name="object-name" propertyIdentifier="77" minimumLength="1"/>
+            <Enumerated name="object-type" propertyIdentifier="79" type="0-BACnetObjectType" value="network-security" variability="constant"/>
+            <String name="description" propertyIdentifier="28" optional="true"/>
+            <Enumerated name="base-device-security-policy" propertyIdentifier="327" type="0-BACnetSecurityLevel" writable="true"/>
+            <Array name="network-access-security-policies" propertyIdentifier="332" memberType="0-BACnetNetworkSecurityPolicy" writable="true"/>
+            <Unsigned name="security-time-window" propertyIdentifier="335" writable="true"/>
+            <Unsigned name="packet-reorder-time" propertyIdentifier="333" writable="true"/>
+            <Unsigned name="distribution-key-revision" propertyIdentifier="328" type="0-Unsigned8" writable="false"/>
+            <Array name="key-sets" propertyIdentifier="330" memberType="0-BACnetSecurityKeySet" minimumSize="2" maximumSize="2" writable="false"/>
+            <Sequence name="last-key-server" propertyIdentifier="331" type="0-BACnetAddressBinding" writable="true"/>
+            <Unsigned name="security-pdu-timeout" propertyIdentifier="334" type="0-Unsigned16" writable="true"/>
+            <Unsigned name="update-key-set-timeout" propertyIdentifier="337" type="0-Unsigned16"/>
+            <List name="supported-security-algorithms" propertyIdentifier="336" memberType="0-Unsigned8" writable="false"/>
+            <Boolean name="do-not-hide" propertyIdentifier="329" writable="true"/>
+
+            <String name="profile-name" propertyIdentifier="168" optional="true"/>
+        </Object>
+
+        <!-- Clause 12.21 -->
+        <Object name="0-NotificationClassObject">
+            <ObjectIdentifier name="object-identifier" propertyIdentifier="75"/>
+            <String name="object-name" propertyIdentifier="77" minimumLength="1"/>
+            <Enumerated name="object-type" propertyIdentifier="79" type="0-BACnetObjectType" value="notification-class" variability="constant"/>
+            <String name="description" propertyIdentifier="28" optional="true"/>
+            <Unsigned name="notification-class" propertyIdentifier="17"/>
+            <Array name="priority" propertyIdentifier="86" memberType="Unsigned" minimumSize="3" maximumSize="3"/>
+            <BitString name="ack-required" propertyIdentifier="1" type="0-BACnetEventTransitionBits"/>
+            <List name="recipient-list" propertyIdentifier="102" memberType="0-BACnetDestination"/>
+            <!-- Add135-2012aw-6 Protocol_Revision 16 -->
+            <BitString name="status-flags" propertyIdentifier="111" type="0-BACnetStatusFlags" optional="true" requiredWith="event-detection-enable;notification-class;event-enable;acked-transitions;notify-type;event-time-stamps;event-message-texts;event-message-texts-config"/>
+            <Enumerated name="event-state" propertyIdentifier="36" type="0-BACnetEventState" optional="true" requiredWith="event-detection-enable;notification-class;event-enable;acked-transitions;notify-type;event-time-stamps;event-message-texts;event-message-texts-config"/>
+            <Enumerated name="reliability" propertyIdentifier="103" type="0-BACnetReliability" optional="true" requiredWith="reliability-evaluation-inhibit;event-detection-enable;notification-class;event-enable;acked-transitions;notify-type;event-time-stamps;event-message-texts;event-message-texts-config"/>
+            <Boolean name="event-detection-enable" propertyIdentifier="353" optional="true" requiredWith="notification-class;event-enable;acked-transitions;notify-type;event-time-stamps;event-message-texts;event-message-texts-config"/>
+            <!-- BUG <Unsigned name="notification-class" propertyIdentifier="17" optional="true" requiredWith="event-detection-enable;event-enable;acked-transitions;notify-type;event-time-stamps;event-message-texts;event-message-texts-config"/> -->
+            <BitString name="event-enable" propertyIdentifier="35" type="0-BACnetEventTransitionBits" optional="true" requiredWith="event-detection-enable;notification-class;acked-transitions;notify-type;event-time-stamps;event-message-texts;event-message-texts-config"/>
+            <BitString name="acked-transitions" propertyIdentifier="0" type="0-BACnetEventTransitionBits" optional="true" writable="false" requiredWith="event-detection-enable;notification-class;event-enable;notify-type;event-time-stamps;event-message-texts;event-message-texts-config"/>
+            <Enumerated name="notify-type" propertyIdentifier="72" type="0-BACnetNotifyType" optional="true" requiredWith="event-detection-enable;notification-class;event-enable;acked-transitions;event-time-stamps;event-message-texts;event-message-texts-config"/>
+            <Array name="event-time-stamps" propertyIdentifier="130" memberType="0-BACnetTimeStamp" minimumSize="3" maximumSize="3" optional="true" writable="false" requiredWith="event-detection-enable;notification-class;event-enable;acked-transitions;notify-type;event-message-texts;event-message-texts-config"/>
+            <Array name="event-message-texts" propertyIdentifier="351" memberType="String" minimumSize="3" maximumSize="3" optional="true" writable="false" requiredWith="event-message-texts-config"/>
+            <Array name="event-message-texts-config" propertyIdentifier="352" memberType="String" minimumSize="3" maximumSize="3" optional="true"/>
+            <Boolean name="reliability-evaluation-inhibit" propertyIdentifier="357" optional="true"/>
+            <String name="profile-name" propertyIdentifier="168" optional="true"/>
+        </Object>
+
+        <!-- Clause 12.51 -->
+        <Object name="0-NotificationForwarderObject">
+            <ObjectIdentifier name="object-identifier" propertyIdentifier="75"/>
+            <String name="object-name" propertyIdentifier="77" minimumLength="1"/>
+            <Enumerated name="object-type" propertyIdentifier="79" type="0-BACnetObjectType" value="notification-forwarder" variability="constant"/>
+            <String name="description" propertyIdentifier="28" optional="true"/>
+            <BitString name="status-flags" propertyIdentifier="111" type="0-BACnetStatusFlags"/>
+            <Enumerated name="reliability" propertyIdentifier="103" type="0-BACnetReliability"/>
+            <Boolean name="out-of-service" propertyIdentifier="81"/>
+            <List name="recipient-list" propertyIdentifier="102" memberType="0-BACnetDestination"/>
+            <List name="subscribed-recipients" propertyIdentifier="362" memberType="0-BACnetEventNotificationSubscription" writable="true"/>
+            <Choice name="process-identifier-filter" propertyIdentifier="361" type="0-BACnetProcessIdSelection"/>
+            <Array name="port-filter" propertyIdentifier="363" memberType="0-BACnetPortPermission" optional="true"/>
+            <Boolean name="local-forwarding-only" propertyIdentifier="360"/>
+            <Boolean name="reliability-evaluation-inhibit" propertyIdentifier="357" optional="true"/>
+
+            <String name="profile-name" propertyIdentifier="168" optional="true"/>
+        </Object>
+
+        <!-- Clause 12.41 -->
+        <Object name="0-OctetstringValueObject">
+            <ObjectIdentifier name="object-identifier" propertyIdentifier="75"/>
+            <String name="object-name" propertyIdentifier="77" minimumLength="1"/>
+            <Enumerated name="object-type" propertyIdentifier="79" type="0-BACnetObjectType" value="octetstring-value" variability="constant"/>
+            <String name="description" propertyIdentifier="28" optional="true"/>
+            <OctetString name="present-value" propertyIdentifier="85"/>
+            <BitString name="status-flags" propertyIdentifier="111" type="0-BACnetStatusFlags"/>
+            <Enumerated name="event-state" propertyIdentifier="36" type="0-BACnetEventState" optional="true"/>
+            <Enumerated name="reliability" propertyIdentifier="103" type="0-BACnetReliability" optional="true" requiredWith="reliability-evaluation-inhibit"/>
+            <Boolean name="out-of-service" propertyIdentifier="81" optional="true"/>
+            <Array name="priority-array" propertyIdentifier="87" type="0-BACnetPriorityArray" optional="true" writable="false"/>
+            <OctetString name="relinquish-default" propertyIdentifier="104" optional="true"/>
+            <Boolean name="reliability-evaluation-inhibit" propertyIdentifier="357" optional="true"/>
+
+            <String name="profile-name" propertyIdentifier="168" optional="true"/>
+        </Object>
+
+        <!-- Clause 12.44 -->
+        <Object name="0-PositiveIntegerValueObject">
+            <ObjectIdentifier name="object-identifier" propertyIdentifier="75"/>
+            <String name="object-name" propertyIdentifier="77" minimumLength="1"/>
+            <Enumerated name="object-type" propertyIdentifier="79" type="0-BACnetObjectType" value="positive-integer-value" variability="constant"/>
+            <String name="description" propertyIdentifier="28" optional="true"/>
+            <Unsigned name="present-value" propertyIdentifier="85"/>
+            <BitString name="status-flags" propertyIdentifier="111" type="0-BACnetStatusFlags"/>
+            <Enumerated name="event-state" propertyIdentifier="36" type="0-BACnetEventState" optional="true"/>
+            <Enumerated name="reliability" propertyIdentifier="103" type="0-BACnetReliability" optional="true" requiredWith="reliability-evaluation-inhibit"/>
+            <Boolean name="out-of-service" propertyIdentifier="81" optional="true"/>
+            <Enumerated name="units" propertyIdentifier="117" type="0-BACnetEngineeringUnits"/>
+            <Array name="priority-array" propertyIdentifier="87" type="0-BACnetPriorityArray" optional="true" writable="false"/>
+            <Unsigned name="relinquish-default" propertyIdentifier="104" optional="true"/>
+            <Unsigned name="cov-increment" propertyIdentifier="22" optional="true"/>
+            <Unsigned name="time-delay" propertyIdentifier="113" optional="true"/>
+            <Unsigned name="notification-class" propertyIdentifier="17" optional="true"/>
+            <Unsigned name="high-limit" propertyIdentifier="45" optional="true"/>
+            <Unsigned name="low-limit" propertyIdentifier="59" optional="true"/>
+            <Unsigned name="deadband" propertyIdentifier="25" optional="true"/>
+            <BitString name="limit-enable" propertyIdentifier="52" type="0-BACnetLimitEnable" optional="true"/>
+            <BitString name="event-enable" propertyIdentifier="35" type="0-BACnetEventTransitionBits" optional="true"/>
+            <BitString name="acked-transitions" propertyIdentifier="0" type="0-BACnetEventTransitionBits" optional="true" writable="false"/>
+            <Enumerated name="notify-type" propertyIdentifier="72" type="0-BACnetNotifyType" optional="true"/>
+            <Array name="event-time-stamps" propertyIdentifier="130" memberType="0-BACnetTimeStamp" minimumSize="3" maximumSize="3" optional="true" writable="false"/>
+            <Array name="event-message-texts" propertyIdentifier="351" memberType="String" minimumSize="3" maximumSize="3" optional="true" writable="false" requiredWith="event-message-texts-config"/>
+            <Array name="event-message-texts-config" propertyIdentifier="352" memberType="String" minimumSize="3" maximumSize="3" optional="true"/>
+            <Boolean name="event-detection-enable" propertyIdentifier="353" optional="true"/>
+            <Sequence name="event-algorithm-inhibit-ref" propertyIdentifier="355" type="0-BACnetObjectPropertyReference" optional="true"/>
+            <Boolean name="event-algorithm-inhibit" propertyIdentifier="354" optional="true" requiredWith="event-algorithm-inhibit-ref"/>
+            <Unsigned name="time-delay-normal" propertyIdentifier="356" optional="true"/>
+            <Boolean name="reliability-evaluation-inhibit" propertyIdentifier="357" optional="true"/>
+            <Unsigned name="min-pres-value" propertyIdentifier="69" optional="true"/>
+            <Unsigned name="max-pres-value" propertyIdentifier="65" optional="true"/>
+            <Unsigned name="resolution" propertyIdentifier="106" optional="true" writable="false"/>
+
+            <!-- Add135-2012aw-3 Protocol_Revision 16 -->
+            <Unsigned name="fault-high-limit" propertyIdentifier="388" optional="true" requiredWith="fault-low-limit"/>
+            <Unsigned name="fault-low-limit" propertyIdentifier="389" optional="true" requiredWith="fault-high-limit"/>
+            <String name="profile-name" propertyIdentifier="168" optional="true"/>
+        </Object>
+
+        <!-- Clause 12.22 -->
+        <Object name="0-ProgramObject">
+            <ObjectIdentifier name="object-identifier" propertyIdentifier="75"/>
+            <String name="object-name" propertyIdentifier="77" minimumLength="1"/>
+            <Enumerated name="object-type" propertyIdentifier="79" type="0-BACnetObjectType" value="program" variability="constant"/>
+            <Enumerated name="program-state" propertyIdentifier="92" type="0-BACnetProgramState" writable="false"/>
+            <Enumerated name="program-change" propertyIdentifier="90" type="0-BACnetProgramRequest" writable="true"/>
+            <Enumerated name="reason-for-halt" propertyIdentifier="100" type="0-BACnetProgramError" optional="true"/>
+            <String name="description-of-halt" propertyIdentifier="29" optional="true"/>
+            <String name="program-location" propertyIdentifier="91" optional="true"/>
+            <String name="description" propertyIdentifier="28" optional="true"/>
+            <String name="instance-of" propertyIdentifier="48" optional="true"/>
+            <BitString name="status-flags" propertyIdentifier="111" type="0-BACnetStatusFlags"/>
+            <Enumerated name="reliability" propertyIdentifier="103" type="0-BACnetReliability" optional="true" requiredWith="reliability-evaluation-inhibit"/>
+            <Boolean name="out-of-service" propertyIdentifier="81"/>
+            <Boolean name="event-detection-enable" propertyIdentifier="353" optional="true"/>
+            <Unsigned name="notification-class" propertyIdentifier="17" optional="true"/>
+            <BitString name="event-enable" propertyIdentifier="35" type="0-BACnetEventTransitionBits" optional="true"/>
+            <Enumerated name="event-state" propertyIdentifier="36" type="0-BACnetEventState" optional="true"/>
+            <BitString name="acked-transitions" propertyIdentifier="0" type="0-BACnetEventTransitionBits" optional="true" writable="false"/>
+            <Enumerated name="notify-type" propertyIdentifier="72" type="0-BACnetNotifyType" optional="true"/>
+            <Array name="event-time-stamps" propertyIdentifier="130" memberType="0-BACnetTimeStamp" minimumSize="3" maximumSize="3" optional="true" writable="false"/>
+            <Array name="event-message-texts" propertyIdentifier="351" memberType="String" minimumSize="3" maximumSize="3" optional="true" writable="false" requiredWith="event-message-texts-config"/>
+            <Array name="event-message-texts-config" propertyIdentifier="352" memberType="String" minimumSize="3" maximumSize="3" optional="true"/>
+            <Boolean name="reliability-evaluation-inhibit" propertyIdentifier="357" optional="true"/>
+
+            <String name="profile-name" propertyIdentifier="168" optional="true"/>
+        </Object>
+
+        <!-- Clause 12.23 -->
+        <Object name="0-PulseConverterObject">
+            <ObjectIdentifier name="object-identifier" propertyIdentifier="75"/>
+            <String name="object-name" propertyIdentifier="77" minimumLength="1"/>
+            <Enumerated name="object-type" propertyIdentifier="79" type="0-BACnetObjectType" value="pulse-converter" variability="constant"/>
+            <String name="description" propertyIdentifier="28" optional="true"/>
+            <Real name="present-value" propertyIdentifier="85"/>
+            <Sequence name="input-reference" propertyIdentifier="181" type="0-BACnetObjectPropertyReference" optional="true"/>
+            <BitString name="status-flags" propertyIdentifier="111" type="0-BACnetStatusFlags"/>
+            <Enumerated name="event-state" propertyIdentifier="36" type="0-BACnetEventState"/>
+            <Enumerated name="reliability" propertyIdentifier="103" type="0-BACnetReliability" optional="true" requiredWith="reliability-evaluation-inhibit"/>
+            <Boolean name="out-of-service" propertyIdentifier="81"/>
+            <Enumerated name="units" propertyIdentifier="117" type="0-BACnetEngineeringUnits"/>
+            <Real name="scale-factor" propertyIdentifier="188"/>
+            <Real name="adjust-value" propertyIdentifier="176" writable="true"/>
+            <Unsigned name="count" propertyIdentifier="177" writable="false"/>
+            <DateTime name="update-time" propertyIdentifier="189" writable="false"/>
+            <DateTime name="count-change-time" propertyIdentifier="179" writable="false"/>
+            <Unsigned name="count-before-change" propertyIdentifier="178"/>
+            <Real name="cov-increment" propertyIdentifier="22" optional="true"/>
+            <Unsigned name="cov-period" propertyIdentifier="180" optional="true"/>
+            <Unsigned name="notification-class" propertyIdentifier="17" optional="true"/>
+            <Unsigned name="time-delay" propertyIdentifier="113" optional="true"/>
+            <Real name="high-limit" propertyIdentifier="45" optional="true"/>
+            <Real name="low-limit" propertyIdentifier="59" optional="true"/>
+            <Real name="deadband" propertyIdentifier="25" optional="true"/>
+            <BitString name="limit-enable" propertyIdentifier="52" type="0-BACnetLimitEnable" optional="true"/>
+            <BitString name="event-enable" propertyIdentifier="35" type="0-BACnetEventTransitionBits" optional="true"/>
+            <BitString name="acked-transitions" propertyIdentifier="0" type="0-BACnetEventTransitionBits" optional="true" writable="false"/>
+            <Enumerated name="notify-type" propertyIdentifier="72" type="0-BACnetNotifyType" optional="true"/>
+            <Array name="event-time-stamps" propertyIdentifier="130" memberType="0-BACnetTimeStamp" minimumSize="3" maximumSize="3" optional="true" writable="false"/>
+            <Array name="event-message-texts" propertyIdentifier="351" memberType="String" minimumSize="3" maximumSize="3" optional="true" writable="false" requiredWith="event-message-texts-config"/>
+            <Array name="event-message-texts-config" propertyIdentifier="352" memberType="String" minimumSize="3" maximumSize="3" optional="true"/>
+            <Boolean name="event-detection-enable" propertyIdentifier="353" optional="true"/>
+            <Sequence name="event-algorithm-inhibit-ref" propertyIdentifier="355" type="0-BACnetObjectPropertyReference" optional="true"/>
+            <Boolean name="event-algorithm-inhibit" propertyIdentifier="354" optional="true" requiredWith="event-algorithm-inhibit-ref"/>
+            <Unsigned name="time-delay-normal" propertyIdentifier="356" optional="true"/>
+            <Boolean name="reliability-evaluation-inhibit" propertyIdentifier="357" optional="true"/>
+
+            <String name="profile-name" propertyIdentifier="168" optional="true"/>
+        </Object>
+
+        <!-- Clause 12.24 -->
+        <Object name="0-ScheduleObject">
+            <ObjectIdentifier name="object-identifier" propertyIdentifier="75"/>
+            <String name="object-name" propertyIdentifier="77" minimumLength="1"/>
+            <Enumerated name="object-type" propertyIdentifier="79" type="0-BACnetObjectType" value="schedule" variability="constant"/>
+            <Any name="present-value" propertyIdentifier="85"/>
+            <String name="description" propertyIdentifier="28" optional="true"/>
+            <Sequence name="effective-period" propertyIdentifier="32" type="0-BACnetDateRange"/>
+            <Array name="weekly-schedule" propertyIdentifier="123" memberType="0-BACnetDailySchedule" minimumSize="7" maximumSize="7" optional="true"/>
+            <Any name="schedule-default" propertyIdentifier="174"/>
+            <Array name="exception-schedule" propertyIdentifier="38" memberType="0-BACnetSpecialEvent" optional="true"/>
+            <List name="list-of-object-property-references" propertyIdentifier="54" memberType="0-BACnetDeviceObjectPropertyReference"/>
+            <Unsigned name="priority-for-writing" propertyIdentifier="88" minimum="1" maximum="16"/>
+            <BitString name="status-flags" propertyIdentifier="111" type="0-BACnetStatusFlags"/>
+            <Enumerated name="reliability" propertyIdentifier="103" type="0-BACnetReliability"/>
+            <Boolean name="out-of-service" propertyIdentifier="81"/>
+            <Boolean name="event-detection-enable" propertyIdentifier="353" optional="true"/>
+            <Unsigned name="notification-class" propertyIdentifier="17" optional="true"/>
+            <BitString name="event-enable" propertyIdentifier="35" type="0-BACnetEventTransitionBits" optional="true"/>
+            <Enumerated name="event-state" propertyIdentifier="36" type="0-BACnetEventState" optional="true"/>
+            <BitString name="acked-transitions" propertyIdentifier="0" type="0-BACnetEventTransitionBits" optional="true" writable="false"/>
+            <Enumerated name="notify-type" propertyIdentifier="72" type="0-BACnetNotifyType" optional="true"/>
+            <Array name="event-time-stamps" propertyIdentifier="130" memberType="0-BACnetTimeStamp" minimumSize="3" maximumSize="3" optional="true" writable="false"/>
+            <Array name="event-message-texts" propertyIdentifier="351" memberType="String" minimumSize="3" maximumSize="3" optional="true" writable="false" requiredWith="event-message-texts-config"/>
+            <Array name="event-message-texts-config" propertyIdentifier="352" memberType="String" minimumSize="3" maximumSize="3" optional="true"/>
+            <Boolean name="reliability-evaluation-inhibit" propertyIdentifier="357" optional="true"/>
+
+            <String name="profile-name" propertyIdentifier="168" optional="true"/>
+        </Object>
+
+        <!-- Clause 12.29 -->
+        <Object name="0-StructuredViewObject">
+            <ObjectIdentifier name="object-identifier" propertyIdentifier="75"/>
+            <String name="object-name" propertyIdentifier="77" minimumLength="1"/>
+            <Enumerated name="object-type" propertyIdentifier="79" type="0-BACnetObjectType" value="structured-view" variability="constant"/>
+            <String name="description" propertyIdentifier="28" optional="true"/>
+            <Enumerated name="node-type" propertyIdentifier="208" type="0-BACnetNodeType"/>
+            <String name="node-subtype" propertyIdentifier="207" optional="true"/>
+            <Array name="subordinate-list" propertyIdentifier="211" memberType="0-BACnetDeviceObjectReference"/>
+            <Array name="subordinate-annotations" propertyIdentifier="210" memberType="String" optional="true"/>
+
+            <String name="profile-name" propertyIdentifier="168" optional="true"/>
+        </Object>
+
+        <!-- Clause 12.47 -->
+        <Object name="0-TimePatternValueObject">
+            <ObjectIdentifier name="object-identifier" propertyIdentifier="75"/>
+            <String name="object-name" propertyIdentifier="77" minimumLength="1"/>
+            <Enumerated name="object-type" propertyIdentifier="79" type="0-BACnetObjectType" value="timepattern-value" variability="constant"/>
+            <String name="description" propertyIdentifier="28" optional="true"/>
+            <TimePattern name="present-value" propertyIdentifier="85"/>
+            <BitString name="status-flags" propertyIdentifier="111" type="0-BACnetStatusFlags"/>
+            <Enumerated name="event-state" propertyIdentifier="36" type="0-BACnetEventState" optional="true"/>
+            <Enumerated name="reliability" propertyIdentifier="103" type="0-BACnetReliability" optional="true" requiredWith="reliability-evaluation-inhibit"/>
+            <Boolean name="out-of-service" propertyIdentifier="81" optional="true"/>
+            <Array name="priority-array" propertyIdentifier="87" type="0-BACnetPriorityArray" optional="true" writable="false"/>
+            <TimePattern name="relinquish-default" propertyIdentifier="104" optional="true"/>
+            <Boolean name="reliability-evaluation-inhibit" propertyIdentifier="357" optional="true"/>
+
+            <!-- Add135-2012aw-5 Protocol_Revision 16 -->
+            <Boolean name="event-detection-enable" propertyIdentifier="353" optional="true" requiredWith="notification-class;event-enable;acked-transitions;notify-type;event-time-stamps;event-message-texts;event-message-texts-config"/>
+            <Unsigned name="notification-class" propertyIdentifier="17" optional="true" requiredWith="event-detection-enable;event-enable;acked-transitions;notify-type;event-time-stamps;event-message-texts;event-message-texts-config"/>
+            <BitString name="event-enable" propertyIdentifier="35" type="0-BACnetEventTransitionBits" optional="true" requiredWith="event-detection-enable;notification-class;acked-transitions;notify-type;event-time-stamps;event-message-texts;event-message-texts-config"/>
+            <BitString name="acked-transitions" propertyIdentifier="0" type="0-BACnetEventTransitionBits" optional="true" writable="false" requiredWith="event-detection-enable;notification-class;event-enable;notify-type;event-time-stamps;event-message-texts;event-message-texts-config"/>
+            <Enumerated name="notify-type" propertyIdentifier="72" type="0-BACnetNotifyType" optional="true" requiredWith="event-detection-enable;notification-class;event-enable;acked-transitions;event-time-stamps;event-message-texts;event-message-texts-config"/>
+            <Array name="event-time-stamps" propertyIdentifier="130" memberType="0-BACnetTimeStamp" minimumSize="3" maximumSize="3" optional="true" writable="false" requiredWith="event-detection-enable;notification-class;event-enable;acked-transitions;notify-type;event-message-texts;event-message-texts-config"/>
+            <Array name="event-message-texts" propertyIdentifier="351" memberType="String" minimumSize="3" maximumSize="3" optional="true" writable="false" requiredWith="event-message-texts-config"/>
+            <Array name="event-message-texts-config" propertyIdentifier="352" memberType="String" minimumSize="3" maximumSize="3" optional="true"/>
+            <String name="profile-name" propertyIdentifier="168" optional="true"/>
+        </Object>
+
+        <!-- Clause 12.42 -->
+        <Object name="0-TimeValueObject">
+            <ObjectIdentifier name="object-identifier" propertyIdentifier="75"/>
+            <String name="object-name" propertyIdentifier="77" minimumLength="1"/>
+            <Enumerated name="object-type" propertyIdentifier="79" type="0-BACnetObjectType" value="time-value" variability="constant"/>
+            <String name="description" propertyIdentifier="28" optional="true"/>
+            <Time name="present-value" propertyIdentifier="85"/>
+            <BitString name="status-flags" propertyIdentifier="111" type="0-BACnetStatusFlags"/>
+            <Enumerated name="event-state" propertyIdentifier="36" type="0-BACnetEventState" optional="true"/>
+            <Enumerated name="reliability" propertyIdentifier="103" type="0-BACnetReliability" optional="true" requiredWith="reliability-evaluation-inhibit"/>
+            <Boolean name="out-of-service" propertyIdentifier="81" optional="true"/>
+            <Array name="priority-array" propertyIdentifier="87" type="0-BACnetPriorityArray" optional="true" writable="false"/>
+            <Time name="relinquish-default" propertyIdentifier="104" optional="true"/>
+            <Boolean name="reliability-evaluation-inhibit" propertyIdentifier="357" optional="true"/>
+
+            <!-- Add135-2012aw-5 Protocol_Revision 16 -->
+            <Boolean name="event-detection-enable" propertyIdentifier="353" optional="true" requiredWith="notification-class;event-enable;acked-transitions;notify-type;event-time-stamps;event-message-texts;event-message-texts-config"/>
+            <Unsigned name="notification-class" propertyIdentifier="17" optional="true" requiredWith="event-detection-enable;event-enable;acked-transitions;notify-type;event-time-stamps;event-message-texts;event-message-texts-config"/>
+            <BitString name="event-enable" propertyIdentifier="35" type="0-BACnetEventTransitionBits" optional="true" requiredWith="event-detection-enable;notification-class;acked-transitions;notify-type;event-time-stamps;event-message-texts;event-message-texts-config"/>
+            <BitString name="acked-transitions" propertyIdentifier="0" type="0-BACnetEventTransitionBits" optional="true" writable="false" requiredWith="event-detection-enable;notification-class;event-enable;notify-type;event-time-stamps;event-message-texts;event-message-texts-config"/>
+            <Enumerated name="notify-type" propertyIdentifier="72" type="0-BACnetNotifyType" optional="true" requiredWith="event-detection-enable;notification-class;event-enable;acked-transitions;event-time-stamps;event-message-texts;event-message-texts-config"/>
+            <Array name="event-time-stamps" propertyIdentifier="130" memberType="0-BACnetTimeStamp" minimumSize="3" maximumSize="3" optional="true" writable="false" requiredWith="event-detection-enable;notification-class;event-enable;acked-transitions;notify-type;event-message-texts;event-message-texts-config"/>
+            <Array name="event-message-texts" propertyIdentifier="351" memberType="String" minimumSize="3" maximumSize="3" optional="true" writable="false" requiredWith="event-message-texts-config"/>
+            <Array name="event-message-texts-config" propertyIdentifier="352" memberType="String" minimumSize="3" maximumSize="3" optional="true"/>
+            <String name="profile-name" propertyIdentifier="168" optional="true"/>
+        </Object>
+
+        <!-- Clause 12.25 -->
+        <Object name="0-TrendLogObject">
+            <ObjectIdentifier name="object-identifier" propertyIdentifier="75"/>
+            <String name="object-name" propertyIdentifier="77" minimumLength="1"/>
+            <Enumerated name="object-type" propertyIdentifier="79" type="0-BACnetObjectType" value="trend-log" variability="constant"/>
+            <String name="description" propertyIdentifier="28" optional="true"/>
+            <Boolean name="enable" propertyIdentifier="133" writable="true"/>
+            <DateTime name="start-time" propertyIdentifier="142" optional="true" writable="true"/>
+            <DateTime name="stop-time" propertyIdentifier="143" optional="true" writable="true"/>
+            <Sequence name="log-device-object-property" propertyIdentifier="132" type="0-BACnetDeviceObjectPropertyReference" optional="true"/>
+            <Unsigned name="log-interval" propertyIdentifier="134" optional="true"/>
+            <Unsigned name="cov-resubscription-interval" propertyIdentifier="128" optional="true"/>
+            <Choice name="client-cov-increment" propertyIdentifier="127" type="0-BACnetClientCOV" optional="true"/>
+            <Boolean name="stop-when-full" propertyIdentifier="144"/>
+            <Unsigned name="buffer-size" propertyIdentifier="126" type="0-Unsigned32"/>
+            <List name="log-buffer" propertyIdentifier="131" memberType="0-BACnetLogRecord"/>
+            <Unsigned name="record-count" propertyIdentifier="141" type="0-Unsigned32" writable="true"/>
+            <Unsigned name="total-record-count" propertyIdentifier="145" type="0-Unsigned32"/>
+            <Enumerated name="logging-type" propertyIdentifier="197" type="0-BACnetLoggingType"/>
+            <Boolean name="align-intervals" propertyIdentifier="193" optional="true"/>
+            <Unsigned name="interval-offset" propertyIdentifier="195" optional="true"/>
+            <Boolean name="trigger" propertyIdentifier="205" optional="true"/>
+            <BitString name="status-flags" propertyIdentifier="111" type="0-BACnetStatusFlags"/>
+            <Enumerated name="reliability" propertyIdentifier="103" type="0-BACnetReliability" optional="true" requiredWith="reliability-evaluation-inhibit"/>
+            <Unsigned name="notification-threshold" propertyIdentifier="137" type="0-Unsigned32" optional="true"/>
+            <Unsigned name="records-since-notification" propertyIdentifier="140" type="0-Unsigned32" optional="true"/>
+            <Unsigned name="last-notify-record" propertyIdentifier="173" type="0-Unsigned32" optional="true"/>
+            <Enumerated name="event-state" propertyIdentifier="36" type="0-BACnetEventState"/>
+            <Unsigned name="notification-class" propertyIdentifier="17" optional="true"/>
+            <BitString name="event-enable" propertyIdentifier="35" type="0-BACnetEventTransitionBits" optional="true"/>
+            <BitString name="acked-transitions" propertyIdentifier="0" type="0-BACnetEventTransitionBits" optional="true" writable="false"/>
+            <Enumerated name="notify-type" propertyIdentifier="72" type="0-BACnetNotifyType" optional="true"/>
+            <Array name="event-time-stamps" propertyIdentifier="130" memberType="0-BACnetTimeStamp" minimumSize="3" maximumSize="3" optional="true" writable="false"/>
+            <Array name="event-message-texts" propertyIdentifier="351" memberType="String" minimumSize="3" maximumSize="3" optional="true" writable="false" requiredWith="event-message-texts-config"/>
+            <Array name="event-message-texts-config" propertyIdentifier="352" memberType="String" minimumSize="3" maximumSize="3" optional="true"/>
+            <Boolean name="event-detection-enable" propertyIdentifier="353" optional="true"/>
+            <Sequence name="event-algorithm-inhibit-ref" propertyIdentifier="355" type="0-BACnetObjectPropertyReference" optional="true"/>
+            <Boolean name="event-algorithm-inhibit" propertyIdentifier="354" optional="true" requiredWith="event-algorithm-inhibit-ref"/>
+            <Boolean name="reliability-evaluation-inhibit" propertyIdentifier="357" optional="true"/>
+
+            <String name="profile-name" propertyIdentifier="168" optional="true"/>
+        </Object>
+
+        <!-- Clause 12.30 -->
+        <Object name="0-TrendLogMultipleObject">
+            <ObjectIdentifier name="object-identifier" propertyIdentifier="75"/>
+            <String name="object-name" propertyIdentifier="77" minimumLength="1"/>
+            <Enumerated name="object-type" propertyIdentifier="79" type="0-BACnetObjectType" value="trend-log-multiple" variability="constant"/>
+            <String name="description" propertyIdentifier="28" optional="true"/>
+            <BitString name="status-flags" propertyIdentifier="111" type="0-BACnetStatusFlags"/>
+            <Enumerated name="event-state" propertyIdentifier="36" type="0-BACnetEventState"/>
+            <Enumerated name="reliability" propertyIdentifier="103" type="0-BACnetReliability" optional="true"/>
+            <Boolean name="enable" propertyIdentifier="133" writable="true"/>
+            <DateTime name="start-time" propertyIdentifier="142" optional="true" writable="true"/>
+            <DateTime name="stop-time" propertyIdentifier="143" optional="true" writable="true"/>
+            <Array name="log-device-object-property" propertyIdentifier="132" memberType="0-BACnetDeviceObjectPropertyReference"/>
+            <Enumerated name="logging-type" propertyIdentifier="197" type="0-BACnetLoggingType"/>
+            <Unsigned name="log-interval" propertyIdentifier="134"/>
+            <Boolean name="align-intervals" propertyIdentifier="193" optional="true"/>
+            <Unsigned name="interval-offset" propertyIdentifier="195" optional="true"/>
+            <Boolean name="trigger" propertyIdentifier="205" optional="true"/>
+            <Boolean name="stop-when-full" propertyIdentifier="144"/>
+            <Unsigned name="buffer-size" propertyIdentifier="126" type="0-Unsigned32"/>
+            <List name="log-buffer" propertyIdentifier="131" memberType="0-BACnetLogMultipleRecord"/>
+            <Unsigned name="record-count" propertyIdentifier="141" type="0-Unsigned32" writable="true"/>
+            <Unsigned name="total-record-count" propertyIdentifier="145" type="0-Unsigned32"/>
+            <Unsigned name="notification-threshold" propertyIdentifier="137" type="0-Unsigned32" optional="true"/>
+            <Unsigned name="records-since-notification" propertyIdentifier="140" type="0-Unsigned32" optional="true"/>
+            <Unsigned name="last-notify-record" propertyIdentifier="173" type="0-Unsigned32" optional="true"/>
+            <Unsigned name="notification-class" propertyIdentifier="17" optional="true"/>
+            <BitString name="event-enable" propertyIdentifier="35" type="0-BACnetEventTransitionBits" optional="true"/>
+            <BitString name="acked-transitions" propertyIdentifier="0" type="0-BACnetEventTransitionBits" optional="true" writable="false"/>
+            <Enumerated name="notify-type" propertyIdentifier="72" type="0-BACnetNotifyType" optional="true"/>
+            <Array name="event-time-stamps" propertyIdentifier="130" memberType="0-BACnetTimeStamp" minimumSize="3" maximumSize="3" optional="true" writable="false"/>
+            <Array name="event-message-texts" propertyIdentifier="351" memberType="String" minimumSize="3" maximumSize="3" optional="true" writable="false" requiredWith="event-message-texts-config"/>
+            <Array name="event-message-texts-config" propertyIdentifier="352" memberType="String" minimumSize="3" maximumSize="3" optional="true"/>
+            <Boolean name="event-detection-enable" propertyIdentifier="353" optional="true"/>
+            <Sequence name="event-algorithm-inhibit-ref" propertyIdentifier="355" type="0-BACnetObjectPropertyReference" optional="true"/>
+            <Boolean name="event-algorithm-inhibit" propertyIdentifier="354" optional="true" requiredWith="event-algorithm-inhibit-ref"/>
+            <Boolean name="reliability-evaluation-inhibit" propertyIdentifier="357" optional="true"/>
+
+            <String name="profile-name" propertyIdentifier="168" optional="true"/>
+        </Object>
+
+    </Definitions>
+
+</CSML>

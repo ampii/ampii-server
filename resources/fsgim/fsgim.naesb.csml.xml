@@ -1,0 +1,733 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CSML xmlns="http://bacnet.org/csml/1.2">
+    <Definitions>
+    <Sequence name="NAESB.BaseCIM_CombinedVersion" documentation="The combined version denotes the versions of the subpackages that have been combined into the total CIM model. This is a convenience instead of having to look at each subpackage.">
+        <DateTime name="date" documentation="Form is YYYY-MM-DD for example for January 5, 2009 it is 2009-01-05."/>
+        <String name="version" documentation="Form is IEC61970CIMXXvYY_IEC61968CIMXXvYY_combined where XX is the major CIM package version and the YY is the minor version, and different packages could have different major and minor versions. For example IEC61970CIM13v18_IEC61968CIM10v16_combined.  Additional packages might be added in the future."/>
+    </Sequence>
+
+    <Sequence name="NAESB.Customer" extends="NAESB.IdentifiedObject" documentation="Organization receiving services from ServiceSupplier.">
+        <String name="name" optional="true" documentation="The name is any free human readable and possibly non unique text naming the object."/>
+        <!-- associations -->
+        <Array name="CustomerAgreements" memberType="NAESB.CustomerAgreement" documentation="All agreements of this customer."/>
+        <Array name="ServiceSuppliers" memberType="NAESB.ServiceSupplier" minimumSize="1" documentation="ServiceSuppliers associated with a Customer."/>
+        <Array name="UsagePoints" memberType="NAESB.UsagePoint" documentation="UsagePoints associated with a specific customer"/>
+    </Sequence>
+
+    <Sequence name="NAESB.CustomerAgreement" documentation="Agreement between the customer and the ServiceSupplier to pay for service at a specific service location. It provides for the recording of certain billing information about the type of service provided at the service location and is used during charge creation to determine the type of service.">
+        <String name="name" optional="true" documentation="The name is any free human readable and possibly non unique text naming the object."/>
+        <!-- associations -->
+        <Sequence name="Customer" type="NAESB.Customer" documentation="Customer for this agreement."/>
+        <Array name="CustomerAuthorisations" memberType="NAESB.CustomerAuthorisation" documentation="CustomerAuthorisations provided by the Customer."/>
+        <Array name="ServiceDeliveryPoints" memberType="NAESB.ServiceDeliveryPoint" documentation="All service delivery points regulated by this customer agreement."/>
+    </Sequence>
+
+    <Sequence name="NAESB.CustomerAuthorisation" extends="NAESB.IdentifiedObject" documentation="Holds an authorization for access to specific user-private data granted to a third party service provider. ">
+        <String name="authorizationServer" type="Fsgim.AnyURI" optional="true" documentation="Contains the URI link to the authorization endpoint associated with this authorization. "/>
+        <Sequence name="authorizedPeriod" type="Fsgim.UTCDateTimeInterval" optional="true" documentation="Restricts access to requests or subscriptions within this date time interval. "/>
+        <String name="name" optional="true" documentation="The name is any free human readable and possibly non unique text naming the object."/>
+        <Sequence name="validityInterval" type="Fsgim.UTCDateTimeInterval" optional="true" documentation="Date and time interval this agreement is valid (from going into effect to termination)."/>
+        <String name="accessToken" optional="true" documentation="Contains the access token associated with this authorization. "/>
+        <Sequence name="publishedPeriod" type="Fsgim.UTCDateTimeInterval" optional="true" documentation="Restricts access to the objects within the associated resource that were published within this date time interval. "/>
+        <String name="resource" type="Fsgim.AnyURI" optional="true" documentation="Contains the identifier of the resource, same as was specified in OAuth &quot;scope&quot;. "/>
+        <Integer name="status" optional="true" documentation="
+            The status of this authorization. 
+            0 - Revoked
+            1 - Active
+            "/>
+        <!-- associations -->
+        <Array name="CustomerAgreements" memberType="NAESB.CustomerAgreement" documentation="CustomerAgreements represented by a CustomerAuthorisation."/>
+    </Sequence>
+
+    <Sequence name="NAESB.ElectricPowerQualitySummary" extends="NAESB.IdentifiedObject" documentation="A summary of power quality events. This information represents a summary of power quality information typically required by energy management systems. It is not intended to satisfy the detailed requirements of power quality monitoring. All values are as defined by measurementProtocol during the period. The standards typically also give ranges of allowed values. See referenced standards for definition, measurement protocol  and period.">
+        <Real name="flickerPlt" optional="true" documentation="A measurement of long term Rapid Voltage Change "/>
+        <Real name="flickerPst" optional="true" documentation="flickerPst is a value measured over 10 minutes that characterizes the likelihood that the voltage fluctuations would result in perceptible light flicker. A value of 1.0 is designed to represent the level that 50% of people would perceive flicker in a 60 watt incandescent bulb."/>
+        <Real name="harmonicVoltage" optional="true" documentation="A measurement of the Harmonic Voltage during the period. For DC, distortion is with respect to a signal of zero Hz."/>
+        <Integer name="longInterruptions" optional="true" documentation="A count of Long Interruption events (as defined by measurementProtocol) during the summary interval period."/>
+        <Real name="mainsVoltage" optional="true" documentation="A measurement of the Mains [Signaling] Voltage during the summary interval period."/>
+        <String name="measurementProtocol" optional="true" documentation="A reference to the source used as the measurement protocol definition. e.g., &quot;IEEE1519-2009&quot;, &quot;EN50160&quot;"/>
+        <Real name="powerFrequency" optional="true" documentation="A measurement of the power frequency during the summary interval period."/>
+        <Integer name="rapidVoltageChanges" optional="true" documentation="A count of Rapid Voltage Change events during the summary interval period"/>
+        <Integer name="shortInterruptions" optional="true" documentation="A count of Short Interruption events during the summary interval period "/>
+        <Sequence name="summaryInterval" type="Fsgim.UTCDateTimeInterval" documentation="
+            The relevant time reference for the ElectricPowerQualitySummary.
+            This time interval may not be the same as any associated EMIntervalData time interval. For example, many of the statistics in the summary are running counts. The summaryInterval defines when the counts began.
+            "/>
+        <Integer name="supplyVoltageDips" optional="true" documentation="A count of Supply Voltage Dip events during the summary interval period "/>
+        <Integer name="supplyVoltageImbalance" optional="true" documentation="A count of Supply Voltage Imbalance events during the summary interval period "/>
+        <Integer name="supplyVoltageVariations" optional="true" documentation="A count of Supply Voltage Variations during the summary interval period "/>
+        <Integer name="tempOvervoltage" optional="true" documentation="A count of Temporary Overvoltage events (as defined by measurementProtocol) during the summary interval period "/>
+        <!-- associations -->
+        <Sequence name="UsagePoint" type="NAESB.UsagePoint" documentation="UsagePoint for this ElectricPowerQualitySummary."/>
+    </Sequence>
+
+    <Sequence name="NAESB.EndDeviceAsset" documentation="
+            EndDeviceAsset that performs one or more end device functions. One type of EndDeviceAsset is a MeterAsset which can perform metering, load management, connect/disconnect, accounting functions, etc. Some EndDeviceAssets, such as ones monitoring and controlling air conditioner, refrigerator, pool pumps may be connected to a MeterAsset. All EndDeviceAssets may have communication capability defined by the associated ComFunction(s). An EndDeviceAsset may be owned by a consumer, an energy service provider, utility or otherwise.
+            There may be a related end device function that identifies a sensor or control point within a metering application or communications systems (e.g., water, gas, electricity).
+            Some devices may use an optical port that conforms to the ANSI C12.18 standard for communications.
+            ">
+        <String name="name" optional="true" documentation="The name is any free human readable and possibly non unique text naming the object."/>
+        <!-- associations -->
+        <Sequence name="UsagePoint" type="NAESB.UsagePoint" optional="true" documentation="Usage point to which this end device asset belongs."/>
+    </Sequence>
+
+    <Sequence name="NAESB.EnergyUsageInformation" documentation="A collection of customer energy usage information. This class is a container, and has no attributes.  ">
+        <!-- associations -->
+        <Array name="ServiceSuppliers" memberType="NAESB.ServiceSupplier" documentation="ServiceSuppliers associated with this collection of EnergyUsageInformation."/>
+        <Array name="UsagePoints" memberType="NAESB.UsagePoint" documentation="UsagePoints in this collection of EnergyUsageInformation."/>
+    </Sequence>
+
+    <Sequence name="NAESB.IdentifiedObject" documentation="This is a root class to provide common identification for all classes needing identification and naming attributes">
+        <String name="aliasName" optional="true" documentation="The aliasName is free text human readable name of the object alternative to IdentifiedObject.name. It may be non unique and may not correlate to a naming hierarchy."/>
+        <String name="mRID" type="Fsgim.GlobalId" optional="true" documentation="Master resource identifier issued by a model authority. The mRID is globally unique within an exchange context. The specific type and encoding of mRID is dependent on the context in which it is found by the adopting profiles."/>
+        <String name="name" optional="true" documentation="The name is any free human readable and possibly non unique text naming the object."/>
+        <!-- associations -->
+        <Array name="Names" memberType="NAESB.Name" documentation="All names of this identified object."/>
+    </Sequence>
+
+    <Sequence name="NAESB.IntervalBlock" extends="NAESB.IdentifiedObject" documentation="Time sequence of Readings of the same ReadingType. ">
+        <!-- associations -->
+        <Array name="IntervalReadings" memberType="NAESB.IntervalReading" documentation="Interval reading contained in this block."/>
+        <Sequence name="MeterReading" type="NAESB.MeterReading" optional="true" documentation="Meter reading containing this interval block."/>
+        <Sequence name="ReadingType" type="NAESB.ReadingType" documentation="Type information for interval reading values contained in this block."/>
+    </Sequence>
+
+    <Sequence name="NAESB.IntervalReading" extends="NAESB.IdentifiedObject" documentation="Data captured over a specific interval of time. If not specified, the duration is the intervalLength of the associated ReadingType, where the full definition of the units of measure is located.">
+        <Real name="cost" optional="true" documentation="The cost associated with this reading for this interval."/>
+        <Sequence name="interval" type="Fsgim.UTCDateTimeInterval" optional="true" documentation="The time interval associated with the reading. "/>
+        <Real name="value" optional="true" documentation="Value of this interval reading."/>
+        <!-- associations -->
+        <Array name="IntervalBlocks" memberType="NAESB.IntervalBlock" documentation="All blocks containing this interval reading."/>
+        <Sequence name="MeterReading" type="NAESB.MeterReading" optional="true" documentation="MeterReading associated with these IntervalReadings."/>
+        <Array name="ReadingQualities" memberType="NAESB.ReadingQuality" documentation="Used only if quality of this interval reading value is different than 'Good'."/>
+    </Sequence>
+
+    <Sequence name="NAESB.LineItem" documentation="Details on an amount line, with rounding, date and note.">
+        <Real name="amount" optional="true" documentation="Amount for this line item."/>
+        <DateTime name="dateTime" optional="true" documentation="Date and time when this line was created in the application process."/>
+        <Sequence name="measurement" type="NAESB.SummaryMeasurement" optional="true" documentation="Optional relevant measurement for line item."/>
+        <String name="note" optional="true" documentation="Free format note relevant to this line."/>
+        <Real name="rounding" optional="true" documentation="Totalized monetary value of all errors due to process rounding or truncating that is not reflected in 'amount'."/>
+    </Sequence>
+
+    <Sequence name="NAESB.MeterReading" extends="NAESB.IdentifiedObject" documentation="Set of values obtained from the meter.">
+        <String name="name" optional="true" documentation="The name is any free human readable and possibly non unique text naming the object."/>
+        <Sequence name="valuesInterval" type="Fsgim.UTCDateTimeInterval" optional="true" documentation="Date and time interval of the data items contained within this meter reading."/>
+        <!-- associations -->
+        <Array name="IntervalBlocks" memberType="NAESB.IntervalBlock" documentation="All interval blocks contained in this meter reading."/>
+        <Array name="IntervalReadings" memberType="NAESB.IntervalReading" documentation="IntervalReadings of this MeterReading."/>
+        <Array name="Readings" memberType="NAESB.Reading" documentation="All reading values contained within this meter reading."/>
+        <Sequence name="ReadingType" type="NAESB.ReadingType" optional="true" documentation="ReadingType of this MeterReading."/>
+        <Sequence name="UsagePoint" type="NAESB.UsagePoint" documentation="UsagePoint for this MeterReading."/>
+    </Sequence>
+
+    <Sequence name="NAESB.NAESB_EUI_Version" documentation="The version of this model.">
+        <DateTime name="date" documentation="Form is YYYY-MM-DD for example for January 5, 2009 it is 2009-01-05.20120802"/>
+        <String name="version" documentation="naesb_eui_vxx.yy where xx is the major version and yy is the minor version. "/>
+    </Sequence>
+
+    <Sequence name="NAESB.Name" documentation="The Name class provides the means to define any number of human readable names for an object. ">
+        <String name="name" documentation="Any free text that name the object."/>
+        <!-- associations -->
+        <Sequence name="IdentifiedObject" type="NAESB.IdentifiedObject" documentation="Identified object that this name designates."/>
+        <Sequence name="NameType" type="NAESB.NameType" documentation="Type of this name."/>
+    </Sequence>
+
+    <Sequence name="NAESB.NameType" documentation="Type of name. Possible values for attribute 'name' are implementation dependent but standard profiles may specify types. An enterprise may have multiple information technology systems each having its own local name for the same object, e.g., a planning system may have different names from an energy management system. An object may also have different names within the same system. ">
+        <String name="name" documentation="Name of the name type."/>
+        <!-- associations -->
+        <Array name="Names" memberType="NAESB.Name" documentation="All names of this type."/>
+        <Sequence name="NameTypeAuthority" type="NAESB.NameTypeAuthority" optional="true" documentation="Authority responsible for managing names of this type."/>
+    </Sequence>
+
+    <Sequence name="NAESB.NameTypeAuthority" documentation="Authority responsible for creation and management of names of a given type; typically an organization or an enterprise system.">
+        <String name="name" documentation="Name of the name type authority."/>
+        <!-- associations -->
+        <Array name="NameTypes" memberType="NAESB.NameType" documentation="All name types managed by this authority."/>
+    </Sequence>
+
+    <Sequence name="NAESB.PositionPoint" documentation="Set of spatial coordinates that determine a point, defined in coordinate system specified in 'Location.CoordinateSystem', or &quot;WGS 84&quot; if not specified otherwise. Use a single position point instance to describe a point-oriented location. Use a sequence of position points to describe a line-oriented object (physical location of non-point oriented objects like cables or lines), or area of an object (like a substation or a geographical zone - in this case, have first and last position point with the same values).">
+        <String name="xPosition" optional="true" documentation="X axis position."/>
+        <String name="yPosition" optional="true" documentation="Y axis position."/>
+        <String name="zPosition" optional="true" documentation="(if applicable) Z axis position."/>
+        <!-- associations -->
+        <Sequence name="UsagePoint" type="NAESB.UsagePoint" optional="true" documentation="UsagePoint at thie PositionPoint (location)."/>
+    </Sequence>
+
+    <Sequence name="NAESB.Reading" extends="NAESB.IdentifiedObject" documentation="Specific value measured by a meter or other asset. Each Reading is associated with a specific ReadingType.">
+        <Real name="cost" optional="true" documentation="Cost in a currency"/>
+        <DateTime name="timeStamp" optional="true" documentation="The time when the value was last updated"/>
+        <Real name="value" optional="true" documentation="Value of this reading."/>
+        <!-- associations -->
+        <Array name="MeterReadings" memberType="NAESB.MeterReading" documentation="All meter readings (sets of values) containing this reading value."/>
+        <Array name="ReadingQualities" memberType="NAESB.ReadingQuality" documentation="Used only if quality of this reading value is different than 'Good'."/>
+        <Sequence name="ReadingType" type="NAESB.ReadingType" documentation="Type information for this reading value."/>
+    </Sequence>
+
+    <Sequence name="NAESB.ReadingQuality" documentation="Quality of a specific reading value or interval reading value. Note that more than one quality may be applicable to a given reading. Typically not used unless problems or unusual conditions occur (i.e., quality for each reading is assumed to be 'good' unless stated otherwise in associated reading quality).">
+        <Enumerated name="quality" type="Fsgim.QualityOfReading" optional="true" documentation="Quality, to be specified if different than ReadingType.defaultQuality."/>
+        <!-- associations -->
+        <Sequence name="IntervalReading" type="NAESB.IntervalReading" documentation="Interval reading value to which this quality applies."/>
+        <Sequence name="Reading" type="NAESB.Reading" optional="true" documentation="Reading value to which this quality applies."/>
+    </Sequence>
+
+    <Sequence name="NAESB.ReadingType" documentation="Detailed description for a type of a reading value. Values in attributes allow for the description of metadata about a measurement or measurements.">
+        <Enumerated name="accumulation" type="NAESB.AccumulationKind" optional="true" documentation="Accumulation behavior of a reading over time, usually 'measuringPeriod', to be used with individual endpoints (as opposed to 'macroPeriod' and 'aggregate' that are used to describe aggregations of data from individual endpoints)."/>
+        <Enumerated name="aggregate" type="NAESB.DataQualifierKind" optional="true" documentation="Salient attribute of the reading data aggregated from individual endpoints. This is mainly used to define a mathematical operation carried out over 'macroPeriod', but may also be used to describe an attribute of the data when the 'macroPeriod' is not defined."/>
+        <Sequence name="argument" type="NAESB.RationalNumber" optional="true" documentation="
+            Argument used to introduce numbers into the unit of measure description where they are needed (e.g., 4 where the measure needs an argument such as CEMI(n=4)). Most arguments used in practice however will be integers (i.e., 'denominator'=1).
+            Value 0 in 'numerator' and 'denominator' means not applicable.
+            "/>
+        <Enumerated name="commodity" type="NAESB.CommodityKind" optional="true" documentation="Commodity being measured."/>
+        <Integer name="consumptionTier" optional="true" documentation="
+            In case of common flat-rate pricing for power, in which all purchases are at a given rate, 'consumptionTier'=0. Otherwise, the value indicates the consumption tier, which can be used in conjunction with time of use or critical peak period pricing.
+            Consumption tier pricing refers to the method of billing in which a certain &quot;block&quot; of energy is purchased/sold at one price, after which the next block of energy is purchased at another price, and so on, all throughout a defined period. At the start of the defined period, consumption is initially zero, and any usage is measured against the first consumption tier ('consumptionTier'=1). If this block of energy is consumed before the end of the period, energy consumption moves to be reconed against the second consumption tier ('consumptionTier'=2), and so on. At the end of the defined period, the consumption accumulator is reset, and usage within the 'consumptionTier'=1 restarts.
+            "/>
+        <Integer name="cpp" optional="true" documentation="Critical peak period bucket the reading value is attributed to. Value 0 means not applicable. Even though critical peak period is usually considered a specialized form of time of use, this attribute is defined explicitly for flexibility."/>
+        <Enumerated name="currency" type="Fsgim.CurrencyKind" optional="true" documentation="Metering-specific currency."/>
+        <Enumerated name="defaultQuality" type="Fsgim.QualityOfReading" optional="true" documentation="The default quality of readings. It may be overridden for specific measurements in Reading or IntervalReading classes."/>
+        <Enumerated name="flowDirection" type="NAESB.FlowDirectionKind" optional="true" documentation="Flow direction for a reading where the direction of flow of the commodity is important (for electricity measurements this includes current, energy, power, and demand)."/>
+        <Sequence name="interharmonic" type="NAESB.ReadingInterharmonic" optional="true" documentation="Indication of a &quot;harmonic&quot; or &quot;interharmonic&quot; basis for the measurement. Value 0 in 'numerator' and 'denominator' means not applicable."/>
+        <String name="intervalLength" type="Fsgim.Duration" optional="true" documentation="(if incremental reading value) Length of increment interval."/>
+        <Enumerated name="macroPeriod" type="NAESB.MacroPeriodKind" optional="true" documentation="Time period of interest that reflects how the reading is viewed or captured over a long period of time."/>
+        <Enumerated name="measurementKind" type="NAESB.MeasurementKind" optional="true" documentation="Identifies &quot;what&quot; is being measured, as refinement of 'commodity'. When combined with 'unit', it provides detail to the unit of measure. For example, 'energy' with a unit of measure of 'kWh' indicates to the user that active energy is being measured, while with 'kVAh' or 'kVArh', it indicates apparent energy and reactive energy, respectively. 'power' can be combined in a similar way with various power units of measure: Distortion power ('distortionVoltAmperes') with 'kVA' is different from 'power' with 'kVA'."/>
+        <Enumerated name="measuringPeriod" type="NAESB.TimeAttributeKind" optional="true" documentation="
+            Time attribute inherent or fundamental to the reading value (as opposed to 'macroPeriod' that supplies an &quot;adjective&quot; to describe aspects of a time period with regard to the measurement). It refers to the way the value was originally measured and not to the frequency at which it is reported or presented. For example, an hourly interval of consumption data would have value 'hourly' as an attribute. However in the case of an hourly sampled voltage value, the meterReadings schema would carry the 'hourly' interval size information.
+            It is common for meters to report demand in a form that is measured over the course of a portion of an hour, while enterprise applications however commonly assume the demand (in kW or kVAr) normalised to 1 hour. The sytem that receives readings directly from the meter therefore must perform this transformation before publishing readings for use by the other enterprise systems. The scalar used is chosen based on the block size (not any sub-interval size).
+            "/>
+        <Enumerated name="multiplier" type="Fsgim.SiScaleCodeType" optional="true" documentation="Metering-specific multiplier."/>
+        <Enumerated name="phases" type="NAESB.PhaseCodeKind" optional="true" documentation="Meteric-specific phase code."/>
+        <Integer name="tou" optional="true" documentation="Time of use bucket the reading value is attributed to. Value 0 means not applicable."/>
+        <Enumerated name="unit" type="Fsgim.UnitSymbolKind" optional="true" documentation="Metering-specific unit."/>
+        <!-- associations -->
+        <Array name="IntervalBlocks" memberType="NAESB.IntervalBlock" documentation="All blocks containing interval reading values with this type information."/>
+        <Array name="MeterReadings" memberType="NAESB.MeterReading" documentation="MeterReadings with this ReadingType."/>
+        <Array name="Readings" memberType="NAESB.Reading" documentation="All reading values with this type information."/>
+        <Sequence name="ServiceSupplier" type="NAESB.ServiceSupplier" optional="true" documentation="ServiceSupplier able to use ReadingType."/>
+    </Sequence>
+
+    <Sequence name="NAESB.ServiceCategory" documentation="Category of service provided to the customer.">
+        <Enumerated name="kind" type="NAESB.ServiceKind" optional="true" documentation="Kind of service."/>
+        <!-- associations -->
+        <Array name="UsagePoint" memberType="NAESB.UsagePoint" documentation="All service delivery points that deliver this category of service."/>
+    </Sequence>
+
+    <Sequence name="NAESB.ServiceDeliveryPoint" documentation="Logical point on the network where the ownership of the service changes hands. It is one of potentially many service points within a service location, delivering service in accordance with a customer agreement. Used at the place where a meter may be installed.">
+        <String name="name" optional="true" documentation="The name is any free human readable and possibly non unique text naming the object."/>
+        <!-- associations -->
+        <Sequence name="CustomerAgreement" type="NAESB.CustomerAgreement" optional="true" documentation="Customer agreement regulating this service delivery point."/>
+        <Sequence name="TariffProfile" type="NAESB.TariffProfile" optional="true" documentation="TariffProfile governing this ServiceDeliveryPoint."/>
+        <Array name="UsagePoints" memberType="NAESB.UsagePoint" documentation="UsagePoints at this ServiceDeliveryPoint"/>
+    </Sequence>
+
+    <Sequence name="NAESB.ServiceSupplier" documentation="Organization that provides services to customers.">
+        <Enumerated name="kind" type="NAESB.SupplierKind" optional="true" documentation="Kind of supplier."/>
+        <String name="name" optional="true" documentation="The name is any free human readable and possibly non unique text naming the object."/>
+        <!-- associations -->
+        <Array name="Customers" memberType="NAESB.Customer" documentation="Customers supported by a ServiceSupplier."/>
+        <Array name="EnergyUsageInformation" memberType="NAESB.EnergyUsageInformation" documentation="Collection of EnergyUsageInformation supported by this ServiceSupplier."/>
+        <Array name="ReadingTypes" memberType="NAESB.ReadingType" documentation="ReadingTypes supported by ServiceSupplier."/>
+    </Sequence>
+
+    <Sequence name="NAESB.SummaryMeasurement" documentation="An aggregated summary measurement reading.">
+        <Enumerated name="powerOfTenMultiplier" type="Fsgim.SiScaleCodeType" optional="true" documentation="The multiplier part of the unit of measure, e.g., &quot;kilo&quot; (k)"/>
+        <String name="readingTypeRef" type="Fsgim.AnyURI" optional="true" documentation="Reference to a full ReadingType that describes the measurement. Note only one of readingTypeRef or unit + powerofTenMultiplier are used in any single instance of SummaryMeasurement."/>
+        <DateTime name="timeStamp" optional="true" documentation="The date and time (if needed) of the summary measurement."/>
+        <Enumerated name="unit" type="Fsgim.UnitSymbolKind" optional="true" documentation="The units of the reading, e.g., &quot;Wh&quot;."/>
+        <Real name="value" optional="true" documentation="The value of the summary measurement."/>
+    </Sequence>
+
+    <Sequence name="NAESB.TariffProfile" documentation="A schedule of charges; structure associated with Tariff that allows the definition of complex tariff structures such as step and time of use.">
+        <String name="name" optional="true" documentation="The name is any free human readable and possibly non unique text naming the object."/>
+        <!-- associations -->
+        <Array name="ServiceDeliveryPoints" memberType="NAESB.ServiceDeliveryPoint" documentation="ServiceDeliveryPoints governed by a TariffProfile."/>
+    </Sequence>
+
+    <Sequence name="NAESB.UsagePoint" extends="NAESB.IdentifiedObject" documentation="Logical point on a network at which consumption or production is either physically measured (e.g., metered) or estimated (e.g., unmetered street lights).">
+        <String name="description" optional="true" documentation="A human readable description of the object. "/>
+        <Boolean name="isVirtual" documentation="Is used to indicate that the UsagePoint is virtual (that is, not a real physical measurement). This may be the result of a computation or estimation."/>
+        <String name="name" optional="true" documentation="The name is any free human readable and possibly non unique text naming the object."/>
+        <Sequence name="roleFlags" type="NAESB.RoleFlags" documentation="The set of roles pertinent to this UsagePoint"/>
+        <Integer name="status" documentation="
+            Status of this UsagePoint:
+            0 - Off
+            1 - On
+            "/>
+        <!-- associations -->
+        <Sequence name="Customer" type="NAESB.Customer" optional="true" documentation="Customer associated with this UsagePoint"/>
+        <Array name="ElectricPowerQualitySummaries" memberType="NAESB.ElectricPowerQualitySummary" documentation="ElectricPowerQualitySummaries at this UsagePoint."/>
+        <Array name="EndDeviceAssets" memberType="NAESB.EndDeviceAsset" documentation="All end device assets at this usage point."/>
+        <Array name="EnergyUsageInformation" memberType="NAESB.EnergyUsageInformation" documentation="EnergyUsageInformation collection that this UsagePoint is part of."/>
+        <Array name="MeterReadings" memberType="NAESB.MeterReading" documentation="MeterReadings available at this UsagePoint."/>
+        <!-- DR-EDIT replace "PositionPoint" containment with reference
+        <Sequence name="PositionPoint" type="NAESB.PositionPoint" optional="true" documentation="PositionPoint describing location of this UsagePoint."/>
+        -->
+        <Link name="PositionPoint" targetType="NAESB.PositionPoint" optional="true" documentation="PositionPoint describing location of this UsagePoint."/>
+
+        <Sequence name="ServiceCategory" type="NAESB.ServiceCategory" optional="true" documentation="Service category delivered by this service delivery point."/>
+        <Array name="ServiceDeliveryPoints" memberType="NAESB.ServiceDeliveryPoint" documentation="ServiceDeliveryPoints associated with this UsagePoint."/>
+        <Array name="UsageSummaries" memberType="NAESB.UsageSummary" documentation="UsageSummaries at this UsagePoint."/>
+    </Sequence>
+
+    <Sequence name="NAESB.UsageSummary" extends="NAESB.IdentifiedObject" documentation="
+            Summary of usage for a billing period. 
+            Note: This model was extended using the work of OpenADE 2015 for ESPI. These extensions are proposed for the next revision of the NAESB standard REQ.21. Also extended are SummaryMeasurement and LineDetail.
+            ">
+        <Sequence name="billingPeriod" type="Fsgim.UTCDateTimeInterval" optional="true" documentation="The billing period to which the included measurements apply. May also be an off-bill arbitrary period."/>
+        <Real name="billLastPeriod" optional="true" documentation="The amount of the bill for the referenced billingPeriod  in the currency attribute of this UsageSummary (e.g., 840 = USD, US dollar)."/>
+        <Real name="billToDate" optional="true" documentation="If the summary contains data from a current period beyond the end of the referenced billingPeriod, the bill amount as of the date the summary is generated, in the currency attribute of this UsageSummary (e.g., 840 = USD, US dollar)."/>
+        <Enumerated name="commodity" type="NAESB.CommodityKind" optional="true" documentation=" The commodity for this summary report."/>
+        <Array name="costAdditionalLastPeriod" memberType="Fsgim.Real" documentation="Additional charges from the for the referenced billingPeriod, in the currency attribute of this UsageSummary (e.g., 840 = USD, US dollar)."/>
+        <Array name="costAdditionalLastPeriodDetail" memberType="NAESB.LineItem" documentation="Additional charges from the for the referenced billingPeriod which in total add up to costAdditionalLastPeriod, in the currency attribute of this UsageSummary (e.g., 840 = USD, US dollar)."/>
+        <Enumerated name="currency" type="Fsgim.CurrencyKind" optional="true" documentation="The ISO 4217 code indicating the currency applicable to the bill amounts in the summary. See list at http://www.unece.org/cefact/recommendations/rec09/rec09_ecetrd203.pdf"/>
+        <Sequence name="currentBillingPeriodOverallConsumption" type="NAESB.SummaryMeasurement" optional="true" documentation="The total consumption for the billing period."/>
+        <Sequence name="currentDayLastYearNetConsumption" type="NAESB.SummaryMeasurement" optional="true" documentation="The amount of energy consumed one year ago interpreted as same day of week same week of year (see ISO 8601)."/>
+        <Sequence name="currentDayNetConsumption" type="NAESB.SummaryMeasurement" optional="true" documentation="Net consumption for the current day (delivered - received)."/>
+        <Sequence name="currentDayOverallConsumption" type="NAESB.SummaryMeasurement" optional="true" documentation="Overall energy consumption for the current day."/>
+        <Sequence name="overallConsumptionLastPeriod" type="NAESB.SummaryMeasurement" optional="true" documentation="The amount of energy consumed in for the referenced billingPeriod."/>
+        <Sequence name="peakDemand" type="NAESB.SummaryMeasurement" optional="true" documentation="If the summary contains data from a current period beyond the end of the referenced billingPeriod, peak demand recorded for the current period."/>
+        <Sequence name="previousDayLastYearOverallConsumption" type="NAESB.SummaryMeasurement" optional="true" documentation="If the summary contains data from a current period beyond the end of the referenced billingPeriod, the amount of energy consumed on the previous day one year ago interpreted as same day of week same week of year (see ISO 8601) based on the day of the statusTimestamp."/>
+        <Sequence name="previousDayNetConsumption" type="NAESB.SummaryMeasurement" optional="true" documentation="If the summary contains data from a current period beyond the end of the referenced billingPeriod, net consumption for the previous day relative to the day of the statusTimestamp."/>
+        <Sequence name="previousDayOverallConsumption" type="NAESB.SummaryMeasurement" optional="true" documentation="If the summary contains data from a current period beyond the end of the referenced billingPeriod, the total consumption for the previous day based on the day of the statusTimestamp."/>
+        <Enumerated name="qualityOfReading" type="Fsgim.QualityOfReading" optional="true" documentation="Indication of the quality of the summary readings"/>
+        <Sequence name="ratchetDemand" type="NAESB.SummaryMeasurement" optional="true" documentation="If the summary contains data from a current period beyond the end of the referenced billingPeriod, the current ratchet demand value for the ratchet demand over the ratchetDemandPeriod."/>
+        <Sequence name="ratchetDemandPeriod" type="Fsgim.UTCDateTimeInterval" optional="true" documentation="The period over which the ratchet demand applies."/>
+        <DateTime name="statusTimeStamp" documentation="Date/Time status of this UsageSummary."/>
+        <!-- associations -->
+        <Sequence name="UsagePoint" type="NAESB.UsagePoint" optional="true" documentation="UsagePoint for this UsageSummary."/>
+    </Sequence>
+
+    <Sequence name="NAESB.RoleFlags" documentation="Describes a set of specific communication or physical attributes that the associated UsagePoint has. The term RoleFlags in this specific case pertains to the application-specific nature of the UsagePoint. More than one of these flags can be true for any UsagePoint.">
+        <Boolean name="isDC" documentation="Is direct current (DC) rather than alternating current (AC)"/>
+        <Boolean name="isDER" documentation="Is a DER point"/>
+        <Boolean name="isMirror" documentation="Represents a copy or mirror of an original UsagePoint"/>
+        <Boolean name="isOneway" documentation="Device is a one-way communications device that can only transmit its information and cannot receive."/>
+        <Boolean name="isPEV" documentation="Is a PEV Usage Point"/>
+        <Boolean name="isPremiseAggregationPoint" documentation="This UsagePoint aggregates the contributions of other UsagePoints in the premise"/>
+        <Boolean name="isRevenueQuality" documentation="Is revenue quality."/>
+        <Boolean name="isVirtual" documentation="Is used to indicate that the UsagePoint is virtual (that is, not a real physical measurement). This may be the result of a computation or estimation. Note that isVirtual was added to IEC 61968-9 2nd ed model of a UsagePoint which occurred after its adoption by NAESB. It has since been added to Green Button and will be added to the next release of &quot;NAESB Business Practices and Information Models to Support Priority Action Plan 10 - Standardized Energy Usage Information standards, Revision 1.1, 2012."/>
+    </Sequence>
+
+    <Sequence name="NAESB.ReadingInterharmonic" documentation="Interharmonics are represented as a rational number 'numerator' / 'denominator', and harmonics are represented using the same mechanism and identified by 'denominator'=1.">
+        <Integer name="numerator" optional="true" documentation="Interharmonic numerator. Value 0 means not applicable. Value 1 is used in combination with 'denominator'=2 to represent interharmonic 1/2, and with 'denominator'=1 it represents fundamental frequency. Finally, values greater than 1 indicate the harmonic of that order (e.g., 'numerator'=5 is the fifth harmonic)."/>
+        <Integer name="denominator" optional="true" documentation="Interharmonic denominator. Value 0 means not applicable. Value 2 is used in combination with 'numerator'=1 to represent interharmonic 1/2. Finally, value 1 indicates the harmonic of the order specified with 'numerator'."/>
+    </Sequence>
+
+    <Sequence name="NAESB.RationalNumber" documentation="Rational number = 'numerator' / 'denominator'.">
+        <Integer name="numerator" optional="true" documentation="Numerator."/>
+        <Integer name="denominator" optional="true" documentation="Denominator. Value 1 indicates the number is a simple integer."/>
+    </Sequence>
+
+    <Enumerated name="NAESB.FlowDirectionKind" documentation="This value identifies the direction of flow of what is being measured. Specific indications are supported, especially for electrical measurements that have complex values.">
+        <NamedValues>
+            <Unsigned name="none" value="1" documentation="Not Applicable (N/A)"/>
+            <Unsigned name="forward" value="2" documentation="&quot;Delivered,&quot; or &quot;Imported&quot; as defined 61968-2.
+Forward Active Energy is a positive kWh value as one would naturally expect to find as energy is supplied by the utility and consumed at the service."/>
+        </NamedValues>
+    </Enumerated>
+
+    <Enumerated name="NAESB.MeasurementKind" documentation="Identifies &quot;what&quot; is being measured, as refinement of 'commodity'. When combined with 'unit', it provides detail to the unit of measure. For example, 'energy' with a unit of measure of 'kWh' indicates to the user that active energy is being measured, while with 'kVAh' or 'kVArh', it indicates apparent energy and reactive energy, respectively. 'power' can be combined in a similar way with various power units of measure: Distortion power ('distortionVoltAmperes') with 'kVA' is different from 'power' with 'kVA'.">
+        <NamedValues>
+            <Unsigned name="none" value="1" documentation="Not Applicable"/>
+            <Unsigned name="apparentPowerFactor" value="2" documentation="apparentPowerFactor"/>
+            <Unsigned name="currency" value="3" documentation="Funds"/>
+            <Unsigned name="current" value="4" documentation="Current"/>
+            <Unsigned name="currentAngle" value="5" documentation="Current angle"/>
+            <Unsigned name="currentImbalance" value="6" documentation="Current imbalance"/>
+            <Unsigned name="date" value="7" documentation="Date"/>
+            <Unsigned name="demand" value="8" documentation="Demand"/>
+            <Unsigned name="distance" value="9" documentation="Distance"/>
+            <Unsigned name="distortionVoltAmperes" value="10" documentation="Distortion volt-amperes"/>
+            <Unsigned name="energization" value="11" documentation="Energization"/>
+            <Unsigned name="energy" value="12" documentation="Energy"/>
+            <Unsigned name="energizationLoadSide" value="13" documentation="Energization load side"/>
+            <Unsigned name="fan" value="14" documentation="Fan"/>
+            <Unsigned name="frequency" value="15" documentation="Frequency"/>
+            <Unsigned name="ieee1366ASAI" value="16" documentation="IEEE1366 Average Service Availability Index (ASAI) "/>
+            <Unsigned name="ieee1366ASIDI" value="17" documentation="IEEE1366 Average System Interruption Duration Index (ASIDI)"/>
+            <Unsigned name="ieee1366ASIFI" value="18" documentation="IEEE1366 Average System Interruption Frequency Index (ASIFI)"/>
+            <Unsigned name="ieee1366CAIDI" value="19" documentation="IEEE1366 Customer Average Interruption Duration Index (CAIDI)"/>
+            <Unsigned name="ieee1366CAIFI" value="20" documentation="IEEE1366 Customer Average Interruption Frequency Index (CAIFI)"/>
+            <Unsigned name="ieee1366CEMIn" value="21" documentation="IEEE1366 Customers Experiencing Multiple Interruptions (CEMIN)"/>
+            <Unsigned name="ieee1366CEMSMIn" value="22" documentation="IEEE 1366 Customers Experiencing Multiple Sustained Interruption and Momentary Interruption Events (CEMSMIN)"/>
+            <Unsigned name="ieee1366CTAIDI" value="23" documentation="IEEE 1366 Customers Experiencing Multiple Sustained Interruption and Momentary Interruption Events (CEMSMIN)"/>
+            <Unsigned name="ieee1366MAIFI" value="24" documentation="IEEE 1366 Momentary Average Interruption Frequency Index (MAIFI)"/>
+            <Unsigned name="ieee1366MAIFIe" value="25" documentation="IEEE 1366 Momentary Average Interruption Event Frequency Index (MAIFIE)"/>
+            <Unsigned name="ieee1366SAIDI" value="26" documentation="IEEE 1366 System average interruption duration index (SAIDI)"/>
+            <Unsigned name="ieee1366SAIFI" value="27" documentation="IEEE 1366 System average interruption frequency index (SAIFI)"/>
+            <Unsigned name="lineLosses" value="28" documentation="Line Losses"/>
+            <Unsigned name="losses" value="29" documentation="Losses"/>
+            <Unsigned name="negativeSequence" value="30" documentation="Negative Sequence"/>
+            <Unsigned name="phasorPowerFactor" value="31" documentation="Phasor Power Factor"/>
+            <Unsigned name="phasorReactivePower" value="32" documentation="Phasor Reactive Power"/>
+            <Unsigned name="positiveSequence" value="33" documentation="Positive Sequence"/>
+            <Unsigned name="power" value="34" documentation="Power"/>
+            <Unsigned name="powerFactor" value="35" documentation="Power Factor"/>
+            <Unsigned name="quantityPower" value="36" documentation="Quantity Power"/>
+            <Unsigned name="sag" value="37" documentation="Sag"/>
+            <Unsigned name="swell" value="38" documentation="Swell"/>
+            <Unsigned name="switchPosition" value="39" documentation="Switch Position"/>
+            <Unsigned name="tapPosition" value="40" documentation="Tap Position"/>
+            <Unsigned name="tariffRate" value="41" documentation="Tariff Rate"/>
+            <Unsigned name="temperature" value="42" documentation="Temperature"/>
+            <Unsigned name="totalHarmonicDistortion" value="43" documentation="Total Harmonic Distortion (THD)"/>
+            <Unsigned name="transformerLosses" value="44" documentation="Transformer Losses"/>
+            <Unsigned name="unipedeVoltageDip10to15" value="45" documentation="Unipede Voltage Dip 10 to 15"/>
+            <Unsigned name="unipedeVoltageDip15to30" value="46" documentation="Unipede Voltage Dip 15 to 30"/>
+            <Unsigned name="unipedeVoltageDip30to60" value="47" documentation="Unipede Voltage Dip 30 to 60"/>
+            <Unsigned name="unipedeVoltageDip60to90" value="48" documentation="Unipede Voltage Dip 60 to 90"/>
+            <Unsigned name="unipedeVoltageDip90to100" value="49" documentation="Unipede Voltage Dip 90 to 100"/>
+            <Unsigned name="voltage" value="50" documentation="Voltage"/>
+            <Unsigned name="voltageAngle" value="51" documentation="Voltage Angle"/>
+            <Unsigned name="voltageExcursion" value="52" documentation="Voltage Excursion"/>
+            <Unsigned name="voltageImbalance" value="53" documentation="Voltage Imbalance"/>
+            <Unsigned name="volume" value="54" documentation="Indicates fluid volume"/>
+            <Unsigned name="zeroFlowDuration" value="55" documentation="Zero Flow Duration"/>
+            <Unsigned name="zeroSequence" value="56" documentation="Zero Sequence"/>
+            <Unsigned name="distortionPowerFactor" value="57" documentation="Distortion power factor"/>
+            <Unsigned name="frequencyExcursion" value="58" documentation="Frequency excursion. Usually expressed as a “count”."/>
+            <Unsigned name="applicationContext" value="59" documentation="Application context."/>
+            <Unsigned name="apTitle" value="60" documentation="ApTitle"/>
+            <Unsigned name="assetNumber" value="61" documentation="Asset number."/>
+            <Unsigned name="bandwidth" value="62" documentation="Bandwidth"/>
+            <Unsigned name="batteryVoltage" value="63" documentation="Battery voltage"/>
+            <Unsigned name="broadcastAddress" value="64" documentation="Broadcast address"/>
+            <Unsigned name="deviceAddressType1" value="65" documentation="Device address type 1"/>
+            <Unsigned name="deviceAddressType2" value="66" documentation="Device address type 2"/>
+            <Unsigned name="deviceAddressType3" value="67" documentation="Device address type 3"/>
+            <Unsigned name="deviceAddressType4" value="68" documentation="Device address type 4"/>
+            <Unsigned name="deviceClass" value="69" documentation="Device class"/>
+            <Unsigned name="electronicSerialNumber" value="70" documentation="Electronic serial number"/>
+            <Unsigned name="endDeviceID" value="71" documentation="End device ID"/>
+            <Unsigned name="groupAddressType1" value="72" documentation="Group address type 1"/>
+            <Unsigned name="groupAddressType2" value="73" documentation="Group address type 2"/>
+            <Unsigned name="groupAddressType3" value="74" documentation="Group address type 3"/>
+            <Unsigned name="groupAddressType4" value="75" documentation="Group address type 4"/>
+            <Unsigned name="ipAddress" value="76" documentation="IP Address"/>
+            <Unsigned name="macAddress" value="77" documentation="MAC Address"/>
+            <Unsigned name="mfgAssignedConfigurationID" value="78" documentation="Manufacturer Assigned Configuration ID"/>
+            <Unsigned name="mfgAssignedPhysicalSerialNumber" value="79" documentation="Manufacturer Assigned Physical Serial Number"/>
+            <Unsigned name="mfgAssignedProductNumber" value="80" documentation="Manufacturer Assigned Product Number"/>
+            <Unsigned name="mfgAssignedUniqueCommunicationAddress" value="81" documentation="Manufacturer Assigned Unique Communication Address"/>
+            <Unsigned name="multiCastAddress" value="82" documentation="Multicast Address"/>
+            <Unsigned name="oneWayAddress" value="83" documentation="One Way Address"/>
+            <Unsigned name="signalStrength" value="84" documentation="Signal Strength"/>
+            <Unsigned name="twoWayAddress" value="85" documentation="Two Way Address"/>
+            <Unsigned name="signaltoNoiseRatio" value="86" documentation="Signal to Noise Ration"/>
+            <Unsigned name="alarm" value="87" documentation="Alarm"/>
+            <Unsigned name="batteryCarryover" value="88" documentation="Battery carryover"/>
+            <Unsigned name="dataOverflowAlarm" value="89" documentation="Data overflow alarm"/>
+            <Unsigned name="demandLimit" value="90" documentation="Demand limit"/>
+            <Unsigned name="demandReset" value="91" documentation="Demand resets. Usually expressed as a count as part of a billing cycle."/>
+            <Unsigned name="diagnostic" value="92" documentation="Diagnostic"/>
+            <Unsigned name="emergencyLimit" value="93" documentation="Emergency limit"/>
+            <Unsigned name="encoderTamper" value="94" documentation="Encoder tamper"/>
+            <Unsigned name="ieee1366MomentaryInterruption" value="95" documentation="IEEE 1366 Momentary Interruption"/>
+            <Unsigned name="ieee1366MomentaryInterruptionEvent" value="96" documentation="IEEE 1366 Momentary Interruption Event"/>
+            <Unsigned name="ieee1366SustainedInterruption" value="97" documentation="IEEE 1366 Sustained Interruption"/>
+            <Unsigned name="interruptionBehaviour" value="98" documentation="Interruption Behavior"/>
+            <Unsigned name="inversionTamper" value="99" documentation="Inversion Tamper"/>
+            <Unsigned name="loadInterrupt" value="100" documentation="Load Interrupt"/>
+            <Unsigned name="loadShed" value="101" documentation="Load Shed"/>
+            <Unsigned name="maintenance" value="102" documentation="Maintenance"/>
+            <Unsigned name="physicalTamper" value="103" documentation="Physical Tamper"/>
+            <Unsigned name="powerLossTamper" value="104" documentation="Power Loss Tamper"/>
+            <Unsigned name="powerOutage" value="105" documentation="Power Outage"/>
+            <Unsigned name="powerQuality" value="106" documentation="Power Quality"/>
+            <Unsigned name="powerRestoration" value="107" documentation="Power Restoration"/>
+            <Unsigned name="programmed" value="108" documentation="Programmed"/>
+            <Unsigned name="pushbutton" value="109" documentation="Push Button"/>
+            <Unsigned name="relayActivation" value="110" documentation="Relay Activation"/>
+            <Unsigned name="relayCycle" value="111" documentation="Relay Cycle"/>
+            <Unsigned name="removalTamper" value="112" documentation="Removal Tamper"/>
+            <Unsigned name="reprogrammingTamper" value="113" documentation="Reprogramming Tamper"/>
+            <Unsigned name="reverseRotationTamper" value="114" documentation="Reverse Rotation Tamper"/>
+            <Unsigned name="switchArmed" value="115" documentation="Switch Armed"/>
+            <Unsigned name="switchDisabled" value="116" documentation="Switch Disabled"/>
+            <Unsigned name="tamper" value="117" documentation="Tamper"/>
+            <Unsigned name="watchdogTimeout" value="118" documentation="Watchdog Timeout"/>
+            <Unsigned name="billLastPeriod" value="119" documentation="Customer’s bill for the previous billing period (Currency)"/>
+            <Unsigned name="billToDate" value="120" documentation="Customer’s bill, as known thus far within the present billing period (Currency)"/>
+            <Unsigned name="billCarryover" value="121" documentation="Customer’s bill carryover."/>
+            <Unsigned name="connectionFee" value="122" documentation="Monthly fee for connection to commodity."/>
+            <Unsigned name="audibleVolume" value="123" documentation="Sound"/>
+            <Unsigned name="volumetricFlow" value="124" documentation="Volumetric Flow"/>
+        </NamedValues>
+    </Enumerated>
+
+    <Enumerated name="NAESB.ServiceKind" documentation="Kind of service.">
+        <NamedValues>
+            <Unsigned name="electricity" value="1" documentation="Electricity"/>
+            <Unsigned name="gas" value="2" documentation="Gas"/>
+            <Unsigned name="water" value="3" documentation="Water"/>
+            <Unsigned name="time" value="4" documentation="Time"/>
+            <Unsigned name="heat" value="5" documentation="Heat"/>
+            <Unsigned name="refuse" value="6" documentation="Refuse"/>
+            <Unsigned name="sewerage" value="7" documentation="Sewerage"/>
+            <Unsigned name="rates" value="8" documentation="Rates"/>
+            <Unsigned name="tvLicence" value="9" documentation="TV License"/>
+            <Unsigned name="internet" value="10" documentation="Internet"/>
+            <Unsigned name="other" value="11" documentation="Other"/>
+            <Unsigned name="cold" value="12" documentation="Includes chilled water and ice"/>
+        </NamedValues>
+    </Enumerated>
+
+    <Enumerated name="NAESB.SupplierKind" documentation="Kind of supplier.">
+        <NamedValues>
+            <Unsigned name="utility" value="1" documentation="Utility"/>
+            <Unsigned name="retailer" value="2" documentation="Retailer"/>
+            <Unsigned name="other" value="3" documentation="Other"/>
+            <Unsigned name="district" value="4" documentation="District"/>
+            <Unsigned name="intermediary" value="5" documentation="Intermediary"/>
+            <Unsigned name="local" value="6" documentation="Local"/>
+            <Unsigned name="microgrid" value="7" documentation="Microgrid"/>
+        </NamedValues>
+    </Enumerated>
+
+    <Enumerated name="NAESB.AccumulationKind" documentation="This attribute provides metadata about how the measurements described are made. These enumerated values refer to the common present and historic methods by which physical measurements are made in revenue-quality metering instruments and are based on that terminology.">
+        <NamedValues>
+            <Unsigned name="none" value="1" documentation="Not Applicable, or implied by the unit of measure."/>
+            <Unsigned name="bulkQuantity" value="2" documentation="A value from a register which represents the bulk quantity of a commodity. This quantity is computed as the integral of the commodity usage rate. This value is typically used as the basis for the dial reading at the meter, and as a result, will roll over upon reaching a maximum dial value. 
+Note 1: With the metering system, the roll-over behavior typically implies a roll-under behavior so that the value presented is always a positive value (e.g., unsigned integer or positive decimal.) However, when communicating data between enterprise applications a negative value might occur in a case such as net metering.
+Note 2: A BulkQuantity refers primarily to the dial reading and not the consumption over a specific period of time."/>
+            <Unsigned name="continuousCumulative" value="3" documentation="The sum of the previous billing period values and the present period value. Note: “ContinuousCumulative” is commonly used in conjunction with “demand.” The “ContinuousCumulative Demand” would be the cumulative sum of the previous billing period maximum demand values (as occurring with each demand reset) summed with the present period maximum demand value (which has yet to be reset.)"/>
+            <Unsigned name="cumulative" value="4" documentation="The sum of the previous billing period values. Note: “Cumulative” is commonly used in conjunction with “demand.” Each demand reset causes the maximum demand value for the present billing period (since the last demand reset) to accumulate as an accumulative total of all maximum demands. So instead of “zeroing” the demand register, a demand reset has the affect of adding the present maximum demand to this accumulating total. "/>
+            <Unsigned name="deltaData" value="5" documentation="The difference between the value at the end of the prescribed interval and the beginning of the interval. This is used for incremental interval data. 
+Note: One common application would be for load profile data, another use might be to report the number of events within an interval (such as the number of equipment energizations within the specified period of time.)"/>
+            <Unsigned name="indicating" value="6" documentation="As if a needle is swung out on the meter face to a value to indicate the current value. (Note: An “indicating” value is typically measured over hundreds of milliseconds or greater, or may imply a “pusher” mechanism to capture a value. Compare this to “instantaneous” which is measured over a shorter period of time.) "/>
+            <Unsigned name="summation" value="7" documentation="A form of accumulation which is selective with respect to time. 
+Note : “Summation” could be considered a specialization of “Bulk Quantity” according to the rules of inheritance where “Summation” selectively accumulates pulses over a timing pattern, and “BulkQuantity” accumulates pulses all of the time."/>
+            <Unsigned name="timeDelay" value="8" documentation="A form of computation which introduces a time delay characteristic to the data value"/>
+            <Unsigned name="instantaneous" value="9" documentation="Typically measured over the fastest period of time allowed by the definition of the metric (usually milliseconds or tens of milliseconds.) (Note: “Instantaneous” was moved to attribute #3 in 61968-9Ed2 from attribute #1 in 61968-9Ed1.)"/>
+            <Unsigned name="latchingQuantity" value="10" documentation="When this description is applied to a metered value, it implies that the value is a time-independent cumulative quantity much a BulkQuantity, except that it latches upon the maximum value upon reaching that value. Any additional accumulation (positive or negative) is discarded until a reset occurs. 
+Note: A LatchingQuantity may also occur in the downward direction – upon reaching a minimum value. The terms “maximum” or “minimum” will usually be included as an attribute when this type of accumulation behaviour is present.
+When this description is applied to an encoded value (UOM= “Code”), it implies that the value has one or more bits which are latching. The condition that caused the bit to be set may have long since evaporated.
+In either case, the timestamp that accompanies the value may not coincide with the moment the value was initially set.
+In both cases a system will need to perform an operation to clear the latched value."/>
+            <Unsigned name="boundedQuantity" value="11" documentation="A time-independent cumulative quantity such as BulkQuantity or a LatchingQuantity, except that the accumulation stops at the maximum or minimum values. When the maximum is reached, any additional positive accumulation is discarded, but negative accumulation may be accepted (thus lowering the counter.) Likewise, when the negative bound is reached, any additional negative accumulation is discarded, but positive accumulation is accepted (thus increasing the counter.) "/>
+        </NamedValues>
+    </Enumerated>
+
+    <Enumerated name="NAESB.CommodityKind" documentation="Identifies the commodity being measured.">
+        <NamedValues>
+            <Unsigned name="none" value="1" documentation="Not Applicable"/>
+            <Unsigned name="electricity SecondaryMetered" value="2" documentation="All types of metered quantities. This type of reading comes from the meter and represents a “secondary” metered value."/>
+            <Unsigned name="electricity PrimaryMetere" value="3" documentation="It is possible for a meter to be outfitted with an external VT and/or CT. The meter might not be aware of these devices, and the display not compensate for their presence. Ultimately, when these scalars are applied, the value that represents the service value is called the “primary metered” value. The “index” in sub-category 3 mirrors those of sub-category 0."/>
+            <Unsigned name="communication" value="4" documentation="A measurement of the communication infrastructure itself."/>
+            <Unsigned name="air" value="5" documentation="Air"/>
+            <Unsigned name="insulativeGas" value="6" documentation="Insulative gas (SF6 is found separately below.)"/>
+            <Unsigned name="insulativeOil" value="7" documentation="Insulative Oil"/>
+            <Unsigned name="naturalGas" value="8" documentation="Natural Gas"/>
+            <Unsigned name="propane" value="9" documentation="Propane C3H8"/>
+            <Unsigned name="potableWater" value="10" documentation="Drinkable water"/>
+            <Unsigned name="steam" value="11" documentation="Water in steam form, usually used for heating."/>
+            <Unsigned name="wasteWater" value="12" documentation="Waste Water (Sewerage)"/>
+            <Unsigned name="heatingFluid" value="13" documentation="This fluid is likely in liquid form. It is not necessarily water or water based. The warm fluid returns cooler than when it was sent. The heat conveyed may be metered."/>
+            <Unsigned name="coolingFluid" value="14" documentation="The cool fluid returns warmer than when it was sent. The heat conveyed may be metered."/>
+            <Unsigned name="nonpotableWater" value="15" documentation="Reclaimed water – possibly used for irrigation but not sufficiently treated to be considered safe for drinking."/>
+            <Unsigned name="nox" value="16" documentation="Nitrous Oxides NOX"/>
+            <Unsigned name="so2" value="17" documentation="Sulfur Dioxide SO2"/>
+            <Unsigned name="ch4" value="18" documentation="Methane CH4"/>
+            <Unsigned name="co2" value="19" documentation="Carbon Dioxide CO2"/>
+            <Unsigned name="carbon" value="20" documentation="Carbon"/>
+            <Unsigned name="pfc" value="21" documentation="Perfluorocarbons PFC"/>
+            <Unsigned name="sf6" value="22" documentation="Sulfurhexafluoride SF6"/>
+            <Unsigned name="tvLicence" value="23" documentation="Television"/>
+            <Unsigned name="internet" value="24" documentation="Internet service"/>
+            <Unsigned name="refuse" value="25" documentation="trash"/>
+            <Unsigned name="h2" value="26" documentation="Hydrogen, H2"/>
+            <Unsigned name="c2h2" value="27" documentation="Acetylene, C2H2"/>
+            <Unsigned name="c2h4" value="28" documentation="Ethylene, C2H4"/>
+            <Unsigned name="c2h6" value="29" documentation="Ethane, C2H6"/>
+            <Unsigned name="co" value="30" documentation="Carbon monoxide, CO"/>
+            <Unsigned name="o2" value="31" documentation="Oxygen, O2"/>
+            <Unsigned name="dissolvedCombustibleGas" value="32" documentation="Dissolved Combustible Gas (A combination of combustible gasses such as H2, CH4, C2H2, C2H4, C2H6, and/or CO in some mixture.)"/>
+            <Unsigned name="co2e" value="33" documentation="Carbon Dioxide CO2 Equivalent"/>
+            <Unsigned name="lead" value="34" documentation="Lead, Pb"/>
+            <Unsigned name="mercury" value="35" documentation="Mercury, Hg"/>
+            <Unsigned name="ozone" value="36" documentation="Ozone, O3"/>
+            <Unsigned name="pm10" value="37" documentation="Particulate matter whose maximum size is 10 µm."/>
+            <Unsigned name="pm25" value="38" documentation="Particulate matter whose maximum size is 2.5 µm."/>
+            <Unsigned name="sox" value="39" documentation="Sulfur Oxides, SOX"/>
+        </NamedValues>
+    </Enumerated>
+
+    <Enumerated name="NAESB.DataQualifierKind" documentation="This value qualifies the measurement as to what it represents -- for example a minimum or maximum value or a nominal or nameplate value.">
+        <NamedValues>
+            <Unsigned name="high" value="1" documentation="Typically used to identify the high volume flow port of a compound water meter."/>
+            <Unsigned name="low" value="2" documentation="Typically used to identify the low volume flow port of a compound water meter."/>
+            <Unsigned name="none" value="3" documentation="Not Applicable"/>
+            <Unsigned name="average" value="4" documentation="The value represents an average"/>
+            <Unsigned name="excess" value="5" documentation="The value represents an amount over which a threshold was exceeded."/>
+            <Unsigned name="highThreshold" value="6" documentation="The value represents a programmed threshold."/>
+            <Unsigned name="lowThreshold" value="7" documentation="The value represents a programmed threshold."/>
+            <Unsigned name="maximum" value="8" documentation="The highest value observed"/>
+            <Unsigned name="minimum" value="9" documentation="The smallest value observed"/>
+            <Unsigned name="nominal" value="10" documentation="The value represents nominal or nameplate values"/>
+            <Unsigned name="normal" value="11" documentation="The value represents typical operating values"/>
+            <Unsigned name="secondMaximum" value="12" documentation="The second highest value observed"/>
+            <Unsigned name="secondMinimum" value="13" documentation="The second smallest value observed"/>
+            <Unsigned name="thirdMaximum" value="14" documentation="The third highest value observed"/>
+            <Unsigned name="fourthMaximum" value="15" documentation="The fourth highest value observed"/>
+            <Unsigned name="fifthMaximum" value="16" documentation="The fifth highest value observed"/>
+            <Unsigned name="sum" value="17" documentation="The accumulated sum"/>
+        </NamedValues>
+    </Enumerated>
+
+    <Enumerated name="NAESB.MacroPeriodKind" documentation="Time period of interest that reflects how the reading is viewed or captured over a long period of time.">
+        <NamedValues>
+            <Unsigned name="none" value="1" documentation="Not Applicable"/>
+            <Unsigned name="billingPeriod" value="2" documentation="Captured during the billing period starting at midnight of the first day of the billing period (as defined by the billing cycle day). If during the current billing period, it specifies a period from the start of the current billing period until &quot;now&quot;."/>
+            <Unsigned name="daily" value="3" documentation="Daily Period starting at midnight. If for the current day, this specifies the time from midnight to &quot;now&quot;."/>
+            <Unsigned name="monthly" value="4" documentation="Monthly period starting at midnight on the first day of the month. If within the current month, this specifies the period from the start of the month until &quot;now.&quot;"/>
+            <Unsigned name="seasonal" value="5" documentation="A season of time spanning multiple months. E.g., &quot;Summer,&quot; &quot;Spring,&quot; &quot;Fall,&quot; and &quot;Winter&quot; based cycle. If within the current season, it specifies the period from the start of the current season until &quot;now.&quot;"/>
+            <Unsigned name="weekly" value="6" documentation="Weekly period starting at midnight on the first day of the week and ending the instant before midnight the last day of the week. If within the current week, it specifies the period from the start of the week until &quot;now.&quot;"/>
+            <Unsigned name="specifiedPeriod" value="7" documentation="The period defined by the start time and end time of the MeterReading.valuesInterval associated with the containing ReadingType."/>
+        </NamedValues>
+    </Enumerated>
+
+    <Enumerated name="NAESB.MeasuringPeriodKind" documentation="
+            Time attribute inherent or fundamental to the reading value (as opposed to 'macroPeriod' that supplies an &quot;adjective&quot; to describe aspects of a time period with regard to the measurement). It refers to the way the value was originally measured and not to the frequency at which it is reported or presented. For example, an hourly interval of consumption data would have value 'hourly' as an attribute. However in the case of an hourly sampled voltage value, the meterReadings schema would carry the 'hourly' interval size information.
+            It is common for meters to report demand in a form that is measured over the course of a portion of an hour, while enterprise applications however commonly assume the demand (in kW or kVAr) normalized to 1 hour. The system that receives readings directly from the meter therefore performs this transformation before publishing readings for use by the other enterprise systems. The scalar used is chosen based on the block size (not any sub-interval size).
+            ">
+        <NamedValues>
+            <Unsigned name="none" value="1" documentation="Not Applicable"/>
+            <Unsigned name="tenMinute" value="2" documentation="10-minute"/>
+            <Unsigned name="fifteenMinute" value="3" documentation="15-minute"/>
+            <Unsigned name="oneMinute" value="4" documentation="1-minute"/>
+            <Unsigned name="twentyfourHour" value="5" documentation="24-hour"/>
+            <Unsigned name="thirtyMinute" value="6" documentation="30-minute"/>
+            <Unsigned name="fiveMinute" value="7" documentation="5-minute"/>
+            <Unsigned name="sixtyMinute" value="8" documentation="60-minute"/>
+            <Unsigned name="twoMinute" value="9" documentation="2-minute"/>
+            <Unsigned name="threeMinute" value="10" documentation="3-minute"/>
+            <Unsigned name="present" value="11" documentation="Within the present period of time"/>
+            <Unsigned name="previous" value="12" documentation="Shifted within the previous monthly cycle and data set"/>
+            <Unsigned name="twentyMinute" value="13" documentation="20-minute interval"/>
+            <Unsigned name="fixedBlock60Min" value="14" documentation="60-minute Fixed Block"/>
+            <Unsigned name="fixedBlock30Min" value="15" documentation="30-minute Fixed Block"/>
+            <Unsigned name="fixedBlock20Min" value="16" documentation="20-minute Fixed Block"/>
+            <Unsigned name="fixedBlock15Min" value="17" documentation="15-minute Fixed Block"/>
+            <Unsigned name="fixedBlock10Min" value="18" documentation="10-minute Fixed Block"/>
+            <Unsigned name="fixedBlock5Min" value="19" documentation="5-minute Fixed Block"/>
+            <Unsigned name="fixedBlock1Min" value="20" documentation="1-minute Fixed Block"/>
+            <Unsigned name="rollingBlock60MinIntvl30MinSubIntvl" value="21" documentation="60-minute Rolling Block with 30-minute sub-intervals"/>
+            <Unsigned name="rollingBlock60MinIntvl20MinSubIntvl" value="22" documentation="60-minute Rolling Block with 20-minute sub-intervals"/>
+            <Unsigned name="rollingBlock60MinIntvl15MinSubIntvl" value="23" documentation="60-minute Rolling Block with 15-minute sub-intervals"/>
+            <Unsigned name="rollingBlock60MinIntvl12MinSubIntvl" value="24" documentation="60-minute Rolling Block with 12-minute sub-intervals"/>
+            <Unsigned name="rollingBlock60MinIntvl10MinSubIntvl" value="25" documentation="60-minute Rolling Block with 10-minute sub-intervals"/>
+            <Unsigned name="rollingBlock60MinIntvl6MinSubIntvl" value="26" documentation="60-minute Rolling Block with 6-minute sub-intervals"/>
+            <Unsigned name="rollingBlock60MinIntvl5MinSubIntvl" value="27" documentation="60-minute Rolling Block with 5-minute sub-intervals"/>
+            <Unsigned name="rollingBlock60MinIntvl4MinSubIntvl" value="28" documentation="60-minute Rolling Block with 4-minute sub-intervals"/>
+            <Unsigned name="rollingBlock30MinIntvl15MinSubIntvl" value="29" documentation="30-minute Rolling Block with 15-minute sub-intervals"/>
+            <Unsigned name="rollingBlock30MinIntvl10MinSubIntvl" value="30" documentation="30-minute Rolling Block with 10-minute sub-intervals"/>
+            <Unsigned name="rollingBlock30MinIntvl6MinSubIntvl" value="31" documentation="30-minute Rolling Block with 6-minute sub-intervals"/>
+            <Unsigned name="rollingBlock30MinIntvl5MinSubIntvl" value="32" documentation="30-minute Rolling Block with 5-minute sub-intervals"/>
+            <Unsigned name="rollingBlock30MinIntvl3MinSubIntvl" value="33" documentation="30-minute Rolling Block with 3-minute sub-intervals"/>
+            <Unsigned name="rollingBlock30MinIntvl2MinSubIntvl" value="34" documentation="30-minute Rolling Block with 2-minute sub-intervals"/>
+            <Unsigned name="rollingBlock15MinIntvl5MinSubIntvl" value="35" documentation="15-minute Rolling Block with 5-minute sub-intervals"/>
+            <Unsigned name="rollingBlock15MinIntvl3MinSubIntvl" value="36" documentation="15-minute Rolling Block with 3-minute sub-intervals"/>
+            <Unsigned name="rollingBlock15MinIntvl1MinSubIntvl" value="37" documentation="15-minute Rolling Block with 1-minute sub-intervals"/>
+            <Unsigned name="rollingBlock10MinIntvl5MinSubIntvl" value="38" documentation="10-minute Rolling Block with 5-minute sub-intervals"/>
+            <Unsigned name="rollingBlock10MinIntvl2MinSubIntvl" value="39" documentation="10-minute Rolling Block with 2-minute sub-intervals"/>
+            <Unsigned name="rollingBlock10MinIntvl1MinSubIntvl" value="40" documentation="10-minute Rolling Block with 1-minute sub-intervals"/>
+            <Unsigned name="rollingBlock5MinIntvl1MinSubIntvl" value="41" documentation="5-minute Rolling Block with 1-minute sub-intervals"/>
+        </NamedValues>
+    </Enumerated>
+
+    <Enumerated name="NAESB.PhaseCodeKind" documentation="
+            Enumeration of phase identifiers. Allows designation of phases for both transmission and distribution equipment, circuits and loads.
+            Residential and small commercial loads are often served from single-phase, or split-phase, secondary circuits. Phases 1 and 2 refer to hot wires that are 180 degrees out of phase, while N refers to the neutral wire. Through single-phase transformer connections, these secondary circuits may be served from one or two of the primary phases A, B, and C. For three-phase loads, use the A, B, C phase codes instead of s12N.
+            ">
+        <NamedValues>
+            <Unsigned name="none" value="1" documentation="Not applicable to any phase"/>
+            <Unsigned name="phaseN" value="2" documentation="Neutral"/>
+            <Unsigned name="phaseNtoGnd" value="3" documentation="Neutral to ground"/>
+            <Unsigned name="phaseC" value="4" documentation="Phase C"/>
+            <Unsigned name="phaseCtoN" value="5" documentation="Phase C to Neutral"/>
+            <Unsigned name="phaseCtoAv" value="6" documentation="Phase C current or voltage relative to Phase A voltage"/>
+            <Unsigned name="phaseCAtoN" value="7" documentation="CA to Neutral"/>
+            <Unsigned name="phaseB" value="8" documentation="Phase B"/>
+            <Unsigned name="phaseBtoN" value="9" documentation="Phase B to Neutral"/>
+            <Unsigned name="phaseBtoC" value="10" documentation="Phase B to C"/>
+            <Unsigned name="phaseBtoAv" value="11" documentation="Phase B current or voltage relative to Phase A voltage"/>
+            <Unsigned name="phaseBCtoN" value="12" documentation="BC to Neutral"/>
+            <Unsigned name="phaseA" value="13" documentation="Phase A"/>
+            <Unsigned name="phaseAtoN" value="14" documentation="Phase A to Neutral"/>
+            <Unsigned name="phaseAtoB" value="15" documentation="Phase A to B"/>
+            <Unsigned name="phaseAtoAv" value="16" documentation="Phase A current relative to Phase A voltage"/>
+            <Unsigned name="phaseABtoN" value="17" documentation="AB to Neutral"/>
+            <Unsigned name="phasesABC" value="18" documentation="Involving all phases"/>
+            <Unsigned name="phaseABCtoN" value="19" documentation="ABC to Neutral"/>
+            <Unsigned name="s2" value="20" documentation="Phase S2"/>
+            <Unsigned name="s2N" value="21" documentation="Phase S2 to Neutral"/>
+            <Unsigned name="s1" value="22" documentation="Phase S1"/>
+            <Unsigned name="s1N" value="23" documentation="Phase S1 to Neutral"/>
+            <Unsigned name="s12" value="24" documentation="Phase S1 to S2"/>
+            <Unsigned name="s12N" value="25" documentation="Phase S1, S2 to Neutral"/>
+            <Unsigned name="threeWireWye" value="26" documentation="Three wire Wye"/>
+            <Unsigned name="fourWireWye" value="27" documentation="Four wire Wye"/>
+            <Unsigned name="threeWireDelta" value="28" documentation="Three wire Delta"/>
+            <Unsigned name="fourWireDelta" value="29" documentation="Four wire Delta"/>
+            <Unsigned name="fourWireHLDelta" value="30" documentation="Four wire High-leg Delta"/>
+            <Unsigned name="fourWireOpenDelta" value="31" documentation="Four wire Open Delta"/>
+            <Unsigned name="networked" value="32" documentation="Networked meter"/>
+        </NamedValues>
+    </Enumerated>
+
+    <Enumerated name="NAESB.TimeAttributeKind" documentation="This value identifies the time period during which this measurement was performed. For example if averaged (see DataQualifierKind) what period is averaged. Other complex time periods for how a measurement is computed are identified.">
+        <NamedValues>
+            <Unsigned name="twelveMinute" value="1" documentation="12-minute"/>
+            <Unsigned name="twoHour" value="2" documentation="2-hour"/>
+            <Unsigned name="fourHour" value="3" documentation="4-hour"/>
+            <Unsigned name="sixHour" value="4" documentation="6-hour"/>
+            <Unsigned name="twelveHour" value="5" documentation="12-hour"/>
+            <Unsigned name="specifiedInterval" value="6" documentation="The interval length is described in RationalNumber.numerator in seconds. Attribute RationalNumber.denominator should be ‘1’ for whole seconds."/>
+            <Unsigned name="specifiedFixedBlock" value="7" documentation="The fixed block duration is described in RationalNumber.numerator in seconds. RationalNumber.denominator should be ‘1’ for whole seconds."/>
+            <Unsigned name="specifiedRollingBlock" value="8" documentation="The rolling block size is described by RationalNumber.numerator in seconds, and the sub-interval size by RationalNumber.denominator in seconds."/>
+            <Unsigned name="none" value="9" documentation="Not Applicable"/>
+            <Unsigned name="tenMinute" value="10" documentation="10-minute"/>
+            <Unsigned name="fifteenMinute" value="11" documentation="15-minute"/>
+            <Unsigned name="oneMinute" value="12" documentation="1-minute"/>
+            <Unsigned name="twentyfourHour" value="13" documentation="24-hour"/>
+            <Unsigned name="thirtyMinute" value="14" documentation="30-minute"/>
+            <Unsigned name="fiveMinute" value="15" documentation="5-minute"/>
+            <Unsigned name="sixtyMinute" value="16" documentation="60-minute"/>
+            <Unsigned name="twoMinute" value="17" documentation="2-minute"/>
+            <Unsigned name="threeMinute" value="18" documentation="3-minute"/>
+            <Unsigned name="present" value="19" documentation="Within the present period of time"/>
+            <Unsigned name="previous" value="20" documentation="Shifted within the previous monthly cycle and data set"/>
+            <Unsigned name="twentyMinute" value="21" documentation="20-minute interval"/>
+            <Unsigned name="fixedBlock60Min" value="22" documentation="60-minute Fixed Block"/>
+            <Unsigned name="fixedBlock30Min" value="23" documentation="30-minute Fixed Block"/>
+            <Unsigned name="fixedBlock20Min" value="24" documentation="20-minute Fixed Block"/>
+            <Unsigned name="fixedBlock15Min" value="25" documentation="15-minute Fixed Block"/>
+            <Unsigned name="fixedBlock10Min" value="26" documentation="10-minute Fixed Block"/>
+            <Unsigned name="fixedBlock5Min" value="27" documentation="5-minute Fixed Block"/>
+            <Unsigned name="fixedBlock1Min" value="28" documentation="1-minute Fixed Block"/>
+            <Unsigned name="rollingBlock60MinIntvl30MinSubIntvl" value="29" documentation="60-minute Rolling Block with 30-minute sub-intervals"/>
+            <Unsigned name="rollingBlock60MinIntvl20MinSubIntvl" value="30" documentation="60-minute Rolling Block with 20-minute sub-intervals"/>
+            <Unsigned name="rollingBlock60MinIntvl15MinSubIntvl" value="31" documentation="60-minute Rolling Block with 15-minute sub-intervals"/>
+            <Unsigned name="rollingBlock60MinIntvl12MinSubIntvl" value="32" documentation="60-minute Rolling Block with 12-minute sub-intervals"/>
+            <Unsigned name="rollingBlock60MinIntvl10MinSubIntvl" value="33" documentation="60-minute Rolling Block with 10-minute sub-intervals"/>
+            <Unsigned name="rollingBlock60MinIntvl6MinSubIntvl" value="34" documentation="60-minute Rolling Block with 6-minute sub-intervals"/>
+            <Unsigned name="rollingBlock60MinIntvl5MinSubIntvl" value="35" documentation="60-minute Rolling Block with 5-minute sub-intervals"/>
+            <Unsigned name="rollingBlock60MinIntvl4MinSubIntvl" value="36" documentation="60-minute Rolling Block with 4-minute sub-intervals"/>
+            <Unsigned name="rollingBlock30MinIntvl15MinSubIntvl" value="37" documentation="30-minute Rolling Block with 15-minute sub-intervals"/>
+            <Unsigned name="rollingBlock30MinIntvl10MinSubIntvl" value="38" documentation="30-minute Rolling Block with 10-minute sub-intervals"/>
+            <Unsigned name="rollingBlock30MinIntvl6MinSubIntvl" value="39" documentation="30-minute Rolling Block with 6-minute sub-intervals"/>
+            <Unsigned name="rollingBlock30MinIntvl5MinSubIntvl" value="40" documentation="30-minute Rolling Block with 5-minute sub-intervals"/>
+            <Unsigned name="rollingBlock30MinIntvl3MinSubIntvl" value="41" documentation="30-minute Rolling Block with 3-minute sub-intervals"/>
+            <Unsigned name="rollingBlock30MinIntvl2MinSubIntvl" value="42" documentation="30-minute Rolling Block with 2-minute sub-intervals"/>
+            <Unsigned name="rollingBlock15MinIntvl5MinSubIntvl" value="43" documentation="15-minute Rolling Block with 5-minute sub-intervals"/>
+            <Unsigned name="rollingBlock15MinIntvl3MinSubIntvl" value="44" documentation="15-minute Rolling Block with 3-minute sub-intervals"/>
+            <Unsigned name="rollingBlock15MinIntvl1MinSubIntvl" value="45" documentation="15-minute Rolling Block with 1-minute sub-intervals"/>
+            <Unsigned name="rollingBlock10MinIntvl5MinSubIntvl" value="46" documentation="10-minute Rolling Block with 5-minute sub-intervals"/>
+            <Unsigned name="rollingBlock10MinIntvl2MinSubIntvl" value="47" documentation="10-minute Rolling Block with 2-minute sub-intervals"/>
+            <Unsigned name="rollingBlock10MinIntvl1MinSubIntvl" value="48" documentation="10-minute Rolling Block with 1-minute sub-intervals"/>
+            <Unsigned name="rollingBlock5MinIntvl1MinSubIntvl" value="49" documentation="5-minute Rolling Block with 1-minute sub-intervals"/>
+        </NamedValues>
+    </Enumerated>
+
+    </Definitions>
+</CSML>

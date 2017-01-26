@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CSML xmlns="http://bacnet.org/csml/1.2">
+    <Definitions>
+    <Sequence name="Wscal.Randomization" extends="Wscal.ToleranceValueType" documentation="A specialized version of ToleranceValueType used to indicate the degree of randomization required.  In this use, the startafter and startbefore attributes indicate the range of the starting times.">
+    </Sequence>
+
+    <Sequence name="Wscal.RecurType" documentation="
+            This value type is used to identify properties that contain a recurrence rule specification.
+            From RFC5545 section 3.3.10.  Recurrence Rule.
+            ">
+        <Enumerated name="freq" type="Wscal.FreqRecurType" documentation="
+            The freq rule part identifies the type of recurrence rule.
+            Valid values include SECONDLY, to specify repeating events based on an interval of a second or more; MINUTELY, to specify repeating events based on an interval of a minute or more; HOURLY, to specify repeating events based on an interval of an hour or more; DAILY, to specify repeating events based on an interval of a day or more; WEEKLY, to specify repeating events based on an interval of a week or more; MONTHLY, to specify repeating events based on an interval of a month or more; and YEARLY, to specify repeating events based on an interval of a year or more.
+            "/>
+        <DateTime name="until" optional="true" documentation="
+            The until rule part defines a date/time value that bounds the recurrence rule in an inclusive manner.  If the value specified by until is synchronized with the specified recurrence, this date/time becomes the last instance of the recurrence.
+            Only one of until or count may be used in a single RecurType instance.
+            Constraint:  The choice of either LocalDateTime or UTCDateTime as the datatype shall be consistent with the choice made within the associated AvailabilityType.DateTimeInterval and VavailabilityType.DateTimeInterval. 
+            "/>
+        <Integer name="count" optional="true" documentation="
+            The COUNT rule part defines the number of occurrences at which to range-bound the recurrence.
+            Only one of until or count may be used in a single RecurType instance.
+            "/>
+        <Integer name="interval" optional="true" documentation="The interval rule part contains a positive integer representing at which intervals the recurrence rule repeats.  The default value is &quot;1&quot;, meaning every second for a SECONDLY rule, every minute for a MINUTELY rule, every hour for an HOURLY rule, every day for a DAILY rule, every week for a WEEKLY rule, every month for a MONTHLY rule, and every year for a YEARLY rule. For example, within a DAILY rule, a value of &quot;8&quot; means every eight days."/>
+        <Array name="bySecond" memberType="Fsgim.Integer" documentation="Specifies a sequence of seconds within a minute -- 0..60."/>
+        <Array name="byMinute" memberType="Fsgim.Integer" documentation="Specifies a sequence of minutes within an hour -- 0..59."/>
+        <Array name="byHour" memberType="Fsgim.Integer" documentation="Specifies a sequence of hours within a day -- 0..23."/>
+        <Array name="byDay" memberType="Wscal.WeekdaySpecType" documentation="A sequence of  weekdays."/>
+        <Array name="byMonthDay" memberType="Fsgim.Integer" documentation="
+            Specifies a sequence of day numbers within a month.
+            Valid values are 1 to 31 or -31 to -1.  For example, -10 represents the tenth to the last day of the month. 
+            "/>
+        <Array name="byYearDay" memberType="Fsgim.Integer" documentation="
+            Specifies a sequence of day numbers within a year.
+            Valid values are 1 to 3366 or -366 to -1.  For example, -1 represents the last day of the year.
+            "/>
+        <Array name="byWeekNo" memberType="Fsgim.Integer" documentation="A sequence of week-numbers of a year, based on the definitions in ISO.8601.2004."/>
+        <Array name="byMonth" memberType="Fsgim.MonthType" documentation="A sequence of month numbers in a year -- 1..12."/>
+        <Array name="bySetPos" memberType="Fsgim.Integer" documentation="The bysetpos rule part specifies a sequence of values that corresponds to the nth occurrence within the set of recurrence instances specified by the RecurType instance."/>
+        <Enumerated name="wkst" type="Fsgim.WeekdayType" optional="true" documentation="Specifies the day on which the workweek starts."/>
+    </Sequence>
+
+    <Sequence name="Wscal.WeekdaySpecType" documentation="
+            Specifies a week day and a recurrence number. For example, within a MONTHLY rule:
+            +1,MO represents the first Monday within the month, whereas -1,MO represents the last Monday of the month.
+            ">
+        <Enumerated name="dow" type="Fsgim.WeekdayType" documentation="Specifies a day of the week."/>
+        <Integer name="num" optional="true" documentation="If present, this indicates the nth occurrence of a specific day within the MONTHLY or YEARLY RecurType."/>
+    </Sequence>
+
+    <Sequence name="Wscal.AttachType" documentation="This class represents data in the domain of concern over some interval of time.">
+    </Sequence>
+
+    <Sequence name="Wscal.AvailabilityType" documentation="This class expresses the range of times in which an Interval or Sequence can be Scheduled.">
+        <Sequence name="rRule" type="Wscal.RecurType" optional="true" documentation="A recurrence rule specification as defined in RFC5545, (2009) Section 3.3.10."/>
+        <Array name="exDate" memberType="Fsgim.Date" documentation="A set of one or more exception dates that override the sequence specified in the rRule attribute, derived from RFC5545, (2009) Section 3.8.5.1"/>
+        <Sequence name="availInterval" type="Fsgim.DateTimeInterval" documentation="This serves as the template &quot;anchoring&quot; interval that the recurrence rule (stored in rRule) is evaluated against. At instantiation time the choice must be made whether to express the interval as a UTCDateTimeInterval or a LocalDateTimeInterval."/>
+    </Sequence>
+
+    <Sequence name="Wscal.GluonType" extends="Wscal.IntervalType" documentation="A GluonType influences the serialization of IntervalTypes in a sequence. A GluonType is often used as a pointer to the beginning interval in a sequence, although in general it can point to any interval in a sequence, or simply describe an isolated interval.">
+        <!-- associations -->
+        <Array name="relation" memberType="Wscal.RelationLink" minimumSize="1" documentation="
+            This role links a GluonType instance to a specific interval within a sequence (typically the beginning interval). The target RelationLink instance would have a RelationLink.relationship value of CHILD, and would identify the interval with the RelationLink.link attribute.
+            (This association redefines the relation association between the IntervalType Class (see Clause 5.7.3.2.7) and the RelationLink Class (see Clause 5.7.3.2.8).)  
+            "/>
+        <Array name="vavailability" memberType="Wscal.VavailabilityType" documentation="The specification of the time span and pattern of intervals that defines a sequence."/>
+    </Sequence>
+
+    <Sequence name="Wscal.IntervalType" documentation="This class represents an interval of time that attaches to a collection of data pertinent to the interval.">
+        <String name="instanceUid" type="Fsgim.GlobalId" documentation="Unique identifier to the interval instance."/>
+        <Sequence name="timeReference" type="Fsgim.UTCDateTimeInterval" optional="true" documentation="The time reference for an interval which includes some combination of start, duration, and end."/>
+        <Sequence name="tolerance" type="Wscal.ToleranceValueType" optional="true" documentation="The tolerance for the associated timeReference."/>
+        <!-- associations -->
+        <Array name="attach" memberType="Wscal.AttachType" documentation="Associates a set of AttachType data with this IntervalType."/>
+        <Array name="relation" memberType="Wscal.RelationLink" documentation="Describes the relationships between intervals."/>
+    </Sequence>
+
+    <Sequence name="Wscal.RelationLink" documentation="The RelationLink class serves to link a set of intervals together, in support of a linked-list method of creating a sequence. It is also used to link a GluonType instance to a specific interval within a sequence, typically used to point to the beginning interval of a sequence.">
+        <String name="gap" type="Fsgim.Duration" optional="true" documentation="An optional attribute to specify a gap in time between one interval and the next. The default interpretation is a value of zero."/>
+        <String name="link" type="Fsgim.GlobalId" optional="true" documentation="The unique identifier of the interval being linked to."/>
+        <Enumerated name="relationship" type="Wscal.RelationshipType" documentation="The kind of link (see the RelationshipType enumeration)."/>
+        <Enumerated name="temporalRelationship" type="Wscal.TemporalRelationshipType" optional="true" documentation="The specification of the temporal relation of one interval to the interval being linked to. By default, this will be FinishToStart, meaning the next interval immediately begins after the previous interval."/>
+    </Sequence>
+
+    <Sequence name="Wscal.ToleranceValueType" documentation="A tolerance value is a set of durations which indicate the allowed tolerance for the indicated value. Note that there may be many tolerance values associated with a Duration.">
+        <String name="durationLong" type="Fsgim.Duration" optional="true" documentation="Indicates by how much the performance Duration may exceed the Duration specified in the information exchange. Duration Long Tolerance SHALL NOT be used when Start and End Tolerances are both specified."/>
+        <String name="durationShort" type="Fsgim.Duration" optional="true" documentation="Indicates by how much the performance Duration may fall short of the Duration specified in the information exchange. Duration Short Tolerance SHALL NOT be used when Start and End Tolerances are both specified."/>
+        <String name="endAfter" type="Fsgim.Duration" optional="true" documentation="Indicates how far after the scheduled end time the requested service may commence, for example, if a service that ends at 2:01 is compliant with a request to end at 2:00"/>
+        <String name="endBefore" type="Fsgim.Duration" optional="true" documentation="Indicates how far before scheduled end time may end, for example, if a service that ends at 1:57 is compliant with a request to end at 2:00"/>
+        <String name="precision" type="Fsgim.Duration" optional="true" documentation="Whatever the time tolerance above, there is some minimum time that is considered significant. When used in Tolerance, precision defines the tracking and reporting requirements for a service."/>
+        <String name="startAfter" type="Fsgim.Duration" optional="true" documentation="Indicates how far after the requested start time the requested service may commence , for example, if a service that begins at 2:01 is compliant with a request to start at 2:00"/>
+        <String name="startBefore" type="Fsgim.Duration" optional="true" documentation="Indicates how far before the requested start time the requested service may commence, for example if a service that begins at 1:57 is compliant with a request to start at 2:00"/>
+    </Sequence>
+
+    <Sequence name="Wscal.VavailabilityType" documentation="The VavailabilityType class is intended to establish a baseline range of time to scope a sequence. The class can specify a start time and an end time or duration, using the timeRange attribute. If &quot;start&quot; is not present, then the start time is unbounded. If &quot;end&quot; or &quot;duration&quot; are not present, then the end time is unbounded. Within the specified time period, availability defaults to an interpretation of &quot;not available”, except for any time periods corresponding to associated AvailabilityType instances.">
+        <String name="granularity" type="Fsgim.Duration" optional="true" documentation="The finest precision that can be used to define times, such as the value of dtStart or duration"/>
+        <Sequence name="timeRange" type="Fsgim.DateTimeInterval" optional="true" documentation="The span of time that bounds the associated sequence of intervals defined using one or more AvailabilityType instances. At instantiation time the choice must be made whether to express the interval as a UTCDateTimeInterval or a LocalDateTimeInterval."/>
+        <Integer name="priority" optional="true" documentation="Integer value from 1 to 9. Higher numbers have lower priority per RFC5545."/>
+        <!-- associations -->
+        <Array name="availability" memberType="Wscal.AvailabilityType" minimumSize="1" documentation="The specification of a single interval, and optionally the rules for the pattern of intervals that constitute a sequence."/>
+    </Sequence>
+
+    <Enumerated name="Wscal.FreqRecurType" documentation="Used to identify the unit of time to be used in specifying the frequency of a recurring event.">
+        <NamedValues>
+            <Unsigned name="SECONDLY" value="1" documentation="Used to specify repeating events based on an interval of a second or more."/>
+            <Unsigned name="MINUTELY" value="2" documentation="Used to specify repeating events based on an interval of a minute or more."/>
+            <Unsigned name="HOURLY" value="3" documentation="Used to specify repeating events based on an interval of an hour or more."/>
+            <Unsigned name="DAILY" value="4" documentation="Used to specify repeating events based on an interval of a day or more."/>
+            <Unsigned name="WEEKLY" value="5" documentation="Used to specify repeating events based on an interval of a week or more."/>
+            <Unsigned name="MONTHLY" value="6" documentation="Used to specify repeating events based on an interval of a month or more."/>
+            <Unsigned name="YEARLY" value="7" documentation="Used to specify repeating events based on an interval of a year or more."/>
+        </NamedValues>
+    </Enumerated>
+
+    <Enumerated name="Wscal.RelationshipType" documentation="Specifies the type of hierarchical relationship associated with the calendar component specified by the property. The parameter value can be PARENT, to indicate that the referenced calendar component is a superior of calendar component; CHILD to indicate that the referenced calendar component is a subordinate of the calendar component; or SIBLING to indicate that the referenced calendar component is a peer of the calendar component. If this parameter is not specified on an allowable property, the default relationship type is PARENT.">
+        <NamedValues>
+            <Unsigned name="PARENT" value="1" documentation="Indicates that the referenced calendar component is a superior of calendar component - default"/>
+            <Unsigned name="CHILD" value="2" documentation="Indicates that the referenced calendar component is a subordinate of the calendar component. For example, a GluonType would have a CHILD relationship with the IntervalType it is pointing to."/>
+            <Unsigned name="SIBLING" value="3" documentation="Indicates that the referenced calendar component is a peer of the calendar component. For example, an IntervalType would have a SIBLING relationship with another IntervalType it is pointing to."/>
+        </NamedValues>
+    </Enumerated>
+
+    <Enumerated name="Wscal.TemporalRelationshipType" documentation="The temporal relation of one interval to the interval it is linked to.">
+        <NamedValues>
+            <Unsigned name="FinishToStart" value="1" documentation="The next interval immediately begins after the previous interval (the default interpretation)."/>
+            <Unsigned name="FinishToFinish" value="2" documentation="The next interval ends at the same time as the previous interval."/>
+            <Unsigned name="StartToFinish" value="3" documentation="The next interval finishes immediately before the previous interval (i.e., each interval in a sequence points to the interval immediately preceding it in time)."/>
+            <Unsigned name="StartToStart" value="4" documentation="The next interval begins at the same time as the previous interval."/>
+        </NamedValues>
+    </Enumerated>
+
+    </Definitions>
+</CSML>

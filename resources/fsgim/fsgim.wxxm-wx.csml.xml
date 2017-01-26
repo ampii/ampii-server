@@ -1,0 +1,563 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CSML xmlns="http://bacnet.org/csml/1.2">
+    <Definitions>
+    <Sequence name="WXXM-WX.AbstractMeasure" documentation="Abstract measurement class. Each measurment has a unit of measure, uom. WXXM allows more than one uom -- e.g., F/C/K for temperature. FSGIM only allows one choice of uom for a physical quantity.">
+        <Real name="value" documentation="The value of the measure."/>
+        <!-- associations -->
+        <Enumerated name="powerOfTenMultiplier" type="Fsgim.SiScaleCodeType" optional="true" documentation="Default is 1."/>
+        <Enumerated name="uom" type="Fsgim.UnitSymbolKind" documentation="Units of measure for the measurment."/>
+    </Sequence>
+
+    <Sequence name="WXXM-WX.Angle" extends="WXXM-WX.AbstractMeasure" documentation="Generic angle class.">
+        <!-- associations -->
+        <Enumerated name="uom" type="Fsgim.UnitSymbolKind" documentation="
+            Unit of measure for angle.
+            (This association redefines the uom association between the AbstractMeasure Class (see Clause 5.7.6.6.2.1.1) and the UnitSymbolKind Enumeration (see Clause 6.6.2.6).)
+            Constraint:  must be rad  
+            "/>
+    </Sequence>
+
+    <Sequence name="WXXM-WX.Bearing" documentation="Bearing is used to represent direction in the 2D coordinate reference system. It is an &quot;angle measured from true north&quot;. It is represented as an angle restricted to the range greater than 0 and up to and including 360 degrees which is true north.">
+        <Integer name="maxInclusive" documentation="The value of true north, 360."/>
+        <Integer name="minInclusive" documentation="Must be greater than 0."/>
+    </Sequence>
+
+    <Sequence name="WXXM-WX.Distance" extends="WXXM-WX.AbstractMeasure" documentation="Generic distance class.">
+        <!-- associations -->
+        <Enumerated name="uom" type="Fsgim.UnitSymbolKind" documentation="
+            Units of measure for distance.
+            (This association redefines the uom association between the AbstractMeasure Class (see Clause 5.7.6.6.2.1.1) and the UnitSymbolKind Enumeration (see Clause 6.6.2.6).)
+            Constraint:  must be m  
+            "/>
+    </Sequence>
+
+    <Sequence name="WXXM-WX.Luminance" extends="WXXM-WX.AbstractMeasure" documentation="Density of luminous intenstity.">
+        <!-- associations -->
+        <Enumerated name="uom" type="Fsgim.UnitSymbolKind" documentation="
+            Unit of measure for luminance.
+            (This association redefines the uom association between the AbstractMeasure Class (see Clause 5.7.6.6.2.1.1) and the UnitSymbolKind Enumeration (see Clause 6.6.2.6).)
+            Constraint:  must be sb  
+            "/>
+    </Sequence>
+
+    <Sequence name="WXXM-WX.Percentage" documentation="Generic percentage class; value is limited to between 0 and 100 inclusive.">
+        <Integer name="maxInclusive" documentation="Maximum inclusive value."/>
+        <Integer name="minInclusive" documentation="Minimum inclusive value."/>
+    </Sequence>
+
+    <Sequence name="WXXM-WX.Pressure" extends="WXXM-WX.AbstractMeasure" documentation="Generic pressure class.">
+        <!-- associations -->
+        <Enumerated name="uom" type="Fsgim.UnitSymbolKind" documentation="
+            Unit of measure for pressure.
+            (This association redefines the uom association between the AbstractMeasure Class (see Clause 5.7.6.6.2.1.1) and the UnitSymbolKind Enumeration (see Clause 6.6.2.6).)
+            Constraint:  must be pa  
+            "/>
+    </Sequence>
+
+    <Sequence name="WXXM-WX.Speed" extends="WXXM-WX.AbstractMeasure" documentation="Generic speed class.">
+        <!-- associations -->
+        <Enumerated name="uom" type="Fsgim.UnitSymbolKind" documentation="
+            Unit of measure for speed.
+            (This association redefines the uom association between the AbstractMeasure Class (see Clause 5.7.6.6.2.1.1) and the UnitSymbolKind Enumeration (see Clause 6.6.2.6).)
+            Constraint:  must be mPerS  
+            "/>
+    </Sequence>
+
+    <Sequence name="WXXM-WX.Temperature" extends="WXXM-WX.AbstractMeasure" documentation="Generic temperature class.">
+        <!-- associations -->
+        <Enumerated name="uom" type="Fsgim.UnitSymbolKind" documentation="
+            Unit of measure for temperature.
+            (This association redefines the uom association between the AbstractMeasure Class (see Clause 5.7.6.6.2.1.1) and the UnitSymbolKind Enumeration (see Clause 6.6.2.6).)
+            Constraint:  must be degK  
+            "/>
+    </Sequence>
+
+    <Sequence name="WXXM-WX.AbstractWxFeature" extends="WXXM-ISO.AbstractFeature" documentation="Abstract weather feature.">
+        <DateTime name="obsOrFcstTime" documentation="Forecast time for object. For a moving feature that is being tracked (e.g., GustFront), this will often be the time instant corresponding to the forecasted position. For a forecast of conditions for a general area, the time will often be the period of time associated with the forecast. For example, 'between 2 and 3 PM, there will be a wind shift in area X'. "/>
+        <Array name="phenomenon" memberType="WXXM-WX.AbstractPhenomenon" documentation="Phenomenon associated with feature."/>
+        <DateTime name="validTime" documentation="
+            Time period over which the feature is considered valid. Most commonly used in
+            conjunction with forecasts. Valid time is logically separate from a forecast time in that it describes a time period within which a forecast is in effect. So a forecast that describes 'Snow predicted between 6 and 10 PM this evening' may have a valid time that starts at the current time, while the forecast period itself runs from 6 to 10. 
+            "/>
+        <!-- associations -->
+        <Sequence name="associatedFeature" type="WXXM-AVWX.HorizontalVisibility" optional="true" documentation="Associated additional feature."/>
+        <!-- DR-EDIT removed the following for now
+        <Sequence name="associatedFeature" type="WXXM-AVWX.WindShear" optional="true" documentation="Associated additional feature."/>
+        <Sequence name="associatedFeature" type="WXXM-AVWX.TropicalCyclone" optional="true" documentation="Associated additional feature."/>
+        <Sequence name="associatedFeature" type="WXXM-AVWX.VolcanicAshCloud" optional="true" documentation="Associated additional feature."/>
+        <Sequence name="associatedFeature" type="WXXM-AVWX.Convection" optional="true" documentation="Associated additional feature."/>
+        <Sequence name="associatedFeature" type="WXXM-AVWX.AerodromeWx" optional="true" documentation="Associated additional feature."/>
+        <Sequence name="associatedFeature" type="WXXM-AVWX.SurfaceDeposit" optional="true" documentation="Associated additional feature."/>
+        <Sequence name="associatedFeature" type="WXXM-ISO.AbstractFeature" optional="true" documentation="Associated additional feature."/>
+        <Sequence name="associatedFeature" type="WXXM-AVWX.Sea" optional="true" documentation="Associated additional feature."/>
+        <Sequence name="associatedFeature" type="WXXM-AVWX.VolcanicActivity" optional="true" documentation="Associated additional feature."/>
+        <Sequence name="associatedFeature" type="WXXM-AVWX.Turbulence" optional="true" documentation="Associated additional feature."/>
+        <Sequence name="associatedFeature" type="WXXM-AVWX.AviationWx" optional="true" documentation="Associated additional feature."/>
+        <Sequence name="associatedFeature" type="WXXM-AVWX.Icing" optional="true" documentation="Associated additional feature."/>
+        <Sequence name="associatedFeature" type="WXXM-AVWX.MountainObscuration" optional="true" documentation="Associated additional feature."/>
+        <Sequence name="associatedFeature" type="WXXM-AVWX.MountainWave" optional="true" documentation="Associated additional feature."/>
+        <Sequence name="associatedFeature" type="WXXM-AVWX.WindLayer" optional="true" documentation="Associated additional feature."/>
+        -->
+        <Enumerated name="changeIndicator" type="WXXM-WX.ForecastChangeIndicator" optional="true" documentation="Expected change."/>
+    </Sequence>
+
+    <Unknown name="WXXM-WX.ExtentOf" documentation="Defines the extent of a feature.">
+    </Unknown>
+
+    <Sequence name="WXXM-WX.CloudCondition" extends="WXXM-WX.VerticallyBoundedPhenomenon" documentation="Cloud condition.">
+        <!-- associations -->
+        <Enumerated name="cloudAmount" type="WXXM-WX.CloudAmount" optional="true" documentation="Cloud amount."/>
+        <Enumerated name="cloudType" type="WXXM-WX.CloudTypes" optional="true" documentation="Cloud type."/>
+    </Sequence>
+
+    <Sequence name="WXXM-WX.Hydrometeor" extends="WXXM-WX.AbstractPhenomenon" documentation="Hydrometeor feature.">
+        <Boolean name="partial" optional="true" documentation="True if hydrometeor has partial coverage."/>
+        <Boolean name="isFreezing" optional="true" documentation="True if the cloud condensate is freezing."/>
+        <Boolean name="shallow" optional="true" documentation="True if the hydrometeor is shallow."/>
+        <Boolean name="patchy" optional="true" documentation="True if the hydrometeor is patchy."/>
+        <!-- associations -->
+        <Enumerated name="type" type="WXXM-WX.HydrometeorTypes" optional="true" documentation="Hydrometeor type."/>
+    </Sequence>
+
+    <Sequence name="WXXM-WX.Lithometeor" extends="WXXM-WX.AbstractPhenomenon" documentation="Lithometeor feature.">
+        <Boolean name="isBlowing" optional="true" documentation="True if lithometeor is blowing."/>
+        <Boolean name="isLowDrifting" optional="true" documentation="True if lithometeor is low drifting."/>
+        <!-- associations -->
+        <Enumerated name="type" type="WXXM-WX.ObscurationTypes" optional="true" documentation="Obscuration type."/>
+    </Sequence>
+
+    <Sequence name="WXXM-WX.Precipitation" extends="WXXM-WX.AbstractPhenomenon" documentation="Precipitation feature.">
+        <Boolean name="isFreezing" optional="true" documentation="True if precipitation is freezing."/>
+        <!-- associations -->
+        <Enumerated name="type" type="WXXM-WX.PrecipitationTypes" optional="true" documentation="Precipitation type."/>
+    </Sequence>
+
+    <Sequence name="WXXM-WX.RadioactiveCloud" extends="WXXM-WX.VerticallyBoundedPhenomenon" documentation="Radioactive cloud feature.">
+    </Sequence>
+
+    <Sequence name="WXXM-WX.Shower" extends="WXXM-WX.AbstractPhenomenon" documentation="Shower feature.">
+        <Boolean name="obscured" optional="true" documentation="True of shower is obscured."/>
+        <Boolean name="embedded" optional="true" documentation="True if shower is embedded."/>
+        <Boolean name="widespread" optional="true" documentation="True if shower is widespread."/>
+        <!-- associations -->
+        <Array name="contains" memberType="WXXM-WX.Precipitation" documentation="Contains precipitation."/>
+    </Sequence>
+
+    <Sequence name="WXXM-WX.Thunderstorm" extends="WXXM-WX.VerticallyBoundedPhenomenon" documentation="Thunderstorm feature.">
+        <Boolean name="widespread" optional="true" documentation="True if thunderstorm is widespread."/>
+        <Boolean name="embedded" optional="true" documentation="True if thunderstorm is embedded."/>
+        <Boolean name="obscured" optional="true" documentation="True if thunderstorm is obscured."/>
+        <!-- associations -->
+        <Array name="contains" memberType="WXXM-WX.Precipitation" documentation="Contains precipitation."/>
+    </Sequence>
+
+    <Enumerated name="WXXM-WX.CloudAmount" documentation="Enumeration for cloud amounts.">
+        <NamedValues>
+            <Unsigned name="CLEAR" value="1" documentation="Cloud amount is clear."/>
+            <Unsigned name="FEW" value="2" documentation="Cloud amount is few."/>
+            <Unsigned name="SCATTERED" value="3" documentation="Cloud amount is scattered."/>
+            <Unsigned name="BROKEN" value="4" documentation="Cloud amount is broken."/>
+            <Unsigned name="OVERCAST" value="5" documentation="Cloud amount is overcast."/>
+            <Unsigned name="SCATTERED-BROKEN" value="6" documentation="Cloud amount is scattered-broken."/>
+        </NamedValues>
+    </Enumerated>
+
+    <Enumerated name="WXXM-WX.CloudTypes" documentation="Enumeration for types of cloud.">
+        <NamedValues>
+            <Unsigned name="ALTOCUMULUS" value="1" documentation="Cloud type is altocumulus."/>
+            <Unsigned name="ALTOSTRATUS" value="2" documentation="Cloud type is altostratus."/>
+            <Unsigned name="CIRROCUMULUS" value="3" documentation="Cloud type is cirrocumulus."/>
+            <Unsigned name="CIRROSTRATUS" value="4" documentation="Cloud type is cirrostratus."/>
+            <Unsigned name="CIRRUS" value="5" documentation="Cloud type is cirrus."/>
+            <Unsigned name="CUMULONIMBUS" value="6" documentation="Cloud type is cumulonimbus."/>
+            <Unsigned name="CUMULUS" value="7" documentation="Cloud type is cumulus."/>
+            <Unsigned name="NIMBOSTRATUS" value="8" documentation="Cloud type is nimbostratus."/>
+            <Unsigned name="STRATOCUMULUS" value="9" documentation="Cloud type is stratocumulus."/>
+            <Unsigned name="STRATUS" value="10" documentation="Cloud type is stratus."/>
+            <Unsigned name="TOWERING CUMULUS" value="11" documentation="Cloud type is towering cumulus."/>
+            <Unsigned name="OTHER" value="12" documentation="Cloud type is other."/>
+        </NamedValues>
+    </Enumerated>
+
+    <Enumerated name="WXXM-WX.HydrometeorTypes" documentation="Enumeration for types of hydrometeor.">
+        <NamedValues>
+            <Unsigned name="FOG" value="1" documentation="Hydrometeor type is fog."/>
+            <Unsigned name="MIST" value="2" documentation="Hydrometeor type is mist."/>
+            <Unsigned name="UNIDENTIFIED" value="3" documentation="Hydrometeor type is unidentified."/>
+        </NamedValues>
+    </Enumerated>
+
+    <Sequence name="WXXM-WX.AbstractCoverage" documentation="This element serves as the head of a substitution group which may contain any coverage whose type is derived from gml:AbstractCoverageType.  It may act as a variable in the definition of content models where it is required to permit any coverage to be valid.">
+    </Sequence>
+
+    <Sequence name="WXXM-WX.AreaCoverage" extends="WXXM-WX.DiscreteCoverage" documentation="Defines an area coverage.">
+        <!-- associations -->
+        <Unknown name="extent" type="WXXM-WX.ExtentOf" optional="true" documentation="Extent of area coverage."/>
+    </Sequence>
+
+    <Sequence name="WXXM-WX.DiscreteCoverage" extends="WXXM-WX.AbstractCoverage" documentation="
+            A discrete coverage consists of a domain set, range set and optionally a coverage function. The domain set consists of either spatial or temporal geometry objects, finite in number. The range set is comprised of a finite number of attribute values each of which is associated to every direct position within any single spatiotemporal object in the domain. In other words, the range values are constant on each spatiotemporal object in the domain. This coverage function maps each element from the coverage domain to an element in its range. The coverageFunction element describes the mapping function.
+            This element serves as the head of a substitution group which may contain any discrete coverage whose type is derived from gml:DiscreteCoverageType.
+            ">
+    </Sequence>
+
+    <Sequence name="WXXM-WX.PercentageRange" documentation="Percentage range.">
+        <Sequence name="maximum" type="WXXM-WX.Percentage" documentation="Maximum value of percentage."/>
+        <Sequence name="minimum" type="WXXM-WX.Percentage" documentation="Minimum value of percentage."/>
+    </Sequence>
+
+    <Unknown name="WXXM-WX.WeatherModifier" documentation="Weather modifier.">
+    </Unknown>
+
+    <Sequence name="WXXM-WX.WxCode" documentation="Restriction of weather codes.  This includes notation for weather conditions (rain, snow, etc) like that used in METARs and TAFs">
+    </Sequence>
+
+    <Enumerated name="WXXM-WX.Compass16" documentation="Enumeration for compass points, including 12 intercardinal points.">
+        <NamedValues>
+            <Unsigned name="N" value="1" documentation="North."/>
+            <Unsigned name="NNE" value="2" documentation="North-North-East."/>
+            <Unsigned name="NE" value="3" documentation="North-East."/>
+            <Unsigned name="ENE" value="4" documentation="East-North-East."/>
+            <Unsigned name="E" value="5" documentation="East."/>
+            <Unsigned name="ESE" value="6" documentation="East-South-East."/>
+            <Unsigned name="SE" value="7" documentation="South-East."/>
+            <Unsigned name="SSE" value="8" documentation="South-South-East."/>
+            <Unsigned name="S" value="9" documentation="South."/>
+            <Unsigned name="SSW" value="10" documentation="South-South-West."/>
+            <Unsigned name="SW" value="11" documentation="South-West."/>
+            <Unsigned name="WSW" value="12" documentation="West-South-West."/>
+            <Unsigned name="W" value="13" documentation="West."/>
+            <Unsigned name="WNW" value="14" documentation="West-North-West."/>
+            <Unsigned name="NW" value="15" documentation="North-West."/>
+            <Unsigned name="NNW" value="16" documentation="North-North-West."/>
+        </NamedValues>
+    </Enumerated>
+
+    <Enumerated name="WXXM-WX.Compass4" documentation="Enumeration for cardinal compass points.">
+        <NamedValues>
+            <Unsigned name="N" value="1" documentation="North."/>
+            <Unsigned name="S" value="2" documentation="South."/>
+            <Unsigned name="E" value="3" documentation="East"/>
+            <Unsigned name="W" value="4" documentation="West."/>
+        </NamedValues>
+    </Enumerated>
+
+    <Enumerated name="WXXM-WX.Compass8" documentation="Enumeration for 8 compass points, including 4 intercardinal points.">
+        <NamedValues>
+            <Unsigned name="N" value="1" documentation="North."/>
+            <Unsigned name="NE" value="2" documentation="North-East."/>
+            <Unsigned name="E" value="3" documentation="East."/>
+            <Unsigned name="SE" value="4" documentation="South-East."/>
+            <Unsigned name="S" value="5" documentation="South."/>
+            <Unsigned name="SW" value="6" documentation="South-West."/>
+            <Unsigned name="W" value="7" documentation="West."/>
+            <Unsigned name="NW" value="8" documentation="North-West."/>
+        </NamedValues>
+    </Enumerated>
+
+    <Enumerated name="WXXM-WX.ForecastChangeIndicator" documentation="Enumeration for forecast change indicator descriptions.">
+        <NamedValues>
+            <Unsigned name="BECOMING" value="1" documentation="Forecast change indicator is becoming."/>
+            <Unsigned name="NO SIGNIFICANT CHANGE" value="2" documentation="Forecast change indicator is no significant change."/>
+            <Unsigned name="TEMPORARY" value="3" documentation="Forecast change indicator is temporary."/>
+            <Unsigned name="FROM" value="4" documentation="Forecast change indicator is from."/>
+        </NamedValues>
+    </Enumerated>
+
+    <Enumerated name="WXXM-WX.Growth" documentation="Enumeration for storm growth (taken from CCFP).">
+        <NamedValues>
+            <Unsigned name="FAST POSITIVE" value="1" documentation="Storm growth is fast and positive."/>
+            <Unsigned name="POSITIVE" value="2" documentation="Storm growth is positive."/>
+            <Unsigned name="NO CHANGE" value="3" documentation="Storm growth is no-change."/>
+            <Unsigned name="NEGATIVE" value="4" documentation="Storm growth is negative."/>
+        </NamedValues>
+    </Enumerated>
+
+    <Enumerated name="WXXM-WX.IntensityChange" documentation="Enumeration for intensity change descriptions.">
+        <NamedValues>
+            <Unsigned name="INTENSIFY" value="1" documentation="Weather will intensify."/>
+            <Unsigned name="NO CHANGE" value="2" documentation="No change."/>
+            <Unsigned name="WEAKEN" value="3" documentation="Weather phenomena will weaken."/>
+        </NamedValues>
+    </Enumerated>
+
+    <Enumerated name="WXXM-WX.PastTendency" documentation="Enumeration for past tendency descriptions.">
+        <NamedValues>
+            <Unsigned name="DOWNWARD" value="1" documentation="Past tendency is downward."/>
+            <Unsigned name="NO CHANGE" value="2" documentation="Past tendency is no change."/>
+            <Unsigned name="UPWARD" value="3" documentation="Past tendency is upward."/>
+        </NamedValues>
+    </Enumerated>
+
+    <Enumerated name="WXXM-WX.WeatherDescriptor" documentation="Enumeration for weather descriptor.">
+        <NamedValues>
+            <Unsigned name="BLOWING" value="1" documentation="Weather characterized as blowing."/>
+            <Unsigned name="FREEZING" value="2" documentation="Weather characterized as freezing."/>
+            <Unsigned name="DRIFTING" value="3" documentation="Weather characterized as drifting."/>
+            <Unsigned name="LOW DRIFTING" value="4" documentation="Weather characterized as low-drifting."/>
+            <Unsigned name="PARTIAL" value="5" documentation="Weather characterized as partial."/>
+            <Unsigned name="PATCHES" value="6" documentation="Weather characterized as pathes."/>
+            <Unsigned name="SHALLOW" value="7" documentation="Weather characterized as shallow."/>
+            <Unsigned name="SHOWERS" value="8" documentation="Weather characterized as showers."/>
+            <Unsigned name="THUNDERSTORMS" value="9" documentation="Weather characterized as thunderstorms."/>
+        </NamedValues>
+    </Enumerated>
+
+    <Enumerated name="WXXM-WX.WeatherIntensity" documentation="Enumeration for weather intensity descriptions.">
+        <NamedValues>
+            <Unsigned name="NONE" value="1" documentation="A report of no intensity (no icing present, for example) for a condition.  This is different from missing information"/>
+            <Unsigned name="LIGHT" value="2" documentation="Weather intensity is light."/>
+            <Unsigned name="LIGHT-MODERATE" value="3" documentation="A light to moderate intensity.  This is used by AIR/SIGMETs"/>
+            <Unsigned name="MODERATE" value="4" documentation="Weather intensity is moderate."/>
+            <Unsigned name="MODERATE-SEVERE" value="5" documentation="A moderate to severe intensity.  This is used by AIR/SIGMETs"/>
+            <Unsigned name="HEAVY" value="6" documentation="Weather intensity is heavy."/>
+            <Unsigned name="SEVERE" value="7" documentation="Weather intensity is severe."/>
+        </NamedValues>
+    </Enumerated>
+
+    <Enumerated name="WXXM-WX.WeatherProximity" documentation="Enumeration for weather intensity descriptions.">
+        <NamedValues>
+            <Unsigned name="VICINITY" value="1" documentation="Weather proximity is vicinity."/>
+        </NamedValues>
+    </Enumerated>
+
+    <Sequence name="WXXM-WX.AreaOfInterest" extends="WXXM-ISO.AbstractFeature" documentation="This represents a generic area of interest such as a radar scan area for use in situations where a soft-type feature of interest is preferable.">
+        <!-- associations -->
+        <Unknown name="extentOf" type="WXXM-WX.ExtentOf" optional="true" documentation="Extent of feature."/>
+    </Sequence>
+
+    <Sequence name="WXXM-WX.Forecast" extends="WXXM-SWEObservation" documentation="
+            Generic weather forecast class. Forecast inherits from O&amp;M observation. This is a temporary fix as this inheritance violates Liskov substitution principle (subclass can't be used as a substitute for the super class). 
+            For a Forecast the samplingTime implies the time period associated with the observations used to produce the forecast.
+            ">
+        <Sequence name="confidence" type="WXXM-WX.Percentage" documentation="Percentage confidence in forecast."/>
+        <Sequence name="confidenceRange" type="WXXM-WX.PercentageRange" documentation="Range for percentage."/>
+        <DateTime name="forecastAnalysisTime" documentation="Forecast analysis time."/>
+        <Sequence name="probability" type="WXXM-WX.Percentage" documentation="Probability for this forecast."/>
+        <DateTime name="validTime" documentation="Time period over which forecast result is valid (can incorporate “expiration time”)."/>
+        <!-- associations -->
+        <Enumerated name="changeIndicator" type="WXXM-WX.ForecastChangeIndicator" optional="true" documentation="Expected change."/>
+        <Sequence name="relatedObservation" type="WXXM-AVWX.Turbulence" optional="true" documentation="
+            The base observation allows for a forecast to be linked to its corresponding base observation.
+                            This is in support of existing data models where the observations and forecasts are bundled
+                            together for convenience. It allows for the linkage between an observation and its associated
+                            forecasts tied to be maintained.
+            "/>
+        <!-- DR-EDIT removed the following for now
+        <Sequence name="relatedObservation" type="WXXM-ISO.AbstractFeature" optional="true" documentation="
+             The base observation allows for a forecast to be linked to its corresponding base observation.
+                            This is in support of existing data models where the observations and forecasts are bundled
+                            together for convenience. It allows for the linkage between an observation and its associated
+                            forecasts tied to be maintained.
+            "/>
+        <Sequence name="relatedObservation" type="WXXM-AVWX.WindShear" optional="true" documentation="
+            The base observation allows for a forecast to be linked to its corresponding base observation.
+                            This is in support of existing data models where the observations and forecasts are bundled
+                            together for convenience. It allows for the linkage between an observation and its associated
+                            forecasts tied to be maintained.
+            "/>
+        <Sequence name="relatedObservation" type="WXXM-AVWX.AviationWx" optional="true" documentation="
+             The base observation allows for a forecast to be linked to its corresponding base observation.
+                            This is in support of existing data models where the observations and forecasts are bundled
+                            together for convenience. It allows for the linkage between an observation and its associated
+                            forecasts tied to be maintained.
+            "/>
+        <Sequence name="relatedObservation" type="WXXM-AVWX.Sea" optional="true" documentation="
+             The base observation allows for a forecast to be linked to its corresponding base observation.
+                            This is in support of existing data models where the observations and forecasts are bundled
+                            together for convenience. It allows for the linkage between an observation and its associated
+                            forecasts tied to be maintained.
+            "/>
+        <Sequence name="relatedObservation" type="WXXM-AVWX.Convection" optional="true" documentation="
+             The base observation allows for a forecast to be linked to its corresponding base observation.
+                            This is in support of existing data models where the observations and forecasts are bundled
+                            together for convenience. It allows for the linkage between an observation and its associated
+                            forecasts tied to be maintained.
+            "/>
+        <Sequence name="relatedObservation" type="WXXM-AVWX.VolcanicAshCloud" optional="true" documentation="
+            The base observation allows for a forecast to be linked to its corresponding base observation.
+                            This is in support of existing data models where the observations and forecasts are bundled
+                            together for convenience. It allows for the linkage between an observation and its associated
+                            forecasts tied to be maintained.
+            "/>
+        <Sequence name="relatedObservation" type="WXXM-AVWX.VolcanicActivity" optional="true" documentation="
+            The base observation allows for a forecast to be linked to its corresponding base observation.
+                            This is in support of existing data models where the observations and forecasts are bundled
+                            together for convenience. It allows for the linkage between an observation and its associated
+                            forecasts tied to be maintained.
+            "/>
+        <Sequence name="relatedObservation" type="WXXM-AVWX.WindLayer" optional="true" documentation="
+            The base observation allows for a forecast to be linked to its corresponding base observation.
+                            This is in support of existing data models where the observations and forecasts are bundled
+                            together for convenience. It allows for the linkage between an observation and its associated
+                            forecasts tied to be maintained.
+            "/>
+        <Sequence name="relatedObservation" type="WXXM-AVWX.SurfaceDeposit" optional="true" documentation="
+             The base observation allows for a forecast to be linked to its corresponding base observation.
+                            This is in support of existing data models where the observations and forecasts are bundled
+                            together for convenience. It allows for the linkage between an observation and its associated
+                            forecasts tied to be maintained.
+            "/>
+        <Sequence name="relatedObservation" type="WXXM-AVWX.MountainObscuration" optional="true" documentation="
+             The base observation allows for a forecast to be linked to its corresponding base observation.
+                            This is in support of existing data models where the observations and forecasts are bundled
+                            together for convenience. It allows for the linkage between an observation and its associated
+                            forecasts tied to be maintained.
+            "/>
+        <Sequence name="relatedObservation" type="WXXM-AVWX.TropicalCyclone" optional="true" documentation="
+            The base observation allows for a forecast to be linked to its corresponding base observation.
+                            This is in support of existing data models where the observations and forecasts are bundled
+                            together for convenience. It allows for the linkage between an observation and its associated
+                            forecasts tied to be maintained.
+            "/>
+        <Sequence name="relatedObservation" type="WXXM-AVWX.Icing" optional="true" documentation="
+             The base observation allows for a forecast to be linked to its corresponding base observation.
+                            This is in support of existing data models where the observations and forecasts are bundled
+                            together for convenience. It allows for the linkage between an observation and its associated
+                            forecasts tied to be maintained.
+            "/>
+        <Sequence name="relatedObservation" type="WXXM-AVWX.AerodromeWx" optional="true" documentation="
+             The base observation allows for a forecast to be linked to its corresponding base observation.
+                            This is in support of existing data models where the observations and forecasts are bundled
+                            together for convenience. It allows for the linkage between an observation and its associated
+                            forecasts tied to be maintained.
+            "/>
+        <Sequence name="relatedObservation" type="WXXM-AVWX.MountainWave" optional="true" documentation="
+            The base observation allows for a forecast to be linked to its corresponding base observation.
+                            This is in support of existing data models where the observations and forecasts are bundled
+                            together for convenience. It allows for the linkage between an observation and its associated
+                            forecasts tied to be maintained.
+            "/>
+        <Sequence name="relatedObservation" type="WXXM-AVWX.HorizontalVisibility" optional="true" documentation="
+             The base observation allows for a forecast to be linked to its corresponding base observation.
+                            This is in support of existing data models where the observations and forecasts are bundled
+                            together for convenience. It allows for the linkage between an observation and its associated
+                            forecasts tied to be maintained.
+            "/>
+        -->
+    </Sequence>
+
+    <Sequence name="WXXM-WX.AirTemperature" extends="WXXM-WX.Temperature" documentation="Air temperature.">
+    </Sequence>
+
+    <Sequence name="WXXM-WX.CloudHeight" extends="WXXM-WX.VerticalDistance" documentation="Cloud height.">
+    </Sequence>
+
+    <Sequence name="WXXM-WX.Depth" extends="WXXM-WX.VerticalDistance" documentation="Depth.">
+    </Sequence>
+
+    <Sequence name="WXXM-WX.HorizontalDistance" extends="WXXM-WX.Distance" documentation="Horizontal distance.">
+    </Sequence>
+
+    <Sequence name="WXXM-WX.HorizontalVisibilityDistance" extends="WXXM-WX.HorizontalDistance" documentation="Restricts HorizontalDistance to an integer value greater than or equal to zero.">
+    </Sequence>
+
+    <Sequence name="WXXM-WX.VerticalDistance" extends="WXXM-WX.Distance" documentation="Vertical distance.">
+    </Sequence>
+
+    <Sequence name="WXXM-WX.VerticalVisibilityDistance" extends="WXXM-WX.VerticalDistance" documentation="Restricts VerticalDistance to an integer value greater than or equal to zero.">
+    </Sequence>
+
+    <Sequence name="WXXM-WX.WindDirection" extends="WXXM-WX.Bearing" documentation="WindDirection is a Bearing expressed as an integer.">
+    </Sequence>
+
+    <Sequence name="WXXM-WX.WindGust" extends="WXXM-WX.Speed" documentation="Wind gust.">
+    </Sequence>
+
+    <Sequence name="WXXM-WX.WindSpeed" extends="WXXM-WX.Speed" documentation="Restriction of Speed to an integer value greater than or equal to one.">
+    </Sequence>
+
+    <Sequence name="WXXM-WX.MotionVector" extends="WXXM-WX.AbstractWxFeature" documentation="Motion vector feature.">
+        <Sequence name="position" type="WXXM-ISO.DirectPosition" documentation="The position of the motion vector."/>
+        <!-- associations -->
+        <Sequence name="direction" type="WXXM-WX.Angle" documentation="Direction of motion vector."/>
+        <Sequence name="position" type="WXXM-ISO.DirectPosition" documentation="Position of feature."/>
+        <Sequence name="speed" type="WXXM-WX.Speed" documentation="Speed of movement."/>
+    </Sequence>
+
+    <Sequence name="WXXM-WX.Observation" extends="WXXM-SWEObservation" documentation="Weather observation. This class comprises the measurements and observed phenomena at a point in time and for a given weather area.">
+        <DateTime name="validTime" documentation="Time period over which observation result is valid (can incorporate “expiration time”)."/>
+    </Sequence>
+
+    <Sequence name="WXXM-WX.AbstractPhenomenon" extends="WXXM-ISO.AbstractFeature" documentation="Abstract class intended to act as head of subsitution group for all weather phenomena classes.">
+        <Sequence name="coverage" type="WXXM-WX.PercentageRange" documentation="Percentage of coverage of the phenomenon."/>
+        <!-- associations -->
+        <Unknown name="extentOf" type="WXXM-WX.ExtentOf" optional="true" documentation="Extent of the phenomenon."/>
+        <Enumerated name="intensity" type="WXXM-WX.WeatherIntensity" optional="true" documentation="Weather intensity."/>
+        <Array name="movement" memberType="WXXM-WX.MovementDescription" documentation="Movement."/>
+    </Sequence>
+
+    <Sequence name="WXXM-WX.MovementDescription" documentation="Movement description feature.">
+        <Sequence name="directionTowards" type="WXXM-WX.Bearing" documentation="Direction feature is moving towards."/>
+        <Sequence name="speed" type="WXXM-WX.Speed" documentation="Speed of feature motion."/>
+        <Boolean name="isStationary" documentation="True if movement description is stationary."/>
+        <!-- associations -->
+        <Enumerated name="compassDirection" type="WXXM-WX.Compass16" optional="true" documentation="Compass direction."/>
+    </Sequence>
+
+    <Sequence name="WXXM-WX.OtherPhenomenon" extends="WXXM-WX.AbstractPhenomenon" documentation="Other phenomenon feature.">
+        <!-- associations -->
+        <Enumerated name="phenomenonType" type="WXXM-WX.OtherPhenomenonTypes" optional="true" documentation="Phenomenon type."/>
+    </Sequence>
+
+    <Sequence name="WXXM-WX.VerticallyBoundedPhenomenon" extends="WXXM-WX.AbstractPhenomenon" documentation="A weather phenomenon that is vertically bounded with a base and/or top.">
+        <Sequence name="base" type="WXXM-WX.VerticalDistance" documentation="Base vertical distance of phenomenon."/>
+        <Sequence name="top" type="WXXM-WX.VerticalDistance" documentation="Top distance of the phenomenon."/>
+    </Sequence>
+
+    <Sequence name="WXXM-WX.WxCondition" extends="WXXM-ISO.AbstractFeature" documentation="Weather condition description.">
+        <Unknown name="weatherModifier" type="WXXM-WX.WeatherModifier" documentation="Allows for intensity or proximity attribution of condition."/>
+        <Sequence name="wxPhenomenon" type="WXXM-WX.AbstractPhenomenon" documentation="Phenomenon associated with condition."/>
+        <!-- associations -->
+        <Enumerated name="weatherDescriptor" type="WXXM-WX.WeatherDescriptor" optional="true" documentation="Descriptor of weather condition."/>
+        <Sequence name="wxCode" type="WXXM-WX.WxCode" optional="true" documentation="Weather codes."/>
+    </Sequence>
+
+    <Enumerated name="WXXM-WX.ObscurationTypes" documentation="Enumeration for obscuration types.">
+        <NamedValues>
+            <Unsigned name="MIST" value="1" documentation="Obscuration type is mist."/>
+            <Unsigned name="FOG" value="2" documentation="Obscuration type is fog."/>
+            <Unsigned name="SMOKE" value="3" documentation="Obscuration type is smoke."/>
+            <Unsigned name="VOLCANIC ASH" value="4" documentation="Obscuration type is volcanic ash."/>
+            <Unsigned name="DUST" value="5" documentation="Obscuration type is dust."/>
+            <Unsigned name="SAND" value="6" documentation="Obscuration type is sand."/>
+            <Unsigned name="HAZE" value="7" documentation="Obscuration type is haze."/>
+            <Unsigned name="SPRAY" value="8" documentation="Obscuration type is spray."/>
+            <Unsigned name="UNIDENTIFIED" value="9" documentation="Obscuration type is unidentified."/>
+        </NamedValues>
+    </Enumerated>
+
+    <Enumerated name="WXXM-WX.OtherPhenomenonTypes" documentation="Enumeration for other types of phenomenon.">
+        <NamedValues>
+            <Unsigned name="DUSTWHIRL" value="1" documentation="Includes SANDWHIRL (dust devil)."/>
+            <Unsigned name="SQUALL" value="2" documentation="Squall."/>
+            <Unsigned name="FUNNEL CLOUD" value="3" documentation="Includes TORNADO and WATERSPOUT."/>
+            <Unsigned name="DUSTSTORM" value="4" documentation="Dust storm."/>
+            <Unsigned name="SANDSTORM" value="5" documentation="Sand storm."/>
+        </NamedValues>
+    </Enumerated>
+
+    <Enumerated name="WXXM-WX.PrecipitationTypes" documentation="Enumeration for precipitation types.">
+        <NamedValues>
+            <Unsigned name="DRIZZLE" value="1" documentation="Precipitation type is drizzle."/>
+            <Unsigned name="RAIN" value="2" documentation="Precipitation type is rain."/>
+            <Unsigned name="SNOW" value="3" documentation="Precipitation type is snow."/>
+            <Unsigned name="SNOW_GRAINS" value="4" documentation="Precipitation type is snow grains."/>
+            <Unsigned name="ICE CRYSTALS" value="5" documentation="Precipitation type is ice crystals."/>
+            <Unsigned name="ICE PELLETS" value="6" documentation="Precipitation type is ice pellets."/>
+            <Unsigned name="HAIL" value="7" documentation="Precipitation type is hail."/>
+            <Unsigned name="SMALL HAIL" value="8" documentation="Precipitation type is small hail."/>
+            <Unsigned name="UNKNOWN" value="9" documentation="Precipitation type is unknown."/>
+            <Unsigned name="UNIDENTIFIED" value="10" documentation="Precipitation type is unidentified (Sharknado)."/>
+        </NamedValues>
+    </Enumerated>
+
+    <Sequence name="WXXM-WX.ReportProcess" documentation="The process related to the distribution or collection of weather reports">
+        <Sequence name="boundedBy" type="WXXM-ISO.GM_Envelope" optional="true" documentation="Bounding envelope of feature."/>
+        <Sequence name="position" type="WXXM-ISO.DirectPosition" optional="true" documentation="The point location of the feature."/>
+        <!-- associations -->
+        <Sequence name="CRS" type="WXXM-ISO.SC_CRS" optional="true" documentation="The coordinate system for this position."/>
+    </Sequence>
+
+    </Definitions>
+</CSML>

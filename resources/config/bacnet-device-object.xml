@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Collection nodeType="device" xmlns="http://bacnet.org/csml/1.2"  defaultLocale="en-US">
+    <!-- this is the data for the ".this" device. it is consumed by BACnetManager.initializeSystemDeviceFromFile(), called from the Application class at startup -->
+    <!-- the name and instance number of the device and the various properties under the Device object will be filled in at runtime to match Application.thisDeviceInstance -->
+    <Object name="device,4194303" displayName="The BACnet/WS Device" type="0-DeviceObject"> <!--this number gets replaced -->
+        <ObjectIdentifier name="object-identifier" value="device,4194303"/> <!--this number gets replaced -->
+        <String name="object-name" value="AMPII-Device-4194303"/> <!--this number gets replaced -->
+        <Enumerated name="object-type" value="device"/>
+        <Enumerated name="system-status" value="operational"/>
+        <String name="vendor-name" value="ampii.org"/>
+        <Unsigned name="vendor-identifier" value="888"/>
+        <String name="model-name" value="BWS SIMTEST"/>
+        <String name="firmware-revision" value="1.0"/>
+        <String name="application-software-version" value="0.0"/> <!--this string gets replaced by BACnetManager class -->
+        <String name="description" value="AMPII BACnet/WS Simulator"/>
+        <Unsigned name="protocol-version" value="1"/>
+        <Unsigned name="protocol-revision" value="16"/>
+        <BitString name="protocol-services-supported" value="read-property;who-is"/>
+        <BitString name="protocol-object-types-supported" value="device"/>
+        <Array name="object-list"/>  <!-- update this if you add any objects to this file (or create a binding for it to autofill on preread) -->
+        <Unsigned name="max-apdu-length-accepted" value="1500"/>
+        <Enumerated name="segmentation-supported" value="no-segmentation"/>
+        <Time name="local-time" unspecifiedValue="true"/>
+        <Date name="local-date" unspecifiedValue="true"/>
+        <Integer name="utc-offset" value="300"/>
+        <Boolean name="daylight-savings-status" value="false"/>
+        <Unsigned name="apdu-timeout" value="10"/>
+        <Unsigned name="number-of-apdu-retries" value="3"/>
+        <List name="device-address-binding" />
+        <Unsigned name="database-revision" value="1"/>
+    </Object>
+</Collection>

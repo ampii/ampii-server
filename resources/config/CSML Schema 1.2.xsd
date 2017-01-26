@@ -1,0 +1,995 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://bacnet.org/csml/1.2"
+           targetNamespace="http://bacnet.org/csml/1.2"
+           elementFormDefault="qualified" >
+
+    <!-- THIS IS NOT AN OFFICIAL SCHEMA. It may be helpful for HUMAN development but it slightly broken against the current spec.  -->
+
+    <xs:element name="CSML" type="CSML"/>
+    <xs:complexType name="CSML">
+        <xs:sequence>
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:element ref="Definitions"/>
+                <xs:element ref="Includes"/>
+                <xs:group ref="AllDataGroup"/>
+                <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:choice>
+        </xs:sequence>
+        <xs:attribute name="defaultLocale" type="xs:language" use="optional"/>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+
+
+    <xs:complexType name="DataBaseType">
+        <xs:sequence>
+            <xs:choice minOccurs="0" maxOccurs="unbounded"> <!-- repeatable elements -->
+                <xs:element ref="Definitions"/>
+                <xs:element name="DisplayName" type="LocalizableStringType"/>
+                <xs:element name="Description" type="LocalizableStringType"/>
+                <xs:element name="Documentation">
+                    <xs:complexType mixed="true">
+                        <xs:sequence>
+                            <xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                        <xs:attribute name="locale" type="xs:language" use="optional"/>
+                        <xs:anyAttribute namespace="##any" processContents="lax"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="WritableWhen" type="LocalizableStringType"/>
+                <xs:element name="RequiredWhen" type="LocalizableStringType"/>
+                <xs:element name="Error" type="LocalizableStringType"/>
+                <xs:element ref="Links"/>
+                <xs:element ref="Failures"/>
+                <xs:element ref="ValueTags"/>
+                <xs:element ref="Revisions"/>
+                <xs:element ref="History"/>
+                <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:choice>
+            <xs:element name="PriorityArray" type="ArrayType" minOccurs="0"/>
+            <xs:element ref="Extensions" minOccurs="0"/>
+        </xs:sequence>
+        <!-- these are in the same order as in the standard -->
+        <xs:attribute name="name" type="xs:string" use="optional"/>
+        <xs:attribute name="id" type="xs:string" use="optional"/>
+        <xs:attribute name="type" type="xs:string" use="optional"/>
+        <xs:attribute name="extends" type="xs:string" use="optional"/>
+        <xs:attribute name="overlays" type="xs:string" use="optional"/>
+        <xs:attribute name="nodeType" type="xs:string" use="optional"/>    <!-- TODO: make NodeTypeType -->
+        <xs:attribute name="nodeSubType" type="xs:string" use="optional"/>
+        <xs:attribute name="displayName" type="xs:string" use="optional"/>
+        <xs:attribute name="description" type="xs:string" use="optional"/>
+        <!-- <Documentation> defined above, 'documentation' attribute defined below -->
+        <xs:attribute name="documentation" type="xs:string" use="optional"/>
+        <xs:attribute name="comment" type="xs:string" use="optional"/>
+        <xs:attribute name="writable" type="xs:boolean" use="optional"/>
+        <xs:attribute name="commandable" type="xs:boolean" use="optional"/>
+        <!-- <PriorityArray> is defined above -->
+        <xs:attribute name="relinquishDefault" type="xs:anyType" use="optional"/>
+        <!-- <Failures> is defined above -->
+        <xs:attribute name="readable" type="xs:boolean" use="optional"/>
+        <xs:attribute name="associatedWith" type="xs:string" use="optional"/>
+        <xs:attribute name="requiredWith" type="xs:string" use="optional"/>
+        <xs:attribute name="requiredWithout" type="xs:string" use="optional"/>
+        <xs:attribute name="notPresentWith" type="xs:string" use="optional"/>
+        <xs:attribute name="writeEffective" type="WriteEffectiveType" use="optional"/>
+        <xs:attribute name="optional" type="xs:boolean" use="optional"/>
+        <xs:attribute name="absent" type="xs:boolean" use="optional"/>
+        <xs:attribute name="variability" type="VariabilityType" use="optional"/>
+        <xs:attribute name="volatility" type="VolatilityType" use="optional"/>
+        <xs:attribute name="isMultiLine" type="xs:boolean" use="optional"/>
+        <xs:attribute name="inAlarm" type="xs:boolean" use="optional"/>
+        <xs:attribute name="overridden" type="xs:boolean" use="optional"/>
+        <xs:attribute name="fault" type="xs:boolean" use="optional"/>
+        <xs:attribute name="outOfService" type="xs:boolean" use="optional"/>
+        <!-- <Links> is defined above -->
+        <xs:attribute name="tags" type="xs:string" use="optional"/>
+        <!-- <ValueTags> is defined above -->
+        <xs:attribute name="authRead" type="xs:string" use="optional"/>
+        <xs:attribute name="authWrite" type="xs:string" use="optional"/>
+        <xs:attribute name="authVisible" type="xs:string" use="optional"/>
+        <xs:attribute name="href" type="xs:anyURI" use="optional"/>
+        <xs:attribute name="sourceId" type="xs:string" use="optional"/>
+        <xs:attribute name="etag" type="xs:string" use="optional"/>
+        <!-- 'count' has no representation in XML -->
+        <!-- 'children' has no representation in XML -->
+        <!-- 'descendants' has no representation in XML -->
+        <!-- <History> is defined above -->
+        <xs:attribute name="targetType" type="xs:string" use="optional"/>
+        <xs:attribute name="relationship" type="xs:string" use="optional"/>
+        <!-- <Error> defined above, 'documentation' attribute defined below -->
+        <xs:attribute name="error" type="xs:nonNegativeInteger" use="optional"/>
+        <xs:attribute name="displayOrder" type="xs:nonNegativeInteger" use="optional"/>
+        <xs:attribute name="published" type="xs:dateTime" use="optional"/>
+        <xs:attribute name="updated" type="xs:dateTime" use="optional"/>
+        <xs:attribute name="writableWhen" type="WritableWhenType" use="optional"/>
+        <xs:attribute name="requiredWhen" type="RequiredWhenType" use="optional"/>
+        <xs:attribute name="contextTag" type="xs:nonNegativeInteger" use="optional"/>
+        <xs:attribute name="propertyIdentifier" type="xs:nonNegativeInteger" use="optional"/>
+        <xs:attribute name="addRev" type="xs:string" use="optional"/>
+        <xs:attribute name="remRev" type="xs:string" use="optional"/>
+        <xs:attribute name="modRev" type="xs:string" use="optional"/>
+        <xs:attribute name="dataRev" type="xs:string" use="optional"/>
+        <!-- <Revisions> defined above -->
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+
+
+    <xs:complexType name="PrimitiveDataBaseType">
+        <xs:complexContent>
+            <xs:extension base="DataBaseType">
+                <xs:attribute name="displayNameForWriting" type="xs:string" use="optional"/>
+                <xs:attribute name="notForWriting" type="xs:boolean" use="optional"/>
+                <xs:attribute name="notForReading" type="xs:boolean" use="optional"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="ConstructedDataBaseType">
+        <xs:complexContent>
+            <xs:extension base="DataBaseType">
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                    <xs:group ref="AllDataGroup"/>
+                </xs:choice>
+                <xs:attribute name="truncated" type="xs:boolean" use="optional"/>
+                <xs:attribute name="partial" type="xs:boolean" use="optional"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="CollectionsDataBaseType">
+        <xs:complexContent>
+            <xs:extension base="DataBaseType">
+                <xs:sequence>
+                    <xs:element ref="MemberTypeDefinition" minOccurs="0" maxOccurs="1"/>
+                    <xs:choice minOccurs="0" maxOccurs="unbounded">
+                        <xs:group ref="AllDataGroup"/>
+                    </xs:choice>
+                </xs:sequence>
+                <xs:attribute name="memberType" type="xs:token" use="optional"/>
+                <xs:attribute name="truncated" type="xs:boolean" use="optional"/>
+                <xs:attribute name="partial" type="xs:boolean" use="optional"/>
+                <xs:attribute name="maximumSize" type="xs:nonNegativeInteger" use="optional"/>
+                <xs:attribute name="minimumSize" type="xs:nonNegativeInteger" use="optional"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:element name="Any" type="AnyType"/>
+    <xs:complexType name="AnyType">
+        <xs:complexContent>
+            <xs:extension base="DataBaseType">
+                <xs:attribute name="allowedTypes" type="xs:string" use="optional"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:element name="Links" type="LinksType"/>
+    <xs:complexType name="LinksType">
+        <xs:sequence>
+            <xs:element ref="Link" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+
+    <xs:element name="Failures" type="FailuresType"/>
+    <xs:complexType name="FailuresType">
+        <xs:sequence>
+            <xs:element ref="Link" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+
+    <xs:element name="ValueTags" type="ValueTagsType"/>
+    <xs:complexType name="ValueTagsType">
+        <xs:complexContent>
+            <xs:extension base="CollectionsDataBaseType"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:element name="Revisions" type="RevisionsType"/>
+    <xs:complexType name="RevisionsType">
+        <xs:complexContent>
+            <xs:extension base="CollectionsDataBaseType"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:element name="History" type="HistoryType"/>
+    <xs:complexType name="HistoryType">
+        <xs:sequence>
+            <xs:element ref="Sequence" minOccurs="0" maxOccurs="unbounded"/> <!-- TODO fill out the type of these <Sequence>s -->
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+
+
+    <xs:element name="Collection" type="CollectionType"/>
+    <xs:complexType name="CollectionType">
+        <xs:complexContent>
+            <xs:extension base="CollectionsDataBaseType"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:element name="Array" type="ArrayType"/>
+    <xs:complexType name="ArrayType">
+        <xs:complexContent>
+            <xs:extension base="CollectionsDataBaseType"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:element name="Unknown" type="UnknownType"/>
+    <xs:complexType name="UnknownType">
+        <xs:complexContent>
+            <xs:extension base="CollectionsDataBaseType"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:element name="Bit" type="BitType"/>
+    <xs:complexType name="BitType">
+        <xs:complexContent>
+            <xs:extension base="PrimitiveDataBaseType"> <!-- this is not exactly right because <Bit> doesn't have a 'value'-->
+                <xs:attribute name="bit" type="xs:nonNegativeInteger" use="optional"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:element name="BitString" type="BitStringType"/>
+    <xs:complexType name="BitStringType">
+        <xs:complexContent>
+            <xs:extension base="PrimitiveDataBaseType">
+                <xs:sequence>
+                    <xs:element name="NamedBits" minOccurs="0">
+                        <xs:complexType>
+                            <xs:choice maxOccurs="unbounded">
+                                <xs:element ref="Bit"/>
+                                <xs:any namespace="##other" processContents="lax" minOccurs="0"
+                                        maxOccurs="unbounded"/>
+                            </xs:choice>
+                            <xs:anyAttribute namespace="##other" processContents="lax"/>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="NamedValues" minOccurs="0">
+                        <xs:complexType>
+                            <xs:choice maxOccurs="unbounded">
+                                <xs:element ref="BitString"/>
+                                <xs:any namespace="##other" processContents="lax" minOccurs="0"
+                                        maxOccurs="unbounded"/>
+                            </xs:choice>
+                            <xs:anyAttribute namespace="##other" processContents="lax"/>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="Value" type="xs:string" minOccurs="0"/>
+                </xs:sequence>
+                <xs:attribute name="maximumLength" type="xs:nonNegativeInteger" use="optional"/>
+                <xs:attribute name="minimumLength" type="xs:nonNegativeInteger" use="optional"/>
+                <xs:attribute name="maximumLengthForWriting" type="xs:nonNegativeInteger" use="optional"/>
+                <xs:attribute name="minimumLengthForWriting" type="xs:nonNegativeInteger" use="optional"/>
+                <xs:attribute name="value" type="xs:string" use="optional"/>
+                <xs:attribute name="length" type="xs:nonNegativeInteger" use="optional"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:element name="Boolean" type="BooleanType"/>
+    <xs:complexType name="BooleanType">
+        <xs:complexContent>
+            <xs:extension base="PrimitiveDataBaseType">
+                <xs:sequence>
+                    <xs:element name="NamedValues" minOccurs="0">
+                        <xs:complexType>
+                            <xs:choice maxOccurs="unbounded">
+                                <xs:element ref="Boolean"/>
+                                <xs:any namespace="##other" processContents="lax" minOccurs="0"
+                                        maxOccurs="unbounded"/>
+                            </xs:choice>
+                            <xs:anyAttribute namespace="##other" processContents="lax"/>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+                <xs:attribute name="value" type="xs:boolean" use="optional"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:element name="Choice" type="ChoiceType"/>
+    <xs:complexType name="ChoiceType">
+        <xs:complexContent>
+            <xs:extension base="DataBaseType">
+                <xs:sequence>
+                    <xs:element name="Choices" minOccurs="0">
+                        <xs:complexType>
+                            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                                <xs:group ref="AllDataGroup"/>
+                                <xs:any namespace="##other" processContents="lax" minOccurs="0"
+                                        maxOccurs="unbounded"/>
+                            </xs:choice>
+                            <xs:anyAttribute namespace="##other" processContents="lax"/>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:choice minOccurs="0" >
+                        <xs:group ref="AllDataGroup"/>
+                    </xs:choice>
+                </xs:sequence>
+                <xs:attribute name="allowedChoices" type="xs:string" use="optional"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:element name="Date" type="DateType"/>
+    <xs:complexType name="DateType">
+        <xs:complexContent>
+            <xs:extension base="PrimitiveDataBaseType">
+                <xs:sequence>
+                    <xs:element name="NamedValues" minOccurs="0">
+                        <xs:complexType>
+                            <xs:choice maxOccurs="unbounded">
+                                <xs:element ref="Date"/>
+                                <xs:any namespace="##other" processContents="lax" minOccurs="0"
+                                        maxOccurs="unbounded"/>
+                            </xs:choice>
+                            <xs:anyAttribute namespace="##other" processContents="lax"/>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+                <xs:attribute name="maximum" type="xs:date" use="optional"/>
+                <xs:attribute name="minimum" type="xs:date" use="optional"/>
+                <xs:attribute name="maximumForWriting" type="xs:date" use="optional"/>
+                <xs:attribute name="minimumForWriting" type="xs:date" use="optional"/>
+                <xs:attribute name="value" type="xs:date" use="optional"/>
+                <xs:attribute name="unspecifiedValue" type="xs:boolean" use="optional"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:element name="DatePattern" type="DatePatternType"/>
+    <xs:complexType name="DatePatternType">
+        <xs:complexContent>
+            <xs:extension base="PrimitiveDataBaseType">
+                <xs:sequence>
+                    <xs:element name="NamedValues" minOccurs="0">
+                        <xs:complexType>
+                            <xs:choice maxOccurs="unbounded">
+                                <xs:element ref="DatePattern"/>
+                                <xs:any namespace="##other" processContents="lax" minOccurs="0"
+                                        maxOccurs="unbounded"/>
+                            </xs:choice>
+                            <xs:anyAttribute namespace="##other" processContents="lax"/>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+                <xs:attribute name="value" type="xs:string" use="optional"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:element name="DateTimePattern" type="DateTimePatternType"/>
+    <xs:complexType name="DateTimePatternType">
+        <xs:complexContent>
+            <xs:extension base="PrimitiveDataBaseType">
+                <xs:sequence>
+                    <xs:element name="NamedValues" minOccurs="0">
+                        <xs:complexType>
+                            <xs:choice maxOccurs="unbounded">
+                                <xs:element ref="DateTimePattern"/>
+                                <xs:any namespace="##other" processContents="lax" minOccurs="0"
+                                        maxOccurs="unbounded"/>
+                            </xs:choice>
+                            <xs:anyAttribute namespace="##other" processContents="lax"/>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+                <xs:attribute name="value" type="xs:string" use="optional"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:element name="DateTime" type="DateTimeType"/>
+    <xs:complexType name="DateTimeType">
+        <xs:complexContent>
+            <xs:extension base="PrimitiveDataBaseType">
+                <xs:sequence>
+                    <xs:element name="NamedValues" minOccurs="0">
+                        <xs:complexType>
+                            <xs:choice maxOccurs="unbounded">
+                                <xs:element ref="DateTime"/>
+                                <xs:any namespace="##other" processContents="lax" minOccurs="0"
+                                        maxOccurs="unbounded"/>
+                            </xs:choice>
+                            <xs:anyAttribute namespace="##other" processContents="lax"/>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+                <xs:attribute name="maximum" type="xs:dateTime" use="optional"/>
+                <xs:attribute name="minimum" type="xs:dateTime" use="optional"/>
+                <xs:attribute name="maximumForWriting" type="xs:dateTime" use="optional"/>
+                <xs:attribute name="minimumForWriting" type="xs:dateTime" use="optional"/>
+                <xs:attribute name="value" type="xs:dateTime" use="optional"/>
+                <xs:attribute name="unspecifiedValue" type="xs:boolean" use="optional"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:element name="Double" type="DoubleType"/>
+    <xs:complexType name="DoubleType">
+        <xs:complexContent>
+            <xs:extension base="PrimitiveDataBaseType">
+                <xs:sequence>
+                    <xs:element name="NamedValues" minOccurs="0">
+                        <xs:complexType>
+                            <xs:choice maxOccurs="unbounded">
+                                <xs:element ref="Double"/>
+                                <xs:any namespace="##other" processContents="lax" minOccurs="0"
+                                        maxOccurs="unbounded"/>
+                            </xs:choice>
+                            <xs:anyAttribute namespace="##other" processContents="lax"/>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="Units" type="LocalizableStringType" minOccurs="0" maxOccurs="unbounded" />
+                </xs:sequence>
+                <xs:attribute name="units" type="xs:string" use="optional"/>
+                <xs:attribute name="maximum" type="xs:double" use="optional"/>
+                <xs:attribute name="minimum" type="xs:double" use="optional"/>
+                <xs:attribute name="maximumForWriting" type="xs:double" use="optional"/>
+                <xs:attribute name="minimumForWriting" type="xs:double" use="optional"/>
+                <xs:attribute name="resolution" type="xs:double" use="optional"/>
+                <xs:attribute name="value" type="xs:double" use="optional"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:element name="Enumerated" type="EnumeratedType"/>
+    <xs:complexType name="EnumeratedType">
+        <xs:complexContent>
+            <xs:extension base="PrimitiveDataBaseType">
+                <xs:sequence>
+                    <xs:element name="NamedValues" minOccurs="0">
+                        <xs:complexType>
+                            <xs:choice maxOccurs="unbounded">
+                                <xs:element ref="Unsigned"/>
+                                <xs:any namespace="##other" processContents="lax" minOccurs="0"
+                                        maxOccurs="unbounded"/>
+                            </xs:choice>
+                            <xs:anyAttribute namespace="##other" processContents="lax"/>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+                <xs:attribute name="maximum" type="xs:nonNegativeInteger" use="optional"/>
+                <xs:attribute name="minimum" type="xs:nonNegativeInteger" use="optional"/>
+                <xs:attribute name="maximumForWriting" type="xs:nonNegativeInteger" use="optional"/>
+                <xs:attribute name="minimumForWriting" type="xs:nonNegativeInteger" use="optional"/>
+                <xs:attribute name="value" type="xs:string" use="optional"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:element name="Integer" type="IntegerType"/>
+    <xs:complexType name="IntegerType">
+        <xs:complexContent>
+            <xs:extension base="PrimitiveDataBaseType">
+                <xs:sequence>
+                    <xs:element name="NamedValues" minOccurs="0">
+                        <xs:complexType>
+                            <xs:choice maxOccurs="unbounded">
+                                <xs:element ref="Integer"/>
+                                <xs:any namespace="##other" processContents="lax" minOccurs="0"
+                                        maxOccurs="unbounded"/>
+                            </xs:choice>
+                            <xs:anyAttribute namespace="##other" processContents="lax"/>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="Units" type="LocalizableStringType" minOccurs="0" maxOccurs="unbounded" />
+                </xs:sequence>
+                <xs:attribute name="units" type="xs:string" use="optional"/>
+                <xs:attribute name="maximum" type="xs:integer" use="optional"/>
+                <xs:attribute name="minimum" type="xs:integer" use="optional"/>
+                <xs:attribute name="maximumForWriting" type="xs:integer" use="optional"/>
+                <xs:attribute name="minimumForWriting" type="xs:integer" use="optional"/>
+                <xs:attribute name="resolution" type="xs:integer" use="optional"/>
+                <xs:attribute name="value" type="xs:integer" use="optional"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:element name="Link" type="LinkType"/>
+    <xs:complexType name="LinkType">
+        <xs:complexContent>
+            <xs:extension base="StringType">
+                <xs:attribute name="mediaType" type="xs:string" use="optional"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+
+    <xs:element name="List" type="ListType"/>
+    <xs:complexType name="ListType">
+        <xs:complexContent>
+            <xs:extension base="CollectionsDataBaseType"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:element name="Tag" type="TagType"/>
+    <xs:complexType name="TagType">
+        <xs:complexContent>
+            <xs:extension base="DataBaseType">
+                <xs:attribute name="equivalentTo" type="xs:string" use="optional"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:element name="Null" type="NullType"/>
+    <xs:complexType name="NullType">
+        <xs:complexContent>
+            <xs:extension base="DataBaseType"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:element name="Object" type="ObjectType"/>
+    <xs:complexType name="ObjectType">
+        <xs:complexContent>
+            <xs:extension base="ConstructedDataBaseType"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:element name="Composition" type="CompositionType"/>
+    <xs:complexType name="CompositionType">
+        <xs:complexContent>
+            <xs:extension base="ConstructedDataBaseType"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+
+    <xs:element name="ObjectIdentifier" type="ObjectIdentifierType"/>
+    <xs:complexType name="ObjectIdentifierType">
+        <xs:complexContent>
+            <xs:extension base="PrimitiveDataBaseType">
+                <xs:sequence>
+                    <xs:element name="NamedValues" minOccurs="0">
+                        <xs:complexType>
+                            <xs:choice maxOccurs="unbounded">
+                                <xs:element ref="ObjectIdentifier"/>
+                                <xs:any namespace="##other" processContents="lax" minOccurs="0"
+                                        maxOccurs="unbounded"/>
+                            </xs:choice>
+                            <xs:anyAttribute namespace="##other" processContents="lax"/>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+                <xs:attribute name="maximum" type="xs:nonNegativeInteger" use="optional"/>
+                <xs:attribute name="minimum" type="xs:nonNegativeInteger" use="optional"/>
+                <xs:attribute name="maximumForWriting" type="xs:nonNegativeInteger" use="optional"/>
+                <xs:attribute name="minimumForWriting" type="xs:nonNegativeInteger" use="optional"/>
+                <xs:attribute name="value" type="xs:string" use="optional"/>
+                <xs:attribute name="unspecifiedValue" type="xs:boolean" use="optional"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:element name="ObjectIdentifierPattern" type="ObjectIdentifierPatternType"/>
+    <xs:complexType name="ObjectIdentifierPatternType">
+        <xs:complexContent>
+            <xs:extension base="PrimitiveDataBaseType">
+                <xs:sequence>
+                    <xs:element name="NamedValues" minOccurs="0">
+                        <xs:complexType>
+                            <xs:choice maxOccurs="unbounded">
+                                <xs:element ref="ObjectIdentifierPattern"/>
+                                <xs:any namespace="##other" processContents="lax" minOccurs="0"
+                                        maxOccurs="unbounded"/>
+                            </xs:choice>
+                            <xs:anyAttribute namespace="##other" processContents="lax"/>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+                <xs:attribute name="value" type="xs:string" use="optional"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:element name="OctetString" type="OctetStringType"/>
+    <xs:complexType name="OctetStringType">
+        <xs:complexContent>
+            <xs:extension base="PrimitiveDataBaseType">
+                <xs:sequence>
+                    <xs:element name="NamedValues" minOccurs="0">
+                        <xs:complexType>
+                            <xs:choice maxOccurs="unbounded">
+                                <xs:element ref="OctetString"/>
+                                <xs:any namespace="##other" processContents="lax" minOccurs="0"
+                                        maxOccurs="unbounded"/>
+                            </xs:choice>
+                            <xs:anyAttribute namespace="##other" processContents="lax"/>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="Value" type="xs:base64Binary" minOccurs="0"/>
+                </xs:sequence>
+                <xs:attribute name="maximumLength" type="xs:nonNegativeInteger" use="optional"/>
+                <xs:attribute name="minimumLength" type="xs:nonNegativeInteger" use="optional"/>
+                <xs:attribute name="maximumLengthForWriting" type="xs:nonNegativeInteger" use="optional"/>
+                <xs:attribute name="minimumLengthForWriting" type="xs:nonNegativeInteger" use="optional"/>
+                <xs:attribute name="value" type="xs:hexBinary" use="optional"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:element name="Raw" type="RawType"/>
+    <xs:complexType name="RawType">
+        <xs:complexContent>
+            <xs:extension base="PrimitiveDataBaseType">
+                <xs:sequence>
+                    <xs:element name="Value" type="xs:base64Binary" minOccurs="0"/>
+                </xs:sequence>
+                <xs:attribute name="value" type="xs:hexBinary" use="optional"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:element name="Real" type="RealType"/>
+    <xs:complexType name="RealType">
+        <xs:complexContent>
+            <xs:extension base="PrimitiveDataBaseType">
+                <xs:sequence>
+                    <xs:element name="NamedValues" minOccurs="0">
+                        <xs:complexType>
+                            <xs:choice maxOccurs="unbounded">
+                                <xs:element ref="Real"/>
+                                <xs:any namespace="##other" processContents="lax" minOccurs="0"
+                                        maxOccurs="unbounded"/>
+                            </xs:choice>
+                            <xs:anyAttribute namespace="##other" processContents="lax"/>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="Units" type="LocalizableStringType" minOccurs="0" maxOccurs="unbounded" />
+                </xs:sequence>
+                <xs:attribute name="units" type="xs:string" use="optional"/>
+                <xs:attribute name="maximum" type="xs:float" use="optional"/>
+                <xs:attribute name="minimum" type="xs:float" use="optional"/>
+                <xs:attribute name="maximumForWriting" type="xs:float" use="optional"/>
+                <xs:attribute name="minimumForWriting" type="xs:float" use="optional"/>
+                <xs:attribute name="resolution" type="xs:float" use="optional"/>
+                <xs:attribute name="value" type="xs:float" use="optional"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:element name="Sequence" type="SequenceType"/>
+    <xs:complexType name="SequenceType">
+        <xs:complexContent>
+            <xs:extension base="ConstructedDataBaseType">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:element name="SequenceOf" type="SequenceOfType"/>
+    <xs:complexType name="SequenceOfType">
+        <xs:complexContent>
+            <xs:extension base="CollectionsDataBaseType"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:element name="String" type="StringType"/>
+    <xs:complexType name="StringType">
+        <xs:complexContent>
+            <xs:extension base="PrimitiveDataBaseType">
+                <xs:sequence>
+                    <xs:sequence>
+                        <xs:element name="NamedValues" minOccurs="0">
+                            <xs:complexType>
+                                <xs:choice maxOccurs="unbounded">
+                                    <xs:element ref="String"/>
+                                    <xs:any namespace="##other" processContents="lax" minOccurs="0"
+                                            maxOccurs="unbounded"/>
+                                </xs:choice>
+                                <xs:anyAttribute namespace="##other" processContents="lax"/>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                    <xs:element name="Value" type="LocalizableStringType" minOccurs="0"/>
+                </xs:sequence>
+                <xs:attribute name="maximumLength" type="xs:nonNegativeInteger" use="optional"/>
+                <xs:attribute name="minimumLength" type="xs:nonNegativeInteger" use="optional"/>
+                <xs:attribute name="maximumEncodedLength" type="xs:nonNegativeInteger" use="optional"/>
+                <xs:attribute name="minimumEncodedLength" type="xs:nonNegativeInteger" use="optional"/>
+                <xs:attribute name="maximumLengthForWriting" type="xs:nonNegativeInteger" use="optional"/>
+                <xs:attribute name="minimumLengthForWriting" type="xs:nonNegativeInteger" use="optional"/>
+                <xs:attribute name="maximumEncodedLengthForWriting" type="xs:nonNegativeInteger" use="optional"/>
+                <xs:attribute name="minimumEncodedLengthForWriting" type="xs:nonNegativeInteger" use="optional"/>
+                <xs:attribute name="value" type="xs:string" use="optional"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:element name="StringSet" type="StringSetType"/>
+    <xs:complexType name="StringSetType">
+        <xs:complexContent>
+            <xs:extension base="PrimitiveDataBaseType">
+                <xs:sequence>
+                    <xs:sequence>
+                        <xs:element name="NamedValues" minOccurs="0">
+                            <xs:complexType>
+                                <xs:choice maxOccurs="unbounded">
+                                    <xs:element ref="String"/>
+                                    <xs:any namespace="##other" processContents="lax" minOccurs="0"
+                                            maxOccurs="unbounded"/>
+                                </xs:choice>
+                                <xs:anyAttribute namespace="##other" processContents="lax"/>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                    <xs:element name="Value" type="xs:string" minOccurs="0"/>
+                </xs:sequence>
+                <xs:attribute name="maximumLength" type="xs:nonNegativeInteger" use="optional"/>
+                <xs:attribute name="minimumLength" type="xs:nonNegativeInteger" use="optional"/>
+                <xs:attribute name="maximumEncodedLength" type="xs:nonNegativeInteger" use="optional"/>
+                <xs:attribute name="minimumEncodedLength" type="xs:nonNegativeInteger" use="optional"/>
+                <xs:attribute name="maximumLengthForWriting" type="xs:nonNegativeInteger" use="optional"/>
+                <xs:attribute name="minimumLengthForWriting" type="xs:nonNegativeInteger" use="optional"/>
+                <xs:attribute name="maximumEncodedLengthForWriting" type="xs:nonNegativeInteger" use="optional"/>
+                <xs:attribute name="minimumEncodedLengthForWriting" type="xs:nonNegativeInteger" use="optional"/>
+                <xs:attribute name="value" type="xs:string" use="optional"/>
+                <xs:attribute name="charset" type="xs:nonNegativeInteger" use="optional"/>
+                <xs:attribute name="codepage" type="xs:nonNegativeInteger" use="optional"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:element name="Time" type="TimeType"/>
+    <xs:complexType name="TimeType">
+        <xs:complexContent>
+            <xs:extension base="PrimitiveDataBaseType">
+                <xs:sequence>
+                    <xs:element name="NamedValues" minOccurs="0">
+                        <xs:complexType>
+                            <xs:choice maxOccurs="unbounded">
+                                <xs:element ref="Time"/>
+                                <xs:any namespace="##other" processContents="lax" minOccurs="0"
+                                        maxOccurs="unbounded"/>
+                            </xs:choice>
+                            <xs:anyAttribute namespace="##other" processContents="lax"/>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+                <xs:attribute name="maximum" type="xs:time" use="optional"/>
+                <xs:attribute name="minimum" type="xs:time" use="optional"/>
+                <xs:attribute name="maximumForWriting" type="xs:time" use="optional"/>
+                <xs:attribute name="minimumForWriting" type="xs:time" use="optional"/>
+                <xs:attribute name="value" type="xs:time" use="optional"/>
+                <xs:attribute name="unspecifiedValue" type="xs:boolean" use="optional"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:element name="TimePattern" type="TimePatternType"/>
+    <xs:complexType name="TimePatternType">
+        <xs:complexContent>
+            <xs:extension base="PrimitiveDataBaseType">
+                <xs:sequence>
+                    <xs:element name="NamedValues" minOccurs="0">
+                        <xs:complexType>
+                            <xs:choice maxOccurs="unbounded">
+                                <xs:element ref="TimePattern"/>
+                                <xs:any namespace="##other" processContents="lax" minOccurs="0"
+                                        maxOccurs="unbounded"/>
+                            </xs:choice>
+                            <xs:anyAttribute namespace="##other" processContents="lax"/>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+                <xs:attribute name="value" type="xs:string" use="optional"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:element name="Unsigned" type="UnsignedType"/>
+    <xs:complexType name="UnsignedType">
+        <xs:complexContent>
+            <xs:extension base="PrimitiveDataBaseType">
+                <xs:sequence>
+                    <xs:element name="NamedValues" minOccurs="0">
+                        <xs:complexType>
+                            <xs:choice maxOccurs="unbounded">
+                                <xs:element ref="Unsigned"/>
+                                <xs:any namespace="##other" processContents="lax" minOccurs="0"
+                                        maxOccurs="unbounded"/>
+                            </xs:choice>
+                            <xs:anyAttribute namespace="##other" processContents="lax"/>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="Units" type="LocalizableStringType" minOccurs="0" maxOccurs="unbounded"/>
+                </xs:sequence>
+                <xs:attribute name="units" type="xs:string" use="optional"/>
+                <xs:attribute name="maximum" type="xs:nonNegativeInteger" use="optional"/>
+                <xs:attribute name="minimum" type="xs:nonNegativeInteger" use="optional"/>
+                <xs:attribute name="maximumForWriting" type="xs:nonNegativeInteger" use="optional"/>
+                <xs:attribute name="minimumForWriting" type="xs:nonNegativeInteger" use="optional"/>
+                <xs:attribute name="resolution" type="xs:nonNegativeInteger" use="optional"/>
+                <xs:attribute name="value" type="xs:nonNegativeInteger" use="optional"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:element name="WeekNDay" type="WeekNDayType"/>
+    <xs:complexType name="WeekNDayType">
+        <xs:complexContent>
+            <xs:extension base="PrimitiveDataBaseType">
+                <xs:sequence>
+                    <xs:element name="NamedValues" minOccurs="0">
+                        <xs:complexType>
+                            <xs:choice maxOccurs="unbounded">
+                                <xs:element ref="WeekNDay"/>
+                                <xs:any namespace="##other" processContents="lax" minOccurs="0"
+                                        maxOccurs="unbounded"/>
+                            </xs:choice>
+                            <xs:anyAttribute namespace="##other" processContents="lax"/>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+                <xs:attribute name="value" type="xs:string" use="optional"/>
+                <xs:attribute name="unspecifiedValue" type="xs:boolean" use="optional"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="LocalizableStringType">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="locale" type="xs:language" use="optional"/>
+                <xs:anyAttribute namespace="##other" processContents="lax"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:group name="AllDataGroup">
+        <xs:choice>
+            <xs:element ref="Any"/>
+            <xs:element ref="Array"/>
+            <xs:element ref="BitString"/>
+            <xs:element ref="Bit"/>
+            <xs:element ref="Boolean"/>
+            <xs:element ref="Choice"/>
+            <xs:element ref="Collection"/>
+            <xs:element ref="Date"/>
+            <xs:element ref="DateTime"/>
+            <xs:element ref="Double"/>
+            <xs:element ref="Enumerated"/>
+            <xs:element ref="Integer"/>
+            <xs:element ref="List"/>
+            <xs:element ref="Link"/>
+            <xs:element ref="Null"/>
+            <xs:element ref="Object"/>
+            <xs:element ref="ObjectIdentifier"/>
+            <xs:element ref="ObjectIdentifierPattern"/>
+            <xs:element ref="OctetString"/>
+            <xs:element ref="Real"/>
+            <xs:element ref="Sequence"/>
+            <xs:element ref="SequenceOf"/>
+            <xs:element ref="String"/>
+            <xs:element ref="StringSet"/>
+            <xs:element ref="Composition"/>
+            <xs:element ref="Time"/>
+            <xs:element ref="Unsigned"/>
+            <xs:element ref="WeekNDay"/>
+            <xs:element ref="DatePattern"/>
+            <xs:element ref="TimePattern"/>
+            <xs:element ref="DateTimePattern"/>
+            <xs:element ref="Unknown"/>
+            <xs:element ref="Raw"/>
+        </xs:choice>
+    </xs:group>
+
+    <xs:element name="MemberTypeDefinition" type="MemberTypeDefinitionType"/>
+    <xs:complexType name="MemberTypeDefinitionType">
+        <xs:choice>
+            <xs:group ref="AllDataGroup"/>
+            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:choice>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+
+    <xs:element name="Extensions" type="ExtensionsType"/>
+    <xs:complexType name="ExtensionsType">
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:group ref="AllDataGroup"/>
+            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:choice>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+
+    <xs:element name="Definitions" type="DefinitionsType"/>
+    <xs:complexType name="DefinitionsType">
+        <xs:sequence>
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:group ref="AllDataGroup"/>
+                <xs:element ref="Tag"/>
+                <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:choice>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+
+    <xs:element name="Includes" type="IncludesType"/>
+    <xs:complexType name="IncludesType">
+        <xs:sequence>
+            <xs:element ref="Link" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+
+    <xs:simpleType name="WriteEffectiveType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="immediately"/>
+            <xs:enumeration value="delayed"/>
+            <xs:enumeration value="on-program-restart"/>
+            <xs:enumeration value="on-device-restart"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="VolatilityType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="volatile"/>
+            <xs:enumeration value="nonvolatile"/>
+            <xs:enumeration value="nonvolatile-limited-writes"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="VariabilityType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="constant"/>
+            <xs:enumeration value="configuration-setting"/>
+            <xs:enumeration value="operational-setting"/>
+            <xs:enumeration value="status"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="WritableWhenType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="out-of-service"/>
+            <xs:enumeration value="commandable"/>
+            <xs:enumeration value="other"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="RequiredWhenType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="intrinsic-supported"/>
+            <xs:enumeration value="cov-notify-supported"/>
+            <xs:enumeration value="cov-subscribe-supported"/>
+            <xs:enumeration value="present-value-commandable"/>
+            <xs:enumeration value="segmentation-supported"/>
+            <xs:enumeration value="virtual-terminal-supported"/>
+            <xs:enumeration value="time-sync-execution"/>
+            <xs:enumeration value="utc-time-sync-execution"/>
+            <xs:enumeration value="time-master"/>
+            <xs:enumeration value="backup-restore-supported"/>
+            <xs:enumeration value="slave-proxy-supported"/>
+            <xs:enumeration value="slave-discovery-supported"/>
+            <xs:enumeration value="other"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="NodeTypeType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Unknown"/>
+            <xs:enumeration value="System"/>
+            <xs:enumeration value="Subsystem"/>
+            <xs:enumeration value="Protocol"/>
+            <xs:enumeration value="Network"/>
+            <xs:enumeration value="Device"/>
+            <xs:enumeration value="Functional"/>
+            <xs:enumeration value="Organizational"/>
+            <xs:enumeration value="Tree"/>
+            <xs:enumeration value="Area"/>
+            <xs:enumeration value="Building"/>
+            <xs:enumeration value="Floor"/>
+            <xs:enumeration value="Equipment"/>
+            <xs:enumeration value="Section"/>
+            <xs:enumeration value="Point"/>
+            <xs:enumeration value="Collection"/>
+            <xs:enumeration value="Object"/>
+            <xs:enumeration value="Property"/>
+            <xs:enumeration value="Member"/>
+            <xs:enumeration value="Other"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+
+</xs:schema>

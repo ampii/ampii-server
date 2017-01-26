@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AMPII CSML and BACnet/WS Playground</title>
+    <!-- changed jquery references to be local so this would work offline
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    -->
+    <link rel="stylesheet" href="/external/jquery/jquery-ui.css">
+    <script src="/external/jquery/jquery-1.10.2.js"></script>
+    <script src="/external/jquery/jquery-ui.js"></script>
+
+    <script src="/ui/playground.js"></script>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"> <!-- IE -->
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">          <!-- others -->
+    <style>
+        li.tree { list-style-type: none; }
+        button.treeButton { font-family: monospace; }
+    </style>
+</head>
+<body>
+<div>
+    <p><b>AMPII Simulator/Tester/Validator</b></p>
+
+    <div>
+        <div id="greeting" >
+            <p>Welcome to the playground.</p>
+            <p>Please wait a sec...  if you continue to see this, then the javascript is broken :(</p>
+        </div>
+        <div id="inactiveSession" style="display: none">
+            <p>The playground is available.  Type a user name and click 'Start'</p>
+            User name: <input id="nick" size="16" value=""/>
+            <button id="start">Start Session</button>
+        </div>
+        <div id="activeSessionOther" style="display: none">
+            <p>The playground is occupied by '<span id="activeOtherSid">?oops?</span>' until <span id="activeOtherExp">?oops?</span></p>
+        </div>
+        <div id="activeSessionYou" style="display: none">
+            <p>The playground is yours until <span id="activeYouExp">?oops?</span>. <button id="leaveButton">Leave</button></p>
+            <p>----
+                <button id="databaseActionPaneButton">Database</button>----
+                <button id="dataExplorerActionPaneButton">Data Explorer</button>----
+                <button id="csmlValidatorActionPaneButton">CSML Validator</button>----
+                <button id="xddValidatorActionPaneButton">XDD Validator</button>----
+                <!--<button id="pathExplorerActionPaneButton">Path Explorer</button>---- -->
+                <button id="clipboardActionPaneButton">Clipboard</button>----
+            </p>
+
+
+            <div id="csmlValidatorActionPane" style="display: none">
+                Paste your CSML here (XML or JSON):<br/>
+                <textarea id="csml" rows="4" cols="120">
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;CSML xmlns=&quot;http://bacnet.org/csml/1.2&quot;&gt;
+   &lt;!-- Your CSML here! (or replace all this with JSON)  --&gt;
+&lt;/CSML>
+                </textarea><br/>
+                <input type="radio" name="validateRadio" id="validateWithEmptyRadio">Validate in Empty Database<br/>
+                <input type="radio" name="validateRadio" id="validateWithDefsRadio" checked="checked">Validate in Empty Database plus BACnet Defs<br/>
+                <input type="radio" name="validateRadio" id="validateInCurrentRadio" >Validate in Current Database<br/>
+                <input type="radio" name="validateRadio" id="validateAndPersistRadio" >Validate and Persist in Current Database under /bws/my-data<br/>
+                <button id="csmlValidateButton">Validate</button><br/>
+            </div>
+
+            <div id="databaseActionPane" style="display: none">
+                For Locale: <input id="locale" size="7" value="en-US"/><br/>
+                <input type="radio" name="databaseResetRadio" id="makeEmptyRadio">Make Empty Database<br/>
+                <input type="radio" name="databaseResetRadio" id="makeDefsRadio" checked="checked">Include BACnet Defs<br/>
+                <input type="radio" name="databaseResetRadio" id="makeExamplesRadio">Include BACnet Defs and Example Data<br/>
+                <button id="databaseResetButton">Reset Database</button>
+            </div>
+
+
+            <div id="xddValidatorActionPane" style="display: none">
+                ... coming soon ...
+            </div>
+
+            <div id="clipboardActionPane" style="display: none">
+                Clipboard for Cut/Copy/Paste operations.<br/>
+                History: <select id="clipboardHistorySelect"></select><button id="clipboardDuplicateButton">Duplicate</button><br/>
+                <textarea id="clipboard" rows="4" cols="120">Cut or Copy something...
+                </textarea><br/>
+            </div>
+
+            <div id="editDialog" title="Edit Data/Metadata">
+                <button id="copyButton">Copy</button>
+                <input type="radio" name="clipboardFormat" id="clipboardFormatJSON">JSON&nbsp;
+                <input type="radio" name="clipboardFormat" id="clipboardFormatXML" checked="checked">XML
+                <br/><br/>
+                <button id="cutButton">Cut</button>
+                <button id="deleteButton">Delete</button><br/><br/>
+                <button id="pasteOntoButton">Paste</button>
+                <button id="pasteUnderButton">Paste Under</button><br/><br/>
+                <button id="createMetadataDialogButton">New Metadata</button>
+                <button id="createChildDialogButton">New Child</button><br/><br/>
+                <button id="createInstanceDialogButton">New Instance</button>
+                <button id="createSpecialDialogButton">New Special</button>
+                <!--<button id="createDefinitionDialogButton">New Def</button>--><br/><br/>
+                <button id="changeValueDialogButton">Edit Value</button><br/>
+            </div>
+
+            <div id="createChildDialog" class="dialog" title="Create Child Data from Base Type">
+                <i>Name:</i><input id="createChildName" size="20" value="new"/><br/><br/>
+                <i>Type:</i><select id="createChildBaseTypeSelect" value="Boolean">
+                    <option value="Any">Any</option>
+                    <option value="Array">Array</option>
+                    <option value="Bit">Bit</option>
+                    <option value="BitString">BitString</option>
+                    <option value="Boolean">Boolean</option>
+                    <option value="Choice">Choice</option>
+                    <option value="Collection">Collection</option>
+                    <option value="Composition">Composition</option>
+                    <option value="Date">Date</option>
+                    <option value="DatePattern">DatePattern</option>
+                    <option value="DateTime">DateTime</option>
+                    <option value="DateTimePattern">DateTimePattern</option>
+                    <option value="Double">Double</option>
+                    <option value="Enumerated">Enumerated</option>
+                    <option value="Integer">Integer</option>
+                    <option value="Link">Link</option>
+                    <option value="List">List</option>
+                    <option value="Null">Null  </option>
+                    <option value="Object">Object</option>
+                    <option value="OctetString">OctetString</option>
+                    <option value="ObjectIdentifier">ObjectIdentifier</option>
+                    <option value="ObjectIdentifierPattern">ObjectIdentifierPattern</option>
+                    <option value="Raw">Raw</option>
+                    <option value="Real">Real</option>
+                    <option value="Sequence">Sequence</option>
+                    <option value="SequenceOf">SequenceOf</option>
+                    <option value="String" selected="true">String</option>
+                    <option value="StringSet">StringSet</option>
+                    <option value="Time">Time</option>
+                    <option value="TimePattern">TimePattern</option>
+                    <option value="Unknown">Unknown</option>
+                    <option value="Unsigned">Unsigned</option>
+                    <option value="WeekNDay">WeekNDay</option>
+                </select><br/><br/>
+                <span id="createChildValueSpan"><i>Value: </i><input id="createChildValue" size="20" value="---"/><br/><br/></span>
+                <button id="createChildButton">Create</button>
+            </div>
+
+
+            <div id="createMetadataDialog" class="dialog" title="Create Metadata">
+                <i>Name: </i><select id="createMetadataName">
+                    <option value="$comment">$comment</option>
+                    <option value="$description">$description</option>
+                    <option value="$displayName">$displayName</option>
+                    <option value="$extends">$extends</option>
+                    <option value="$tags">$tags</option>
+                    <option value="$targetType">$targetType</option>
+                    <option value="$type">$type</option>
+                    <option value="$valueTags">$valueTags</option>
+                    <option value="$writable">$writable</option>
+                    <option value="---">---</option>
+                    <option value="$bit">$bit</option>
+                    <option value="$choices">$choices</option>
+                    <option value="$length">$length</option>
+                    <option value="$maximum">$maximum</option>
+                    <option value="$maximumLength">$maximumLength</option>
+                    <option value="$maximumSize">$maximumSize</option>
+                    <option value="$memberType">$memberType</option>
+                    <option value="$minimum">$minimum</option>
+                    <option value="$minimumLength">$minimumLength</option>
+                    <option value="$minimumSize">$minimumSize</option>
+                    <option value="$namedBits">$namedBits</option>
+                    <option value="$namedValues">$namedValues</option>
+                    <option value="$units">$units</option>
+                    <option value="$variability">$variability</option>
+                    <option value="$volatility">$volatility</option>
+                    <option value="---">---</option>
+                    <option value="$absent">$absent</option>
+                    <option value="$addRev">$addRev</option>
+                    <option value="$allowedChoices">$allowedChoices</option>
+                    <option value="$allowedTypes">$allowedTypes</option>
+                    <option value="$alternate">$alternate</option>
+                    <option value="$associatedWith">$associatedWith</option>
+                    <option value="$author">$author</option>
+                    <option value="$authRead">$authRead</option>
+                    <option value="$authVisible">$authVisible</option>
+                    <option value="$authWrite">$authWrite</option>
+                    <option value="$commandable">$commandable</option>
+                    <option value="$dataRev">$dataRev</option>
+                    <option value="$displayNameForWriting">$displayNameForWriting</option>
+                    <option value="$displayOrder">$displayOrder</option>
+                    <option value="$documentation">$documentation</option>
+                    <option value="$edit">$edit</option>
+                    <option value="$fault">$fault</option>
+                    <option value="$href">$href</option>
+                    <option value="$id">$id</option>
+                    <option value="$inAlarm">$inAlarm</option>
+                    <option value="$isMultiline">$isMultiline</option>
+                    <option value="$links">$links</option>
+                    <option value="$maximumEncodedLength">$maximumEncodedLength</option>
+                    <option value="$maximumEncodedLengthForWriting">$maximumEncodedLengthForWrit
+                    <option value="$maximumForWriting">$maximumForWriting</option>
+                    <option value="$maximumLengthForWriting">$maximumLengthForWriting</option>
+                    <option value="$mediaType">$mediaType</option>
+                    <option value="$memberTypeDefinition">$memberTypeDefinition</option>
+                    <option value="$minimumEncodedLength">$minimumEncodedLength</option>
+                    <option value="$minimumEncodedLengthForWriting">$minimumEncodedLengthForWrit
+                    <option value="$minimumForWriting">$minimumForWriting</option>
+                    <option value="$minimumLengthForWriting">$minimumLengthForWriting</option>
+                    <option value="$modRev">$modRev</option>
+                    <option value="$nodeType">$nodeType</option>
+                    <option value="$nodeSubtype">$nodeSubtype</option>
+                    <option value="$notForReading">$notForReading</option>
+                    <option value="$notForWriting">$notForWriting</option>
+                    <option value="$notPresentWith">$notPresentWith</option>
+                    <option value="$objectType">$objectType</option>
+                    <option value="$optional">$optional</option>
+                    <option value="$outOfService">$outOfService</option>
+                    <option value="$overlays">$overlays</option>
+                    <option value="$overridden">$overridden</option>
+                    <option value="$physical">$physical</option>
+                    <option value="$priorityArray">$priorityArray</option>
+                    <option value="$propertyIdentifier">$propertyIdentifier</option>
+                    <option value="$published">$published</option>
+                    <option value="$readable">$readable</option>
+                    <option value="$rel">$rel</option>
+                    <option value="$related">$related</option>
+                    <option value="$relinquishDefault">$relinquishDefault</option>
+                    <option value="$remRev">$remRev</option>
+                    <option value="$represents">$represents</option>
+                    <option value="$requiredWhen">$requiredWhen</option>
+                    <option value="$requiredWhenText">$requiredWhenText</option>
+                    <option value="$requiredWith">$requiredWith</option>
+                    <option value="$requiredWithout">$requiredWithout</option>
+                    <option value="$resolution">$resolution</option>
+                    <option value="$revisions">$revisions</option>
+                    <option value="$sourceId">$sourceId</option>
+                    <option value="$unitsText">$unitsText</option>
+                    <option value="$unspecifiedValue">$unspecifiedValue</option>
+                    <option value="$updated">$updated</option>
+                    <option value="$via">$via</option>
+                    <option value="$viaExternal">$viaExternal</option>
+                    <option value="$viaMap">$viaMap</option>
+                    <option value="$writableWhen">$writableWhen</option>
+                    <option value="$writableWhenText">$writableWhenText</option>
+                    <option value="$writeEffective">$writeEffective</option>
+                </select><br/><br/>
+                <span id="createMetadataValueSpan"><i>Value: </i><input id="createMetadataValue" size="20" value=""/><br/><br/></span>
+                <button id="createMetadataButton">Create</button>
+            </div>
+
+            <div id="createInstanceDialog" style="display: inline-block;" title="Create Child Data from Defined Type">
+                <i>Name: </i><input id="createInstanceDataName" size="20" value="new"/><br/><br/>
+                <i>Type: </i><select id="createInstanceTypeSelect"></select><br/><br/>
+                <i>Primitive and Choice Values: </i>
+                <input type="radio" name="createInstanceInitChoice" id="createInstanceInitDefault" checked="checked">Default&nbsp;
+                <input type="radio" name="createInstanceInitChoice" id="createInstanceInitNone">None&nbsp;
+                <input type="radio" name="createInstanceInitChoice" id="createInstanceInitRandom">Random&nbsp;<br/><br/>
+                <i>Collection Members: </i>
+                <input type="radio" name="createInstanceMembersChoice" id="createInstanceMembersNone" checked="checked">None&nbsp;
+                <input type="radio" name="createInstanceMembersChoice" id="createInstanceMembersRandom">Random Between <input id="createInstanceMemberMinInput" type="number" size="1" min="0" max="5" value="1"/> and <input id="createInstanceMemberMaxInput" type="number" size="2" min="1" max="100" value="3"/><br/><br/>
+                <i>Optional Children: </i>
+                <input type="radio" name="createInstanceOptionalChoice" id="createInstanceOptionalAll">All&nbsp;
+                <input type="radio" name="createInstanceOptionalChoice" id="createInstanceOptionalNone" checked="checked">None&nbsp;
+                <input type="radio" name="createInstanceOptionalChoice" id="createInstanceOptionalRandom" >Random <input id="createInstanceOptionalPercentInput" type="number" size="2" min="1" max="99" value="50"/>% of the time<br/><br/>
+                <i>Limits: </i>
+                Depth&nbsp;<input id="createInstanceDepthLimitInput" type="number" size="2" min="1" max="50" value="25"/>&nbsp;Count&nbsp;<input id="createInstanceCountLimitInput" type="number" size="4" min="1" max="1000" value="500"/><br/><br/>
+                <button id="createInstanceButton">Create</button>
+            </div>
+
+            <div id="createSpecialDialog" style="display: inline-block;" title="Create Special Items">
+                <button id="createCSMLButton">Create CSML Wrapper</button><br/><br/>
+                <button id="createDefinitionsButton">Create Definition Context</button><br/><br/>
+                <button id="createTagDefinitionsButton">Create Tag Definition Context</button>
+            </div>
+
+            <div id="changeValueDialog" class="dialog" title="Change Value">
+                <i>New value: </i><input id="changeValueValue" size="20" value=""/><br/>
+                <!--<i>History:</i><select id="changeValueHistory"></select><br/>-->
+                <button id="changeValueButton">Change</button>
+            </div>
+
+            <div id="areYouSureDialog" class="dialog" title="ARE YOU SURE?">
+                <span id="areYouSurePrompt"/>
+                <button id="areYouSureYesButton">Yes</button>
+                <button id="areYouSureNoButton">No</button>
+            </div>
+
+            <div id="dataExplorerActionPane" style="display: none">
+                Metadata filter is: <input id="metadataFilter" size="80" value="all"/><br/>
+                <ol style="margin-left: -30px;" class="tree" id="subs"/>
+            </div>
+
+            <!--
+            <div id="pathExplorerActionPane" style="display: none">
+                <input id="url" size="120" value="/bws/my-data"/><br/>
+                <span id="dataField" hidden="true" ><textarea id="data" rows="1" cols="120" >{ "$base":"String", "$name":"new", "$value":"data-to-put-or-post" }</textarea><br/></span>
+                <select id="method" >
+                    <option value="GET" selected="selected">GET</option>
+                    <option value="PUT" >PUT</option>
+                    <option value="POST" >POST</option>
+                    <option value="DELETE" >DELETE</option>
+                </select>
+                <select id="alt" >
+                    <option value="xml" >xml</option>
+                    <option value="plain" >plain</option>
+                    <option value="json" selected="selected">json</option>
+                </select>
+                <select id="metadata" >
+                    <option value="none" selected="selected">none</option>
+                    <option value="all" >all</option>
+                </select>
+                <button id="pathGoButton">GO</button>
+            </div>
+            -->
+
+            <div id="errorDialog" title="Error">
+                <div id="errorDialogText">?</div><br/>
+                <button id="dismissErrorButton">Dismiss</button>
+            </div>
+
+
+        </div>
+
+
+        <p>Result:
+        <div id="result">...</div>
+    </div>
+
+
+</div>
+</body>
+</html>

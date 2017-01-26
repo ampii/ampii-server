@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CSML xmlns="http://bacnet.org/csml/1.2">
+    <Definitions>
+    <Sequence name="WXXM-AVWX.AerodromeWx" extends="WXXM-AVWX.AviationWx" documentation="
+            Area of interest for weather-related observations and forecasts around an aerodrome.
+            The WXXM Profile has removed seaWx, qfe, qnh, and the override of isDefinedFor in this class. These attributes do not have meaning within FSGIM because they are particular to measurements made specifically in support of aircraft.
+            ">
+        <Boolean name="cavok" documentation="Ceiling and Visibility are OK. A term used in aviation to indicate that (1) the higher of there are no clouds below 5000 feet above aerodrome level, or, the minimum sector altitude; and no cumulonimbus or towering cumulus; (2) visibility is at least 10 kilometres (6 statute miles); and (3) no current or forecast significant weather such as precipitation, thunderstorms, shallow fog or low drifting snow."/>
+        <!-- associations -->
+        <Array name="cloudCondition" memberType="WXXM-WX.CloudCondition" documentation="Cloud condition."/>
+        <Enumerated name="colourState" type="WXXM-AVWX.AviationColourCode" optional="true" documentation="Aviation Colour Code is present if there is a nearby volcano state."/>
+        <Array name="wxCondition" memberType="WXXM-WX.WxCondition" documentation="Weather condition description."/>
+    </Sequence>
+
+    <Sequence name="WXXM-AVWX.AviationWx" extends="WXXM-WX.AbstractWxFeature" documentation="Generic area of interest for weather-related observations and forecasts. Contains properties relating to general weather conditions.">
+        <Sequence name="airPressure" type="WXXM-WX.Pressure" documentation="The air pressure."/>
+        <Sequence name="airTemperature" type="WXXM-WX.AirTemperature" documentation="The air temperature."/>
+        <Sequence name="dewpointTemperature" type="WXXM-WX.AirTemperature" documentation="The dew point temperature."/>
+        <Sequence name="horizontalVisibility" type="WXXM-AVWX.HorizontalVisibility" documentation="Horizontal visibility."/>
+        <Sequence name="isDefinedFor" type="WXXM-ISO.AbstractFeature" documentation="Provides a means to explicitly link to the corresponding feature."/>
+        <Sequence name="verticalVisibility" type="WXXM-WX.VerticalVisibilityDistance" documentation="Vertical visibility."/>
+        <Sequence name="verticalWindGust" type="WXXM-WX.WindGust" documentation="Vertical wind gust."/>
+        <Sequence name="windDirection" type="WXXM-WX.WindDirection" documentation="Wind direction."/>
+        <Sequence name="windGust" type="WXXM-WX.WindGust" documentation="Wind gust."/>
+        <Sequence name="windSpeed" type="WXXM-WX.WindSpeed" documentation="Wind speed."/>
+    </Sequence>
+
+    <Sequence name="WXXM-AVWX.HorizontalVisibility" extends="WXXM-ISO.AbstractFeature" documentation="Horizontal visibility.">
+        <Sequence name="minimumVisibility" type="WXXM-WX.HorizontalVisibilityDistance" documentation="Minimum visibility."/>
+        <Sequence name="prevailingVisibility" type="WXXM-WX.HorizontalVisibilityDistance" documentation="The prevailing visibility."/>
+        <Boolean name="unidirectionalVisibility" documentation="True if visibility is unidirectional."/>
+        <!-- associations -->
+        <Enumerated name="directionMinimum" type="WXXM-WX.Compass8" optional="true" documentation="Direction minimum."/>
+    </Sequence>
+
+    <Sequence name="WXXM-AVWX.SurfaceDeposit" extends="WXXM-ISO.AbstractFeature" documentation="Surface deposit.">
+        <Sequence name="contaminationExtent" type="WXXM-WX.Percentage" documentation="Extent of contamination."/>
+        <Sequence name="depositDepth" type="WXXM-WX.Depth" documentation="Depth of deposit."/>
+        <!-- associations -->
+        <Enumerated name="surfaceDepositType" type="WXXM-AVWX.SurfaceDepositTypes" optional="true" documentation="Surface deposit type."/>
+    </Sequence>
+
+    <Enumerated name="WXXM-AVWX.SeaState" documentation="Enumeration for state of the sea descriptions.">
+        <NamedValues>
+            <Unsigned name="CALM GLASSY" value="1" documentation="Sea state is calm glassy."/>
+            <Unsigned name="CALM RIPPLED" value="2" documentation="Sea state is calm rippled."/>
+            <Unsigned name="SMOOTH WAVELETS" value="3" documentation="Sea state is smooth wavelets."/>
+            <Unsigned name="SLIGHT" value="4" documentation="Sea state is slight."/>
+            <Unsigned name="MODERATE" value="5" documentation="Sea state is moderate."/>
+            <Unsigned name="ROUGH" value="6" documentation="Sea state is rough."/>
+            <Unsigned name="VERY ROUGH" value="7" documentation="Sea state is very rough."/>
+            <Unsigned name="HIGH" value="8" documentation="Sea state is high."/>
+            <Unsigned name="VERY HIGH" value="9" documentation="Sea state is very high."/>
+            <Unsigned name="PHENOMENAL" value="10" documentation="Sea state is phenominal."/>
+        </NamedValues>
+    </Enumerated>
+
+    <Enumerated name="WXXM-AVWX.SurfaceDepositTypes" documentation="Enumeration for types of surface contamination.">
+        <NamedValues>
+            <Unsigned name="CLEAR AND DRY" value="1" documentation="Surface deposit type is clear and dry."/>
+            <Unsigned name="DAMP" value="2" documentation="Surface deposit type is damp."/>
+            <Unsigned name="WET AND WATER PATCHES" value="3" documentation="Surface deposit type is wet and water patches."/>
+            <Unsigned name="RIME AND FROST" value="4" documentation="Surface deposit type is rime and frost."/>
+            <Unsigned name="DRY SNOW" value="5" documentation="Surface deposit type is dry snow."/>
+            <Unsigned name="WET SNOW" value="6" documentation="Surface deposit type is wet snow."/>
+            <Unsigned name="SLUSH" value="7" documentation="Surface deposit type is slush."/>
+            <Unsigned name="ICE" value="8" documentation="Surface deposit type is ice."/>
+            <Unsigned name="COMPACTED SNOW" value="9" documentation="Surface deposit type is compacted snow."/>
+            <Unsigned name="FROZEN RUTS" value="10" documentation="Surface deposit type is frozen ruts."/>
+            <Unsigned name="NOT REPORTED" value="11" documentation="Surface deposit type is not reported."/>
+        </NamedValues>
+    </Enumerated>
+
+    <Enumerated name="WXXM-AVWX.AviationColourCode" documentation="
+            Enumeration for aviation colour codes. A system of four colour codes used to indicate conditions of volcanic ash that may be important to the safety of aircraft (or conditions on the ground).
+            GREEN - volcano is normal non-erupting state
+            YELLOW - volcano is experiencing signs of unrest
+            ORANGE - volcano is exhibiting heightened unrest with increased likelihood of eruption
+            RED - eruption is forecast to be immanent
+            Detailed descriptions from: http://www.wovo.org/aviation-colour-codes.html 
+            ">
+        <NamedValues>
+            <Unsigned name="ORANGE" value="1" documentation="Volcano is exhibiting heightened unrest with increased likelihood of eruption.
+   or,
+Volcanic eruption is underway with no or minor ash emission.
+[specify ash-plume height if possible]"/>
+            <Unsigned name="RED" value="2" documentation="Eruption is forecast to be imminent with significant emission of ash into the atmosphere likely.
+  or,
+Eruption is underway with significant emission of ash into the atmosphere.
+[specify ash-plume height if possible]"/>
+            <Unsigned name="GREEN" value="3" documentation=" Volcano is in normal, non-eruptive state.
+   or, after a change from a higher level: 
+Volcanic activity considered to have ceased, and volcano reverted to its normal, non-eruptive state."/>
+            <Unsigned name="YELLOW" value="4" documentation=" Volcano is experiencing signs of elevated unrest above known background levels. 
+   or, after a change from higher level: 
+Volcanic activity has decreased significantly but continues to be closely monitored for possible renewed increase."/>
+            <Unsigned name="NOT GIVEN" value="5" documentation="Volcanic activity is not given."/>
+            <Unsigned name="UNKNOWN" value="6" documentation="Volcanic activity is unknown."/>
+            <Unsigned name="NIL" value="7" documentation="Volcanic activity is nil."/>
+        </NamedValues>
+    </Enumerated>
+
+    <Enumerated name="WXXM-AVWX.ContaminationExtent" documentation="Enumeration for contamination extent ranges.">
+        <NamedValues>
+            <Unsigned name="&lt;10%" value="1" documentation="Contamination extent &lt;10%."/>
+            <Unsigned name="11-25%" value="2" documentation="Contamination extent  11-25%."/>
+            <Unsigned name="26-50%" value="3" documentation="Contamination extent 26-50%."/>
+            <Unsigned name="51-100%" value="4" documentation="Contamination extent 51-100%."/>
+            <Unsigned name="NOT REPORTED" value="5" documentation="Contamination not reported."/>
+        </NamedValues>
+    </Enumerated>
+
+    <Sequence name="WXXM-AVWX.Aerodrome" extends="WXXM-ISO.AbstractFeature" documentation="Stand-in class for AIXM equivalent (AirportHeliport).">
+        <!-- associations -->
+        <Sequence name="position" type="WXXM-ISO.DirectPosition" optional="true" documentation="Position of feature."/>
+    </Sequence>
+
+    <Sequence name="WXXM-AVWX.Sea" extends="WXXM-ISO.AbstractFeature" documentation="Sea feature.">
+    </Sequence>
+
+    <Sequence name="WXXM-AVWX.Volcano" extends="WXXM-ISO.AbstractFeature" documentation="Volcano feature.">
+        <Sequence name="summitElevation" type="WXXM-WX.VerticalDistance" documentation="Summit elevation."/>
+        <String name="iavceiIdentifier" documentation="The International Association for Volcanology and Chemistry of Earth's Interior (IAVCEI), The World Organization of Volcano Observatories (WOVO), and the Global Volcano Model (GVM) have sanctioned GVP to assign official names and numbers to the world's volcanoes."/>
+        <Sequence name="position" type="WXXM-ISO.DirectPosition" optional="true" documentation="The position of the volcano."/>
+        <!-- associations -->
+        <Sequence name="position" type="WXXM-ISO.DirectPosition" optional="true" documentation="Position of feature."/>
+    </Sequence>
+
+    <Sequence name="WXXM-AVWX.QPressure" extends="WXXM-WX.Pressure" documentation="Restricts Pressure to an integer value between 500 and 1100 (inclusive).">
+    </Sequence>
+
+    <Sequence name="WXXM-AVWX.Convection" extends="WXXM-WX.VerticallyBoundedPhenomenon" documentation="Convection hazard.">
+        <!-- associations -->
+        <Unknown name="extentOf" type="WXXM-WX.ExtentOf" optional="true" documentation="Extent of feature."/>
+        <Enumerated name="growth" type="WXXM-WX.Growth" optional="true" documentation="Expected growth."/>
+        <Enumerated name="intensity" type="WXXM-WX.WeatherIntensity" optional="true" documentation="Intensity."/>
+        <Array name="movement" memberType="WXXM-WX.MovementDescription" documentation="Expected movement."/>
+    </Sequence>
+
+    <Sequence name="WXXM-AVWX.Icing" extends="WXXM-WX.VerticallyBoundedPhenomenon" documentation="Icing hazard.">
+        <Real name="accretionRate" optional="true" documentation="Rate of accretion of ice."/>
+        <!-- associations -->
+        <Unknown name="extentOf" type="WXXM-WX.ExtentOf" optional="true" documentation="Extent of feature."/>
+        <Enumerated name="intensity" type="WXXM-WX.WeatherIntensity" optional="true" documentation="Weather intensity."/>
+        <Array name="movement" memberType="WXXM-WX.MovementDescription" documentation="Movement description."/>
+        <Enumerated name="type" type="WXXM-AVWX.IcingTypes" optional="true" documentation="Icing types."/>
+    </Sequence>
+
+    <Sequence name="WXXM-AVWX.MountainObscuration" extends="WXXM-WX.AbstractPhenomenon" documentation="Mountain obscuration hazard.">
+        <!-- associations -->
+        <Unknown name="extentOf" type="WXXM-WX.ExtentOf" optional="true" documentation="Extent of feature."/>
+        <Enumerated name="intensity" type="WXXM-WX.WeatherIntensity" optional="true" documentation="Weather intensity."/>
+        <Array name="movement" memberType="WXXM-WX.MovementDescription" documentation="Movement."/>
+    </Sequence>
+
+    <Sequence name="WXXM-AVWX.MountainWave" extends="WXXM-WX.AbstractPhenomenon" documentation="Mountain wave hazard.">
+        <!-- associations -->
+        <Sequence name="downdraft" type="WXXM-WX.Speed" optional="true" documentation="Speed of downdraft."/>
+        <Unknown name="extentOf" type="WXXM-WX.ExtentOf" optional="true" documentation="Extent of feature."/>
+        <Enumerated name="intensity" type="WXXM-WX.WeatherIntensity" optional="true" documentation="Intensity."/>
+        <Array name="movement" memberType="WXXM-WX.MovementDescription" documentation="Movement."/>
+    </Sequence>
+
+    <Sequence name="WXXM-AVWX.Turbulence" extends="WXXM-WX.VerticallyBoundedPhenomenon" documentation="Turbulence hazard.">
+        <Real name="edr" optional="true" documentation="Eddy dissipation rate."/>
+        <!-- associations -->
+        <Unknown name="extentOf" type="WXXM-WX.ExtentOf" optional="true" documentation="Extent of feature."/>
+        <Enumerated name="intensity" type="WXXM-WX.WeatherIntensity" optional="true" documentation="Weather intensity."/>
+        <Array name="movement" memberType="WXXM-WX.MovementDescription" documentation="Movement."/>
+        <Enumerated name="type" type="WXXM-AVWX.TurbulenceTypes" optional="true" documentation="Turbulence type."/>
+    </Sequence>
+
+    <Sequence name="WXXM-AVWX.WindShear" extends="WXXM-WX.VerticallyBoundedPhenomenon" documentation="Wind shear hazard.">
+        <Sequence name="level" type="WXXM-WX.VerticalDistance" documentation="Level of wind shear."/>
+        <!-- associations -->
+        <Unknown name="extentOf" type="WXXM-WX.ExtentOf" optional="true" documentation="Extent of feature."/>
+        <Enumerated name="intensity" type="WXXM-WX.WeatherIntensity" optional="true" documentation="Weather intensity."/>
+        <Array name="movement" memberType="WXXM-WX.MovementDescription" documentation="Movement."/>
+    </Sequence>
+
+    <Enumerated name="WXXM-AVWX.IcingTypes" documentation="Enumeration for types of icing.">
+        <NamedValues>
+            <Unsigned name="CLEAR" value="1" documentation="Icing type is clear."/>
+            <Unsigned name="MIXED" value="2" documentation="Icing type is mixed."/>
+            <Unsigned name="RIME" value="3" documentation="Icing type is rime."/>
+        </NamedValues>
+    </Enumerated>
+
+    <Enumerated name="WXXM-AVWX.TurbulenceTypes" documentation="Enumeration for types of turbulence.">
+        <NamedValues>
+            <Unsigned name="CAT" value="1" documentation="Clear Air Turbulence."/>
+            <Unsigned name="CHOP" value="2" documentation="Chop air turbulence."/>
+        </NamedValues>
+    </Enumerated>
+
+    <Sequence name="WXXM-AVWX.TropicalCyclone" extends="WXXM-WX.AbstractPhenomenon" documentation="Tropical cyclone hazard.">
+        <Sequence name="centralPressure" type="WXXM-WX.Pressure" documentation="Central pressure of cyclone."/>
+        <Sequence name="maxSurfaceWindSpeed" type="WXXM-WX.WindSpeed" documentation="Maximum surface wind."/>
+        <Sequence name="centre" type="WXXM-ISO.DirectPosition" optional="true" documentation="The centre position of the cyclone."/>
+        <!-- associations -->
+        <Sequence name="centre" type="WXXM-ISO.DirectPosition" optional="true" documentation="Center position of cyclone."/>
+        <Unknown name="extentOf" type="WXXM-WX.ExtentOf" optional="true" documentation="Extent of feature."/>
+        <Enumerated name="intensity" type="WXXM-WX.WeatherIntensity" optional="true" documentation="Weather intensity."/>
+        <Array name="movement" memberType="WXXM-WX.MovementDescription" documentation="Movement."/>
+    </Sequence>
+
+    <Sequence name="WXXM-AVWX.VolcanicActivity" extends="WXXM-WX.AbstractPhenomenon" documentation="Volcanic activity.">
+        <Sequence name="volcano" type="WXXM-AVWX.Volcano" documentation="Volcano hazard."/>
+        <Boolean name="eruption" optional="true" documentation="True if volcanic activity is an eruption."/>
+        <!-- associations -->
+        <Unknown name="extentOf" type="WXXM-WX.ExtentOf" optional="true" documentation="Extent of feature."/>
+        <Enumerated name="intensity" type="WXXM-WX.WeatherIntensity" optional="true" documentation="Weather intensity."/>
+        <Array name="movement" memberType="WXXM-WX.MovementDescription" documentation="Movement."/>
+    </Sequence>
+
+    <Sequence name="WXXM-AVWX.VolcanicAshCloud" extends="WXXM-WX.VerticallyBoundedPhenomenon" documentation="Volcanic ash cloud.">
+        <!-- associations -->
+        <Unknown name="extentOf" type="WXXM-WX.ExtentOf" optional="true" documentation="Extent of feature."/>
+        <Enumerated name="intensity" type="WXXM-WX.WeatherIntensity" optional="true" documentation="Weather intensity."/>
+        <Array name="movement" memberType="WXXM-WX.MovementDescription" documentation="Movement."/>
+    </Sequence>
+
+    <Sequence name="WXXM-AVWX.WindLayer" extends="WXXM-WX.VerticallyBoundedPhenomenon" documentation="Wind layer hazard.">
+        <Sequence name="direction" type="WXXM-WX.WindDirection" documentation="Direction of wind layer."/>
+        <Sequence name="directionVariesFrom" type="WXXM-WX.WindDirection" documentation="Direction varies from this lmiit."/>
+        <Sequence name="directionVariesTo" type="WXXM-WX.WindDirection" documentation="Direction varies to this limit."/>
+        <Sequence name="height" type="WXXM-WX.VerticalDistance" documentation="Height of wind layer."/>
+        <Sequence name="position" type="WXXM-ISO.DirectPosition" documentation="Position of wind layer."/>
+        <Sequence name="speed" type="WXXM-WX.WindSpeed" documentation="Speed of wind layer."/>
+        <Sequence name="speedVariesFrom" type="WXXM-WX.WindSpeed" documentation="Speed varies from this limit."/>
+        <Sequence name="speedVariesTo" type="WXXM-WX.WindSpeed" documentation="Speed varies to this limit."/>
+        <!-- associations -->
+        <Unknown name="extentOf" type="WXXM-WX.ExtentOf" optional="true" documentation="Extent of feature."/>
+        <Enumerated name="intensity" type="WXXM-WX.WeatherIntensity" optional="true" documentation="Weather intensity."/>
+        <Array name="movement" memberType="WXXM-WX.MovementDescription" documentation="Movement."/>
+    </Sequence>
+
+    <Sequence name="WXXM-AVWX.AbstractReport" extends="WXXM-ISO.AbstractFeature" documentation="Abstract report base class.">
+        <Sequence name="process" type="WXXM-WX.ReportProcess" documentation="The process related to the distribution or collection of weather reports."/>
+        <DateTime name="issueTime" documentation="When the report was issued."/>
+        <String name="rawText" documentation="Arbitrary associated text potentially from a reporting station in an older text-based format."/>
+        <Boolean name="automated" documentation="True if report is automated."/>
+        <Boolean name="missing" documentation="%%%% True if report source data is missing."/>
+        <!-- associations -->
+        <Sequence name="appliesTo" type="WXXM-AVWX.Aerodrome" optional="true" documentation="Applies to Aerodrome."/>
+        <Array name="wxForecast" memberType="WXXM-WX.Forecast" documentation="Weather forecast(s) applies to."/>
+        <Array name="wxObservation" memberType="WXXM-WX.Observation" minimumSize="1" documentation="Observation(s) applies to."/>
+    </Sequence>
+
+    <Sequence name="WXXM-AVWX.TREND" extends="WXXM-ISO.AbstractFeature" documentation="TREND forecast.">
+        <String name="changePeriod" type="Fsgim.Duration" documentation="Change period of trend."/>
+        <!-- associations -->
+        <Array name="forecast" memberType="WXXM-WX.Forecast" documentation="Sequence of forecasts for this Trend."/>
+        <Enumerated name="trendChangeIndicator" type="WXXM-WX.ForecastChangeIndicator" optional="true" documentation="Expected change."/>
+    </Sequence>
+
+    <Enumerated name="WXXM-AVWX.NextAdvisoryText" documentation="Enumeration of next advisory projection.">
+        <NamedValues>
+            <Unsigned name="NO LATER THAN" value="1" documentation="Next advisory: no later than."/>
+            <Unsigned name="WILL BE ISSUED BY" value="2" documentation="Next advisory: will be issued by."/>
+            <Unsigned name="NO FURTHER ADVISORIES" value="3" documentation="Next advisory: no further advisories."/>
+        </NamedValues>
+    </Enumerated>
+
+    </Definitions>
+</CSML>

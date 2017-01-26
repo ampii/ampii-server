@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CSML xmlns="http://bacnet.org/csml/1.2"  defaultLocale="en-US" >
+
+    <!-- THESE ARE NOT THE OFFICIAL DEFINITIONS. See data.ashrae.org for current definition files -->
+
+    <Definitions>
+
+        <Composition name="0-BACnetWsData">
+            <Unsigned name="database-revision"/>
+            <List name="histories" memberType="Link"/>
+            <List name="events" memberType="Link"/>
+            <List name="objects" memberType="Link"/>
+            <Collection name="nodes"><MemberTypeDefinition><List memberType="Link"/></MemberTypeDefinition></Collection>
+        </Composition>
+
+        <Composition name="0-BACnetWsInfo">
+            <Unsigned name="vendor-identifier" />
+            <String name="vendor-name"/>
+            <String name="software-version"/>
+            <String name="model-name"/>
+            <Unsigned name="protocol-version"/>
+            <Unsigned name="protocol-revision"/>
+            <String  name="default-locale"/>
+            <String  name="supported-locales"/>
+            <Unsigned name="max-uri"/>
+        </Composition>
+
+        <Composition name="0-BACnetWsAuth">
+            <OctetString name="dev-uuid" comment="writability is an implementation choice"/>
+            <List name="ca-certs"      memberType="OctetString"/>
+            <List name="ca-certs-pend" memberType="OctetString" writable="true" authWrite="" comment="authWrite changes to 'auth' after TLS activation" />
+            <OctetString name="dev-cert" />
+            <OctetString name="dev-cert-pend" writable="true"                   authWrite="" comment="authWrite changes to 'auth' after TLS activation"/>
+            <OctetString name="dev-key"                       readable="false" />
+            <OctetString name="dev-key-pend"  writable="true" readable="false"  authWrite="" comment="authWrite changes to 'auth' after TLS activation"/>
+            <Boolean name="tls-activate" value="false" writable="true"          authWrite="" comment="authWrite changes to 'auth' after TLS activation"/>
+            <Composition name="int" >
+                <Boolean name="enable" writable="true" authWrite="auth"/>
+                <String name="user"    writable="true" authWrite="auth" readable="false"/>
+                <String name="pass"    writable="true" authWrite="auth" readable="false"/>
+                <String name="id"      writable="true" authWrite="auth" readable="false"/>
+                <String name="secret"  writable="true" authWrite="auth" readable="false"/>
+                <Any name="config"/>
+            </Composition>
+            <Composition name="ext" >
+                <String      name="pri-uri"    writable="true" authWrite="auth"/>
+                <OctetString name="pri-cert"   writable="true" authWrite="auth"/>
+                <OctetString name="pri-pubkey" writable="true" authWrite="auth"/>
+                <String      name="sec-uri"    writable="true" authWrite="auth"/>
+                <OctetString name="sec-cert"   writable="true" authWrite="auth" />
+                <OctetString name="sec-pubkey" writable="true" authWrite="auth"/>
+            </Composition>
+            <List name="group-uuids"           writable="true" authWrite="auth" />
+            <Collection name="scope-desc"/>
+        </Composition>
+
+        <Composition name="0-BACnetWsSubscriptionRecord">
+            <String name="label" optional="true"/>
+            <String name="callback" />
+            <Unsigned name="lifetime" />
+            <String name="callbackError" optional="true" />
+            <String name="dataError" optional="true"/>
+            <List name="covs" optional="true">
+                <MemberTypeDefinition>
+                    <Composition>
+                        <String name="path"/>
+                        <Real name="increment" optional="true"/>
+                    </Composition>
+                </MemberTypeDefinition>
+            </List>
+            <List name="logs" optional="true">
+                <MemberTypeDefinition>
+                    <Composition>
+                        <String name="path"/>
+                        <Enumerated name="frequency" optional="true">
+                            <NamedValues>
+                                <Unsigned name="on-update"/>
+                                <Unsigned name="hourly"/>
+                                <Unsigned name="daily"/>
+                            </NamedValues>
+                        </Enumerated>
+                    </Composition>
+                </MemberTypeDefinition>
+            </List>
+        </Composition>
+
+        <List name="0-BACnetWsSubscriptionCallback" >
+        </List>
+
+        <Composition name="0-BACnetWsMultiRecord">
+            <Unsigned name="lifetime" optional="true"/>
+            <List name="values"/>
+        </Composition>
+
+        <Enumerated name="0-BACnetWsError" minimum="1024" maximum="65535">
+            <NamedValues>
+                <Unsigned name="OTHER"                     value="0"/>
+                <Unsigned name="NOT_AUTHENTICATED"         value="1"/>
+                <Unsigned name="NOT_AUTHORIZED"            value="2"/>
+                <Unsigned name="PARAM_SYNTAX"              value="3"/>
+                <Unsigned name="PARAM_NOT_SUPPORTED"       value="4"/>
+                <Unsigned name="PARAM_VALUE_FORMAT"        value="5"/>
+                <Unsigned name="PARAM_OUT_OF_RANGE"        value="6"/>
+                <Unsigned name="LOCALE_NOT_SUPPORTED"      value="7"/>
+                <Unsigned name="PATH_SYNTAX"               value="8"/>
+                <Unsigned name="DATA_NOT_FOUND"            value="9"/>
+                <Unsigned name="METADATA_NOT_FOUND"        value="10"/>
+                <Unsigned name="ILLEGAL_METADATA"          value="11"/>
+                <Unsigned name="VALUE_FORMAT"              value="12"/>
+                <Unsigned name="VALUE_OUT_OF_RANGE"        value="13"/>
+                <Unsigned name="INDEX_OUT_OF_RANGE"        value="14"/>
+                <Unsigned name="NOT_WRITABLE"              value="15"/>
+                <Unsigned name="WRITE_FAILED"              value="16"/>
+                <Unsigned name="LIST_OF_PATHS_IS_EMPTY"    value="17"/>
+                <Unsigned name="COUNT_IS_ZERO"             value="18"/>
+                <Unsigned name="INTERVAL_IS_ZERO"          value="19"/>
+                <Unsigned name="NO_HISTORY"                value="20"/>
+                <Unsigned name="NO_DATA_AVAILABLE"         value="21"/>
+                <Unsigned name="NOT_AN_ARRAY"              value="23"/>
+                <Unsigned name="COMMUNICATION_FAILED"      value="24"/>
+                <Unsigned name="TLS_CONFIG"                value="26"/>
+                <Unsigned name="NOT_REPRESENTABLE"         value="27"/>
+                <Unsigned name="BAD_METHOD"                value="28"/>
+                <Unsigned name="TOO_LARGE"                 value="29"/>
+                <Unsigned name="TOO_DEEP"                  value="30"/>
+                <Unsigned name="CANNOT_CREATE"             value="31"/>
+                <Unsigned name="CANNOT_DELETE"             value="32"/>
+                <Unsigned name="AUTH_EXPIRED"              value="33"/>
+                <Unsigned name="AUTH_INVALID"              value="34"/>
+                <Unsigned name="MISSING_PARAMETER"         value="35"/>
+                <Unsigned name="UNSUPPORTED_MEDIA_TYPE"    value="36"/>
+                <Unsigned name="UNSUPPORTED_DATATYPE"      value="37"/>
+                <Unsigned name="INVALID_DATATYPE"          value="38"/>
+                <Unsigned name="INCONSISTENT_VALUES"       value="39"/>
+                <Unsigned name="EXPIRED_LINK"              value="40"/>
+                <Unsigned name="NOT_READABLE"              value="41"/>
+                <Unsigned name="DUPLICATES_NOT_ALLOWED"    value="42"/>
+                <Unsigned name="UNINITIALIZED"             value="43"/>
+                <Unsigned name="EXPIRED_CONTEXT"           value="44"/>
+                <Unsigned name="NOT_ATOMIC"                value="45"/>
+                <Unsigned name="CANNOT_FOLLOW"             value="46"/>
+            </NamedValues>
+        </Enumerated>
+
+
+    </Definitions>
+
+</CSML>

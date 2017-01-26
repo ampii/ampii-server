@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CSML defaultLocale="en-US" xmlns="http://bacnet.org/csml/1.2"  >
+
+    <Collection name="misc">
+
+        <Composition name="for-tag-tests">
+            <Composition name="path1">
+                <Composition name="path1.1" tags="foo">
+                    <Real name="path1.1.1" tags="foo;bar">
+                        <ValueTags>
+                            <String name="asset" value="HQE2015A0241"/>
+                        </ValueTags>
+                    </Real>
+                </Composition>
+                <Composition name="path1.2" tags="bar">
+                    <Real name="path1.2.1" tags="foo;bar">
+                        <ValueTags>
+                            <String name="asset" value="RDD2014A0432"/>
+                        </ValueTags>
+                    </Real>
+                </Composition>
+            </Composition>
+            <Composition name="path2">
+                <Composition name="path2.1" tags="baz">
+                    <Real name="path2.1.1" tags="foo;baz">
+                        <ValueTags>
+                            <String name="asset" value="RDD2014A0433"/>
+                        </ValueTags>
+                    </Real>
+                </Composition>
+            </Composition>
+        </Composition>
+
+        <List name="for-filter-tests">
+            <Composition name="1">
+                <Boolean name="a" value="false"/>
+                <Boolean name="b" value="false"/>
+                <Boolean name="c" value="false"/>
+            </Composition>
+            <Composition name="2">
+                <Boolean name="a" value="true"/>
+                <Boolean name="b" value="false"/>
+                <Boolean name="c" value="false"/>
+            </Composition>
+            <Composition name="3">
+                <Boolean name="a" value="false"/>
+                <Boolean name="b" value="true"/>
+                <Boolean name="c" value="false"/>
+            </Composition>
+            <Composition name="4">
+                <Boolean name="a" value="true"/>
+                <Boolean name="b" value="true"/>
+                <Boolean name="c" value="false"/>
+            </Composition>
+            <Composition name="5">
+                <Boolean name="a" value="false"/>
+                <Boolean name="b" value="false"/>
+                <Boolean name="c" value="true"/>
+            </Composition>
+            <Composition name="6">
+                <Boolean name="a" value="true"/>
+                <Boolean name="b" value="false"/>
+                <Boolean name="c" value="true"/>
+            </Composition>
+            <Composition name="7">
+                <Boolean name="a" value="false"/>
+                <Boolean name="b" value="true"/>
+                <Boolean name="c" value="true"/>
+            </Composition>
+            <Composition name="8">
+                <Boolean name="a" value="true"/>
+                <Boolean name="b" value="true"/>
+                <Boolean name="c" value="true"/>
+            </Composition>
+            <Composition name="9">
+                <Boolean name="yea" value="true"/>
+                <Boolean name="nay" value="false"/>
+                <Real name="high" value="100"/>
+                <Real name="low" value="10"/>
+                <String name="hi" value="Hi there! (¡Hola!)"/>
+                <String name="bye" value="So long"/>
+            </Composition>
+            <Composition name="10">
+                <Boolean name="yea" value="false"/>
+                <Boolean name="nay" value="false"/>
+                <Real name="high" value="100"/>
+                <Real name="low" value="10"/>
+                <String name="hi" value="Hi there! (¡Hola!)"/>
+                <String name="bye" value="So/long"/>
+            </Composition>
+            <Composition name="11">
+                <Boolean name="yea" value="false"/>
+                <Boolean name="nay" value="true"/>
+                <Real name="high" value="99"/>
+                <Real name="low" value="9"/>
+                <String name="hi" value="blah"/>
+                <String name="bye" value=""/>
+            </Composition>
+            <Real name="13" value="1234.0" sourceId="urn:uuid:1225c695-cfb8-4ebb-aaaa-80da344efa6a"/>
+        </List>
+
+        <List name="for-published-tests" writable="true" >
+            <Real name="1000" value="0" published="2013-02-13T09:26:00Z"/>
+            <Real name="1001" value="1" published="2013-02-13T09:26:01Z"/>
+            <Real name="1002" value="2" published="2013-02-13T09:26:02Z"/>
+            <Real name="1003" value="3" published="2013-02-13T09:26:03Z"/>
+            <Real name="1004" value="4" published="2013-02-13T09:26:04Z"/>
+            <Real name="1005" value="5" published="2013-02-13T09:26:05Z"/>
+            <Real name="1006" value="6" published="2013-02-13T09:26:06Z"/>
+        </List>
+
+    </Collection>
+
+</CSML>

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CSML defaultLocale="en-US" xmlns="http://bacnet.org/csml/1.2"   >
+
+    <Collection name="definitions">
+
+        <Definitions>
+            <Choice name="org.ampii.test-data.definitions.ChoiceTypeA">
+                <Choices>
+                    <Real name="choice1" value="0"/>
+                    <String name="choice2" value="This is 2"/>
+                </Choices>
+            </Choice>
+        </Definitions>
+        <Choice name="choice-of-two"  type="org.ampii.test-data.definitions.ChoiceTypeA" writable="true">
+            <Real name="choice1" value="1.0"/>
+        </Choice>
+
+        <Definitions>
+            <Composition name="org.ampii.test-data.definitions.CompositionWithOptionalMember">
+                <String name="required-member"/>
+                <String name="optional-member" optional="true"/>
+            </Composition>
+        </Definitions>
+        <Composition name="composition-with-optional-member-present" type="org.ampii.test-data.definitions.CompositionWithOptionalMember" writable="true">
+            <String name="required-member" value="always here"/>
+            <String name="optional-member" value="I'm here!"/>
+        </Composition>
+        <Composition name="composition-with-optional-member-absent" type="org.ampii.test-data.definitions.CompositionWithOptionalMember" writable="true">
+            <String name="required-member" value="always here"/>
+        </Composition>
+
+        <Definitions>
+            <Composition name="org.ampii.test-data.definitions.InheritanceTypeA">
+                <String name="a1" value="this is a1"/>
+                <Real name="a2" value="2"/>
+                <List name="a3" memberType="org.ampii.test-data.definitions.InheritanceTypeB"/>
+                <List name="a4">
+                    <MemberTypeDefinition>
+                        <Composition>
+                            <String name="a4m1" value="default-a"/>
+                            <String name="a4m2" value="default-b"/>
+                        </Composition>
+                    </MemberTypeDefinition>
+                </List>
+                <Real name="a5" value="33" optional="true"/>
+            </Composition>
+            <Composition name="org.ampii.test-data.definitions.InheritanceTypeB" extends="org.ampii.test-data.definitions.InheritanceTypeA">
+                <String name="a1" value="new value for a1 from TypeB"/>
+                <String name="b1" value="this is b1"/>
+                <Composition name="b2" type="org.ampii.test-data.definitions.InheritanceTypeA" description="this is a TypeA inside TypeB"/>
+                <Real name="a5" value="44" description="this makes a5 no longer optional"/>
+            </Composition>
+        </Definitions>
+        <Composition name="complicated" type="org.ampii.test-data.definitions.InheritanceTypeA">
+            <String name="a1" value="instance value for a1"/>
+            <Real name="a2" value="22"/>
+            <List name="a3">
+                <Composition name="1" comment="InstanceA-a3-1 (has an explicit type='TypeB')" partial="true" >
+                    <String name="a1" value="InstanceA-a3-1"/>
+                    <String name="b1" value="InstanceA-b1-1"/>
+                    <Composition name="b2" comment="InstanceA-a3-1 ( no 'type')">
+                        <String name="a1" value="InstanceA-a3-1-b2-a1"/>
+                        <Real name="a2" value="222"/>
+                        <List name="a3" />
+                        <List name="a4" >
+                            <Composition>
+                                <String name="a4m1" value="InstanceA-a3-1-b2-a4-1-a4m1"/>
+                                <String name="a4m2" value="InstanceA-a3-1-b2-a4-1-a4m2"/>
+                            </Composition>
+                            <Composition>
+                                <String name="a4m1" value="InstanceA-a3-1-b2-a4-2-a4m1"/>
+                                <String name="a4m2" value="InstanceA-a3-1-b2-a4-2-a4m2"/>
+                            </Composition>
+                        </List>
+                        <Real name="a5" value="3125" description="InstanceA-a3-1-b2-a5"/>
+                    </Composition>
+                    <Real name="a5" value="315" description="InstanceA-a3-1-a5"/>
+                </Composition>
+                <Composition name="2" comment="InstanceA-a3-2 (has no 'type', implicitly TypeB)" partial="true">
+                    <String name="a1" value="InstanceA-a3-2-a1"/>
+                    <String name="b1" value="InstanceA-b1-2-b1"/>
+                    <Composition name="b2" comment="InstanceA-a3-2-b2 (has no 'type', implicitly TypeA)">
+                        <String name="a1" value="InstanceA-a3-2-b2-a1"/>
+                        <Real name="a2" value="2222"/>
+                        <List name="a3"/>
+                        <List name="a4"/>
+                        <Real name="a5" value="3225" description="InstanceA-a3-2-b2-a5"/>
+                    </Composition>
+                    <Real name="a5" value="325" description="InstanceA-a3-2-a5"/>
+                </Composition>
+            </List>
+            <List name="a4"/>
+            <Real name="a5" value="5" description="InstanceA-a5"/>
+        </Composition>
+
+
+    </Collection>
+
+</CSML>

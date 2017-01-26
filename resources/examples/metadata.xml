@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CSML defaultLocale="en-US" xmlns="http://bacnet.org/csml/1.2"   >
+
+    <Collection name="metadata">
+        <Real name="real" value="75.5" error="666" description="Can't write value, but can write to displayName (and displayName's maxLength!)" writable="true" displayName="write me!" units="1000" tags="foo;bar">
+            <DisplayName locale="de">Scribe Mich</DisplayName>
+            <NamedValues>
+                <Real name="maxxed" value="100.0"/>
+            </NamedValues>
+            <Links>
+                <Link name="doc"    value="/users-manual" mediaType="application/pdf"/>
+                <Link name="friend" value="/jimmy"/>
+                <Link name="enemy" value="/freddy"/>
+            </Links>
+            <Extensions>
+                <Collection name="namedValues" writable="true" />
+                <String name="displayName" writable="true" maximumLength="15">
+                    <Extensions>
+                        <Unsigned name="maximumLength" writable="true"/>
+                        <Composition name="org.example.text" writable="true" description="a structured proprietary metadata">
+                            <Unsigned name="child" value="1" writable="true"/>
+                        </Composition>
+                    </Extensions>
+                </String>
+            </Extensions>
+        </Real>
+
+    </Collection>
+
+</CSML>

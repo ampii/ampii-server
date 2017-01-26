@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CSML xmlns="http://bacnet.org/csml/1.2"  defaultLocale="en-US" >
+
+    <Collection name="examples">
+        <Includes>
+            <Link value="../examples/basetypes.xml"/>
+            <Link value="../examples/metadata.xml"/>
+            <Link value="../examples/definitions.xml"/>
+            <Link value="../examples/misc.xml"/>
+            <Link value="../examples/links.xml"/>
+            <Link value="../examples/histories.xml"/>
+            <Link value="../examples/media.xml"/>
+            <Link value="../fsgim/fsgim-all.xml"/>
+        </Includes>
+    </Collection>
+
+</CSML>

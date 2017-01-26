@@ -1,0 +1,1 @@
+Don't delete this "test-files" directory.  It's needed by some tests as a safe place to write files to.

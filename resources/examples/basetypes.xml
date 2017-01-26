@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CSML defaultLocale="en-US" xmlns="http://bacnet.org/csml/1.2"   >
+
+    <Collection name="basetypes">
+
+        <Collection name="writable">
+            <Array name="array"  writable="true"></Array>
+            <BitString name="bitstring" value="" writable="true"/>
+            <Boolean name="boolean"  value="true" writable="true"/>
+            <Choice name="choice"  writable="true">
+                <Real name="chosen1" value="10"/>
+            </Choice>
+            <Collection name="collection"  writable="true"></Collection>
+            <Date name="date"  value="2013-10-14" writable="true"/>
+            <DatePattern name="datepattern" value="2013-*-*"  writable="true"/>
+            <DateTime name="datetime"  value="2013-10-14T10:00:00Z" writable="true"/>
+            <DateTimePattern name="datetimepattern" value="2013-*-* * 12:00:*.*" writable="true"/>
+            <Real name="real" value="111"  writable="true"/>
+            <Double name="double" value="111"  writable="true"/>
+            <Enumerated name="enumerated" value="value1" writable="true"/>
+            <Integer name="integer" value="100" writable="true"/>
+            <Link name="a-link"  value="http://www.bacnet.org" writable="true"/>
+            <List name="list"  writable="true"></List>
+            <Null name="null"  writable="true"/>
+            <Object name="object"  writable="true"></Object>
+            <ObjectIdentifier name="objectidentifier" value="analog-input,1" writable="true"/>
+            <ObjectIdentifierPattern name="objectidentifierpattern" value="file,*" writable="true"/>
+            <OctetString name="octetstring"  mediaType="image/gif" writable="true" value="00000100010010100000010020006804000016000000280000001000000020000000010020000000000000040000120B0000120B00000000000000000000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFEFEFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFEFEFFFFFFFFFFE9E9E9FFC2C2C4FFFBFBFBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFEFEFFFFFFFFFFFFFFFFFFFFFFFFFFFDFDFDFFFFFFFFFFC1C1C2FF858788FFF1F1F1FFFFFFFFFFFEFEFEFFFFFFFFFFFFFFFFFFF5F5F5FFE2E2E2FFEEEEEEFFEFEFEFFFF7F7F7FFFCFCFCFFFCFCFCFFFCFCFCFFFCFCFCFFFCFCFBFFF9F9F9FFFFFFFFFFFFFFFFFFFFFFFFFFFEFEFEFFFFFFFFFFE8E8E8FFC7C7C7FFCDCDCDFFD3D2D2FFD1D1D1FFD0D0D0FFD0D0D0FFD1D1D1FFCECDCDFFD3D2D2FFCFCFCFFFF2F2F2FFFFFFFFFFFEFEFEFFFEFEFEFFFFFFFFFFEEEEEEFFD2D2D2FFD7D7D7FFD4D4D4FFD3D3D3FFD2D2D2FFD8D8D8FFD9D9D9FFD9D9D9FFDADADAFFD8D8D8FFF6F6F6FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF7F7F7FFEEEEEEFFF0F0F0FFF2F2F2FFF0F0F0FFF1F1F1FFF7F7F7FFF9F9F9FFF6F6F6FFF9F9F9FFF7F7F7FFFCFCFCFFFFFFFFFFFFFFFFFFFFFFFFFFFEFEFEFFFFFFFFFFEFEFEFFFC5C5C5FFCFCFCFFFCACACAFFC7C6C6FFCCCDCDFFBFBFBFFFC6C6C6FFC9C9C9FFC4C4C4FFF1F1F1FFFFFFFFFFFEFEFEFFFFFFFFFFFFFFFFFFFEFEFEFFFFFFFFFFC9CACAFFACABACFFAFB0B0FFBABABAFFBDBEBEFFB5B6B4FFC0C0C0FFBEBEBEFFBABABAFFF1F1F1FFFFFFFFFFFEFEFEFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF8F8F8FFF8F8F8FFF5F5F5FFFDFDFDFFC7C7C7FFC3C3C3FFC0C0C0FFC4C4C4FFBFBFBFFFF3F3F3FFFFFFFFFFFEFEFEFFFFFFFFFFFEFEFEFFFFFFFFFFD1D1D1FFBFBFBFFFC3C3C3FFD0CFCFFFC2C3C3FFBDBDBDFFC3C3C3FFC6C6C6FFBFBFBFFFBCBCBCFFF2F2F2FFFFFFFFFFFEFEFEFFFFFFFFFFFFFFFFFFFFFFFFFFF6F6F6FFF0F0F0FFF9F9F9FFF4F4F4FFF7F7F7FFF5F5F5FFC8C9C8FFABABABFFBEBEBEFFB8B8B8FFF1F1F1FFFFFFFFFFFEFEFEFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFFFFFFFFFFFFFFFFFFFFFFFEFFFFFFFFFFF7F6F5FFDFDDDDFFDAD8D7FFE4E2E2FFE7E5E5FFF7F7F7FFFFFFFFFFFFFFFFFFFFFFFFFFFCFEFFFFF7FCFEFFFBFDFEFFFCFEFFFFFDFEFFFFF7FCFDFFF5FDFFFFEAF1F3FFD7DEE0FFD9E0E2FFDEE5E6FFDBE2E3FFEDF4F6FFFEFFFFFFFFFFFFFFFFFFFFFFD7E9D6FF7CB475FFABCB9EFFAECDA0FFB0CEA2FF83B97CFF6AAC64FF71B06BFF72B26BFF71B16EFF87BB81FF8BBE85FF6DAE69FFE2EFE1FFFFFFFFFFFFFFFFFFEBE1C7FFA97E15FFAD8521FFAB841EFFAB831EFFAD841FFFAE841FFFAF831EFFAD831DFFBFA863FFC6B67FFFC3AC6CFFB28B2EFFEEE5D0FFFFFFFFFFFFFFFFFFE7D4C8FF984A15FF9F5321FF9E521FFF9E521FFF9E521FFF9D521FFF9E521FFF9C521FFF9F5628FFA86F49FFAC744EFF9C5423FFEBDCD1FFFFFFFFFF00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"/>
+            <Sequence name="sequence"  writable="true"></Sequence>
+            <SequenceOf name="sequenceof"  writable="true"></SequenceOf>
+            <Composition name="composition"  writable="true"></Composition>
+            <String name="string" mediaType="text/html"  writable="true" value="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body&gt;Hi There!&lt;/body&gt;&lt;/html&gt;"/>
+            <StringSet name="stringset" value="foo;bar" writable="true"/>
+            <Time name="time" value="01:02:03.04" writable="true"/>
+            <TimePattern name="timepattern" value="01:02:*.*" writable="true"/>
+            <Unsigned name="unsigned" value="100" writable="true"/>
+            <WeekNDay name="weeknday" value="*,*,*" writable="true"/>
+        </Collection>
+
+        <Collection name="readonly">
+            <Array name="array" memberType="Real">
+                <Real name="1" value="10"/>
+                <Real name="2" value="20"/>
+            </Array>
+            <BitString name="bitstring" value="bit0;1;bit2" />
+            <Boolean name="boolean"  value="true" writable="true"/>
+            <Choice name="choice">
+                <Real name="chosen1" value="10"/>
+            </Choice>
+            <Collection name="collection">
+                <Real name="member1" value="10"/>
+                <String name="member2" value="this is member2"/>
+            </Collection>
+            <Date name="date" value="2013-10-14"/>
+            <DatePattern name="datepattern" value="2013-*-*"/>
+            <DateTime name="datetime"  value="2013-10-14T10:00:00Z"/>
+            <DateTimePattern name="datetimepattern" value="2013-*-* * 12:00:*.*"/>
+            <Double name="double" value="222"  />
+            <Enumerated name="enumerated" value="value1"/>
+            <Integer name="integer" value="100"/>
+            <Link name="link"  value="http://www.bacnet.org"/>
+            <List name="list" memberType="Real">
+                <Real name="1" value="10"/>
+                <Real name="2" value="20"/>
+            </List>
+            <Null name="null"/>
+            <Object name="object">
+                <Real name="member1" value="10"/>
+                <String name="member2" value="this is member2"/>
+            </Object>
+            <ObjectIdentifier name="objectidentifier" value="analog-input,1"/>
+            <ObjectIdentifierPattern name="objectidentifierpattern" value="file,*"/>
+            <OctetString name="octetstring"  value="cafebabe"/>
+            <OctetString name="octetstring-large">
+                <Value>TWFuIGlzIGRpc3Rpbmd1aXNoZWQsIG5vdCBvbmx5IGJ5IGhpcyByZWFzb24sIGJ1dCBieSB0aGlzIHNpbmd1bGFyIHBhc3Npb24gZnJvbSBvdGhlciBhbmltYWxzLCB3aGljaCBpcyBhIGx1c3Qgb2YgdGhlIG1pbmQsIHRoYXQgYnkgYSBwZXJzZXZlcmFuY2Ugb2YgZGVsaWdodCBpbiB0aGUgY29udGludWVkIGFuZCBpbmRlZmF0aWdhYmxlIGdlbmVyYXRpb24gb2Yga25vd2xlZGdlLCBleGNlZWRzIHRoZSBzaG9ydCB2ZWhlbWVuY2Ugb2YgYW55IGNhcm5hbCBwbGVhc3VyZS4=</Value>
+            </OctetString>
+            <Sequence name="sequence">
+                <Real name="member1" value="10"/>
+                <String name="member2" value="this is member2"/>
+            </Sequence>
+            <SequenceOf name="sequenceof" memberType="Real">
+                <Real name="1" value="10"/>
+                <Real name="2" value="20"/>
+            </SequenceOf>
+            <Composition name="composition">
+                <Real name="member1" value="10"/>
+                <String name="member2" value="this is member2"/>
+            </Composition>
+            <String name="string" value="Hello!"/>
+            <String name="string-large">
+                <Value>ReallyGreatThingReallyGreatThingReallyGreatThingReallyGreatThingReallyGreatThingReallyGreatThingReallyGreatThingReallyGreatThingReallyGreatThingReallyGreatThingReallyGreatThingReallyGreatThingReallyGreatThingReallyGreatThingReallyGreatThingReallyGreatThingReallyGreatThingReallyGreatThingReallyGreatThing</Value>
+            </String>
+            <String name="string-localized" writable="true" displayName="displayName in default locale">
+                <Value>value in default locale</Value>
+                <Value locale="de-DE">value in de-DE</Value>
+                <Value locale="fr">value in fr</Value>
+                <Value locale="fr-CA">value in fr-CA</Value>
+                <DisplayName locale="fr">displayName in fr</DisplayName>
+                <DisplayName locale="se">displayName in se</DisplayName>
+            </String>
+            <StringSet name="string" value="foo;bar;baz"/>
+            <Time name="time" value="01:02:03.04"/>
+            <TimePattern name="timepattern" value="01:02:*.*"/>
+            <Unsigned name="unsigned" value="100"/>
+            <WeekNDay name="weeknday" value="*,*,*"/>
+        </Collection>
+    </Collection>
+
+</CSML>

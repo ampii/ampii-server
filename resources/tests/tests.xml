@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CSML xmlns="http://bacnet.org/csml/1.2"  defaultLocale="en-US" >
+
+    <!-- parameters for the test environment used by Test.java of java classes containing tests -->
+
+    <Composition name="test-pars" type="org.ampii.types.TestEnvironment">
+        <Unsigned  name="covCallbackFailTime"        value="1100" units="msec" />
+        <Unsigned  name="logCallbackFailTime"        value="1100" units="msec" />
+        <Unsigned  name="subsRecordRemovalFailTime"  value="1100" units="msec" />
+        <Unsigned  name="multiRecordRemovalFailTime" value="1100" units="msec" />
+    </Composition>
+
+    <!-- list of java classes containing tests to run -->
+
+    <List name="test-list">
+        <!--<String value="org.ampii.xd.test.tests.ClientTests"/>-->
+        <String value="org.ampii.xd.test.tests.BasicTests"/>
+        <String value="org.ampii.xd.test.tests.PriorityTests"/>
+        <String value="org.ampii.xd.test.tests.SelectTests"/>
+        <String value="org.ampii.xd.test.tests.HistoryTests"/>
+        <String value="org.ampii.xd.test.tests.IndexerTests"/>
+        <String value="org.ampii.xd.test.tests.BindingTests"/>
+        <String value="org.ampii.xd.test.tests.TypeTests"/>
+        <String value="org.ampii.xd.test.tests.IncludeTests"/>
+        <String value="org.ampii.xd.test.tests.AuthTests"/>
+        <String value="org.ampii.xd.test.tests.RangeTests"/>
+        <String value="org.ampii.xd.test.tests.SkipTests"/>
+        <String value="org.ampii.xd.test.tests.DefinitionsTests"/>
+        <String value="org.ampii.xd.test.tests.LinkTests"/>
+        <String value="org.ampii.xd.test.tests.LocalizationTests"/>
+        <String value="org.ampii.xd.test.tests.MultiTests"/>
+        <String value="org.ampii.xd.test.tests.SubscriptionTests"/>
+    </List>
+
+
+</CSML>
+

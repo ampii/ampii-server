@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CSML defaultLocale="en-US" xmlns="http://bacnet.org/csml/1.2"   >
+
+    <Composition name="links">
+        <Composition name="find-me">
+            <Composition name="member1">
+                <String name="member1.1" value="value1.1" />
+                <Link name="looping-relative-link" value="../../find-me"/>
+            </Composition>
+            <String name="member2" value="value2" />
+        </Composition>
+        <Link name="relative-link" value="find-me"/>
+        <Link name="absolute-link" value="/bws/examples/links/find-me"/>
+        <Link name="bad-link" value="/bws/examples/links/BOGUS"/>
+        <Link name="bad-target-type" value="find-me" targetType="Unsigned"/>
+        <Link name="good-target-type" value="find-me/member1/member1.1" targetType="String"/>
+    </Composition>
+
+</CSML>

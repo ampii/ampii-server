@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CSML defaultLocale="en-US" xmlns="http://bacnet.org/csml/1.2"   >
+
+    <Collection name="auth">
+
+        <Real name="r-foo-w-baz"      value="1" writable="true"  displayName="write me (if you can)" authRead="foo" authWrite="baz"/>
+        <Real name="r-foo-w-baz-blat" value="1" writable="true"  displayName="write me (if you can)" authRead="foo" authWrite="baz blat"/>
+        <Real name="r-blee-w-baz-blat" value="1" writable="true"  displayName="write me (if you can)" authRead="blee blat" authWrite="baz blat"/>
+        <Real name="r-foo-bar-w-baz"  value="1" writable="true"  displayName="write me (if you can)" authRead="foo bar" authWrite="baz"/>
+        <Real name="r-foo-baz-w-foo-bar-baz"  value="1" writable="true"  displayName="write me (if you can)" authRead="foo baz" authWrite="foo bar baz"/>
+
+        <List name="list" writable="true" authWrite="bar">
+            <Real name="r-foo" authRead="foo" value="111"/>
+            <Real name="w-bar-inh" writable="true" value="222"/>
+            <Real name="r-foo-w-bar" authRead="foo" authWrite="bar" writable="true" value="333"/>
+            <Real name="r-foo-w-foo" authRead="foo" authWrite="foo" writable="true" value="444"/>
+            <Real name="cant-read-me-ever" readable="false" value="666"/>
+        </List>
+
+    </Collection>
+
+</CSML>

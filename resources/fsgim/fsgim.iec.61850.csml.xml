@@ -1,0 +1,1368 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CSML xmlns="http://bacnet.org/csml/1.2">
+    <Definitions>
+    <Sequence name="Iec61850.ChargeStatusENS" documentation="The ChargeStatusENS class is an FSGIM class derived from the 61850 ENS class. The ChargeStatusENS class attributes are exactly the same as those in the ENS class except the status value attribute references the DRCS.ChaSt.ING enumeration class rather than the ENS class.">
+        <String name="description" optional="true" documentation="Textual description of the data."/>
+        <Enumerated name="quality" type="Iec61850.X.q.X" documentation="Quality of the attribute(s) representing the value of the data."/>
+        <Enumerated name="stVal" type="Iec61850.DRCS.ChaSt.ING" documentation="Enumerated values for the status."/>
+        <DateTime name="timeOfLastChange" documentation="Timestamp of the last change in one of the attribute(s) representing the value of the data or in the quality attribute."/>
+    </Sequence>
+
+    <Sequence name="Iec61850.GeneratorOperationStatusENS" documentation="The GeneratorOperationStatusENS class is an FSGIM class derived from the 61850 ENS class. The GeneratorOperationStatusENS class attributes are exactly the same as those in the ENS class except the status value attribute references another derived FSGIM enumeration named GeneratorOperationStatusEnumeration.  The GeneratorOperationStatusEnumeration class is an explicitly defined enumeration in FSGIM.  In 61850, this enumeration is represented by a single value.">
+        <String name="description" optional="true" documentation="Textual description of the data."/>
+        <Enumerated name="quality" type="Iec61850.X.q.X" documentation="Quality of the attribute(s) representing the value of the data."/>
+        <Enumerated name="stVal" type="Iec61850.GeneratorOperationStatusEnumeration" documentation="Enumerated values for the status."/>
+        <DateTime name="timeOfLastChange" documentation="Timestamp of the last change in one of the attribute(s) representing the value of the data or in the quality attribute."/>
+    </Sequence>
+
+    <Sequence name="Iec61850.ConnectionTypeENS" documentation="Type of electrical connection between the generator and the facility’s electrical distribution system. This class is an FSGIM class derived from the 61850 ENS class. The ConnectTypeENS class attributes are exactly the same as those in the ENS class except the status value attribute references another derived FSGIM enumeration named ConnectionTypeEnumeration.  The ConnectionTypeEnumeration class is an explicitly defined enumeration in FSGIM.  In 61850, this enumeration is represented by a single value.">
+        <String name="description" optional="true" documentation="Textual description of the data."/>
+        <Enumerated name="quality" type="Iec61850.X.q.X" documentation="Quality of the attribute(s) representing the value of the data."/>
+        <Enumerated name="stVal" type="Iec61850.ConnectionTypeEnumeration" documentation="Enumerated values for the status."/>
+        <DateTime name="timeOfLastChange" documentation="Timestamp of the last change in one of the attribute(s) representing the value of the data or in the quality attribute."/>
+    </Sequence>
+
+    <Sequence name="Iec61850.SequenceDirectionENS" documentation="The SequenceDirectionENS class is an FSGIM class derived from the 61850 ENS class. The SequenceDirectionENS class attributes are exactly the same as those in the ENS class except the status value attribute references another derived FSGIM enumeration named SequenceDirectionEnumeration.  The SequenceDirectionEnumeration class is an explicitly defined enumeration in FSGIM.  In 61850, this enumeration is represented by a single value.">
+        <String name="description" optional="true" documentation="Textual description of the data."/>
+        <Enumerated name="quality" type="Iec61850.X.q.X" documentation="Quality of the attribute(s) representing the value of the data."/>
+        <Enumerated name="stVal" type="Iec61850.SequenceDirectionEnumeration" documentation="Enumerated values for the status."/>
+        <DateTime name="timeOfLastChange" documentation="Timestamp of the last change in one of the attribute(s) representing the value of the data or in the quality attribute."/>
+    </Sequence>
+
+    <Sequence name="Iec61850.SCR" documentation="The SCR class defines the common data class definition for a &quot;Relative Time Schedule Setting&quot;.   This class provides a means for defining a relative time array of setting values, such as schedules, where the time interval between points may be variable.  It has an array of value elements that is characterized by a set of parameters including the number of elements in each array, an array of times between each value and an indication how to ramp between consecutive values, units, multiplier, and a description.">
+        <Enumerated name="cur" type="Fsgim.CurrencyKind" optional="true" documentation="Currency as per ISO 4217."/>
+        <String name="d" optional="true" documentation="Textual description of the data."/>
+        <Enumerated name="multiplier" type="Fsgim.SiScaleCodeType" optional="true" documentation="Units multiplier of the attribute valUnits."/>
+        <Integer name="numPts" documentation="Number of points used to define a curve or a histogram. This contains the dimension of array attributes val, rmpTyp, and tmsOffset."/>
+        <Enumerated name="occPer" type="Iec61850.X.occPer.SCR" documentation="Repeat period (Hour, Day, Week, Month, Year)."/>
+        <Enumerated name="rmpTyp" type="Iec61850.X.rmpTyp.X" documentation="
+            Array of ramp types defining how to interpret the transition from one value to the next.
+            ARRAY 1..numPts OF the enumeration X.rmpTyp.X ( 1=Fixed, 2=Ramp, 3=Average)
+            "/>
+        <Integer name="tmsOffset" documentation="ARRAY 1..numPts OF Integer time offsets in seconds"/>
+        <Real name="val" documentation="ARRAY 1..numPts OF REAL"/>
+        <String name="valD" optional="true" documentation="Description of val."/>
+        <Enumerated name="valEq" type="Iec61850.X.valEq.X" optional="true" documentation="
+            Equation for val:
+            1 = SI units.
+            2 = Currency as per ISO 4217 per SI unit.
+            3 = SI unit per currency.
+            "/>
+        <Enumerated name="valUnits" type="Fsgim.UnitSymbolKind" optional="true" documentation="SI Units."/>
+    </Sequence>
+
+    <Enumerated name="Iec61850.ScheduleOperatingModeKind" documentation="Ed. Note: The ScheduleOperatingModeKind is a newly defined enumeration in 61850.  It has not as yet (Sep 2013) been approved by the committee. Hence, this enumeration was cloned from the 61850 working documents and is subject to modification.">
+        <NamedValues>
+            <Unsigned name="NA" value="1" documentation="Not applicable/unknown"/>
+            <Unsigned name="energy" value="2" documentation="Energy"/>
+            <Unsigned name="continuousReserve" value="3" documentation="Continuous Reserve Spinning"/>
+            <Unsigned name="continuousReserveSupplemental" value="4" documentation="Continuous reserve supplemental"/>
+            <Unsigned name="energyReserve" value="5" documentation="Energy reserve"/>
+            <Unsigned name="emissionReserve" value="6" documentation="Emission reserve"/>
+            <Unsigned name="energyBalancing" value="7" documentation="Energy balancing"/>
+            <Unsigned name="reactivePower" value="8" documentation="Reactive power"/>
+            <Unsigned name="blackStart" value="9" documentation="Black start"/>
+            <Unsigned name="islanding" value="10" documentation="Emergency islanding"/>
+            <Unsigned name="other" value="11" documentation="Other"/>
+        </NamedValues>
+    </Enumerated>
+
+    <Enumerated name="Iec61850.SequenceDirectionENS_Enum" documentation="Enumeration that defines the phase sequence connection of the generator.">
+        <NamedValues>
+            <Unsigned name="ABC" value="1" documentation="Wiring sequence that creates positive phase angles in the clockwise direction."/>
+            <Unsigned name="CBA" value="2" documentation="Wiring sequence that creates positive phase angles in the counter-clockwise direction."/>
+        </NamedValues>
+    </Enumerated>
+
+    <Enumerated name="Iec61850.ConnectionTypeEnumeration" documentation="Enumerated set of the type of electrical connection between the generator and the electrical distribution system.">
+        <NamedValues>
+            <Unsigned name="NA" value="1" documentation="Not Applicable."/>
+            <Unsigned name="SinglePhase" value="2" documentation="Single Phase electrical connection."/>
+            <Unsigned name="SplitPhase" value="3" documentation="Split Phase electrical connection."/>
+            <Unsigned name="TwoPhase" value="4" documentation="Two Phase electrical connection."/>
+            <Unsigned name="ThreePhaseDelta" value="5" documentation="Generator connects each winding to one phase of a three phase electrical interconnection."/>
+            <Unsigned name="ThreePhaseWye" value="6" documentation="Generator connects each winding from a three phase wire to a common neutral point."/>
+            <Unsigned name="ThreePhaseWyeGrounded" value="7" documentation="Generator connects each winding from a three phase wire to a common ground."/>
+            <Unsigned name="ThreePhase_ThreeWire_InverterType" value="8" documentation="Three phase generator connected using three-wires with symmetrical voltages between phases."/>
+            <Unsigned name="ThreePhase_FourWire_InverterType" value="9" documentation="Three phase generator connected using four-wires with symmetrical voltages between phase and neutral."/>
+            <Unsigned name="Other" value="10" documentation="The connection is some other type of electrical connection type."/>
+        </NamedValues>
+    </Enumerated>
+
+    <Enumerated name="Iec61850.GeneratorOperationStatusEnumeration" documentation="The GeneratorOperationStatusEnumeration class is an FSGIM enumeration defining the operation state of the generator.">
+        <NamedValues>
+            <Unsigned name="NA" value="1" documentation="Not Applicable"/>
+            <Unsigned name="NotOperating" value="2" documentation="The generator is not operating."/>
+            <Unsigned name="Operating" value="3" documentation="The generator is operating."/>
+            <Unsigned name="StartingUp" value="4" documentation="The generator is starting."/>
+            <Unsigned name="ShuttingDown" value="5" documentation="The generator is shutting down."/>
+            <Unsigned name="AtDisconnectLevel" value="6" documentation="Generator is at disconnect level."/>
+            <Unsigned name="Ramping_Power" value="7" documentation="Generator is ramping power."/>
+            <Unsigned name="Ramping_ReactivePower" value="8" documentation="Generator is ramping reactive power."/>
+            <Unsigned name="Other" value="9" documentation="The generator is in some other state."/>
+        </NamedValues>
+    </Enumerated>
+
+    <Enumerated name="Iec61850.SequenceDirectionEnumeration" documentation="The SequenceDirectionEnumeration class is an FSGIM enumeration defining the sequence direction for the generator.">
+        <NamedValues>
+            <Unsigned name="ABC" value="1" documentation="The sequence direction is ABC."/>
+            <Unsigned name="CBA" value="2" documentation="The sequence direction is CBA."/>
+        </NamedValues>
+    </Enumerated>
+
+    <Enumerated name="Iec61850.DRCS.ChaSt.ING" documentation="This enumeration indicates the state of charge of a storage unit.">
+        <NamedValues>
+            <Unsigned name="off" value="1" documentation="Charging is off."/>
+            <Unsigned name="fullyDischarged" value="2" documentation="The storage unit is fully discharged."/>
+            <Unsigned name="discharging" value="3" documentation="The storage unit is discharging."/>
+            <Unsigned name="charging" value="4" documentation="The storage unit is charging."/>
+            <Unsigned name="fullyCharged" value="5" documentation="The storage unit is fully charged."/>
+            <Unsigned name="holding" value="6" documentation="The storage unit is holding."/>
+            <Unsigned name="testing" value="7" documentation="In testing mode."/>
+        </NamedValues>
+    </Enumerated>
+
+    <Enumerated name="Iec61850.DRCT.DERtyp.ING" documentation="Distributed energy resource type.">
+        <NamedValues>
+            <Unsigned name="Unknown" value="1" documentation="Not applicable / Unknown."/>
+            <Unsigned name="virtual" value="2" documentation="Virtual or mixed DER."/>
+            <Unsigned name="reciprocatingEngine" value="3" documentation="Reciprocating engine."/>
+            <Unsigned name="fuelCell" value="4" documentation="Fuel cell."/>
+            <Unsigned name="photoVoltaic" value="5" documentation="Photovoltaic system."/>
+            <Unsigned name="combinedHeatAndPower" value="6" documentation="Combined heat and power."/>
+            <Unsigned name="compressedAir" value="7" documentation="Not applicable / Unknown."/>
+            <Unsigned name="pumpedHydroelectric" value="8" documentation="Pumped hydroelectric system."/>
+            <Unsigned name="flywheel" value="9" documentation="Fly wheels."/>
+            <Unsigned name="thermalEnergyStorage" value="10" documentation="Thermal energy storage."/>
+            <Unsigned name="electroChemicalBattery" value="11" documentation="Electro chemical battery."/>
+            <Unsigned name="flowBattery" value="12" documentation="Flow batteries."/>
+            <Unsigned name="capacitor" value="13" documentation="Capacitance storage."/>
+            <Unsigned name="superconductingMagneticEnergy" value="14" documentation="Super-conducting magnetic energy storage."/>
+            <Unsigned name="other" value="15" documentation="Other."/>
+        </NamedValues>
+    </Enumerated>
+
+    <Enumerated name="Iec61850.MMXN.range.CMV" documentation="Measurement minimum and maximum range thresholds.">
+        <NamedValues>
+            <Unsigned name="normal" value="1" documentation="Normal."/>
+            <Unsigned name="high" value="2" documentation="High value."/>
+            <Unsigned name="low" value="3" documentation="Low value."/>
+            <Unsigned name="high-high" value="4" documentation="High high value."/>
+            <Unsigned name="low-low" value="5" documentation="Low low value."/>
+        </NamedValues>
+    </Enumerated>
+
+    <Enumerated name="Iec61850.X.ctlModel.X" documentation="ENUMERATED (status-only | direct-with-normal-security | sbo-with-normal-security | directwith-enhanced-security | sbo-with-enhanced-security).">
+        <NamedValues>
+            <Unsigned name="status-only" value="1" documentation="The object is not controllable, only the services that apply to a status object are supported. The attribute ctlVal does not exist."/>
+            <Unsigned name="direct-with-normal-security" value="2" documentation="Direct control with normal security according to IEC 61850-7-2."/>
+            <Unsigned name="sbo-with-normal-security" value="3" documentation="SBO control with normal security according to IEC 61850-7-2."/>
+            <Unsigned name="direct-with-enhanced-security" value="4" documentation="Direct control with enhanced security according to IEC 61850-7-2."/>
+            <Unsigned name="sbo-with-enhanced-security" value="5" documentation="SBO control with enhanced security according to IEC 61850-7-2."/>
+        </NamedValues>
+    </Enumerated>
+
+    <Enumerated name="Iec61850.X.occPer.SCR" documentation="Repeat period.">
+        <NamedValues>
+            <Unsigned name="Hour" value="1" documentation="Hourly."/>
+            <Unsigned name="Day" value="2" documentation="Daily."/>
+            <Unsigned name="Week" value="3" documentation="Weekly."/>
+            <Unsigned name="Month" value="4" documentation="Monthly."/>
+            <Unsigned name="Year" value="5" documentation="Yearly."/>
+        </NamedValues>
+    </Enumerated>
+
+    <Enumerated name="Iec61850.X.q.X" documentation="Validity component of the complex &quot;quality&quot; attribute with only the following values: good, Invalid, Questionable.">
+        <NamedValues>
+            <Unsigned name="Good" value="1" documentation="The value shall be marked good if no abnormal condition of the acquisition function or the information source is detected."/>
+            <Unsigned name="Invalid" value="2" documentation="The value shall be marked invalid when an abnormal condition of the acquisition function or the information source (missing or non-operating updating devices) is detected."/>
+            <Unsigned name="Questionable" value="3" documentation="The value shall be marked questionable if a supervision function detects an abnormal behaviour, however the value could still be valid."/>
+        </NamedValues>
+    </Enumerated>
+
+    <Enumerated name="Iec61850.X.rmpTyp.X" documentation="1=Fixed, 2=Ramp, 3=Average.">
+        <NamedValues>
+            <Unsigned name="Fixed" value="1" documentation="1=Fixed."/>
+            <Unsigned name="Ramp" value="2" documentation="2=Ramp."/>
+            <Unsigned name="Average" value="3" documentation="3=Average."/>
+        </NamedValues>
+    </Enumerated>
+
+    <Enumerated name="Iec61850.X.valEq.X" documentation="
+            1 = SI units.
+            2 = Currency as per ISO 4217 per SI unit.
+            3 = SI unit per currency.
+            ">
+        <NamedValues>
+            <Unsigned name="1" value="1" documentation="1 = SI units."/>
+            <Unsigned name="2" value="2" documentation="2 = Currency as per ISO 4217 per SI unit."/>
+            <Unsigned name="3" value="3" documentation="3 = SI unit per currency."/>
+        </NamedValues>
+    </Enumerated>
+
+    <Sequence name="Iec61850.DERCostParameters" extends="Iec61850.DomainLN" documentation="Economic drivers of operating the DER unit – operating cost, carbon rate cost, ramp cost, … (61850 Logical Node = DCCT).">
+        <Sequence name="CarbonRatesCost" type="Iec61850.SCR" optional="true" documentation="Incremental carbon emission curve costs."/>
+        <Sequence name="ContractualAncillary" type="Iec61850.ING" optional="true" documentation="
+            Ability to provide ancillary services.
+            0 = N/A / Unknown.
+            1 = Load following.
+            2 = Immediate reserve (i.e., spinning reserve).
+            3 = Operational reserve (i.e., nonspinning reserve).
+            4 = Base load.
+            5 = Black start.
+            99 = Other.
+            "/>
+        <Sequence name="ContractualExportWLimit" type="Iec61850.ASG" optional="true" documentation="Contractual limit on export energy."/>
+        <Sequence name="ContractualHighV" type="Iec61850.ASG" optional="true" documentation="Contractual voltage high limit."/>
+        <Sequence name="ContractualImportWLimit" type="Iec61850.ASG" optional="true" documentation="Contractual limit on import energy."/>
+        <Sequence name="ContractualLowV" type="Iec61850.ASG" optional="true" documentation="Contractual voltage low limit."/>
+        <Sequence name="ContractualPowerFactor" type="Iec61850.ASG" optional="true" documentation="Contractual power factor to be provided by DER."/>
+        <Sequence name="Currency" type="Iec61850.CUG" documentation="ISO 4217 currency 3-character code."/>
+        <Sequence name="HeatRateCost" type="Iec61850.SCR" optional="true" documentation="Incremental heat rate piecewise linear curve costs."/>
+        <Sequence name="OperatingCost" type="Iec61850.CUG" documentation="Marginal operational cost per hour."/>
+        <Sequence name="OperatingWhCost" type="Iec61850.CUG" documentation="Marginal operational cost per kWh."/>
+        <Sequence name="PriceCode" type="Iec61850.ING" documentation="Price code for the pricing signal."/>
+        <Sequence name="RampCost" type="Iec61850.CUG" optional="true" documentation="Cost to ramp DER per kW per minute."/>
+        <Sequence name="StartCost" type="Iec61850.CUG" documentation="Cost to start up DER."/>
+        <Sequence name="StopCost" type="Iec61850.CUG" documentation="Cost to stop DER."/>
+    </Sequence>
+
+    <Sequence name="Iec61850.DERDeviceControllerCharacteristics" extends="Iec61850.DomainLN" documentation="Setpoints for control characteristics and capabilities – max ramp rate, start delay time, stop delay time, …. (61850 Logical Node = DRCT)">
+        <Sequence name="CalcualtionTotalVA" type="Iec61850.ENG" optional="true" documentation="Calculation method used for total apparent power calculation (Vector | Arithmetic)."/>
+        <Sequence name="DERNumber" type="Iec61850.ING" documentation="Number of DER units connected to controller."/>
+        <Enumerated name="DERType" type="Iec61850.DRCT.DERtyp.ING" documentation="Type of DER unit: Enumerated. See DRCT.DERtyp.ING."/>
+        <Sequence name="LoadRampRate" type="Iec61850.ING" documentation="Nominal ramp load or unload rate, power versus time."/>
+        <Sequence name="MaximumRampRate" type="Iec61850.ING" optional="true" documentation="Setpoint for maximum ramp rate as percentage of nominal maximum ramp rate."/>
+        <Sequence name="MaximumVArLimit" type="Iec61850.ASG" documentation="Nominal max output reactive power."/>
+        <Sequence name="MaximumWLimitPercent" type="Iec61850.ASG" optional="true" documentation="Nominal max output power."/>
+        <Sequence name="MiniumumReservePercent" type="Iec61850.ING" optional="true" documentation="Setpoint for minimum reserve for storage, as a percentage of the nominal maximum storage."/>
+        <Sequence name="OutputVarNominal" type="Iec61850.ASG" optional="true" documentation="Reactive power in percent of VarMax "/>
+        <Sequence name="PowerFactorSignConvention" type="Iec61850.ENG" optional="true" documentation="Power factor convention: IEC=1 IEEE=2."/>
+        <Sequence name="PowerReference" type="Iec61850.ASG" documentation="Reference active power with the default set equal to Wmax."/>
+        <Sequence name="StartDelayTimeSeconds" type="Iec61850.ING" documentation="Nominal time delay before starting or restarting."/>
+        <Sequence name="StopDelayTimeSeconds" type="Iec61850.ING" documentation="Nominal time delay before stopping."/>
+        <Sequence name="VAChargerMaximum" type="Iec61850.ASG" optional="true" documentation="Setpoint for maximum apparent charging power."/>
+        <Sequence name="VAMaximum" type="Iec61850.ASG" optional="true" documentation="Setpoint for maximum apparent power."/>
+        <Sequence name="VArAction" type="Iec61850.ENC" optional="true" documentation="Var action on change between charging and discharging: switch=1, remain=2."/>
+        <Sequence name="VArMaximum" type="Iec61850.ASG" documentation="Setpoint for maximum reactive power."/>
+        <Sequence name="VMaximum" type="Iec61850.ASG" optional="true" documentation="Setpoint for maximum voltage."/>
+        <Sequence name="VMinimum" type="Iec61850.ASG" optional="true" documentation="Setpoint for minimum voltage."/>
+        <Sequence name="VReference" type="Iec61850.ASG" documentation="Reference voltage for functions using grid voltage as input."/>
+        <Sequence name="VReferenceOffset" type="Iec61850.ASG" optional="true" documentation="Reference offset voltage for functions using grid voltage as input."/>
+        <Sequence name="WChargerGradient" type="Iec61850.ASG" optional="true" documentation="Setpoint for maximum charging ramp rate: percentage of WChaMax."/>
+        <Sequence name="WChargerMaximum" type="Iec61850.ASG" optional="true" documentation="Setpoint for maximum active charging power and reference value for functions."/>
+        <Sequence name="WGradient" type="Iec61850.ASG" optional="true" documentation="Gradient: percentage of delta power per Hertz."/>
+        <Sequence name="WMaximum" type="Iec61850.ASG" documentation="Setpoint for maximum active power and reference value for functions."/>
+    </Sequence>
+
+    <Sequence name="Iec61850.DERGeneratorRatings" extends="Iec61850.DomainLN" documentation="Information on the nameplate ratings and other identifying data of the generation/storage unit.">
+        <Sequence name="ConnectionType" type="Iec61850.ConnectionTypeENS" documentation="
+            0 N/A.
+            1 Single phase.
+            2 Split phase.
+            3 2-phase.
+            4 3-phase delta.
+            5 3-phase wye.
+            6 3-phase wye grounded.
+            7 3-phase / 3-wire (inverter type).
+            8 3-phase / 4-wire (inverter type).
+            99 Other.
+            "/>
+        <Sequence name="CurrentRating" type="Iec61850.ASG" optional="true" documentation="Current rating under nominal voltage under nominal power factor."/>
+        <Enumerated name="DERType" type="Iec61850.DRCT.DERtyp.ING" documentation="Type of Distributed Energy Resource."/>
+        <Sequence name="DisconnectLevelW" type="Iec61850.ASG" optional="true" documentation="Generator disconnect level."/>
+        <Sequence name="EfficiencyRatingPercent" type="Iec61850.ASG" optional="true" documentation="Efficiency at rated capacity."/>
+        <Sequence name="EmergencyMaximumWOutput" type="Iec61850.CSG" optional="true" documentation="Max watt output - emergency limits for different minutes."/>
+        <Sequence name="EmergencyMinimumWOutput" type="Iec61850.CSG" optional="true" documentation="Min watt output - emergency limits for different minutes."/>
+        <Sequence name="EmergencyRampRate" type="Iec61850.INS" optional="true" documentation="Emergency ramp rate."/>
+        <Sequence name="FaultARating" type="Iec61850.ASG" optional="true" documentation="Max fault current rating."/>
+        <Sequence name="FaultDurationTimeInSeconds" type="Iec61850.INS" optional="true" documentation="Exposure to fault rates as percent."/>
+        <Sequence name="FaultRatingPercent" type="Iec61850.ASG" optional="true" documentation="Max fault current rating."/>
+        <Sequence name="FrequencyRating" type="Iec61850.ASG" optional="true" documentation="Nominal frequency."/>
+        <Sequence name="GroundZ" type="Iec61850.CMV" optional="true" documentation="Grounding impedance."/>
+        <Sequence name="LowerLoadSetpointRate" type="Iec61850.INS" optional="true" documentation="Lower baseload setpoint rate."/>
+        <Sequence name="MaximumFaultRating" type="Iec61850.ASG" optional="true" documentation="Max fault duration rating."/>
+        <Sequence name="MaximumLoadRamp" type="Iec61850.INS" optional="true" documentation="max load ramp rate."/>
+        <Sequence name="MaximumUnloadRamp" type="Iec61850.INS" optional="true" documentation="max unload ramp rate."/>
+        <Sequence name="MaximumVarOutput" type="Iec61850.ASG" optional="true" documentation="Max VAR output."/>
+        <Sequence name="MaximumWOutput" type="Iec61850.ASG" optional="true" documentation="Max watt output - continuous."/>
+        <Sequence name="MinimumWOutput" type="Iec61850.ASG" optional="true" documentation="Min watt output - continuous."/>
+        <Sequence name="RaiseLoadSetpointRate" type="Iec61850.INS" optional="true" documentation="Raise baseload setpoint rate."/>
+        <Sequence name="SelfPowerFactor" type="Iec61850.ASG" optional="true" documentation="Self-service nominal power factor."/>
+        <Sequence name="SelfV" type="Iec61850.ASG" optional="true" documentation="Self-service voltage."/>
+        <Sequence name="SelfVRange" type="Iec61850.ASG" optional="true" documentation="Self-service acceptable voltage range."/>
+        <Sequence name="SelfW" type="Iec61850.ASG" optional="true" documentation="Self-service nominal power."/>
+        <Enumerated name="SequenceDirection" type="Iec61850.SequenceDirectionENS_Enum" optional="true" documentation="
+            Sequence (direction): ABC or CBA.
+            0 ABC.
+            1 CBA.
+            "/>
+        <Sequence name="TemperatureRating" type="Iec61850.ASG" optional="true" documentation="Max temperature rating."/>
+        <Sequence name="VARating" type="Iec61850.ASG" optional="true" documentation="Max volt-amps rating (apparent power)."/>
+        <Sequence name="VarRating" type="Iec61850.ASG" optional="true" documentation="Max VAR rating (reactive power)."/>
+        <Sequence name="VRating" type="Iec61850.ASG" optional="true" documentation="Voltage rating of storage device."/>
+        <Sequence name="WHRating" type="Iec61850.ASG" optional="true" documentation="Energy rating of storage device."/>
+        <Sequence name="WRating" type="Iec61850.ASG" optional="true" documentation="Max watt rating (real power)."/>
+    </Sequence>
+
+    <Sequence name="Iec61850.DEROperationalModeControls" extends="Iec61850.DomainLN" documentation="
+            Operating mode at the ECP.
+            Control of the operational modes of the DER (e.g., constant watts, constant vars.) More than one mode can be set simultaneously for certain logical combinations (61850 Logical Node = DOPM).
+            ">
+        <Sequence name="OperationalModeConstantW" type="Iec61850.SPC" optional="true" documentation="Mode of operation - constant watts."/>
+        <Sequence name="OperationModeConstantPowerFactor" type="Iec61850.SPC" optional="true" documentation="Mode of operation - constant power factor."/>
+        <Sequence name="OperationModeConstantV" type="Iec61850.SPG" optional="true" documentation="Mode of operation - constant voltage."/>
+        <Sequence name="OperationModeConstantVAr" type="Iec61850.SPC" optional="true" documentation="Mode of operation - constant vars."/>
+        <Sequence name="OperationModeExportImport" type="Iec61850.SPC" optional="true" documentation="Mode of operation - constant export/import."/>
+        <Sequence name="OperationModeIslanded" type="Iec61850.SPC" optional="true" documentation="Mode of operation - islanded at the ECP."/>
+        <Sequence name="OperationModeMaximumVAr" type="Iec61850.SPC" optional="true" documentation="Mode of operation - maximum vars."/>
+        <Sequence name="OperationModePeak" type="Iec61850.SPC" optional="true" documentation="Mode of operation - peak demand reduction."/>
+        <Sequence name="OperationModePM" type="Iec61850.SPC" optional="true" documentation="Mode of operation – driven by energy source (e.g., solar, water flow) so generation level is constrained by availability of that energy source."/>
+        <Sequence name="OperationModeVOverride" type="Iec61850.SPC" optional="true" documentation="Mode of operation - voltage override."/>
+        <Sequence name="RampTimeSeconds" type="Iec61850.ING" optional="true" documentation="Ramp time (in seconds) for moving from the present operational mode settings to new operational mode settings."/>
+        <Sequence name="RevertTimeSeconds" type="Iec61850.ING" optional="true" documentation="Timeout period (in seconds), after which the device will revert to its default status, such as closing the switch to reconnect to the grid."/>
+        <Sequence name="WindowTimeSeconds" type="Iec61850.ING" optional="true" documentation="Time window (in seconds) within which to randomly execute a command.  If the time window is zero, the command will be executed immediately."/>
+    </Sequence>
+
+    <Sequence name="Iec61850.DERThermalStorage" extends="Iec61850.DomainLN" documentation="This logical node describes the characteristics of the thermal storage. This LN applies both to heat storage and to coolant storage, and is used for measurements of heat exchanges.">
+        <Sequence name="ThermalCapacityPercent" type="Iec61850.MV" optional="true" documentation="Remaining actual thermal energy capacity as percent of total available capacity"/>
+        <Sequence name="ThermalCapacityTotal" type="Iec61850.MV" optional="true" documentation="Total available thermal energy capacity"/>
+        <Sequence name="ThermalInput" type="Iec61850.MV" optional="true" documentation="Instantaneous thermal energy input into storage"/>
+        <Sequence name="ThermalLost" type="Iec61850.MV" optional="true" documentation="Thermal energy lost or dumped"/>
+        <Sequence name="ThermalOutput" type="Iec61850.MV" optional="true" documentation="Instantaneous thermal energy output from storage"/>
+        <Sequence name="ThermalOutputEstimated" type="Iec61850.SCR" optional="true" documentation="
+            Estimated instantaneous thermal energy output over time (using
+            time offsets)
+            "/>
+        <Sequence name="ThermalStorageType" type="Iec61850.ENG" documentation="
+            0 Not applicable / Unknown
+            1 For heating with storage
+            2 For heating without storage
+            3 For cooling with storage
+            4 For cooling without storage
+            99 Other
+            "/>
+    </Sequence>
+
+    <Sequence name="Iec61850.DERUnitControlActions" extends="Iec61850.DomainLN" documentation="Basic control operations – start / stop, test mode, …. (61850 Logical Node = DRCC).">
+        <Sequence name="AutoManualControl" type="Iec61850.SPC" documentation="Sets operations mode to automatic or manual."/>
+        <Sequence name="DCPowerStatus" type="Iec61850.SPC" optional="true" documentation="True = DC power control."/>
+        <Sequence name="DeratedRatePercent" type="Iec61850.APC" optional="true" documentation="Derated load target as percent."/>
+        <Sequence name="DERStart" type="Iec61850.SPC" documentation="True = Start DER unit or sequencer."/>
+        <Sequence name="DERStop" type="Iec61850.SPC" documentation="True = Stop DER unit or sequencer."/>
+        <Sequence name="EmergencyStop" type="Iec61850.DPC" optional="true" documentation="Remote emergency stop."/>
+        <Sequence name="FaultAcknowledge" type="Iec61850.SPC" optional="true" documentation="True = Acknowledge fault clearing."/>
+        <Sequence name="GeneratorSynchronization" type="Iec61850.SPC" optional="true" documentation="True = Starts synchronizing generator to EPS."/>
+        <Sequence name="ImportExportSetting" type="Iec61850.APC" optional="true" documentation="Setpoint for maintaining constant import/export energy at ECP."/>
+        <Sequence name="LoadModeAvailable" type="Iec61850.SPC" optional="true" documentation="Sets &quot;available&quot;: True = for connection to load."/>
+        <Sequence name="LoadModeBase" type="Iec61850.SPC" optional="true" documentation="Sets &quot;base load&quot; : True = load mode."/>
+        <Sequence name="LoadModeFixedExport" type="Iec61850.SPC" optional="true" documentation="Sets &quot;fixed export&quot; True = Load mode."/>
+        <Sequence name="LoadModeFollowing" type="Iec61850.SPC" optional="true" documentation="Sets &quot;load following&quot;: True = load mode."/>
+        <Sequence name="LoadRamp" type="Iec61850.APC" optional="true" documentation="Ramp load or unload rate."/>
+        <Sequence name="LoadShareRamp" type="Iec61850.APC" optional="true" documentation="Load share/Do not share."/>
+        <Sequence name="LoadShutDown" type="Iec61850.APC" optional="true" documentation="Load shut down: Stop/Do not stop."/>
+        <Sequence name="LoadWPercent" type="Iec61850.APC" optional="true" documentation="Percent load power."/>
+        <Sequence name="LocalRemoteControl" type="Iec61850.SPC" documentation="Sets operations mode to remote or local."/>
+        <Sequence name="MaximumVArLimit" type="Iec61850.APC" optional="true" documentation="Derated max output reactive power."/>
+        <Sequence name="MaximumWLimitPercent" type="Iec61850.ASG" optional="true" documentation="
+            Percent of reference active power watts as maximum allowed watts output - in ING.
+            * setVal = percentage value between minVal and maxVal.
+            * minVal = 0% or greater.
+            * maxVal = 100% of less.
+            "/>
+        <Sequence name="OperationModeAvailable" type="Iec61850.SPC" optional="true" documentation="Sets operational mode: True = is available."/>
+        <Sequence name="OperationModeOff" type="Iec61850.SPC" optional="true" documentation="Sets operational mode: True = off-line."/>
+        <Sequence name="OperationModeTest" type="Iec61850.SPC" optional="true" documentation="Sets operational mode: True = test mode."/>
+        <Sequence name="OperationTimeReset" type="Iec61850.SPC" optional="true" documentation="True = Reset operational time."/>
+        <Sequence name="OutputHzSetting" type="Iec61850.APC" optional="true" documentation="Setpoint for maintaining fixed frequency offset."/>
+        <Sequence name="OutputPowerFactorSetting" type="Iec61850.ASG" optional="true" documentation="
+            Setpoint for maintaining fixed power factor: negative power factor is leading and positive power factor is lagging.
+            OutPFSet is specified with CDC: APC in the -420 spec and CDC: ING and in the v15 document. APC v. ING is under investigation at the working group level.
+            "/>
+        <Sequence name="OutputVArNominal" type="Iec61850.ASG" optional="true" documentation="Reactive power in percent of Wmax."/>
+        <Sequence name="OutputVArSetting" type="Iec61850.APC" optional="true" documentation="Output target reactive power setpoint."/>
+        <Sequence name="OutputVSetting" type="Iec61850.APC" optional="true" documentation="Voltage setpoint for maintaining fixed voltage level in percent offset."/>
+        <Sequence name="OutputWRate" type="Iec61850.ASG" optional="true" documentation="Mode of operations / setpoint for charge/discharge rate."/>
+        <Sequence name="OutputWSetting" type="Iec61850.APC" optional="true" documentation="Output target power setpoint."/>
+        <Sequence name="PowerFactorExcitation" type="Iec61850.SPG" optional="true" documentation="Power Factor excitation: Underexcited = True; Overexcited = False."/>
+        <Sequence name="StartDelayTimeSeconds" type="Iec61850.ING" optional="true" documentation="Time delay before starting."/>
+        <Sequence name="StopDelayTimeSeconds" type="Iec61850.ING" optional="true" documentation="Time delay before stopping."/>
+    </Sequence>
+
+    <Sequence name="Iec61850.DERUnitGenerator" extends="Iec61850.DomainLN" documentation="More detailed status of DER unit – operation time, operation counts, …. (61850 Logical Node = DGEN).">
+        <Sequence name="AutomaticVoltageRegulatorPercentDutyCycle" type="Iec61850.MV" documentation="Automatic voltage regulator percent duty cycle."/>
+        <Sequence name="DCPowerStatus" type="Iec61850.SPS" optional="true" documentation="
+            DC Power On/Off Status.
+            True = On.
+            False = Off.
+            "/>
+        <Sequence name="GeneratorBlocked" type="Iec61850.SPC" optional="true" documentation="Set generator as blocked.  True = blocked from being turned on."/>
+        <Sequence name="GeneratorControl" type="Iec61850.DPC" optional="true" documentation="Starts or stops the generator: True = Start, False = Stop, other states indicate error condition."/>
+        <Sequence name="GeneratorCoolDownTime" type="Iec61850.MV" documentation="Timer for generator to cool down; min = minimum time for cool down."/>
+        <Sequence name="GeneratorHarmonics" type="Iec61850.HMV" documentation="Generator harmonics."/>
+        <Sequence name="GeneratorOnCount" type="Iec61850.INS" optional="true" documentation="The number of times that the generator has been turned on: count of &quot;generator on&quot; times, since the last time the counter was reset."/>
+        <Sequence name="GeneratorOperationStatus" type="Iec61850.GeneratorOperationStatusENS" optional="true" documentation="
+            Generation operational state.
+            0 = N/A.
+            1 = Not operating.
+            2 = Operating.
+            3 = Starting-up. 
+            4 = Shutting-down.
+            5 = At disconnect level.
+            6 = Ramping (power).
+            7 = Ramping (reactive power).
+            99 = Other.
+            "/>
+        <Sequence name="GeneratorOperationTime" type="Iec61850.BCR" documentation="
+            Elapsed time as the generator becomes ready after the GenOnOff command was issued.
+            Max = maximum time before issuing a start-failure alarm.
+            "/>
+        <Sequence name="GeneratorRaiseLower" type="Iec61850.DPC" optional="true" documentation="Raises or lowers the generation level by steps: True = Raise, False = Lower, other states indicate error condition."/>
+        <Sequence name="GeneratorStabilizationTime" type="Iec61850.MV" documentation="Timer for stabilization time; max = maximum time before issuing a stabilization-failure alarm."/>
+        <Sequence name="GeneratorSynchronization" type="Iec61850.SPS" optional="true" documentation="
+            Generator is synchronized to EPS, or not.
+            True = Synchronized.
+            False = Not synchronized.
+            "/>
+        <Sequence name="OperatingTimeHours" type="Iec61850.INS" documentation="Operation time."/>
+        <Sequence name="OperatingTimeSecondsResettable" type="Iec61850.INS" documentation="Total time generator has operated - re-settable: accumulated time since the last time the counter was reset."/>
+        <Sequence name="ParallelStatus" type="Iec61850.SPS" optional="true" documentation="
+            Paralleling Status.
+            True = Paralleling.
+            False = Standby.
+            "/>
+        <Sequence name="PeriodStartCount" type="Iec61850.BCR" documentation="Count of starts in period since reset."/>
+        <Sequence name="PeriodWh" type="Iec61850.MV" documentation="Energy in period since last reset."/>
+        <Sequence name="RampLoadSwitch" type="Iec61850.SPS" optional="true" documentation="
+            Ramp Load/Unload Switch.
+            True = Ramp Load.
+            False = Ramp Unload.
+            "/>
+        <Sequence name="TotalStartCount" type="Iec61850.BCR" documentation="Count of total number of starts."/>
+        <Sequence name="TotalWh" type="Iec61850.MV" documentation="Total energy delivered."/>
+    </Sequence>
+
+    <Sequence name="Iec61850.DERUnitStatus" extends="Iec61850.DomainLN" documentation="Present status of the DER – current mode, auto/manual state, … (61850 Logical Node = DRCS).">
+        <Sequence name="AutoManual" type="Iec61850.SPS" documentation="
+            Automatic or manual mode.
+            True = automatic.
+            False = manual.
+            "/>
+        <Sequence name="ChargeStatus" type="Iec61850.ChargeStatusENS" optional="true" documentation="
+            Charge status of a storage device.
+            1 = Off 
+            2 = Fully discharged
+            3 = Discharging
+            4 = Charging
+            5 = Fully charged
+            6 = Holding
+            7 = Testing
+            "/>
+        <Sequence name="DCPowerStatus" type="Iec61850.SPS" optional="true" documentation="
+            DC Power status.
+            True = Power on.
+            False = Power not on.
+            "/>
+        <Sequence name="ElectricalConnectionPointConnected" type="Iec61850.SPS" documentation="
+            Electrically connected to the ECP that it is physically connected to.
+            True = connected.
+            False = not connected.
+            "/>
+        <Sequence name="FaultRatePercent" type="Iec61850.MV" optional="true" documentation="Fault rates of DER as percent."/>
+        <Sequence name="LoadModeAvailable" type="Iec61850.SPS" optional="true" documentation="Load mode - True: Available."/>
+        <Sequence name="LoadModeBase" type="Iec61850.SPS" optional="true" documentation="Load mode - True: Base load."/>
+        <Sequence name="LoadModeFixedExport" type="Iec61850.SPS" optional="true" documentation="Load mode - True: fixed export."/>
+        <Sequence name="LoadModeFollowing" type="Iec61850.SPS" optional="true" documentation="Load mode - True: Load following."/>
+        <Sequence name="Local" type="Iec61850.SPS" documentation="
+            Remote or local mode.
+            True = remote is allowed.
+            False = Local.
+            "/>
+        <Sequence name="ModeOffAvailable" type="Iec61850.SPS" documentation="Operational mode - True: Off and available to start."/>
+        <Sequence name="ModeOffUnavailable" type="Iec61850.SPS" documentation="Operational mode: True Off and not available to start."/>
+        <Sequence name="ModeOnAvailable" type="Iec61850.SPS" documentation="Operational mode - True : On and available for connection."/>
+        <Sequence name="ModeOnConnected" type="Iec61850.SPS" documentation="Operational mode - True: on and connected."/>
+        <Sequence name="ModeOnUnavailable" type="Iec61850.SPS" optional="true" documentation="Operational mode - True: On but not available for connection."/>
+        <Sequence name="ModeStartingUp" type="Iec61850.SPS" optional="true" documentation="Mode is starting up"/>
+        <Sequence name="ModeStop" type="Iec61850.SPS" optional="true" documentation="Operational mode - True: Stopping/shutting down."/>
+        <Sequence name="ModeTest" type="Iec61850.SPS" optional="true" documentation="Operational mode - True: Test mode."/>
+        <Sequence name="ModeVAr" type="Iec61850.SPS" documentation="Yes/No, VAr management is available."/>
+        <Sequence name="OperationTimeHours" type="Iec61850.INS" documentation="Operation time."/>
+        <Sequence name="SelfServeWh" type="Iec61850.MV" documentation="Actual self service energy used."/>
+        <Sequence name="SequencePosition" type="Iec61850.INS" optional="true" documentation="Sequence active position or step."/>
+        <Sequence name="SequencerStatus" type="Iec61850.INS" optional="true" documentation="Status of the sequencer."/>
+        <Sequence name="VAChargePercent" type="Iec61850.MV" optional="true" documentation="Actual percentage charged based on VAChaMax."/>
+        <Sequence name="VAPercent" type="Iec61850.MV" optional="true" documentation="Actual percentage apparent power output based on VAMax."/>
+    </Sequence>
+
+    <Enumerated name="Iec61850.DpStatusKind" documentation="Double point status kind.">
+        <NamedValues>
+            <Unsigned name="intermediateState" value="1" documentation="Intermediate state."/>
+            <Unsigned name="offOrFalse" value="2" documentation="Off or False state."/>
+            <Unsigned name="onOrTrue" value="3" documentation="On or True state."/>
+            <Unsigned name="badState" value="4" documentation="The server can not detect whether the position is open (off), closed (on) or in intermediate state."/>
+        </NamedValues>
+    </Enumerated>
+
+    <Sequence name="Iec61850.EnumDA" documentation="Not explicitly defined in the standard. Enumerated data attribute has only a value field of some enumerated type.">
+    </Sequence>
+
+    <Sequence name="Iec61850.ObjectReference" documentation="
+            part 7-2, sec. 5
+            Instances of classes in the hierarchical information model (ACSI class hierarchy of logical device, logical node, data, data attributes) shall be constructed by the concatenation of all instance names comprising the whole path-name of an instance of a class that identifies the instance uniquely. The ObjectReference syntax shall be: LDName/LNName[.Name[. ...]].
+            The &quot;/&quot; shall separate the instance name of a logical device (LDName) from the name of an instance of a logical node (LNName). The &quot;.&quot; shall separate the further names in the hierarchy. The &quot;[  ]&quot; shall indicate an option. The inner square bracket &quot;[. ...]&quot; shall indicate further names of nested definitions.
+            NOTE: Section 19 specifies constraints on the use of the type ObjectReference.
+            Modelling notes:
+            •	We define this type as abstract class and extend it with the subtypes which carry semantics of the above naming scheme.
+            •	Subtypes of ObjectReference provide methods that return separately all the elements that make the reference (e.g., FC, LDName, LNName), which have been parsed from the reference string.
+            ">
+    </Sequence>
+
+    <Sequence name="Iec61850.CMV" extends="Iec61850.RangeDeadbandCDC" documentation="This common data class is used to represent complex (phasor) measured values.">
+        <Sequence name="instCVal" type="Iec61850.Vector" optional="true" documentation="Instantaneous complex (phasor) value, with magnitude and angle."/>
+        <Sequence name="cVal" type="Iec61850.Vector" documentation="Deadbanded complex value, based on a deadband calculation from the instantaneous value 'instCVal.mag' with 'db' and 'instCVal.ang' with 'dbAng', independently. See 'MV.mag'."/>
+        <Enumerated name="rangeAng" type="Iec61850.RangeKind" optional="true" documentation="
+            Range in which the current instantaneous value is ('MV.instMag' or 'CMV.instCVal.mag'). It may be used to report an event if its value changes (due to the change in the instantaneous value). See RangeConfig.
+            NOTE The use of algorithms to filter events based on transition from one range to another is a local issue.
+            "/>
+        <Sequence name="q" type="Iec61850.Quality" documentation="Quality of the data values 'instCVal', 'cVal', 'range'."/>
+        <DateTime name="t" documentation="Timestamp of the last change in one of the data values 'cVal', 'range', or quality 'q'."/>
+        <Sequence name="subCVal" type="Iec61850.Vector" optional="true" documentation="Value used to substitute 'instCVal'."/>
+        <Sequence name="units" type="Iec61850.Unit" optional="true" documentation="Unit for 'instCVal.mag', 'cVal.mag', 'subCVal.mag', 'rangeC'."/>
+        <Integer name="dbAng" optional="true" documentation="Deadband is a configuration parameter used to calculate deadbanded angle of a complex value ('cVal.ang'). The value of 'dbAng' shall represent the percentage of difference ('rangeAngC.max' - 'rangeAngC.min') in units of 0.001%. See 'RangeDeadbandCDC.db'."/>
+        <Sequence name="rangeAngC" type="Iec61850.RangeConfig" optional="true" documentation="Configuration for 'rangeAng'."/>
+        <Sequence name="magSVC" type="Iec61850.ScaledValueConfig" optional="true" documentation="Configuration for scaled value representation of magnitudes 'instCVal.mag', 'cVal.mag', 'subCVal.mag'."/>
+        <Sequence name="angSVC" type="Iec61850.ScaledValueConfig" optional="true" documentation="Configuration for scaled value representation of angles 'instCVal.ang', 'cVal.ang', 'rangeAngC.min' and 'rangeAngC.max'."/>
+        <Enumerated name="angRef" type="Iec61850.AngleReferenceKind" optional="true" documentation="Angle reference, indicating the quantity that is used as reference for the phase angles 'cVal.ang', 'instCVal.ang', subCVal.ang'. For the indicated quantity, the fundamental frequency (index = 1) is used as reference by convention."/>
+        <Integer name="smpRate" optional="true" documentation="Number of samples per nominal period that has been used to determine instantaneous value 'instCVal.mag'.In the case of a dc system, it is number of samples per s."/>
+    </Sequence>
+
+    <Sequence name="Iec61850.DEL" documentation="
+            This class is a collection of measurements of values in a three phase system that represent phase to phase values (&quot;delta&quot;).
+            Values for 'phsAB', 'phsBC' and 'phsCA' have been simultaneously acquired or determined, and their respective time stamps hold the same value 't.secondSinceEpoch'. It shall be assumed that any jitter between the acquisition times dedicated for these values is neglectable. The jitter for simultaneity shall be as indicated in any of the respective 't.timeQuality' attributes of the above values.
+            Attribute 'angRef' is used in place of individual 'angRef' attributes of 'phsAB', 'phsBC' and 'phsCA'.
+            ">
+        <Sequence name="phsAB" type="Iec61850.CMV" optional="true" documentation="Value of phase A to phase B measurement."/>
+        <Sequence name="phsBC" type="Iec61850.CMV" optional="true" documentation="Value of phase B to phase C measurement."/>
+        <Sequence name="phsCA" type="Iec61850.CMV" optional="true" documentation="Value of phase C to phase A measurement."/>
+        <Enumerated name="angRef" type="Iec61850.AngleReferenceKind" optional="true" documentation="Angle reference, indicating the quantity that is used as reference for the phase angles {'phsAB', 'phsBC', 'phsCA'}.'instCVal.ang', instead of their own 'angRef'. For the indicated quantity, the fundamental frequency (index = 1) is used as reference by convention."/>
+    </Sequence>
+
+    <Sequence name="Iec61850.HarmonicMeasurandCDC" documentation="
+            This abstract supertype groups the configuration attributes for common data classes that provide harmonic and interharmonic measurand information. Attributes are used to configure arrays of harmonic values in concrete CDCs ('har[] in HMV, {'phsAHar', 'phsBHar', phsCHar', 'neutHar', 'netHar', 'resHar'}[] in HWYE, and {'phsABHar', phsBCHar', 'phsCAHar'}[] in HDEL).
+            An array (e.g., 'har[]') contains the harmonic and subharmonic ('evalTm' equals 'frequency' period), or the interharmonic values ('evalTm' differs from 'frequency' period). The first array element 'har[0]' contains the dc component, the further array elements 'har[1]'...'har['numHar']' contain the values for the harmonics 1..'numHar', respectively.
+            For the case of harmonic and subharmonic values ('evalTm' equals'frequency' period), if 'numCyc'>1, 'har[]' contains both harmonics, and subharmonics with their multiples. Array elements with the index that is a multiple of 2'numCyc'-1 are harmonics; all the others are subharmonics or multiple of subharmonics.
+            ">
+        <Integer name="numHar" documentation="Number of harmonic and subharmonics, or interharmonic values that are to be returned as the array of values. Array index 0 refers to the dc component, therefore 'numHar'>0. The maximum value can be calculated as follows: 'numHar' = 1 + 0.5 * ('smpRate' * 'frequency' * 'evalTm' * 2'numCyc'-1)."/>
+        <Integer name="numCyc" documentation="Number of cycles of power frequency, which are used for harmonic, subharmonic and interharmonic calculation. See 'numHar'."/>
+        <Integer name="evalTm" documentation="Time window [ms] applied to interharmonic calculations. See 'numHar'."/>
+        <Integer name="smpRate" optional="true" documentation="Determines the highest possible harmonic or interharmonic detectable, according to the sampling theorem; the minimum value is 'smpRate'=2 * 'frequency'. 'smpRate' is the number of samples per nominal period. In the case of a dc system, it is number of samples per s."/>
+        <Real name="frequency" documentation="Nominal frequency of the power system (HMV, HDEL) or some other fundamental frequency (HWYE) [Hz]."/>
+        <Enumerated name="hvRef" type="Iec61850.HvReferenceKind" optional="true" documentation="Reference type (i.e., ratio of harmonic to fundamental, to RMS or to absolute), of the values in 'CMV[i].instCVal.mag'."/>
+        <Integer name="rmsCyc" optional="true" documentation="Number of cycles of power frequency used for the calculation of rms values."/>
+    </Sequence>
+
+    <Sequence name="Iec61850.HMV" extends="Iec61850.HarmonicMeasurandCDC" documentation="
+            This class is a collection of values that represent the harmonic or interharmonic content of a process value.
+            NOTE Harmonics for a single circuit may have phase angles, but need no reference for the angle ('angRef'), since by convention the reference is always the fundamental frequency (index 1).
+            ">
+        <Array name="har" memberType="Iec61850.CMV" minimumSize="1" documentation="Array of harmonic and subharmonic, or the interharmonic values."/>
+    </Sequence>
+
+    <Sequence name="Iec61850.MV" extends="Iec61850.RangeDeadbandCDC" documentation="This common data class is used to represent scalar measured values.">
+        <Sequence name="instMag" type="Iec61850.AnalogueValue" optional="true" documentation="
+            Magnitude of the instantaneous value.
+            NOTE 'instMag' is optional from the perspective of the visibility of that value to the communication. The instantaneous value may be required for the internal behaviour of the function, e.g., to perform the deadband calculation for 'mag'.
+            "/>
+        <Sequence name="mag" type="Iec61850.AnalogueValue" documentation="
+            Magnitude based on a deadband 'db' calculation from the instantaneous value 'instMag'. The value of 'mag' shall be updated to the current instantaneous value 'instMag' when the value has changed according the configured deadband 'db'. If 'db'=0, 'mag'='instMag'.
+            NOTE 1 This value is typically used to create reports for analogue values. Such a report sent &quot;by exception&quot; is not comparable to the transfer of sampled measured values as supported by the CDC SAV.
+            NOTE 2 This 'mag' is not the same as 'Vector.mag'. In particular, the value 'CMV.instCVal.mag' is NOT a deadbanded value.
+            "/>
+        <Sequence name="q" type="Iec61850.Quality" documentation="Quality of the data values 'instMag', 'mag', 'range'."/>
+        <DateTime name="t" documentation="Timestamp of the last change in one of the data values 'mag', 'range', or quality 'q'."/>
+        <Sequence name="subMag" type="Iec61850.AnalogueValue" optional="true" documentation="Value used to substitute 'instMag'."/>
+        <Sequence name="units" type="Iec61850.Unit" optional="true" documentation="Unit for 'instMag', 'mag', 'subMag', 'rangeC'."/>
+        <Sequence name="sVC" type="Iec61850.ScaledValueConfig" optional="true" documentation="Configuration for scaled value representation ('instMag', 'mag', 'subMag', 'range')."/>
+        <Integer name="smpRate" optional="true" documentation="Number of samples per nominal period that has been used to determine instantaneous value 'instMag'. In the case of a dc system, it is number of samples per s."/>
+    </Sequence>
+
+    <Sequence name="Iec61850.RangeDeadbandCDC" documentation="This abstract supertype groups the attributes common to those common data classes  that provide deadbanded values (in addition to instantaneous ones).">
+        <Enumerated name="range" type="Iec61850.RangeKind" optional="true" documentation="
+            Range in which the current instantaneous value is ('MV.instMag' or 'CMV.instCVal.mag'). It may be used to report an event if its value changes (due to the change in the instantaneous value). See RangeConfig.
+            NOTE The use of algorithms to filter events based on transition from one range to another is a local issue.
+            "/>
+        <Integer name="db" optional="true" documentation="
+            Deadband is a configuration parameter used to calculate deadbanded value ('MV.mag' or 'CMV.cVal.mag'). The value of 'db' shall represent the percentage of difference ('rangeC.max' - 'rangeC.min') in units of 0.001%. Therefore, 'db'=[0, 100'000], corresponding to [0%, 100%], respectively. If an integral calculation is used to determine the deadbanded value, the value of 'db' shall be represented as 0,001% s.
+            Value 0 shall suppress reporting events on the analog value, so that only changes of the 'range' value will lead to events.
+            "/>
+        <Integer name="zeroDb" optional="true" documentation="Configuration parameter used to calculate the range around zero, where the deadbanded value ('MV.mag' or CMV.cVal.mag') will be forced to zero. The value of 'zeroDb' shall represent the percentage of difference ('rangeC.max' - 'rangeC.min') in units of 0,001%. Therefore, 'zeroDb'=[0, 100'000], corresponding to [0%, 100%], respectively."/>
+        <Sequence name="rangeC" type="Iec61850.RangeConfig" optional="true" documentation="Configuration for 'range'."/>
+    </Sequence>
+
+    <Sequence name="Iec61850.WYE" documentation="
+            This class is a collection of simultaneous measurements of values in a three phase system that represent phase to ground values (&quot;wye&quot;).
+            Values for 'phsA', 'phsB', 'phsC', 'neut', 'net' and 'res' have been simultaneously acquired or determined, and their respective time stamps hold the same value 't.secondSinceEpoch'. It shall be assumed that any jitter between the acquisition times dedicated for these values is neglectable. The jitter for simultaneity shall be as indicated in any of the respective 't.timeQuality' attributes of the above values.
+            Attribute 'angRef' is used in place of individual 'angRef' attributes of 'phsA', 'phsB', 'phsC', 'neut', 'net' and 'res'.
+            ">
+        <Sequence name="phsA" type="Iec61850.CMV" optional="true" documentation="Value of phase A."/>
+        <Sequence name="phsB" type="Iec61850.CMV" optional="true" documentation="Value of phase B."/>
+        <Sequence name="phsC" type="Iec61850.CMV" optional="true" documentation="Value of phase C."/>
+        <Sequence name="neut" type="Iec61850.CMV" optional="true" documentation="Value of the measured phase neutral. If a direct measurement of this value is not available, it is acceptable to substitute an estimate computed by creating the algebraic sum of the instantaneous values of currents flowing through all live conductors ('phsA.instCVal'+'phsB.instCVal'+'phsC.instCVal'); in that case, 'neut'='res'."/>
+        <Sequence name="net" type="Iec61850.CMV" optional="true" documentation="Net current, as the algebraic sum of the instantaneous values of currents flowing through all live conductors and neutral point of the electrical installation('phsA.instCVal'+'phsB.instCVal'+'phsC.instCVal'+'neut.instCVal')."/>
+        <Sequence name="res" type="Iec61850.CMV" optional="true" documentation="Residual current, as the algebraic sum of the instantaneous values of currents flowing through all live conductors of the electrical installation('phsA.instCVal'+'phsB.instCVal'+'phsC.instCVal')."/>
+        <Enumerated name="angRef" type="Iec61850.AngleReferenceKind" optional="true" documentation="Angle reference, indicating the quantity that is used as reference for the phase angles {'phsA', 'phsB', 'phsC', 'neut', 'net', 'res'}.'instCVal.ang', instead of their own 'angRef'. For the indicated quantity, the fundamental frequency (index = 1) is used as reference by convention."/>
+        <Boolean name="phsToNeut" optional="true" documentation="True indicates that this WYE instance is used for phase to neutral values instead of phase to ground values ('neut' always indicates the neutral to ground value)."/>
+    </Sequence>
+
+    <Sequence name="Iec61850.ASG" documentation="This common data class is used to represent analogue settings.">
+        <Sequence name="setMag" type="Iec61850.AnalogueValue" optional="true" documentation="The value of the analogue setting."/>
+        <Sequence name="units" type="Iec61850.Unit" optional="true" documentation="Unit for 'setMag', 'minVal', 'maxVal', 'stepSize'."/>
+        <Sequence name="sVC" type="Iec61850.ScaledValueConfig" optional="true" documentation="Configuration for scaled value representation ('setMag', 'minVal', 'maxVal', 'stepSize')."/>
+        <Sequence name="minVal" type="Iec61850.AnalogueValue" optional="true" documentation="Minimum setting for 'setMag'."/>
+        <Sequence name="maxVal" type="Iec61850.AnalogueValue" optional="true" documentation="Maximum setting for 'setMag'."/>
+        <Sequence name="stepSize" type="Iec61850.AnalogueValue" optional="true" documentation="Step between the individual values of 'setMag'."/>
+    </Sequence>
+
+    <Sequence name="Iec61850.CSG" documentation="This common data class is used to hold curve points and describe curve settings.">
+        <Real name="pointZ" optional="true" documentation="Position of the curve on z-axis."/>
+        <Integer name="numPts" documentation="Actual size of 'crvPts[]'."/>
+        <Array name="crvPts" memberType="Iec61850.Point" documentation="The array with the points specifying a curve shape."/>
+        <Sequence name="xUnit" type="Iec61850.Unit" documentation="Unit of the x-axis of a curve."/>
+        <Sequence name="yUnit" type="Iec61850.Unit" documentation="Unit of the y-axis of a curve."/>
+        <Sequence name="zUnit" type="Iec61850.Unit" documentation="Unit of the z-axis of a curve."/>
+        <Integer name="maxPts" documentation="Maximum supported size for 'crvPts[]'."/>
+        <String name="xD" documentation="Description of the value of the x-axis of a curve."/>
+        <String name="xDU" optional="true" documentation="Description of the value of the x-axis of a curve in Unicode."/>
+        <String name="yD" documentation="Description of the value of the y-axis of a curve."/>
+        <String name="yDU" optional="true" documentation="Description of the value of the x-axis of a curve in Unicode."/>
+        <String name="zD" optional="true" documentation="Description of the value of the z-axis of a curve."/>
+        <String name="zDU" optional="true" documentation="Description of the value of the z-axis of a curve in Unicode."/>
+    </Sequence>
+
+    <Sequence name="Iec61850.APC" documentation="This common data class is used to represent analogue controls.">
+        <Sequence name="origin" type="Iec61850.Originator" optional="true" documentation="See 'SPC.origin'."/>
+        <Integer name="ctlNum" optional="true" documentation="See 'SPC.ctlNum'."/>
+        <Sequence name="mxVal" type="Iec61850.AnalogueValue" optional="true" documentation="Current value of the controllable analogue process value; it can be deadbanded for reporting."/>
+        <Sequence name="q" type="Iec61850.Quality" optional="true" documentation="Quality of the data value 'mxVal'."/>
+        <DateTime name="t" optional="true" documentation="Timestamp of the last change in the data value 'mxVal', or quality 'q'."/>
+        <Boolean name="stSeld" optional="true" documentation="See 'SPC.stSeld'."/>
+        <Sequence name="subVal" type="Iec61850.AnalogueValue" optional="true" documentation="Value used to substitute 'mxVal'."/>
+        <Sequence name="units" type="Iec61850.Unit" optional="true" documentation="Units of the data values: 'mxVal', 'subVal', 'minVal', 'maxVal', 'stepSize', 'ctlVal'."/>
+        <Integer name="db" optional="true" documentation="See 'RangeDeadbandCDC.db'. Used in case 'mxVal' is deadbanded for reporting."/>
+        <Sequence name="sVC" type="Iec61850.ScaledValueConfig" optional="true" documentation="Configuration for scaled value representation ('mxVal', 'subVal', 'minVal', 'maxVal', 'stepSize') and for service parameter 'ctlVal'."/>
+        <Sequence name="minVal" type="Iec61850.AnalogueValue" optional="true" documentation="Minimum setting for 'ctlVal'."/>
+        <Sequence name="maxVal" type="Iec61850.AnalogueValue" optional="true" documentation="Maximum setting for 'ctlVal'."/>
+        <Sequence name="stepSize" type="Iec61850.AnalogueValue" optional="true" documentation="Step between the individual values of 'ctlVal'."/>
+        <Sequence name="ctlVal" type="Iec61850.AnalogueValue" documentation="Service parameter that determines the control activity, containing the new value for 'mxVal'."/>
+    </Sequence>
+
+    <Sequence name="Iec61850.DPC" documentation="This common data class is used to represent double point controls.">
+        <Sequence name="origin" type="Iec61850.Originator" optional="true" documentation="See 'SPC.origin'."/>
+        <Integer name="ctlNum" optional="true" documentation="See 'SPC.ctlNum'."/>
+        <Enumerated name="stVal" type="Iec61850.DpStatusKind" documentation="Status data value."/>
+        <Sequence name="q" type="Iec61850.Quality" documentation="Quality of the data value 'stVal'."/>
+        <DateTime name="t" documentation="Timestamp of the last change of the data value 'stVal' or quality 'q'."/>
+        <Boolean name="stSeld" optional="true" documentation="See 'SPC.stSeld'."/>
+        <Enumerated name="subVal" type="Iec61850.DpStatusKind" optional="true" documentation="Value used to substitute 'stVal'."/>
+        <Sequence name="pulseConfig" type="Iec61850.PulseConfig" optional="true" documentation="See 'SPC.pulseConfig'."/>
+        <Boolean name="ctlVal" documentation="Service parameter that determines the control activity, containing the new value for 'stVal' ('false' for off, 'true' for on)."/>
+    </Sequence>
+
+    <Sequence name="Iec61850.ENC" documentation="This common data class is used to represent integer controls with the value restricted to those in an enumeration.">
+        <Sequence name="origin" type="Iec61850.Originator" optional="true" documentation="See 'SPC.origin'."/>
+        <Integer name="ctlNum" optional="true" documentation="See 'SPC.ctlNum'."/>
+        <Sequence name="stVal" type="Iec61850.EnumDA" documentation="Status data value."/>
+        <Sequence name="q" type="Iec61850.Quality" documentation="Quality of the data value 'stVal'."/>
+        <DateTime name="t" documentation="Timestamp of the last change of the data value 'stVal' or quality 'q'."/>
+        <Boolean name="stSeld" optional="true" documentation="See 'SPC.stSeld'."/>
+        <Sequence name="subVal" type="Iec61850.EnumDA" optional="true" documentation="Value used to substitute 'stVal'."/>
+        <Sequence name="ctlVal" type="Iec61850.EnumDA" documentation="Service parameter that determines the control activity, containing the new value for 'stVal'."/>
+    </Sequence>
+
+    <Sequence name="Iec61850.SPC" documentation="This common data class is used to represent single point controls.">
+        <Sequence name="origin" type="Iec61850.Originator" optional="true" documentation="Information related to the originator of the last change of the controllable data value."/>
+        <Integer name="ctlNum" optional="true" documentation="Control sequence number of the control service when the change of the status data value has been caused by a control. The only thing that the server shall do with 'ctlNum' is to include it in the responses to the control model and in the reports about a status change that is caused by a command."/>
+        <Boolean name="stVal" optional="true" documentation="Status data value."/>
+        <Sequence name="q" type="Iec61850.Quality" optional="true" documentation="Quality of the data value 'stVal'."/>
+        <DateTime name="t" optional="true" documentation="Timestamp of the last change of the data value 'stVal' or quality 'q'."/>
+        <Boolean name="stSeld" optional="true" documentation="True means that the controllable data is in the status &quot;selected&quot;."/>
+        <Boolean name="subVal" optional="true" documentation="Value used to substitute 'stVal'."/>
+        <Sequence name="pulseConfig" type="Iec61850.PulseConfig" optional="true" documentation="Used to configure the output pulse generated with the command, if applicable."/>
+        <Boolean name="ctlVal" documentation="Service parameter that determines the control activity, containing the new value for 'stVal' ('false' for off, 'true' for on)."/>
+    </Sequence>
+
+    <Sequence name="Iec61850.DPL" documentation="This common data class is used to identify entities like primary equipment or physical devices.">
+        <String name="vendor" documentation="Name of the vendor."/>
+        <String name="hwRev" optional="true" documentation="Hardware revision."/>
+        <String name="swRev" optional="true" documentation="Software revision."/>
+        <String name="serNum" optional="true" documentation="Serial number."/>
+        <String name="model" optional="true" documentation="Vendor specific product name."/>
+        <String name="location" optional="true" documentation="Location where the equipment is installed."/>
+        <String name="name" optional="true" documentation="The name of the IED (if DPL is used in the context of a LPHD) or of a device like a circuit breaker (if used for the data EEName)."/>
+        <String name="owner" optional="true" documentation="Owner of the device."/>
+        <String name="ePSName" optional="true" documentation="Name of electric power system the device is connected to."/>
+        <String name="primeOper" optional="true" documentation="Primary operator of the device."/>
+        <String name="secondOper" optional="true" documentation="Secondary operator of the device."/>
+        <Real name="latitude" optional="true" documentation="Geographical position of device in WGS84 coordinates – latitude."/>
+        <Real name="longitude" optional="true" documentation="Geographical position of device in WGS84 coordinates – longitude."/>
+        <Real name="altitude" optional="true" documentation="Geographical position of device in WGS84 coordinates – altitude."/>
+        <String name="mrID" type="Fsgim.GlobalId" optional="true" documentation="Master resource ID – unique identification of an asset or device."/>
+    </Sequence>
+
+    <Sequence name="Iec61850.LPL" documentation="This common data class is used for nameplate information of logical nodes.">
+        <String name="vendor" documentation="Name of the vendor."/>
+        <String name="swRev" documentation="Software revision."/>
+        <String name="configRev" optional="true" documentation="Uniquely identifies the configuration of a logical device instance. 'LLN0.NamPlt.configRev' has to be changed at least on any semantic change of the data model of the logical device, related to the client functionality. How this is detected and performed is left to the user. Also the semantics of 'configRev' for other logical nodes is left to the user. For further details see as well Annex C. "/>
+        <Integer name="paramRev" optional="true" documentation="
+            Uniquely identifies the parameter revision of a logical device or logical node instance. 'paramRev' has to be changed at least on any change of a parameter (FC= SE or FC=SP) within this logical device or logical node. How this is detected and performed is left to the user. For further details see as well Annex C.
+            The value change of 'paramRev' shall be done as follows:
+            •	if the parameter change is done in the IED only through communication services or through the local HMI, this value shall be increased by one;
+            •	if the parameter change is done in the configuration file, this value shall be increased by 10 000.
+            "/>
+        <Integer name="valRev" optional="true" documentation="
+            Uniquely identifies the revision of the preconfiguration of configuration values (FC= CF) in a logical device or logical node instance through a SCL file. 'valRev' has to be changed at least on any change of preconfigured values within an SCL file for this logical device or logical node. How this is detected and performed is left to the user. For further details see as well Annex C.
+            The value change of 'valRev' shall be done according to the same rules as for 'paramRev'.
+            "/>
+        <String name="ldNs" optional="true" documentation="Logical device name space. Scope of the standard specified with the attribute is LN class definition (CDC definition by reference). For details see IEC 61850-7-1."/>
+        <String name="lnNs" optional="true" documentation="Logical node name space. Scope of the standard specified with the attribute is LN class definition (CDC definition by reference). For details see IEC 61850-7-1."/>
+    </Sequence>
+
+    <Sequence name="Iec61850.BCR" documentation="This common data class is used to represent binary counter reading.">
+        <Integer name="actVal" documentation="Binary counter status represented as an integer value."/>
+        <Integer name="frVal" optional="true" documentation="Frozen binary counter status represented as an integer value."/>
+        <DateTime name="frTm" optional="true" documentation="Time of the last counter freeze."/>
+        <Sequence name="q" type="Iec61850.Quality" documentation="Quality of the data values 'actVal', 'frVal'."/>
+        <DateTime name="t" documentation="Timestamp of the last change of the data value 'actVal' or quality 'q'."/>
+        <Sequence name="units" type="Iec61850.Unit" optional="true" documentation="Unit for value calculated as [value = 'actVal * pulsQty'], [value = 'frVal * pulsQty']."/>
+        <Real name="pulsQty" documentation="Magnitude of the counted value per count. Used together with 'actVal' and 'frVal' to calculate the value: [value = 'actVal * pulsQty'], [value = 'frVal * pulsQty']."/>
+        <Boolean name="frEna" optional="true" documentation="Controls the freeze process. If true, freezing shall occur as specified in 'strTm', 'frPd' and 'frRs'; otherwise, no freezing shall occur."/>
+        <DateTime name="strTm" optional="true" documentation="Starting time of the freeze process. If the current time is later than 'strTm', the first freeze shall occur at the expiration of the next freeze interval 'frPd', computed from 'strTm' setting."/>
+        <Integer name="frPd" optional="true" documentation="Time interval between freeze operations [ms]. If value is 0, only a single freeze is performed at the time indicated in 'strTm'."/>
+        <Boolean name="frRs" optional="true" documentation="If true, the counter is to be automatically reset to zero after each freezing process."/>
+    </Sequence>
+
+    <Sequence name="Iec61850.ENS" documentation="This common data class is used to represent integer status values with the value restricted to those in an enumeration.">
+        <Sequence name="stVal" type="Iec61850.EnumDA" documentation="Status data value."/>
+        <Sequence name="q" type="Iec61850.Quality" documentation="Quality of the data value 'stVal'."/>
+        <DateTime name="t" documentation="Timestamp of the last change of the data value 'stVal' or quality 'q'."/>
+        <Sequence name="subVal" type="Iec61850.EnumDA" optional="true" documentation="Value used to substitute 'stVal'."/>
+    </Sequence>
+
+    <Sequence name="Iec61850.INS" documentation="This common data class is used to represent integer status values.">
+        <Integer name="stVal" documentation="Status data value."/>
+        <Sequence name="q" type="Iec61850.Quality" documentation="Quality of the data value 'stVal'."/>
+        <DateTime name="t" documentation="Timestamp of the last change of the data value 'stVal' or quality 'q'."/>
+        <Integer name="subVal" optional="true" documentation="Value used to substitute 'stVal'."/>
+        <Sequence name="units" type="Iec61850.Unit" optional="true" documentation="Unit for 'stVal', 'subVal'."/>
+    </Sequence>
+
+    <Sequence name="Iec61850.SPS" documentation="This common data class is used to represent single point status values.">
+        <Boolean name="stVal" documentation="Status data value."/>
+        <Sequence name="q" type="Iec61850.Quality" documentation="Quality of the data value 'stVal'."/>
+        <DateTime name="t" documentation="Timestamp of the last change of the data value 'stVal' or quality 'q'."/>
+        <Boolean name="subVal" optional="true" documentation="Value used to substitute 'stVal'."/>
+    </Sequence>
+
+    <Sequence name="Iec61850.CUG" documentation="This common data class is used to represent currency settings.">
+        <Enumerated name="cur" type="Fsgim.CurrencyKind" optional="true" documentation="The value of the currency setting."/>
+    </Sequence>
+
+    <Sequence name="Iec61850.ENG" documentation="This common data class is used to represent integer settings with the value restricted to those in an enumeration.">
+        <Sequence name="setVal" type="Iec61850.EnumDA" optional="true" documentation="The value of the status setting."/>
+    </Sequence>
+
+    <Sequence name="Iec61850.ING" documentation="This common data class is used to represent integer settings.">
+        <Integer name="setVal" optional="true" documentation="The value of the status setting."/>
+        <Integer name="minVal" optional="true" documentation="Minimum setting for 'setVal'."/>
+        <Integer name="maxVal" optional="true" documentation="Maximum setting for 'setVal'."/>
+        <Integer name="stepSize" optional="true" documentation="Step between the individual values of 'setVal'."/>
+        <Sequence name="units" type="Iec61850.Unit" optional="true" documentation="Unit for 'setVal', 'minVal', 'maxVal', 'stepSize'."/>
+    </Sequence>
+
+    <Sequence name="Iec61850.ORG" documentation="This common data class is used to represent object reference settings, such as object reference to the logical node of which the statistical data have been calculated.">
+        <Sequence name="setSrcRef" type="Iec61850.ObjectReference" documentation="The value of the object reference setting used to reference for example a logical node instance or a data object instance."/>
+        <Sequence name="setTstRef" type="Iec61850.ObjectReference" optional="true" documentation="The value of the test object reference setting, used as alternative to 'setSrcRef' when 'tstEna'=true for testing purpose."/>
+        <Sequence name="setSrcCB" type="Iec61850.ObjectReference" optional="true" documentation="The value of the object reference to the control block, indicating from where the object referred to with 'setSrcRef' shall be received."/>
+        <Sequence name="setTstCB" type="Iec61850.ObjectReference" optional="true" documentation="The value of the object reference to the control block indicating from where the object referred to with 'setTstRef' shall be received, used when 'tstEna'=true for testing purposes."/>
+        <String name="intAddr" optional="true" documentation="Manufacturer-specific internal address."/>
+        <Boolean name="tstEna" optional="true" documentation="Switch between original data source (as defined with 'setSrcRef' and 'setSrcCB') for a reference and test data source (as defined with 'setTstRef' and 'setTstCB')."/>
+        <String name="purpose" optional="true" documentation="Description of the purpose of the object reference."/>
+    </Sequence>
+
+    <Sequence name="Iec61850.SPG" documentation="This common data class is used to represent single point settings.">
+        <Boolean name="setVal" optional="true" documentation="The value of the status setting (false is off, true is on)."/>
+    </Sequence>
+
+    <Sequence name="Iec61850.AnalogueValue" documentation="
+            This type is used to represent primary process measured value, pVal. An analogue value may be represented by applying an appropriate conversion to a basic type integer 'i' or to a floating point 'f'.
+            At least one of the attributes shall be used. If both 'i' and 'f' exist, the application in the server shall insure that both values remain consistent, i.e., that the pVal produced after appropriate conversion is the same within acceptable error. The latest value set by the communication service shall be used to update the other value. As an example, if 'xxx.f' is written, the application shall update 'xxx.i' accordingly.
+            NOTE The reason for both integer and floating point representation is so that IEDs without floating point capabilities are enabled to support analogue values. In this case, the scaleFactor and offset may be exchanged offline between clients and servers.
+            ">
+        <Integer name="i" optional="true" documentation="Integer representation of the measured value. The formula to convert between 'i' and the process value (pVal) shall be: pVal=('i'*'ScaledValueConfig.scaleFactor')+'ScaledValueConfig.offset'."/>
+        <Real name="f" optional="true" documentation="Floating point representation of the measured value. The formula to convert between 'f' and the process value (pVal) shall be: pVal='f'*10'Unit.multiplier'."/>
+    </Sequence>
+
+    <Sequence name="Iec61850.DetailQual" documentation="This type contains reason for an 'invalid' or 'questionable' value. See statechart diagram 'Quality.validity'.">
+        <Boolean name="overflow" documentation="
+            If true, the value of the attribute to which the quality has been associated is beyond the capability of being represented properly (used for measurand information only).
+            EXAMPLE A measured value may exceed the range that may be represented by the selected data type, for example the data type is a 16-bit unsigned integer and the value exceeds 65535.
+            "/>
+        <Boolean name="outOfRange" documentation="
+            If true, the attribute to which the quality has been associated is beyond a predefined range of values. The server shall decide if validity shall be set to invalid or questionable (used for measurand information only).
+            EXAMPLE A measured value may exceed a predefined range, however the selected data type can still represent the value, for example the data type is a 16-bit unsigned integer, the predefined range is 0 to 40000, if the value is between 40001 and 65535 it is considered to be out of range.
+            "/>
+        <Boolean name="badReference" documentation="If true, the value may not be a correct value due to a reference being out of calibration. The server shall decide if validity shall be set to invalid or questionable (used for measurand information and binary counter information only)."/>
+        <Boolean name="oscillatory" documentation="
+            To prevent overloading of event driven communication channels, it is desirable to detect and suppress oscillating (fast changing) binary inputs. If a signal changes in a defined time (tosc) twice in the same direction (from 0 to 1 or from 1 to 0), then it shall be defined as an oscillation and this attribute shall be set to true. If a configured numbers of transient changes is detected, they shall be suppressed. In this time, the 'Quality.validity' shall be set to 'questionable'. If the signal is still in the oscillating state after the defined number of changes, the value shall be left in the state it was in when this flag was set. In this case, the 'Quality.validity' shall be changed from 'questionable' to 'invalid' and kept so as long as the signal is oscillating.
+            If the configuration is such that all transient changes should be suppressed, the 'Quality.validity' shall be set immediately to 'invalid' and this flag to true (used for status information only).
+            "/>
+        <Boolean name="failure" documentation="If true, a supervision function has detected an internal or external failure."/>
+        <Boolean name="oldData" documentation="
+            If true, an update is not made during a specific time interval. The value may be an old value that may have changed in the meantime. This specific time interval may be defined by an allowed-age attribute.
+            NOTE &quot;Fail silent&quot; errors, where the equipment stops sending data, will cause setting this flag to true. In this case, the last received information was correct.
+            "/>
+        <Boolean name="inconsistent" documentation="If true, an evaluation function has detected an inconsistency."/>
+        <Boolean name="inaccurate" documentation="
+            If true, the value does not meet the stated accuracy of the source. 
+            EXAMPLE The measured value of power factor may be noisy (inaccurate) when the current is very small.
+            "/>
+    </Sequence>
+
+    <Sequence name="Iec61850.Originator" documentation="This type is used to describe the originator of the last change of a controllable data.">
+        <Enumerated name="orCat" type="Iec61850.OriginatorCategoryKind" documentation="Category indicates who/what caused the change of a controllable process value. If the initiator of a change is not known, this attribute shall be set to 'process'."/>
+        <String name="orIdent" type="Fsgim.GlobalId" documentation="Identification of the originator of the value change. If the initiator of a change is not known, this value shall be set to null."/>
+    </Sequence>
+
+    <Sequence name="Iec61850.Point" documentation="This type is used to represent points in a two or three dimensional coordinate system.">
+        <Real name="xVal" documentation="X-axis value."/>
+        <Real name="yVal" documentation="Y-axis value."/>
+        <Real name="zVal" optional="true" documentation="Z-axis value."/>
+    </Sequence>
+
+    <Sequence name="Iec61850.PulseConfig" documentation="
+            As the result of receiving an 'operate' service request, a pulsed output may be generated to the on or off input of a switching device. This type is used to configure that output pulse.
+            If 'cmdQual=pulse', the duration of the pulse shall be defined with 'onDur', 'offDur' and 'numPls'. If 'cmdQual=persistent', the output stays in the state indicated in the 'operate' service request.
+            ">
+        <Enumerated name="cmdQual" type="Iec61850.ControlOutputKind" documentation="Kind of control output."/>
+        <Integer name="onDur" documentation="Duration of the pulse [ms]. If set to 0, the duration is defined locally."/>
+        <Integer name="offDur" documentation="Duration between two pulses [ms]. If set to 0, the duration is defined locally."/>
+        <Integer name="numPls" documentation="Number of pulses that are generated."/>
+    </Sequence>
+
+    <Sequence name="Iec61850.Quality" documentation="
+            Quality contains data that describe the quality of the data from the server. Quality of the data is also related to the mode of a logical node. Further details can be found in IEC 61850-7-4. The different quality attributes are not independent.
+            The default value shall be applied if the functionality of the related attribute is not supported. The mapping may specify to exclude the attribute from the message if it is not supported or if the default value applies.
+            ">
+        <Enumerated name="validity" type="Iec61850.ValidityKind" documentation="Validity of the value, as condensed information for the client. In case this value is not 'good', the reasons may be found in the 'detailQual'. See statechart diagram 'Quality.validity'."/>
+        <Sequence name="detailQual" type="Iec61850.DetailQual" documentation="Describes reason in case 'validity' is not 'good'. See statechart diagram 'Quality.validity'."/>
+        <Enumerated name="source" type="Iec61850.SourceKind" documentation="
+            Defines the source of a value.
+            NOTE 1 Substitution may be done locally or via the communication services. In the second case, specific attributes with a FC=SV are used.
+            NOTE 2 There are various means to clear a substitution. As an example, a substitution that was done following an invalid condition may be cleared automatically if the invalid condition is cleared. However, this is a local issue and therefore not in the scope of this standard.
+            "/>
+        <Boolean name="test" documentation="If true, the value is a test value and not to be used for operational purposes. The processing of the test quality in the client shall be as described in IEC 61850-7-4. This bit shall be completely independent from the other bits within the quality descriptor."/>
+        <Boolean name="operatorBlocked" documentation="
+            If true, further update of the value has been blocked by an operator. The value shall be the information that was acquired before blocking. If this flag is set, then the 'detailQul.oldData' shall also be set.
+            The operator shall use the data attribute 'CDC.blkEna' to block the update of the value.
+            NOTE Both an operator as well as an automatic function may freeze communication updating as well as input updating. In both cases, 'detailQual.oldData' will be set. If the blocking is done by an operator, then this flag is set additionally, and an operator activity is required to clear the condition.
+            EXAMPLE An operator may freeze the update of an input, to save the old value before the auxiliary supply is switched off.
+            "/>
+    </Sequence>
+
+    <Sequence name="Iec61850.RangeConfig" documentation="This type is used to configure the limits that define the range of a measured value.">
+        <Sequence name="hhLim" type="Iec61850.AnalogueValue" documentation="Setting for 'CDC.range' transition between 'high' and 'high-high'."/>
+        <Sequence name="hLim" type="Iec61850.AnalogueValue" documentation="Setting for 'CDC.range' transition between 'normal' and 'high'."/>
+        <Sequence name="lLim" type="Iec61850.AnalogueValue" documentation="Setting for 'CDC.range' transition between 'normal' and 'low'."/>
+        <Sequence name="llLim" type="Iec61850.AnalogueValue" documentation="Setting for 'CDC.range' transition between 'low' and 'low-low'."/>
+        <Sequence name="min" type="Iec61850.AnalogueValue" documentation="The minimum process measurement for which 'AnalogueValue.[i,f]' is considered within process limits. If the value is lower, quality shall be set accordingly ('Quality.detailQual.outOfRange'=true => 'Quality.validity'='questionable'; see statechart diagram 'Quality.validity')."/>
+        <Sequence name="max" type="Iec61850.AnalogueValue" documentation="The maximum process measurement for which 'AnalogueValue.[i,f]' is considered within process limits. If the value is higher, quality shall be set accordingly ('Quality.detailQual.outOfRange'=true => 'Quality.validity'='questionable'; see statechart diagram 'Quality.validity')."/>
+        <Integer name="limDb" optional="true" documentation="When present, the value used to introduce a hysteresis in the calculation of 'range'. When a high/low limit has been crossed, 'range' is immediately set to the higher/lower value. However, 'range' is only set back to the lower/higher value when the value of the high limit minus/low limit plut 'limDb' has been crossed. The value shall represent the percentage between 'max' and 'min' in units of 0.001 %."/>
+    </Sequence>
+
+    <Sequence name="Iec61850.ScaledValueConfig" documentation="
+            This type is used to configure the integer value representation of the analogue value. See AnalogueValue.i.
+            NOTE If a server does not support transmission of floating point values and needs to apply conversion, the client may retrieve these values from the SCL file.
+            ">
+        <Real name="scaleFactor" documentation="Scaling factor for integer representation of analogue value."/>
+        <Real name="offset" documentation="Offset for integer representation of analogue value."/>
+    </Sequence>
+
+    <Sequence name="Iec61850.Unit" documentation="This type is used to represent unit and multiplier information.">
+        <Enumerated name="multiplier" type="Fsgim.SiScaleCodeType" optional="true" documentation="Unit multiplier."/>
+        <Enumerated name="SIUnit" type="Fsgim.UnitSymbolKind" documentation="SI unit of measure."/>
+    </Sequence>
+
+    <Sequence name="Iec61850.Vector" documentation="This type is used to represent a complex value (phasor), with magnitude and angle.">
+        <Sequence name="mag" type="Iec61850.AnalogueValue" documentation="Magnitude of the complex value."/>
+        <Sequence name="ang" type="Iec61850.AnalogueValue" optional="true" documentation="Angle of the complex value [deg]; angle reference is defined in the context where this type is used."/>
+    </Sequence>
+
+    <Enumerated name="Iec61850.SourceKind" documentation="Source of a value.">
+        <NamedValues>
+            <Unsigned name="process" value="1" documentation="The value is provided by an input function from the process I/O or is calculated from some application function."/>
+            <Unsigned name="substituted" value="2" documentation="The value is provided by an operator input or by an automatic source."/>
+        </NamedValues>
+    </Enumerated>
+
+    <Enumerated name="Iec61850.ValidityKind" documentation="This type is used as validity of a value. See statechart diagram 'Quality.validity'.">
+        <NamedValues>
+            <Unsigned name="good" value="1" documentation="Supervision function has detected no abnormal condition of either the acquisition function or the information source."/>
+            <Unsigned name="invalid" value="2" documentation="Supervision function has detected an abnormal condition of the acquisition function or the information source (missing or non-operating updating devices). The value shall not be defined under this condition. It shall be used to indicate to the client that the value may be incorrect and shall not be used.
+EXAMPLE If an input unit detects an oscillation of one input it will mark the related information as invalid."/>
+            <Unsigned name="questionable" value="3" documentation="Supervision function has detected any abnormal behaviour. However, the value could still be valid. It is client's responsibility to determine whether the values should be used."/>
+        </NamedValues>
+    </Enumerated>
+
+    <Enumerated name="Iec61850.AngleReferenceKind" documentation="An enumeration defining the quantity that is used as reference for the phase angles. ">
+        <NamedValues>
+            <Unsigned name="Va" value="1" documentation="Angle reference is V phase a."/>
+            <Unsigned name="Vb" value="2" documentation="Angle reference is V phase b."/>
+            <Unsigned name="Vc" value="3" documentation="Angle reference is V phase c."/>
+            <Unsigned name="Aa" value="4" documentation="Angle reference is Amps phase a."/>
+            <Unsigned name="Ab" value="5" documentation="Angle reference is Amps phase b."/>
+            <Unsigned name="Ac" value="6" documentation="Angle reference is Amps phase c."/>
+            <Unsigned name="Vab" value="7" documentation="Angle reference is Volts phase a-b."/>
+            <Unsigned name="Vbc" value="8" documentation="Angle reference is Volts phase b-c."/>
+            <Unsigned name="Vca" value="9" documentation="Angle reference is Volts phase c-a."/>
+            <Unsigned name="Vother" value="10" documentation="Angle reference is Volts other."/>
+            <Unsigned name="Aother" value="11" documentation="Angle reference is Amps other."/>
+            <Unsigned name="Synchrophasor" value="12" documentation="Reference of the angle is as defined in IEEE C37.118, clause 4.2."/>
+        </NamedValues>
+    </Enumerated>
+
+    <Enumerated name="Iec61850.ControlOutputKind" documentation="An enumeration defining the kind of control output provided.">
+        <NamedValues>
+            <Unsigned name="pulse" value="1" documentation="Control output is a pulse output."/>
+            <Unsigned name="persistent" value="2" documentation="Control output is a persistent output."/>
+        </NamedValues>
+    </Enumerated>
+
+    <Enumerated name="Iec61850.CtlModelKind" documentation="An enumeration defining the kind of control mechanism provided.">
+        <NamedValues>
+            <Unsigned name="status-only" value="1" documentation="The object is not controllable, only the services that apply to a status object are supported. The attribute 'ctlVal' does not exist."/>
+            <Unsigned name="direct-with-normal-security" value="2" documentation="Direct control with normal security according to IEC 61850-7-2."/>
+            <Unsigned name="sbo-with-normal-security" value="3" documentation="SBO (select before operate) control with normal security according to IEC 61850-7-2."/>
+            <Unsigned name="direct-with-enhanced-security" value="4" documentation="Direct control with enhanced security according to IEC 61850-7-2."/>
+            <Unsigned name="sbo-with-enhanced-security" value="5" documentation="SBO control with enhanced security according to IEC 61850-7-2."/>
+        </NamedValues>
+    </Enumerated>
+
+    <Enumerated name="Iec61850.HvReferenceKind" documentation="Reference for harmonic values.">
+        <NamedValues>
+            <Unsigned name="fundamental" value="1" documentation="Fundamental frequency."/>
+            <Unsigned name="rms" value="2" documentation="RMS frequency."/>
+            <Unsigned name="absolute" value="3" documentation="Absolute frequency."/>
+        </NamedValues>
+    </Enumerated>
+
+    <Enumerated name="Iec61850.OriginatorCategoryKind" documentation="An enumeration specifying the category of the originator that caused a change of a value.">
+        <NamedValues>
+            <Unsigned name="not-supported" value="1" documentation="Originator category not supported."/>
+            <Unsigned name="bay-control" value="2" documentation="Control operation issued from an operator using a client located at bay level."/>
+            <Unsigned name="station-control" value="3" documentation="Control operation issued from an operator using a client located at station level."/>
+            <Unsigned name="remote-control" value="4" documentation="Control operation from a remote operator outside the substation (for example network control center)."/>
+            <Unsigned name="automatic-bay" value="5" documentation="Control operation issued from an automatic function at bay level."/>
+            <Unsigned name="automatic-station" value="6" documentation="Control operation issued from an automatic function at station level."/>
+            <Unsigned name="automatic-remote" value="7" documentation="Control operation issued from an automatic function outside of the substation."/>
+            <Unsigned name="maintenance" value="8" documentation="Control operation issued from a maintenance/service tool."/>
+            <Unsigned name="process" value="9" documentation="Status change occurred without control action (for example external trip of a circuit breaker or failure inside the breaker)."/>
+        </NamedValues>
+    </Enumerated>
+
+    <Enumerated name="Iec61850.RangeKind" documentation="An enumeration that indicates the relationship of a measured value against configured settings.">
+        <NamedValues>
+            <Unsigned name="normal" value="1" documentation="Range of value is normal."/>
+            <Unsigned name="high" value="2" documentation="Range of value is high."/>
+            <Unsigned name="low" value="3" documentation="Range of value is low."/>
+            <Unsigned name="high-high" value="4" documentation="Range of value exceeds high-high limit."/>
+            <Unsigned name="low-low" value="5" documentation="Range of value is lower than low-low limit."/>
+        </NamedValues>
+    </Enumerated>
+
+    <Enumerated name="Iec61850.SIUnitKind" documentation="An enumeration of SI units, derived from ISO 1000.">
+        <NamedValues>
+            <Unsigned name="none" value="1" documentation="Dimensionless"/>
+            <Unsigned name="m" value="2" documentation="Length"/>
+            <Unsigned name="kg" value="3" documentation="Mass"/>
+            <Unsigned name="s" value="4" documentation="Time"/>
+            <Unsigned name="A" value="5" documentation="Current"/>
+            <Unsigned name="K" value="6" documentation="Temperature"/>
+            <Unsigned name="mol" value="7" documentation="Amount of substance"/>
+            <Unsigned name="cd" value="8" documentation="Luminous intensity"/>
+            <Unsigned name="deg" value="9" documentation="Plane angle"/>
+            <Unsigned name="rad" value="10" documentation="Plane angle"/>
+            <Unsigned name="sr" value="11" documentation="Solid angle"/>
+            <Unsigned name="Gy" value="12" documentation="Absorbed dose (J/kg)"/>
+            <Unsigned name="Bq" value="13" documentation="Activity (1/s)"/>
+            <Unsigned name="°C" value="14" documentation="Relative temperature"/>
+            <Unsigned name="Sv" value="15" documentation="Dose equivalent (J/kg)"/>
+            <Unsigned name="F" value="16" documentation="Electric capacitance"/>
+            <Unsigned name="C" value="17" documentation="Electric charge (A S)"/>
+            <Unsigned name="S" value="18" documentation="Electric conductance (A/V)"/>
+            <Unsigned name="H" value="19" documentation="Electric inductance (Wb/A)"/>
+            <Unsigned name="V" value="20" documentation="Electric potential (W/A)"/>
+            <Unsigned name="ohm" value="21" documentation="Electric resistance (V/A)"/>
+            <Unsigned name="J" value="22" documentation="Energy (N m)"/>
+            <Unsigned name="N" value="23" documentation="Force (kg m / s2)"/>
+            <Unsigned name="Hz" value="24" documentation="Frequency (1/s)"/>
+            <Unsigned name="lx" value="25" documentation="Illuminance (Lm/m2)"/>
+            <Unsigned name="Lm" value="26" documentation="Luminous flux (cd sr)"/>
+            <Unsigned name="Wb" value="27" documentation="Magnetic flux (V s)"/>
+            <Unsigned name="T" value="28" documentation="Magnetic flux density (Wb / m2)"/>
+            <Unsigned name="W" value="29" documentation="Power (J/s)"/>
+            <Unsigned name="Pa" value="30" documentation="Pressure (N / m2)"/>
+            <Unsigned name="m²" value="31" documentation="Area"/>
+            <Unsigned name="m³" value="32" documentation="Volume"/>
+            <Unsigned name="m/s" value="33" documentation="Velocity"/>
+            <Unsigned name="m/s²" value="34" documentation="Acceleration"/>
+            <Unsigned name="m³/s" value="35" documentation="Volumetric flow rate"/>
+            <Unsigned name="m/m³" value="36" documentation="Fuel efficiency"/>
+            <Unsigned name="M" value="37" documentation="Moment of mass (kg m)"/>
+            <Unsigned name="kg/m³" value="38" documentation="Density"/>
+            <Unsigned name="m²/s" value="39" documentation="Viscosity"/>
+            <Unsigned name="W/m K" value="40" documentation="Thermal conductivity"/>
+            <Unsigned name="J/K" value="41" documentation="Heat capacity"/>
+            <Unsigned name="ppm" value="42" documentation="Concentration"/>
+            <Unsigned name="1/s" value="43" documentation="Rotational speed"/>
+            <Unsigned name="rad/s" value="44" documentation="Angular velocity"/>
+            <Unsigned name="W/m²" value="45" documentation="Insolation"/>
+            <Unsigned name="J/m²" value="46" documentation="Insolation energy"/>
+            <Unsigned name="S/m" value="47" documentation="Electric conductivity"/>
+            <Unsigned name="K/s" value="48" documentation="Temperature change rate"/>
+            <Unsigned name="Pa/s" value="49" documentation="Pressure change rate"/>
+            <Unsigned name="J/kg K" value="50" documentation="Specific heat"/>
+            <Unsigned name="VA" value="51" documentation="Apparent power"/>
+            <Unsigned name="Watts" value="52" documentation="Real power (I2 R)"/>
+            <Unsigned name="VAr" value="53" documentation="Reactive power (V I sinTheta)"/>
+            <Unsigned name="phi" value="54" documentation="Phase angle"/>
+            <Unsigned name="cos(phi)" value="55" documentation="Power factor"/>
+            <Unsigned name="Vs" value="56" documentation="Volt second (Ws/A)"/>
+            <Unsigned name="V²" value="57" documentation="Volt squared (W2/A2)"/>
+            <Unsigned name="As" value="58" documentation="Amp second"/>
+            <Unsigned name="A²" value="59" documentation="Amp squared"/>
+            <Unsigned name="A²t" value="60" documentation="Amps squared time"/>
+            <Unsigned name="VAh" value="61" documentation="Apparent energy"/>
+            <Unsigned name="Wh" value="62" documentation="Real energy"/>
+            <Unsigned name="VArh" value="63" documentation="Reactive energy"/>
+            <Unsigned name="V/Hz" value="64" documentation="Magnetic flux"/>
+            <Unsigned name="Hz/s" value="65" documentation="Rate of change of frequency"/>
+            <Unsigned name="char" value="66" documentation="Number of characters"/>
+            <Unsigned name="char/s" value="67" documentation="Baud"/>
+            <Unsigned name="kgm²" value="68" documentation="Turbine inertia"/>
+            <Unsigned name="dB" value="69" documentation="Sound pressure level"/>
+            <Unsigned name="J/Wh" value="70" documentation="Heat rate"/>
+            <Unsigned name="W/s" value="71" documentation="Ramp rate"/>
+            <Unsigned name="l/s" value="72" documentation="Flow rate"/>
+            <Unsigned name="dBm" value="73" documentation="Power level relative to 1mW"/>
+        </NamedValues>
+    </Enumerated>
+
+    <Sequence name="Iec61850.ENCBehaviourMode" extends="Iec61850.ENC" documentation="Possible values for 'stVal', 'ctlVal', 'subVal', 'minVal', 'maxVal' are restricted by enumeration. Used for: Mod.">
+    </Sequence>
+
+    <Sequence name="Iec61850.ENGCalcIntervalType" extends="Iec61850.ENG" documentation="Possible values for 'setVal', 'minVal', 'maxVal' are restricted by enumeration. Used for: ClcIntvTyp, ClcRfTyp.">
+    </Sequence>
+
+    <Sequence name="Iec61850.ENGCalcMethod" extends="Iec61850.ENG" documentation="Possible values for 'setVal', 'minVal', 'maxVal' are restricted by enumeration. Used for: ClcMth.">
+    </Sequence>
+
+    <Sequence name="Iec61850.ENGCalcMode" extends="Iec61850.ENG" documentation="Possible values for 'setVal', 'minVal', 'maxVal' are restricted by enumeration. Used for: ClcMod.">
+    </Sequence>
+
+    <Sequence name="Iec61850.ENGPfSign" extends="Iec61850.ENG" documentation="Possible values for 'setVal', 'minVal', 'maxVal' are restricted by enumeration. Used for: PFSign.">
+    </Sequence>
+
+    <Sequence name="Iec61850.ENGSTotalCalcMethod" extends="Iec61850.ENG" documentation="Possible values for 'setVal', 'minVal', 'maxVal' are restricted by enumeration. Used for: ClcTotVA.">
+    </Sequence>
+
+    <Sequence name="Iec61850.ENSAdjustment" extends="Iec61850.ENS" documentation="Possible values for 'stVal', 'subVal' are restricted by enumeration. Used for: AdjSt.">
+    </Sequence>
+
+    <Sequence name="Iec61850.ENSBehaviourMode" extends="Iec61850.ENS" documentation="Possible values for 'stVal', 'subVal' are restricted by enumeration. Used for: Beh, Mod.">
+    </Sequence>
+
+    <Sequence name="Iec61850.ENSHealth" extends="Iec61850.ENS" documentation="Possible values for 'stVal', 'subVal' are restricted by enumeration. Used for: EEHealth, Health, PhyHealth, MechHealth.">
+    </Sequence>
+
+    <Sequence name="Iec61850.SPCTransient" extends="Iec61850.SPC" documentation="
+            An SPC whose 'stVal' is transient.
+            Not explicitly defined in the standard.
+            Transient Data - the status of data with this designation is momentary and must be logged or reported to provide evidence of their momentary state.  The transient property of data only applies to boolean process data attributes (FC=ST) of that data. Transient data is identical to normal data, except that for the process state change from TRUE to FALSE no event is generated for reporting and for logging.
+            ">
+    </Sequence>
+
+    <Sequence name="Iec61850.SPSTransient" extends="Iec61850.SPS" documentation="
+            An SPS whose 'stVal' is transient.
+            Not explicitly defined in the standard.
+            Transient Data - the status of data with this designation is momentary and must be logged or reported to provide evidence of their momentary state. The transient property of data only applies to boolean process data attributes (FC=ST) of that data. Transient data is identical to normal data, except that for the process state change from TRUE to FALSE no event may be generated for reporting and for logging.
+            ">
+    </Sequence>
+
+    <Enumerated name="Iec61850.AdjustmentKind" documentation="An enumeration of an adjustment status.">
+        <NamedValues>
+            <Unsigned name="Completed" value="1" documentation="Adjustment has completed."/>
+            <Unsigned name="Cancelled" value="2" documentation="Adjustment has been cancelled."/>
+            <Unsigned name="New adjustments" value="3" documentation="Adjustment has accepted new adjustment."/>
+            <Unsigned name="Under way" value="4" documentation="Adjustment is under way."/>
+        </NamedValues>
+    </Enumerated>
+
+    <Enumerated name="Iec61850.BehaviourModeKind" documentation="
+            Switching between the modes (Mod.stVal) should only happen as a result of an operator command to the data object Mod. Mod and Beh are always accessible by the services. The communication services for the data object Mod do not care about the status of the Beh of the LN.
+            Logical nodes should process receiving data according to their quality information:
+            •	processed as valid means that the application should react according to the quality and the behaviour of the LN. 
+            •	processes as invalid means the application should react as if the quality of the data had been invalid. 
+            •	processed as blocked means that the application should decide how to react, besides no process-related action based on the value is performed. 
+            •	statements &quot;processed&quot; and &quot;not processed&quot; don’t belong to communication services and therefore no quality bit can be evaluated. 
+            ">
+        <NamedValues>
+            <Unsigned name="on" value="1" documentation="Normal enabled state. All communication services work and get updated values."/>
+            <Unsigned name="•" value="2" documentation="Function behind LN: on"/>
+            <Unsigned name="•" value="3" documentation="Output to the process (switchgear) via a non-IEC 61850 link (for example wire, typical for X...,Y... and GGIO LNs): yes"/>
+            <Unsigned name="•" value="4" documentation="Output of FC ST, MX (issued independently from Beh): value and q are relevant	 "/>
+            <Unsigned name="•" value="5" documentation="Response to normal command from client: a+ (pos. ack.)"/>
+            <Unsigned name="•" value="6" documentation="Response to test command from client: a- (neg. ack.)"/>
+            <Unsigned name="•" value="7" documentation="Incoming data with q='normal': processed as valid"/>
+            <Unsigned name="•" value="8" documentation="Incoming data with q='operatorBlocked': processed as blocked "/>
+            <Unsigned name="•" value="9" documentation="Incoming data with q='test': processed as valid"/>
+            <Unsigned name="•" value="10" documentation="Incoming data with q='test'+'operatorBlocked': processed as invalid"/>
+            <Unsigned name="•" value="11" documentation="Incoming data with q='invalid': processed as invalid"/>
+            <Unsigned name="•" value="12" documentation="Non-IEC 61850 binary (relay, contact) inputs and analogue (instrument transformer) inputs: processed"/>
+            <Unsigned name="on-blocked" value="13" documentation="Process is passively supervised. No output data (digital by relays or analogue setting) will be issued to the process. All communication services work and get updated values. Data objects will be transmitted with quality 'operatorBlocked'."/>
+            <Unsigned name="•" value="14" documentation="Function behind LN: on"/>
+            <Unsigned name="•" value="15" documentation="Output to the process (switchgear) via a non-IEC 61850 link (for example wire, typical for X...,Y... and GGIO LNs): no"/>
+            <Unsigned name="•" value="16" documentation="Output of FC ST, MX (issued independently from Beh): value is relevant, q='operatorBlocked'"/>
+            <Unsigned name="•" value="17" documentation="Response to normal command from client: a- (neg. ack.)"/>
+            <Unsigned name="•" value="18" documentation="Response to test command from client: a- (neg. ack.)"/>
+            <Unsigned name="•" value="19" documentation="Incoming data with q='normal': processed as valid"/>
+            <Unsigned name="•" value="20" documentation="Incoming data with q='operatorBlocked': processed as blocked "/>
+            <Unsigned name="•" value="21" documentation="Incoming data with q='test': processed as invalid"/>
+            <Unsigned name="•" value="22" documentation="Incoming data with q='test'+'operatorBlocked': processed as invalid"/>
+            <Unsigned name="•" value="23" documentation="Incoming data with q='invalid': processed as invalid"/>
+            <Unsigned name="•" value="24" documentation="Non-IEC 61850 binary (relay, contact) inputs and analogue (instrument transformer) inputs: processed"/>
+            <Unsigned name="test" value="25" documentation="Function is operated but results are indicated as test results. All communication services work and get updated values. Data objects will be transmitted with quality 'test'. Control commands with quality 'test' will be accepted only by LNs in 'test' or 'test/blocked mode. Processed as valid means that the application should react in the manner what is foreseen for 'test'."/>
+            <Unsigned name="•" value="26" documentation="Function behind LN: on"/>
+            <Unsigned name="•" value="27" documentation="Output to the process (switchgear) via a non-IEC 61850 link (for example wire, typical for X...,Y... and GGIO LNs): yes"/>
+            <Unsigned name="•" value="28" documentation="Output of FC ST, MX (issued independently from Beh): value is relevant, q='test'	 "/>
+            <Unsigned name="•" value="29" documentation="Response to normal command from client: a- (neg. ack.)"/>
+            <Unsigned name="•" value="30" documentation="Response to test command from client: a+ (pos. ack.)"/>
+            <Unsigned name="•" value="31" documentation="Incoming data with q='normal': processed as valid"/>
+            <Unsigned name="•" value="32" documentation="Incoming data with q='operatorBlocked': processed as blocked "/>
+            <Unsigned name="•" value="33" documentation="Incoming data with q='test': processed as valid"/>
+            <Unsigned name="•" value="34" documentation="Incoming data with q='test'+'operatorBlocked': processed as blocked"/>
+            <Unsigned name="•" value="35" documentation="Incoming data with q='invalid': processed as invalid"/>
+            <Unsigned name="•" value="36" documentation="Non-IEC 61850 binary (relay, contact) inputs and analogue (instrument transformer) inputs: processed"/>
+            <Unsigned name="test/blocked" value="37" documentation="Function is operated in test mode, but with no impact to the process. No output data (digital by relays or analogue setting) will be issued to the process. All communication services work and get updated values. Data objects will be transmitted with quality 'test'. Control commands with quality test will be accepted only by LNs in 'test' or 'test/blocked' mode."/>
+            <Unsigned name="•" value="38" documentation="Function behind LN: on"/>
+            <Unsigned name="•" value="39" documentation="Output to the process (switchgear) via a non-IEC 61850 link (for example wire, typical for X...,Y... and GGIO LNs): no"/>
+            <Unsigned name="•" value="40" documentation="Output of FC ST, MX (issued independently from Beh): value is relevant, q='test'+'operatorBlocked'"/>
+            <Unsigned name="•" value="41" documentation="Response to normal command from client: a- (neg. ack.)"/>
+            <Unsigned name="•" value="42" documentation="Response to test command from client: a+ (pos. ack.)"/>
+            <Unsigned name="•" value="43" documentation="Incoming data with q='normal': processed as valid"/>
+            <Unsigned name="•" value="44" documentation="Incoming data with q='operatorBlocked': processed as blocked "/>
+            <Unsigned name="•" value="45" documentation="Incoming data with q='test': processed as valid"/>
+            <Unsigned name="•" value="46" documentation="Incoming data with q='test'+'operatorBlocked': processed as blocked"/>
+            <Unsigned name="•" value="47" documentation="Incoming data with q='invalid': processed as invalid"/>
+            <Unsigned name="•" value="48" documentation="Non-IEC 61850 binary (relay, contact) inputs and analogue (instrument transformer) inputs: processed"/>
+            <Unsigned name="off" value="49" documentation="Function is inactive but shows its configutation capability. No process output is possible. No control command should be acknowledged (negative response). Only the data object Mod and Beh should be accessible by the services."/>
+            <Unsigned name="•" value="50" documentation="Function behind LN: off"/>
+            <Unsigned name="•" value="51" documentation="Output to the process (switchgear) via a non-IEC 61850 link (for example wire, typical for X...,Y... and GGIO LNs): no"/>
+            <Unsigned name="•" value="52" documentation="Output of FC ST, MX (issued independently from Beh): value is irrelevant, q='invalid'"/>
+            <Unsigned name="•" value="53" documentation="Response to normal command from client: a- (neg. ack.)"/>
+            <Unsigned name="•" value="54" documentation="Response to test command from client: a- (neg. ack.)"/>
+            <Unsigned name="•" value="55" documentation="Incoming data with q='normal': not processed"/>
+            <Unsigned name="•" value="56" documentation="Incoming data with q='operatorBlocked': not processed "/>
+            <Unsigned name="•" value="57" documentation="Incoming data with q='test': not processed"/>
+            <Unsigned name="•" value="58" documentation="Incoming data with q='test'+'operatorBlocked': not processed"/>
+            <Unsigned name="•" value="59" documentation="Incoming data with q='invalid': not processed"/>
+            <Unsigned name="•" value="60" documentation="Non-IEC 61850 binary (relay, contact) inputs and analogue (instrument transformer) inputs: not processed"/>
+        </NamedValues>
+    </Enumerated>
+
+    <Enumerated name="Iec61850.CalcIntervalTypeKind" documentation="An enumeration of a calculation interval frequencies.">
+        <NamedValues>
+            <Unsigned name="MS" value="1" documentation="Calculation interval is millisecond."/>
+            <Unsigned name="PER_CYCLE" value="2" documentation="Calculation interval is per cycle."/>
+            <Unsigned name="CYCLE" value="3" documentation="Calculation interval is cycle."/>
+            <Unsigned name="DAY" value="4" documentation="Calculation interval is one day."/>
+            <Unsigned name="WEEK" value="5" documentation="Calculation interval is one week."/>
+            <Unsigned name="MONTH" value="6" documentation="Calculation interval is one month."/>
+            <Unsigned name="YEAR" value="7" documentation="Calculation interval is one year."/>
+            <Unsigned name="EXTERNAL" value="8" documentation="Calculation interval is externally defined."/>
+        </NamedValues>
+    </Enumerated>
+
+    <Enumerated name="Iec61850.CalcMethodKind" documentation="An enumeration of calculation methods.">
+        <NamedValues>
+            <Unsigned name="UNSPECIFIED" value="1" documentation="Calculation of the analogue values is unspecified."/>
+            <Unsigned name="TRUE_RMS" value="2" documentation="All analogue values are true r.m.s. values."/>
+            <Unsigned name="PEAK_FUNDAMENTAL" value="3" documentation="All analogue values are peak fundamental values."/>
+            <Unsigned name="RMS_FUNDAMENTAL" value="4" documentation="All analogue values are r.m.s. fundamental values."/>
+            <Unsigned name="MIN" value="5" documentation="All analogue values are minimum values."/>
+            <Unsigned name="MAX" value="6" documentation="All analogue values are maximum values."/>
+            <Unsigned name="AVG" value="7" documentation="All analogue values are average values."/>
+            <Unsigned name="SDV" value="8" documentation="All analogue values are standard deviation values."/>
+            <Unsigned name="PREDICTION" value="9" documentation="All analogue values are long term changes over time."/>
+            <Unsigned name="RATE" value="10" documentation="All analogue values are actual changes over time calculated with the actual and previous value."/>
+        </NamedValues>
+    </Enumerated>
+
+    <Enumerated name="Iec61850.CalcModeKind" documentation="An enumeration of calculation modes.">
+        <NamedValues>
+            <Unsigned name="TOTAL" value="1" documentation="Total time from the first start of the device/application until the current time."/>
+            <Unsigned name="PERIOD" value="2" documentation="Periodic time cycle."/>
+            <Unsigned name="SLIDING" value="3" documentation="Sliding window from now predefined window backwards."/>
+        </NamedValues>
+    </Enumerated>
+
+    <Enumerated name="Iec61850.HealthKind" documentation="An enumeration of health status.">
+        <NamedValues>
+            <Unsigned name="Ok" value="1" documentation="No problems, normal operation (&quot;green&quot;)."/>
+            <Unsigned name="Warning" value="2" documentation="Minor problems, but in safe operating mode (&quot;yellow&quot;). The exact meaning is a local issue, depending on the dedicated function/device."/>
+            <Unsigned name="Alarm" value="3" documentation="Severe problem, no operation possible (&quot;red&quot;)."/>
+        </NamedValues>
+    </Enumerated>
+
+    <Enumerated name="Iec61850.PfSignKind" documentation="An enumeration of power factor sign kind.">
+        <NamedValues>
+            <Unsigned name="Active Power" value="1" documentation="Real power."/>
+            <Unsigned name="Lead/Lag" value="2" documentation="Lead/lag."/>
+        </NamedValues>
+    </Enumerated>
+
+    <Sequence name="Iec61850.DERComplexOutputRamping" extends="Iec61850.DomainLN" documentation="This logical node models a generic ramp. It is required due to the fact that the data object attributes of the ASG common data class do not contain all of the information required to achieve a full ramping function with divergent up and down trends (61850 LogicalNode FRMP).">
+        <Sequence name="AdjSt" type="Iec61850.ENSAdjustment" optional="true" documentation="'AdjSt.stVal' is the state of adjustment process."/>
+        <Sequence name="Out" type="Iec61850.MV" documentation="'Out.mag.f' is the analogue output of this function."/>
+        <Sequence name="ErrTerm" type="Iec61850.MV" optional="true" documentation="'ErrTerm.mag.f' is the control loop termination error value, in case the function cannot be fulfilled because of external reasons. The value is a difference between set point and actual value."/>
+        <Sequence name="RmpUp" type="Iec61850.ASG" optional="true" documentation="'RmpUp.setMag.f' is the ramping rate on an upward trend."/>
+        <Sequence name="RmpDn" type="Iec61850.ASG" optional="true" documentation="'RmpDn.setMag.f' is the ramping rate on a downward trend."/>
+        <Sequence name="StepPs" type="Iec61850.ASG" optional="true" documentation="'StepPs.setMag.f' is the step size when turning from negative to positive direction."/>
+        <Sequence name="StepNg" type="Iec61850.ASG" optional="true" documentation="'StepNg.setMag.f' is the step size when turning from positive to negative direction."/>
+    </Sequence>
+
+    <Sequence name="Iec61850.DomainLN" documentation="Abstract type, holding attributes common to all of all the domain logical nodes (corresponds to Common LN).">
+        <Sequence name="NamPlt" type="Iec61850.LPL" optional="true" documentation="Name plate of the logical node."/>
+        <Sequence name="Beh" type="Iec61850.ENSBehaviourMode" documentation="'DomainLN.Beh.stVal' is a read-only value, describing the behaviour of a domain logical node. It depends on the current operating mode of the logical node ('DomainLN.Mod.stVal'), and the current operating mode of the logical device that contains it ('LLN0.Mod.stVal'). Processing of the quality status (q) of the received data is the prerequisite for correct interpretation of 'DomainLN.Beh.stVal'. See statechart diagram 'DomainLN.behStateMachine'."/>
+        <Sequence name="Health" type="Iec61850.ENSHealth" optional="true" documentation="'Health.stVal' reflects the state of the logical node related hardware and software. More detailed information related to the source of the problem may be provided by specific attribute of the logical node."/>
+        <Sequence name="Blk" type="Iec61850.SPS" optional="true" documentation="If 'Blk.stVal=true', this function has been dynamically blocked."/>
+        <Sequence name="Mod" type="Iec61850.ENCBehaviourMode" optional="true" documentation="'DomainLN.Mod.ctlVal' is used by operator to initiate the change in the operating mode of the domain logical node. The resulting operating mode is 'DomainLN.Mod.stVal'. Processing of the quality status (q) of the received data is the prerequisite for correct interpretation of 'DomainLN.Mod.stVal'. See statechart diagram 'DomainLN.behStateMachine'."/>
+        <Sequence name="CmdBlk" type="Iec61850.SPC" optional="true" documentation="'CmdBlk.ctlVal=true' initiates blocking of control sequences and action triggers of all controllable data objects in this function. The resulting status is 'CmdBlk.stVal'. NOTE  This data object may be used only in case the logical node does not already contain BlkOpn/BlkCls available (i.e., logical nodes with controllable data objects, other than XCBR, XSWI, YPSH and KVLV)."/>
+        <Array name="InRef" memberType="Iec61850.ORG" documentation="'InRef[i].setRef' is reference to the data object i bound to this input."/>
+        <Array name="BlkRef" memberType="Iec61850.ORG" documentation="'BlkRef[i].setRef' shows the receiving of dynamically blocking signal i."/>
+    </Sequence>
+
+    <Sequence name="Iec61850.LLN0" extends="Iec61850.DomainLN" documentation="This logical node contains common information for logical devices (LDs).">
+        <Sequence name="NamPlt" type="Iec61850.LPL" optional="true" documentation="Name plate of the logical device."/>
+        <Sequence name="Beh" type="Iec61850.ENSBehaviourMode" documentation="Behaviour of the LogicalNode. It can be either on, blocked, test, test/blocked, or off."/>
+        <Sequence name="Health" type="Iec61850.ENSHealth" optional="true" documentation="'Health.stVal' reflects the state of the logical device related hardware and software. It is derived from the worst (most critical) value of the health attribute of all the domain logical nodes contained in the logical device: 'Health.stVal' = max('DomainLN[i].Health.stVal')."/>
+        <Sequence name="Blk" type="Iec61850.SPS" optional="true" documentation="If 'Blk.stVal=true', the function of the logical device has been dynamically blocked."/>
+        <Sequence name="Mod" type="Iec61850.ENCBehaviourMode" optional="true" documentation="'Mod.ctlVal' is used by operator to initiate the change in the operating mode of the logical device, which subsequently influences behaviour of the contained domain logical nodes ('DomainLN.Beh.stVal'). The resulting operating mode is 'DomainLN.Mod.stVal'. Processing of the quality status (q) of the received data is the prerequisite for correct interpretation of 'LLN0.Mod.stVal'. See statechart diagram 'DomainLN.behStateMachine'."/>
+        <Sequence name="CmdBlk" type="Iec61850.SPC" optional="true" documentation="'CmdBlk.ctlVal=true' initiates blocking of control sequences and action triggers of all controllable data objects in the logical device. The resulting status is 'CmdBlk.stVal'."/>
+        <Array name="InRef" memberType="Iec61850.ORG" documentation="'InRef[i].setRef' is reference to the data object i bound to this input."/>
+        <Array name="BlkRef" memberType="Iec61850.ORG" documentation="'BlkRef[i].setRef' shows the receiving of dynamically blocking signal i."/>
+        <Sequence name="OpTmh" type="Iec61850.INS" optional="true" documentation="'OpTmh.stVal' is the operation time [h], of a physical device (???) since start of the operation."/>
+        <Sequence name="LocKey" type="Iec61850.SPS" documentation="If 'LocKey.stVal=true', the operation of the complete logical device has been switched (from remote) to local. This changeover is always done locally with a physical key or toggle switch, which may have a set of contacts from which the position can be read."/>
+        <Sequence name="Loc" type="Iec61850.SPS" optional="true" documentation="
+            If 'Loc.stVal=true', the control behaviour is allowed at this level. At bay level, &quot;local&quot; means operation from the bay unit and &quot;remote&quot; means operation from a station unit. At process level, &quot;local&quot; means direct operation on the process device (for example on a circuit breaker) and &quot;remote&quot; means operation from a bay unit.
+            If in a logical device 'LLN0.Loc.stVal' is in contradiction to the any contained 'DomainLN.Loc', &quot;local&quot; is always dominant.
+            (See also Annex B)
+            "/>
+        <Sequence name="LocSta" type="Iec61850.SPC" optional="true" documentation="'LocSta.ctlVal=true' switches control authority to station level and disables control from remote. 'LocSta.ctlVal=false' does the opposite, i.e., it switches control authority from local to remote. The resulting status is 'LocSta.stVal'."/>
+        <Sequence name="Diag" type="Iec61850.SPC" optional="true" documentation="'Diag.ctlVal=true' initiates running the diagnostics. The resulting status is 'Diag.stVal'."/>
+        <Sequence name="LEDRs" type="Iec61850.SPCTransient" optional="true" documentation="'LEDRs.ctlVal=true' initiates the resetting of all light emitting diodes. The resulting status is 'LEDRs.stVal'."/>
+        <Sequence name="GrRef" type="Iec61850.ORG" optional="true" documentation="'GrRef.setRef' is the reference to a higher level logical device."/>
+        <Sequence name="MltLev" type="Iec61850.SPG" optional="true" documentation="If 'MltLev.setVal=true', authority control from multiple levels is allowed, otherwise no other control level is allowed (see Annex B)."/>
+    </Sequence>
+
+    <Sequence name="Iec61850.LPHD" extends="Iec61850.DomainLN" documentation="This logical node contains common information for physical devices (IEDs).">
+        <Sequence name="PhyNam" type="Iec61850.DPL" documentation="Physical device (IED) name plate."/>
+        <Sequence name="PhyHealth" type="Iec61850.ENSHealth" documentation="'PhyHealth.stVal' reflects the state of the IED related hardware and software."/>
+        <Sequence name="OutOv" type="Iec61850.SPS" optional="true" documentation="If 'OutOv.stVal=true', an output communications buffer overflow occurred. Consequently, the annunciations important for the communication may be lost. A general interrogation is recommended or an integrity scan is started automatically."/>
+        <Sequence name="Proxy" type="Iec61850.SPS" documentation="If 'Proxy.stVal=true', the IED is a proxy."/>
+        <Sequence name="InOv" type="Iec61850.SPS" optional="true" documentation="If 'InOv.stVal=true', an input communications buffer overflow occurred. Consequently, the annunciations important for the communication may be lost. A general interrogation is recommended or an integrity scan is started automatically."/>
+        <Sequence name="NumPwrUp" type="Iec61850.INS" optional="true" documentation="'NumPwrUp.stVal' is the number of power up operations of the IED since the last reset."/>
+        <Sequence name="WrmStr" type="Iec61850.INS" optional="true" documentation="'WrmStr.stVal' is the number of warm start operations of the IED since the last reset."/>
+        <Sequence name="WacTrg" type="Iec61850.INS" optional="true" documentation="'WacTrg.stVal' is the number of times the watchdog circuit has reset the IED since the counter reset."/>
+        <Sequence name="PwrUp" type="Iec61850.SPS" optional="true" documentation="If 'PwrUp.stVal=true', an IED power up has been detected."/>
+        <Sequence name="PwrDn" type="Iec61850.SPS" optional="true" documentation="If 'PwrDn.stVal=true', an IED power down has been detected."/>
+        <Sequence name="PwrSupAlm" type="Iec61850.SPS" optional="true" documentation="If 'PwrSupAlm.stVal=true', an alarm from the external power supply occured. It may be an external contact. It refers always to the local power supply of the IED, and not to the health (EEHealth) of the complete external supply system."/>
+        <Sequence name="Sim" type="Iec61850.SPC" optional="true" documentation="'Sim.ctlVal=true' causes the IED to use simulated GOOSE or sampled measurand values instead of original ones since they are first received."/>
+        <Sequence name="RsStat" type="Iec61850.SPCTransient" optional="true" documentation="'RsStat.ctlVal=true' initiates the resetting of the IED security statistics."/>
+    </Sequence>
+
+    <Sequence name="Iec61850.DERMeasurement" extends="Iec61850.DomainLN" documentation="This logical node is used for calculation of currents, voltages, powers and impedances in a three-phase system. The main use is for operative applications (61850 LogicalNode MMXU).">
+        <Sequence name="ClcExp" type="Iec61850.SPSTransient" optional="true" documentation="If 'ClcExp.stVal=true', the calculation period of a statistical logical node has expired."/>
+        <Sequence name="NamPlt" type="Iec61850.LPL" optional="true" documentation="Name plate of the logical node."/>
+        <Sequence name="TotW" type="Iec61850.MV" optional="true" documentation="'TotW.mag.f' is the total three-phase real power [W]."/>
+        <Sequence name="Beh" type="Iec61850.ENSBehaviourMode" documentation="'DomainLN.Beh.stVal' is a read-only value, describing the behaviour of a domain logical node. It depends on the current operating mode of the logical node ('DomainLN.Mod.stVal'), and the current operating mode of the logical device that contains it ('LLN0.Mod.stVal'). Processing of the quality status (q) of the received data is the prerequisite for correct interpretation of 'DomainLN.Beh.stVal'. See statechart diagram 'DomainLN.behStateMachine'."/>
+        <Sequence name="ClcStr" type="Iec61850.SPC" optional="true" documentation="'ClcStr.ctlVal=true' enables the start calculation of statistical data, either immediately or at 'operTm' of the control model (if set). Resulting status is 'ClcStr.stVal'."/>
+        <Sequence name="TotVAr" type="Iec61850.MV" optional="true" documentation="'TotVAr.mag.f' is the total three-phase reactive power [VAr]."/>
+        <Sequence name="ClcMth" type="Iec61850.ENGCalcMethod" optional="true" documentation="'ClcMth.setVal' is the kind of statistical calculation, specifying how the data attributes that represent analogue values have been calculated. The calculation method shall be the same for all data objects of the logical node instance."/>
+        <Sequence name="Health" type="Iec61850.ENSHealth" optional="true" documentation="'Health.stVal' reflects the state of the logical node related hardware and software. More detailed information related to the source of the problem may be provided by specific attribute of the logical node."/>
+        <Sequence name="TotVA" type="Iec61850.MV" optional="true" documentation="'TotVA.mag.f' is the total three-phase apparent power [VA]."/>
+        <Sequence name="Blk" type="Iec61850.SPS" optional="true" documentation="If 'Blk.stVal=true', this function has been dynamically blocked."/>
+        <Sequence name="ClcMod" type="Iec61850.ENGCalcMode" optional="true" documentation="'ClcMod.setVal' is the calculation mode."/>
+        <Sequence name="TotPF" type="Iec61850.MV" optional="true" documentation="'TotPF.mag.f' is the average three-phase power factor."/>
+        <Sequence name="ClcIntvTyp" type="Iec61850.ENGCalcIntervalType" optional="true" documentation="'ClcIntvTyp.setVal' is the calculation interval type."/>
+        <Sequence name="Hz" type="Iec61850.MV" optional="true" documentation="'Hz.mag.f' is the frequency [Hz]."/>
+        <Sequence name="Mod" type="Iec61850.ENCBehaviourMode" optional="true" documentation="'DomainLN.Mod.ctlVal' is used by operator to initiate the change in the operating mode of the domain logical node. The resulting operating mode is 'DomainLN.Mod.stVal'. Processing of the quality status (q) of the received data is the prerequisite for correct interpretation of 'DomainLN.Mod.stVal'. See statechart diagram 'DomainLN.behStateMachine'."/>
+        <Sequence name="ClcIntvPer" type="Iec61850.ING" optional="true" documentation="'ClcIntvPer.setVal' is the number of units to consider to calculate the calculation interval duration, in case 'ClcIntvTyp.setVal' other than 'external'."/>
+        <Sequence name="CmdBlk" type="Iec61850.SPC" optional="true" documentation="'CmdBlk.ctlVal=true' initiates blocking of control sequences and action triggers of all controllable data objects in this function. The resulting status is 'CmdBlk.stVal'. NOTE  This data object may be used only in case the logical node does not already contain BlkOpn/BlkCls available (i.e., logical nodes with controllable data objects, other than XCBR, XSWI, YPSH and KVLV)."/>
+        <Sequence name="PPV" type="Iec61850.DEL" optional="true" documentation="
+            'PPV' holds the phase to phase voltage phasors [V], as follows:
+            •	'PPV.[phsAB,phsBC,phsCA].cVal.[mag,ang].f' are phase voltage phasors; 
+            •	'PPV.angRef.stVal' is the quantity used as reference for the phase angles of the 3 phasors above. 
+            "/>
+        <Array name="InRef" memberType="Iec61850.ORG" documentation="'InRef[i].setRef' is reference to the data object i bound to this input."/>
+        <Sequence name="NumSubIntv" type="Iec61850.ING" optional="true" documentation="'NumSubIntv.setVal' is the number of sub-intervals contained in a calculation period interval duration."/>
+        <Sequence name="PhV" type="Iec61850.WYE" optional="true" documentation="'PhV.[phsA,phsB,phsC].cVal.' hold phase to ground (line) voltage phasors [V]. For structure, see 'A'."/>
+        <Sequence name="A" type="Iec61850.WYE" optional="true" documentation="
+            'A' holds the currents [A] for three phases, as follows:
+            •	'A.[phsA,phsB,phsC].cVal.[mag,ang].f' are phase current phasors; 
+            •	'A.neut.cVal.[mag,ang].f' is neutral current phasor; 
+            •	'A.net.cVal.[mag,ang].f' is net current phasor (phsA+phsB+phsC+neut); 
+            •	'A.res.cVal.[mag,ang].f' is residual current phasor (phsA+phsB+phsC); 
+            •	'A.angRef.stVal' is the quantity used as reference for the phase angles of the 6 phasors above. 
+            "/>
+        <Array name="BlkRef" memberType="Iec61850.ORG" documentation="'BlkRef[i].setRef' shows the receiving of dynamically blocking signal i."/>
+        <Sequence name="ClcRfTyp" type="Iec61850.ENGCalcIntervalType" optional="true" documentation="'ClcRfTyp.setVal' is the kind of refresh interval."/>
+        <Sequence name="ClcRfPer" type="Iec61850.ING" optional="true" documentation="'ClcRfPer.setVal' is the number of units to consider to calculate the refreshment interval duration in case 'ClcIntvTyp.setVal' is other than 'external'."/>
+        <Sequence name="W" type="Iec61850.WYE" optional="true" documentation="'W.[phsA,phsB,phsC].cVal' hold the real powers [W] per phase. For structure, see 'A'."/>
+        <Sequence name="ClcSrc" type="Iec61850.ORG" optional="true" documentation="'ClcSrc.setRef' is the object reference to the logical node whose analogue data attributes are used to calculate the values contained in this logical node instance."/>
+        <Sequence name="VAr" type="Iec61850.WYE" optional="true" documentation="'VAr.[phsA,phsB,phsC].cVal' hold the reactive powers per phase [VAr]. For structure, see 'A'."/>
+        <Sequence name="ClcNxTmms" type="Iec61850.ING" optional="true" documentation="'ClcNxTmms.setVal' is the remaining time [ms] up to the end of the current calculation interval."/>
+        <Sequence name="VA" type="Iec61850.WYE" optional="true" documentation="'VA.[phsA,phsB,phsC].cVal' hold the apparent powers per phase [VA]. For structure, see 'A'."/>
+        <Sequence name="InSyn" type="Iec61850.ORG" optional="true" documentation="'InSyn.setRef' is the object reference to the source of the external synchronization signal for the calculation interval."/>
+        <Sequence name="PF" type="Iec61850.WYE" optional="true" documentation="'PF.[phsA,phsB,phsC].cVal' hold the phase to ground power factor phasors. For structure, see 'A'."/>
+        <Sequence name="Z" type="Iec61850.WYE" optional="true" documentation="'Z.[phsA,phsB,phsC].cVal' hold the impedances per phase. For structure, see 'A'."/>
+        <Sequence name="AvAPhs" type="Iec61850.MV" optional="true" documentation="'AvAPhs.mag.f' is the arithmetic average of the magnitude of current of the 3 phases: average(Ia,Ib,Ic)."/>
+        <Sequence name="AvPPVPhs" type="Iec61850.MV" optional="true" documentation="'AvPPVPhs.mag.f' is the arithmetic average of the magnitude of phase to phase voltage of the 3 phases: average(PPVa, PPVb, PPVc)."/>
+        <Sequence name="AvPhVPhs" type="Iec61850.MV" optional="true" documentation="'AvPhVPhs.mag.f' is the arithmetic average of the magnitude of phase to reference voltage of the 3 phases: average(PhVa, PhVb, PhVc)."/>
+        <Sequence name="AvWPhs" type="Iec61850.MV" optional="true" documentation="'AvWPhs.mag.f' is the arithmetic average of the magnitude of active power of the 3 phases: average(Wa, Wb, Wc)."/>
+        <Sequence name="AvVAPhs" type="Iec61850.MV" optional="true" documentation="'AvVAPhs.mag.f' is the arithmetic average of the magnitude of apparent power of the 3 phases: average(VAa, VAb, VAc)."/>
+        <Sequence name="AvVArPhs" type="Iec61850.MV" optional="true" documentation="'AvVArPhs.mag.f' is the arithmetic average of the magnitude of rective power of the 3 phases: average(VAra, VArb, VArc)."/>
+        <Sequence name="AvPFPhs" type="Iec61850.MV" optional="true" documentation="'AvPFPhs.mag.f' is the arithmetic average of the magnitude of power factor of the 3 phases.: average(PFa, PFb, PFc)."/>
+        <Sequence name="AvZPhs" type="Iec61850.MV" optional="true" documentation="'AvZPhs.mag.f' is the arithmetic average of the magnitude of impedance of the 3 phases.: average(Za, Zb, Zc)."/>
+        <Sequence name="MaxAPhs" type="Iec61850.MV" optional="true" documentation="'MaxAPhs.mag.f' is the maximum magnitude of current of the 3 phases: max(Ia,Ib,Ic)."/>
+        <Sequence name="MaxPPVPhs" type="Iec61850.MV" optional="true" documentation="'MaxPPVPhs.mag.f' is the maximum magnitude of phase to phase voltage of the 3 phases: max(PPVa, PPVb, PPVc)."/>
+        <Sequence name="MaxPhVPhs" type="Iec61850.MV" optional="true" documentation="'MaxPhVPhs.mag.f' is the maximum magnitude of phase to reference voltage of the 3 phases: max(PhVa, PhVb, PhVc)."/>
+        <Sequence name="MaxWPhs" type="Iec61850.MV" optional="true" documentation="'MaxWPhs.mag.f' is the maximum magnitude of active power of the 3 phases: max(Wa, Wb, Wc)."/>
+        <Sequence name="MaxVAPhs" type="Iec61850.MV" optional="true" documentation="'MaxVAPhs.mag.f' is the maximum magnitude of apparent power of the 3 phases: max(VAa, VAb, VAc)."/>
+        <Sequence name="MaxVArPhs" type="Iec61850.MV" optional="true" documentation="'MaxVArPhs.mag.f' is the maximum magnitude of rective power of the 3 phases: max(VAra, VArb, VArc)."/>
+        <Sequence name="MaxPFPhs" type="Iec61850.MV" optional="true" documentation="'MaxPFPhs.mag.f' is the maximum magnitude of power factor of the 3 phases.: max(PFa, PFb, PFc)."/>
+        <Sequence name="MaxZPhs" type="Iec61850.MV" optional="true" documentation="'MaxZPhs.mag.f' is the maximum magnitude of impedance of the 3 phases.: max(Za, Zb, Zc)."/>
+        <Sequence name="MinAPhs" type="Iec61850.MV" optional="true" documentation="'MinAPhs.mag.f' is the minimum magnitude of current of the 3 phases: min(Ia,Ib,Ic)."/>
+        <Sequence name="MinPPVPhs" type="Iec61850.MV" optional="true" documentation="'MinPPVPhs.mag.f' is the minimum magnitude of phase to phase voltage of the 3 phases: min(PPVa, PPVb, PPVc)."/>
+        <Sequence name="MinPhVPhs" type="Iec61850.MV" optional="true" documentation="'MinPhVPhs.mag.f' is the minimum magnitude of phase to reference voltage of the 3 phases: min(PhVa, PhVb, PhVc)."/>
+        <Sequence name="MinWPhs" type="Iec61850.MV" optional="true" documentation="'MinWPhs.mag.f' is the minimum magnitude of active power of the 3 phases: min(Wa, Wb, Wc)."/>
+        <Sequence name="MinVAPhs" type="Iec61850.MV" optional="true" documentation="'MinVAPhs.mag.f' is the minimum magnitude of apparent power of the 3 phases: min(VAa, VAb, VAc)."/>
+        <Sequence name="MinVArPhs" type="Iec61850.MV" optional="true" documentation="'MinVArPhs.mag.f' is the minimum magnitude of rective power of the 3 phases: min(VAra, VArb, VArc)."/>
+        <Sequence name="MinPFPhs" type="Iec61850.MV" optional="true" documentation="'MinPFPhs.mag.f' is the minimum magnitude of power factor of the 3 phases.: min(PFa, PFb, PFc)."/>
+        <Sequence name="MinZPhs" type="Iec61850.MV" optional="true" documentation="'MinZPhs.mag.f' is the minimum magnitude of impedance of the 3 phases.: min(Za, Zb, Zc)."/>
+        <Sequence name="ClcTotVA" type="Iec61850.ENGSTotalCalcMethod" optional="true" documentation="'ClcTotVA.setVal' is the calculation method used for total apparent power 'TotVA'."/>
+        <Sequence name="PFSign" type="Iec61850.ENGPfSign" optional="true" documentation="'PFSign.setVal' is the sign convention for power factor 'PF' (and reactive power 'VAr'.)."/>
+    </Sequence>
+
+    </Definitions>
+</CSML>

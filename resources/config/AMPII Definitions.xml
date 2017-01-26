@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CSML xmlns="http://bacnet.org/csml/1.2"  defaultLocale="en-US" >
+
+    <Definitions>
+
+        <Enumerated name="org.ampii.types.Error" extends="0-BACnetWsError">
+            <NamedValues>
+                <Unsigned name="INTERNAL_TIMEOUT"          value="1024"/>
+                <Unsigned name="INTERNAL_ERROR"            value="1025"/>
+                <Unsigned name="FUNCTION_NAME"             value="1026"/>
+                <Unsigned name="FUNCTION_TARGET"           value="1027"/>
+                <Unsigned name="ARG_SYNTAX"                value="1028"/>
+                <Unsigned name="ARG_NOT_SUPPORTED"         value="1029"/>
+                <Unsigned name="ARG_VALUE_FORMAT"          value="1030"/>
+                <Unsigned name="ARG_OUT_OF_RANGE"          value="1031"/>
+                <Unsigned name="TARGET_DATATYPE"           value="1032"/>
+                <Unsigned name="CANNOT_HAVE_CHILDREN"      value="1033"/>
+                <Unsigned name="BAD_LINK_TARGET"           value="1034"/>
+                <Unsigned name="OAUTH_INVALID_REQUEST"     value="1035"/>
+                <Unsigned name="OAUTH_INVALID_TOKEN"       value="1036"/>
+                <Unsigned name="OAUTH_INSUFFICIENT_SCOPE"  value="1037"/>
+                <Unsigned name="CALLBACK_FAILED"           value="1038"/>
+                <Unsigned name="CLIENT_ACTION_FAILED"      value="1039"/>
+                <Unsigned name="CANNOT_HAVE_VALUE"         value="1040"/>
+                <Unsigned name="TEST_FAILURE"              value="1041"/>
+            </NamedValues>
+        </Enumerated>
+
+        <Composition name="org.ampii.types.InternalAuthConfig">
+            <Unsigned    name="token-dur" value="86400" description="The default token duration" writable="true" authWrite="auth" />
+            <String      name="keyalg"  readable="true"  authWrite="auth" />
+            <OctetString name="pubkey"  readable="true"  authWrite="auth" />
+            <OctetString name="privkey" readable="false" authWrite="auth" />
+        </Composition>
+
+        <Composition name="org.ampii.types.TestEnvironment">
+            <Unsigned    name="covCallbackFailTime"        value="1100" units="msec" />
+            <Unsigned    name="logCallbackFailTime"        value="1100" units="msec" />
+            <Unsigned    name="subsRecordRemovalFailTime"  value="1100" units="msec" />
+            <Unsigned    name="multiRecordRemovalFailTime" value="1100" units="msec" />
+        </Composition>
+
+        <Composition  name="org.ampii.types.ClientRecord">
+            <String     name="source"/>
+            <String     name="type"/>
+            <String     name="authorization" optional="true"/>
+            <Integer    name="interval"      optional="true"/>
+            <Integer    name="timer"         optional="true"/>
+            <Any        name="data"          optional="true"/>
+            <Boolean    name="error"         optional="true"/>
+            <String     name="status"        optional="true"/>
+        </Composition>
+
+    </Definitions>
+
+</CSML>

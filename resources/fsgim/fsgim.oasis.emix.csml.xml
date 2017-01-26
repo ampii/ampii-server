@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CSML xmlns="http://bacnet.org/csml/1.2">
+    <Definitions>
+    <Sequence name="Emix.DeliveryType" extends="Emix.EmixBaseType" documentation="Receipt / Report of Product Delivery. Injection flag is true for adding product to market supply, false for taking from market.">
+        <Boolean name="injection" documentation="True means positive Delivery is injection into the grid. False means positive Delivery is extraction from Grid. "/>
+    </Sequence>
+
+    <Sequence name="Emix.EmixBaseType" extends="Wscal.GluonType" documentation="iCalendar-derived object to host EMIX (OASIS EMIX v1.0) elements.">
+        <String name="uid" type="Fsgim.GlobalId" documentation="A unique identifier for an EMIX element. Note: different markets and specifications that use EMIX may have their own rules for specifying a UID. "/>
+        <!-- associations -->
+        <Sequence name="envelopeContents" type="Emix.EnvelopeContentsType" optional="true" documentation="The extrinsic information that may distinguish the product from being a pure commodity. "/>
+    </Sequence>
+
+    <Sequence name="Emix.EmixInterfaceType" documentation="Abstract base class for the interfaces for EMIX Product delivery, measurement, and/or pricing.">
+    </Sequence>
+
+    <Sequence name="Emix.EmixOptionType" extends="Emix.EmixBaseType" documentation="Option to buy an Emix Product.">
+        <Enumerated name="currency" type="Fsgim.CurrencyKind" optional="true" documentation="Currency denominating this product."/>
+        <DateTime name="expirationDate" optional="true" documentation="The date and time when a Tender expires. Meaningful only when the value of Transactive State is Tender. "/>
+        <Boolean name="integralOnly" optional="true" documentation="If true, each Option Call must be for the full amount specified"/>
+        <String name="marketContext" type="Fsgim.AnyURI" documentation="The Market Context is the overall market or program rules that govern this event."/>
+        <Enumerated name="optionHolderSide" type="Emix.SideType" documentation="The side which enjoys the benefit of choosing whether to exercise the terms specified in the option. "/>
+        <Sequence name="optionPremium" type="Emix.PriceType" documentation="The Price paid by the Option Holder Side for the rights involved. "/>
+        <Sequence name="optionStrikePrice" type="Emix.PriceType" documentation="The Price that the Option Holder Side pays to exercise the option. "/>
+        <Sequence name="optionType" type="Emix.OptionTypeType" documentation="An enumerated list of Option types. "/>
+        <Enumerated name="side" type="Emix.SideType" documentation="Identifies whether information originator is on the Buy or Sell side. "/>
+        <Sequence name="terms" type="Emix.ArrayOfTerms" optional="true" documentation="A collection of business and performance rules that define the product offering. "/>
+        <Enumerated name="transactiveState" type="Emix.TransactiveStateType" documentation="Indication of the present state of the transaction."/>
+    </Sequence>
+
+    <Sequence name="Emix.EnvelopeContentsType" documentation="EMIX Warrants are delivered as Envelope Contents. Assertions that distinguish the commodity product are called EMIX Warrants. A common definition of a warrant is a written assurance that some product or service will be provided or will meet certain specifications.">
+        <!-- associations -->
+        <Array name="warrants" memberType="Emix.BaseWarrantType" documentation="The assertions that distinguish the commodity product."/>
+    </Sequence>
+
+    <Sequence name="Emix.OptionTypeEnumeratedType" extends="Emix.OptionTypeType" documentation="Enumerated Option Types.">
+    </Sequence>
+
+    <Sequence name="Emix.OptionTypeType" documentation="The EMIX Option is an elaboration of the EMIX Product. An option is an instrument that gives the buyer the right, but not the obligation, to buy or sell a product at a set price during given time windows.  ">
+    </Sequence>
+
+    <Sequence name="Emix.PriceBaseType" documentation="Type of Abstract base for EMIX Prices">
+    </Sequence>
+
+    <Sequence name="Emix.PriceMultiplierType" extends="Emix.PriceBaseType" documentation="Multiplier times market price, 1 for same as market">
+        <String name="marketContext" type="Fsgim.AnyURI" optional="true" documentation="Market Context for  base price. If blank, Market Context from hosting artifact."/>
+        <Real name="multiplier" documentation="Multiplier that when applied to a reference price produces the actual price of a quantity."/>
+    </Sequence>
+
+    <Sequence name="Emix.PriceRelativeType" extends="Emix.PriceBaseType" documentation="Price Relative is a fixed charge (positive or negative) apllied to base price">
+        <String name="marketContext" type="Fsgim.AnyURI" optional="true" documentation="Market Context for base price. If blank, Market Context from hosting artifact."/>
+        <Sequence name="value" type="Fsgim.MonetaryQuantity" documentation="Value added to a reference price to compute the actual price. The value may be positive or negative."/>
+    </Sequence>
+
+    <Sequence name="Emix.PriceType" extends="Emix.PriceBaseType" documentation="Simple Price">
+        <Sequence name="value" type="Fsgim.MonetaryQuantity" documentation="This is the number that quantifies the actual price per unit of the product."/>
+    </Sequence>
+
+    <Sequence name="Emix.ProductDescriptionType" documentation="In EMIX, the Product Description is placed in the Interval or Gluon attachment. The respective product schemas extend this abstract class.">
+    </Sequence>
+
+    <Sequence name="Emix.ProductType" extends="Emix.EmixBaseType" documentation="EMIX Product Type, i.e., a Product Description applied to a Schedule">
+        <Enumerated name="currency" type="Fsgim.CurrencyKind" optional="true" documentation="Currency denominating this product."/>
+        <DateTime name="expirationDate" optional="true" documentation="The date and time when a Tender expires. Meaningful only when the value of Transactive State is Tender."/>
+        <Boolean name="integralOnly" optional="true" documentation="As part of a Tender, indicates element must be accepted in full or rejected"/>
+        <String name="marketContext" type="Fsgim.AnyURI" documentation="The Market Context is the overall market or program rules that govern this event."/>
+        <Enumerated name="side" type="Emix.SideType" documentation="Identifies whether information originator is on the Buy or Sell side."/>
+        <Sequence name="terms" type="Emix.ArrayOfTerms" optional="true" documentation="A collection of business and performance rules that define the product offering."/>
+        <Enumerated name="transactiveState" type="Emix.TransactiveStateType" documentation="Indication of the present state of the transaction."/>
+    </Sequence>
+
+    <Sequence name="Emix.ServiceAreaType" extends="Emix.EmixInterfaceType" documentation="The Service Area is the geographic region that is affected by the EMIX market condition">
+        <Array name="abstractFeature" memberType="WXXM-ISO.AbstractFeature" minimumSize="1" documentation="The Service Area is the only Interface defined for all derived schemas. The Service Area expresses locations or geographic regions relevant to price communication. For example, a change in price for a power product could apply to all customers in an urban area. Service Areas are defined using [GML] in its simplest profile, i.e., level 0. "/>
+    </Sequence>
+
+    <Enumerated name="Emix.SideType" documentation="Identifies whether information originator is on the Buy or Sell side.">
+        <NamedValues>
+            <Unsigned name="buy" value="1" documentation="A party interested in purchasing a product or service."/>
+            <Unsigned name="sell" value="2" documentation="A party offering a product or service for sale."/>
+        </NamedValues>
+    </Enumerated>
+
+    <Enumerated name="Emix.TransactiveStateType" documentation="Indication of the present state of the transaction. ">
+        <NamedValues>
+            <Unsigned name="indicationOfInterest" value="1" documentation="The act of making interest in an offer generally known."/>
+            <Unsigned name="tender" value="2" documentation="An offer to supply a product or a service at a stated fixed price."/>
+            <Unsigned name="transaction" value="3" documentation="An instance of buying or selling a product or service."/>
+            <Unsigned name="exercise" value="4" documentation="The financial transaction specified by a contract is to be enacted immediately between the two parties, and the contract itself is terminated."/>
+            <Unsigned name="delivery" value="5" documentation="The action of delivering a product or service."/>
+            <Unsigned name="transportCommitment" value="6" documentation="The act of committing to transport a product."/>
+            <Unsigned name="publication" value="7" documentation="The action of making trade offering generally known."/>
+        </NamedValues>
+    </Enumerated>
+
+    <Sequence name="Emix.ArrayOfTerms" documentation="Collection of Emix Terms">
+        <Array name="baseTerm" memberType="Emix.BaseTermType" documentation="A collection of business and performance rules that define the product offering. "/>
+    </Sequence>
+
+    <Sequence name="Emix.AvailabilityScheduleType" extends="Emix.BaseTermType" documentation="A Schedule of time windows during which a response may be scheduled. A scheduled Duration must be entirely within a single instance of an availability window.">
+        <Array name="vavailability" memberType="Wscal.VavailabilityType" minimumSize="1" documentation="Availability communicates acceptable schedule times for Sequences."/>
+    </Sequence>
+
+    <Sequence name="Emix.BaseTermType" documentation="Type of Abstract extension object for Emix Terms">
+    </Sequence>
+
+    <Sequence name="Emix.MarketContextNameType" documentation="A descriptive name applied to any market context through the associated Standard Terms.">
+    </Sequence>
+
+    <Sequence name="Emix.MarketGranularityType" extends="Emix.BaseTermType" documentation="Granularity defines the size of a market “bundle”. For example, a Market with a granularity of 10 MW, will only accept tenders, process transactions, and pay for delivery of Power in multiples of 10 MW.">
+        <Sequence name="measurementQuantity" type="Fsgim.MeasurementQuantity" documentation="Amount oF a measurement along with its associated metadata."/>
+    </Sequence>
+
+    <Sequence name="Emix.MaximumConsecutiveDurationsType" extends="Emix.BaseTermType" documentation="Maximum consecutive Durations in which a notification will be accepted, e.g., it will not accept requests on more than three consecutive days.">
+        <String name="duration" type="Fsgim.Duration" documentation="The length of a scheduled event."/>
+        <Integer name="durations" documentation="Number of the durations."/>
+    </Sequence>
+
+    <Sequence name="Emix.MaximumInvocationsPerDurationType" extends="Emix.BaseTermType" documentation="Maximum number of requests for response that will be accepted during a Duration.">
+        <String name="duration" type="Fsgim.Duration" documentation="The length of a scheduled event."/>
+        <Integer name="starts" documentation="Number of starts."/>
+    </Sequence>
+
+    <Sequence name="Emix.MaximumNotificationDurationType" extends="Emix.BaseTermType" documentation="The maximum Duration in advance of a proposed response that a notification will be accepted. ">
+        <String name="duration" type="Fsgim.Duration" documentation="The length of a scheduled event."/>
+    </Sequence>
+
+    <Sequence name="Emix.MaximumResponseDurationType" extends="Emix.BaseTermType" documentation="The longest Duration for which a request will be accepted.">
+        <String name="duration" type="Fsgim.Duration" documentation="The length of a scheduled event."/>
+    </Sequence>
+
+    <Sequence name="Emix.MaximumRunDurationType" extends="Emix.BaseTermType" documentation="Maximum acceptable Duration for a proposed response">
+        <String name="duration" type="Fsgim.Duration" documentation="The length of a scheduled event."/>
+    </Sequence>
+
+    <Sequence name="Emix.MinimumDurationBetweenInvocationsType" extends="Emix.BaseTermType" documentation="The minimum Duration between successive responses that will be accepted.">
+        <String name="duration" type="Fsgim.Duration" documentation="The length of a scheduled event."/>
+    </Sequence>
+
+    <Sequence name="Emix.MinimumEconomicRequirementType" extends="Emix.BaseTermType" documentation="Minimum net remuneration for any single response.">
+        <Sequence name="price" type="Emix.PriceType" documentation="Price of the quantity."/>
+    </Sequence>
+
+    <Sequence name="Emix.MinimumNotificationDurationType" extends="Emix.BaseTermType" documentation="The minimum Duration in advance of a proposed response that a notification will be accepted.">
+        <String name="duration" type="Fsgim.Duration" documentation="The length of a scheduled event."/>
+    </Sequence>
+
+    <Sequence name="Emix.MinimumRecoveryDurationType" extends="Emix.BaseTermType" documentation="The minimum Duration after completion of a response before a new response can be begun.">
+        <String name="duration" type="Fsgim.Duration" documentation="The length of a scheduled event."/>
+    </Sequence>
+
+    <Sequence name="Emix.MinimumRemunerationRateType" extends="Emix.BaseTermType" documentation="Minimum remuneration acceptable per stated Duration of response, e.g., a minimum remuneration of $100 / hour.">
+        <String name="duration" type="Fsgim.Duration" documentation="The length of a scheduled event."/>
+        <Sequence name="price" type="Emix.PriceType" documentation="Price of the quantity."/>
+    </Sequence>
+
+    <Sequence name="Emix.MinimumResponseDurationType" extends="Emix.BaseTermType" documentation="The shortest Duration for which a request will be accepted.">
+        <String name="duration" type="Fsgim.Duration" documentation="The length of a scheduled event."/>
+    </Sequence>
+
+    <Sequence name="Emix.MinimumRunDurationType" extends="Emix.BaseTermType" documentation="Minimum acceptable Duration for a proposed response.">
+        <String name="duration" type="Fsgim.Duration" documentation="The length of a scheduled event."/>
+    </Sequence>
+
+    <Sequence name="Emix.MinimumStartsPerDurationType" extends="Emix.BaseTermType" documentation="The fewest requests that the resource will accept during any Duration.">
+        <String name="duration" type="Fsgim.Duration" documentation="The length of a scheduled event."/>
+        <Integer name="starts" documentation="Number of starts."/>
+    </Sequence>
+
+    <Sequence name="Emix.NotificationScheduleType" extends="Emix.BaseTermType" documentation="A schedule of time windows during which requests can be made.">
+        <Array name="vavailability" memberType="Wscal.VavailabilityType" minimumSize="1" documentation="Availability communicates acceptable schedule times for Sequences."/>
+    </Sequence>
+
+    <Sequence name="Emix.RequiredStartupRemunerationType" extends="Emix.BaseTermType" documentation="Minimum remuneration required for initiating a response.">
+        <Sequence name="price" type="Emix.PriceType" documentation="This is the number that quantifies the actual price per unit of the product."/>
+    </Sequence>
+
+    <Sequence name="Emix.ResponseTimeType" extends="Emix.BaseTermType" documentation="Duration required from receipt of a request to supplying the full requested level of response, i.e., notification time plus response time.">
+        <String name="duration" type="Fsgim.Duration" documentation="Length of time."/>
+    </Sequence>
+
+    <Sequence name="Emix.StandardTermsSetType" documentation="A collection of Standard Terms for this market">
+        <Enumerated name="nonStandardTermsHandling" type="Emix.NonStandardTermsHandlingType" documentation="A string enumeration indicating how to handle terms received that are different than those in the Market Term Set. Permissible values are: Reject (the information artifact), Ignore (the terms), Must Understand, Must Accept. "/>
+        <Enumerated name="side" type="Emix.SideType" optional="true" documentation="Some terms may have different interpretation as to side. A Buyer term may indicate &quot;meet or exceed&quot; well a seller expressing the same term may indicate &quot;no worse than&quot;."/>
+        <Sequence name="terms" type="Emix.ArrayOfTerms" documentation="A collection of business and performance rules that define the product offering."/>
+        <Sequence name="vavailability" type="Wscal.VavailabilityType" optional="true" documentation="If present, this defines the period(s) that this RuleSet applies to, i.e., weekdays 9:00-5:00."/>
+    </Sequence>
+
+    <Sequence name="Emix.StandardTermsType" documentation="Standard Terms express overarching terms for a market context">
+        <Enumerated name="currency" type="Fsgim.CurrencyKind" optional="true" documentation="Currency for interactions. If present, becomes the default for all information models."/>
+        <String name="granularity" type="Fsgim.Duration" optional="true" documentation="Temporal granularity of market, i.e., a 5 minute market operates in 5 minute chunks, with a fixed offset from the beginning of availability"/>
+        <String name="marketContext" type="Fsgim.AnyURI" documentation="Terms that define the market context of this transaction."/>
+        <Sequence name="marketContextName" type="Emix.MarketContextNameType" optional="true" documentation="Human readable name of the market context."/>
+        <Enumerated name="nonStandardTermsHandling" type="Emix.NonStandardTermsHandlingType" optional="true" documentation="A string enumeration indicating how to handle terms received that are different than those in the Market Term Set. Permissible values are: Reject (the information artifact), Ignore (the terms), Must Understand, Must Accept."/>
+        <Sequence name="productDescription" type="Emix.ProductDescriptionType" optional="true" documentation="If present in Standard Terms, then it specifies a single Product Description for all products in the market."/>
+        <Array name="standardTermsSet" memberType="Emix.StandardTermsSetType" documentation="Common expectations outside of any single product-related artifact."/>
+        <String name="tzid" optional="true" documentation="Time Zone Database ID as per IANA &lt;a href=&quot;$inet://https://www.iana.org/time-zones&quot;>https://www.iana.org/time-zones&lt;/a>. This optional attribute can be used to retrieve the IANA database and construct the values for the other attributes of this class."/>
+    </Sequence>
+
+    <Sequence name="Emix.UnavailabilityScheduleType" extends="Emix.BaseTermType" documentation="A schedule of time windows for which no request for response will be accepted. No part of a requested Duration must coincide with an unavailability window.">
+        <Array name="vavailability" memberType="Wscal.VavailabilityType" minimumSize="1" documentation="Availability communicates acceptable schedule times for Sequences."/>
+    </Sequence>
+
+    <Enumerated name="Emix.NonStandardTermsHandlingType" documentation="Defines how participants should handle terms not listed in the RuleSet">
+        <NamedValues>
+            <Unsigned name="mustAccept" value="1" documentation="Participants must accept messages even if they contain rules not listed here that the party does not understand."/>
+            <Unsigned name="ignore" value="2" documentation="Participants must ignore any rule not listed"/>
+            <Unsigned name="mustUnderstand" value="3" documentation="Participants must reject any message containing a rule not listed here unless is it understood."/>
+            <Unsigned name="reject" value="4" documentation="Participants in this market will reject all message containing rules not itemized in market rules."/>
+        </NamedValues>
+    </Enumerated>
+
+    <Sequence name="Emix.BaseWarrantType" documentation="Type of Abstract extension object for Emix Warrants">
+    </Sequence>
+
+    <Sequence name="Emix.QualityWarrantType" extends="Emix.BaseWarrantType" documentation="A Quality Warrant asserts or requires that the product be of a certain quality or better. A quality warrant includes an array of Quality Measures. The Quality Measure type is extensible to support the definition of additional quality measures. Numerous quality measures are defined as part of the POWER schema of EMIX; parties wishing to specify EMIX extensions for other commodities and resources will want to define their Quality Measures. ">
+        <Array name="product" memberType="Emix.ProductType" minimumSize="1" documentation="Type of commodity."/>
+    </Sequence>
+
+    <Sequence name="Emix.AggregatedPnodeType" extends="Emix.EmixInterfaceType" documentation="An aggregated pricing node is a specialized type of pricing node used to model items such as System Zone, Default Price Zone, Custom Price Zone, Control Area, Aggregated Generation, Aggregated Particpating Load, Aggregated Non-Participating Load, Trading Hub, DCA Zone">
+        <String name="node" documentation="A place where something changes (often ownership) or connects on the grid. It is a utility or transmission grid operator assigned designator for this point on the electrical network."/>
+    </Sequence>
+
+    <Sequence name="Emix.EndDeviceAssetType" extends="Emix.EmixInterfaceType" documentation="The EndDeviceAssets are the physical device or devices which could be meters or other types of devices that may be of interest">
+        <String name="mrid" type="Fsgim.GlobalId" documentation="Master Resource Identifier that can identify a physical device that may be a Customer Meter or other types of End Devices. "/>
+    </Sequence>
+
+    <Sequence name="Emix.MeterAssetType" extends="Emix.EmixInterfaceType" documentation="The MeterAsset is the physical device or devices that performs the role of the meter">
+        <String name="mrid" type="Fsgim.GlobalId" documentation="Master Resource Identifier that can identify a physical device that may be a Customer Meter or other types of End Devices."/>
+    </Sequence>
+
+    <Sequence name="Emix.PnodeType" extends="Emix.EmixInterfaceType" documentation="A pricing node is directly associated with a connectivity node.  It is a pricing location for which market participants submit their bids, offers, buy/sell CRRs, and settle.">
+        <String name="node" documentation="A place where something changes (often ownership) or connects on the grid. It is a utility or transmission grid operator assigned designator for this point on the electrical network."/>
+    </Sequence>
+
+    <Sequence name="Emix.ServiceDeliveryPointType" extends="Emix.EmixInterfaceType" documentation="Logical point on the network where the ownership of the service changes hands. It is one of potentially many service points within a ServiceLocation, delivering service in accordance with a CustomerAgreement. Used at the place where a meter may be installed.">
+        <String name="node" documentation="A place where something changes (often ownership) or connects on the grid. It is a utility or transmission grid operator assigned designator for this point on the electrical network."/>
+    </Sequence>
+
+    <Sequence name="Emix.ServiceLocationType" extends="Emix.EmixInterfaceType" documentation="A customer ServiceLocation has one or more ServiceDeliveryPoint(s), which in turn relate to Meters. For distribution, the ServiceLocation is typically the location of the utility customer's premise. ">
+        <Sequence name="abstractFeature" type="WXXM-ISO.AbstractFeature" documentation="The Service Area is the only Interface defined for all derived schemas. The Service Area expresses locations or geographic regions relevant to price communication. For example, a change in price for a power product could apply to all customers in an urban area. Service Areas are defined using [GML] in its simplest profile, i.e., level 0."/>
+    </Sequence>
+
+    <Sequence name="Emix.TransportInterfaceType" extends="Emix.EmixInterfaceType" documentation="The Transport Interface delineates the edges at either end of a transport segment.">
+        <String name="pointOfDelivery" documentation="Where power exits a network or changes ownership. It is a utility or transmission grid operator assigned designator for this point on the electrical network."/>
+        <String name="pointOfReceipt" documentation="Where power enters a network or changes ownership. It is a utility or transmission grid operator assigned designator for this point on the electrical network."/>
+    </Sequence>
+
+    <Sequence name="Emix.UnitEnergyPriceType" documentation="Price per Unit of Energy, i.e., Power times Duration">
+        <Sequence name="energyItem" type="Fsgim.EnergyItemType" documentation="Base class for the measurement of energy."/>
+        <Sequence name="priceBase" type="Emix.PriceBaseType" documentation="Simple, absolute, or other types of energy prices that rely on foreknowledge and computation."/>
+    </Sequence>
+
+    <Sequence name="Emix.MeasurementProtocolType" documentation="An identification of the standard or other protocol used to measure power quality. ">
+    </Sequence>
+
+    <Sequence name="Emix.PowerQualityWarrantType" extends="Emix.QualityWarrantType" documentation="A Power Quality Warrant asserts or requires that the power be of a certain quality or better. This type extends the EMIX Quality Warrant for use in describing power. The Power Quality Warrant is a collection of the most commonly used Quality Measurements. Users who require a Quality Measure not on this list can extend the Quality Measure Type to create new Quality Measures.">
+        <Sequence name="measurementProtocol" type="Emix.MeasurementProtocolType" documentation="An identification of the standard or other protocol used to measure power quality."/>
+        <Sequence name="qualityMeasure" type="Emix.QualityMeasureType" documentation="A collection of power quality indicators."/>
+        <Sequence name="qualityType" type="Emix.QualityTypeType" documentation="The origin of a power quality measurement."/>
+        <Enumerated name="side" type="Emix.SideType" documentation="Identifies whether information originator is on the Buy or Sell side of the transaction.  "/>
+        <String name="uid" type="Fsgim.GlobalId" documentation="Unique Identifier between transacting parties."/>
+    </Sequence>
+
+    <Sequence name="Emix.QualityMeasureType" documentation="Quality Measure is a collection of Power Quality Indicators. The Quality Measure is placed in a WS-Calendar (OASIS WS-Calendar v1.0) Artifact so it can populate a schedule.">
+        <!-- associations -->
+        <Sequence name="qualities" type="NAESB.ElectricPowerQualitySummary" documentation="A collection of power quality indicators."/>
+    </Sequence>
+
+    <Sequence name="Emix.QualityTypeType" documentation="Abstract class for the origin of a power quality measurement.">
+    </Sequence>
+
+    <Enumerated name="Emix.MeasurementProtocolEnumeratedType" extends="Emix.MeasurementProtocolType" documentation="An identification of the standard or other protocol used to measure power quality. Sets definition for all other power attributes.">
+        <NamedValues>
+            <Unsigned name="EN 50160" value="1" documentation="EN50160 means of measuring power quality."/>
+            <Unsigned name="IEEE 1549-2009" value="2" documentation="IEEE 1549 means of measuring power quality."/>
+        </NamedValues>
+    </Enumerated>
+
+    <Enumerated name="Emix.QualityTypeEnumeratedType" extends="Emix.QualityTypeType" documentation="A string indicating the type of Assertion being made.">
+        <NamedValues>
+            <Unsigned name="guaranteed" value="1" documentation="Formal assurance or promise, that certain quality conditions shall be fulfilled relating to a product, service, or transaction."/>
+            <Unsigned name="averaged" value="2" documentation="A quality number that typifies a set of quality numbers."/>
+            <Unsigned name="projected" value="3" documentation="Estimate or forecast of quality based upon trends."/>
+            <Unsigned name="measured" value="4" documentation="Quality as ascertained by comparison with a standard."/>
+        </NamedValues>
+    </Enumerated>
+
+    <Sequence name="Emix.ArrayOfRampSegments" documentation="Collection of Power Ramp Segments.">
+        <Array name="powerRampSegment" memberType="Emix.PowerRampSegmentType" documentation="Characteristics of a change up or down in units/duration during a response."/>
+    </Sequence>
+
+    <Sequence name="Emix.GenerationType" extends="Emix.PowerResponseType" documentation="A Generation Resource ramps up, stays up, and then ramps down. For stagingRamps, endRamp is greater than beginRamp. For recoveryRamps, endRamp is less than beginRamp.">
+        <Sequence name="type" type="Emix.ResourceTypeType" optional="true" documentation="Type and dispatch-ability of generation resource."/>
+    </Sequence>
+
+    <Sequence name="Emix.LoadReductionType" extends="Emix.PowerResponseType" documentation="A Load Reduction Resource ramps down, stays down, and then ramps up. For stagingRamps, endRamp is less than beginRamp. For recoveryRamps, endRamp is greater than beginRamp.">
+    </Sequence>
+
+    <Sequence name="Emix.OfferCurveType" extends="Emix.BaseTermType" documentation="A collection of Offer Segments used to compute cost requirements across a range of power.">
+        <Array name="offerSegment" memberType="Emix.OfferSegmentType" minimumSize="1" documentation="The offer price for the quantity offered in a segment."/>
+    </Sequence>
+
+    <Sequence name="Emix.OfferSegmentType" documentation="Marginal offer for Power within a range. Marginal costs must be computed within the context of a range of segments as conformed by the Offer Type.">
+        <String name="duration" type="Fsgim.Duration" documentation="Duration of this Segment."/>
+        <Sequence name="energyItem" type="Fsgim.EnergyItemType" documentation="Description of energy item being offered. (e.g., Real energy, measured in Watt Hours)"/>
+        <Boolean name="integralOnly" documentation="If true, offer is all or none; no partial acceptance of this segment."/>
+        <Sequence name="powerItem" type="Fsgim.PowerItemType" documentation="Description of power item being offered. (e.g., Reactive power, measured in volt-amperes reactive)"/>
+        <Sequence name="price" type="Emix.PriceType" documentation="Energy Price for this Segment."/>
+        <Real name="quantity" documentation="Power Quantity for this Segment."/>
+        <Integer name="segment" documentation="Numeric identifier of this segment"/>
+    </Sequence>
+
+    <Sequence name="Emix.PowerRampSegmentType" documentation="A Power Ramp Segment describes a change up or down in units/duration. A ramp rate holds for the duration between beginRamp to endRamp.">
+        <Integer name="beginRamp" documentation="Quantity of power at the start of a ramp segment."/>
+        <String name="duration" type="Fsgim.Duration" documentation="the time period component of a ratio specifying the maximum rate of change of power for this segment."/>
+        <Integer name="endRamp" documentation="Quantity of power at the end of a ramp segment."/>
+        <Boolean name="integralOnly" documentation="If true, offer is all or none; no partial acceptance of this segment."/>
+        <Sequence name="rate" type="Fsgim.PowerQuantityType" documentation="the power component of a ratio specifying the maximum rate of change of power for this segment."/>
+    </Sequence>
+
+    <Sequence name="Emix.PowerResponseType" extends="Emix.ResourceDescriptionType" documentation="Generic model describing the power response capabilities of a resource">
+        <Real name="maximumResponse" optional="true" documentation="The greatest Response for which this resource will accept a request."/>
+        <Real name="minimumResponse" documentation="The least Response for which this resource will accept a request. "/>
+        <Sequence name="offerCurve" type="Emix.OfferCurveType" optional="true" documentation="A collection of Offer Segments that define the offer price (as expressed in EMIX Requirements) for the quantity offered in each segment."/>
+        <Sequence name="recoveryRamp" type="Emix.ArrayOfRampSegments" optional="true" documentation="An array Power Ramp Segments describing how a Resource’s returns to its original state following a response. "/>
+        <Sequence name="stagingRamp" type="Emix.ArrayOfRampSegments" optional="true" documentation="Characteristics describing a resource’s ability to change level at the initiation of a response."/>
+    </Sequence>
+
+    <Sequence name="Emix.ResourceDescriptionType" extends="Emix.ProductDescriptionType" documentation="Resource Description based on the EMIX Product Description.">
+        <Sequence name="emixInterface" type="Emix.EmixInterfaceType" documentation="The interfaces for EMIX Product delivery, measurement, and/or pricing."/>
+        <String name="mrid" type="Fsgim.GlobalId" documentation="Master Resource Identifier that identifies a physical device that may be a Customer Meter or other types of End Devices."/>
+        <Sequence name="terms" type="Emix.ArrayOfTerms" optional="true" documentation="A collection of business and performance rules that define the product offering."/>
+    </Sequence>
+
+    <Sequence name="Emix.ResourceTypeType" documentation="Abstract class for the type and dispatch ability of a resource. ">
+    </Sequence>
+
+    <Enumerated name="Emix.ResourceTypeEnumeratedType" extends="Emix.ResourceTypeType" documentation="Resource types share common responsiveness and predictability characteristics, sometimes covarying across resources in the same class. (Example: Solar in the same region failing at the same time)">
+        <NamedValues>
+            <Unsigned name="dispatchableHydro" value="1" documentation="Hydro-based electrical generators dispatchable by power grid operators."/>
+            <Unsigned name="nonDispatchableHydro" value="2" documentation="Hydro-based electrical generators that are not dispatchable by power grid operators."/>
+            <Unsigned name="windGeneration" value="3" documentation="Electrical power generation created from wind."/>
+            <Unsigned name="solarGeneration" value="4" documentation="Electrical power generation created from solar photovoltaic cells."/>
+            <Unsigned name="tollingContract" value="5" documentation="A take-or-pay contract for conversion or transportation of energy."/>
+            <Unsigned name="aggregateResource" value="6" documentation="The characteristics of the summation of all the energy resources of an entity."/>
+            <Unsigned name="dispatchableStorage" value="7" documentation="Energy storage dispatchable by power grid operators."/>
+        </NamedValues>
+    </Enumerated>
+
+    </Definitions>
+</CSML>

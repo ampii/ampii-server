@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CSML xmlns="http://bacnet.org/csml/1.2"  defaultLocale="en-US" >
+    <Includes>
+        <Link value="fsgim.csml.xml"/>
+        <Link value="fsgim.iec.61850.csml.xml"/>
+        <Link value="fsgim.naesb.csml.xml"/>
+        <Link value="fsgim.oasis.csml.xml"/>
+        <Link value="fsgim.oasis.emix.csml.xml"/>
+        <Link value="fsgim.oasis.wscal.csml.xml"/>
+        <Link value="fsgim.wxxm-avwx.csml.xml"/>
+        <Link value="fsgim.wxxm-iso.csml.xml"/>
+        <Link value="fsgim.wxxm-swe.csml.xml"/>
+        <Link value="fsgim.wxxm-wx.csml.xml"/>
+    </Includes>
+
+
+</CSML>
+

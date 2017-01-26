@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CSML xmlns="http://bacnet.org/csml/1.2"  defaultLocale="en-US" >
+
+    <Includes>
+        <Link value="../config/config-with-defs.xml"/>
+        <!-- DON'T WAKE THIS UP until you figure how to *merge* this into the existing /.bacnet/.local -->
+        <!--<Link value="../examples/bacnet.xml"/>-->
+        <Link value="../examples/examples-all.xml"/>
+
+    </Includes>
+
+</CSML>

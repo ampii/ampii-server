@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CSML xmlns="http://bacnet.org/csml/1.2"  defaultLocale="en-US" >
+
+    <Includes>
+        <Link value="../config/AMPII Definitions.xml"/>
+        <Link value="../bacnet/BACnet WS Definitions.xml"/>
+    </Includes>
+
+    <!-- ".defs" gets created by code -->
+
+    <Composition name=".data" type="0-BACnetWsData">
+        <Unsigned name="database-revision" value="1"><Extensions><String name="..binding" value="revision"/></Extensions></Unsigned>
+        <List name="histories"><Extensions><String name="..binding" value="histories"/></Extensions></List>
+        <List name="events"><Extensions><String name="..binding" value="events"/></Extensions></List>
+        <List name="objects"><Extensions><String name="..binding" value="objects"/></Extensions></List>
+        <Collection name="nodes"><Extensions><String name="..binding" value="nodes"/></Extensions></Collection>
+    </Composition>
+
+    <Composition name=".info" type="0-BACnetWsInfo">
+        <Unsigned name="vendor-identifier" value="999"/>
+        <String name="vendor-name" value="ampii.org"/>
+        <String name="software-version" value="???"/> <!-- overwritten by InfoManager -->
+        <String name="model-name" value="AMPII Simulator/Tester"/>
+        <Unsigned name="protocol-version" value="1"/>
+        <Unsigned name="protocol-revision" value="16"/>
+        <String  name="default-locale" value="en-US" />
+        <String  name="supported-locales" value="*" />
+        <Unsigned name="max-uri" value="1000" />
+    </Composition>
+
+    <Composition name=".auth" type="0-BACnetWsAuth" partial="true">  <!-- optionally filled in from Application.authData file -->
+        <Extensions>
+            <String name="..binding" value="auth"/>
+        </Extensions>
+    </Composition>
+
+    <Collection name=".multi" writable="true" memberType="0-BACnetWsMultiRecord">
+        <Extensions>
+            <String name="..binding" value="multi"/>
+        </Extensions>
+    </Collection>
+
+    <Collection name=".subs" writable="true" variability="status" memberType="0-BACnetWsSubscriptionRecord">
+        <Extensions>
+            <String name="..binding" value="subs"/>
+        </Extensions>
+    </Collection>
+
+    <Collection name="callback" writable="true" memberType="0-BACnetWsSubscriptionCallback">
+        <Extensions><String name="..binding" value="callback"/></Extensions>
+    </Collection>
+
+    <Collection name="client" writable="true" memberType="org.ampii.types.ClientRecord">
+        <Extensions><String name="..binding" value="client"/></Extensions>
+    </Collection>
+
+    <Collection name=".trees" writable="true" displayName="Trees" nodeType="collection">
+        <Collection name=".geo" displayName="Geographic" nodeType="tree" />
+    </Collection>
+
+    <Collection name="test-data" writable="true">  <!-- used by Test.serverData() to create local data,  set path with Application.testDataPath -->
+    </Collection>
+
+    <Collection name="my-data" writable="true"> <!-- used for playground data -->
+    </Collection>
+    <Collection name=".bacnet" nodeType="protocol">
+        <Collection name=".local" nodeType="collection">
+            <!-- system Device object will be filled in with contents of Application.deviceFile -->
+        </Collection>
+    </Collection>
+
+
+
+</CSML>
