@@ -10,7 +10,7 @@ import org.ampii.xd.data.basetypes.*;
 /**
  * This abstract class provides the common behavior for floating point base types {@link RealData} and {@link DoubleData}.
  *
- * @author drobin
+ * @author daverobin
  */
 public abstract class AbstractFloatingPointData extends AbstractPrimitiveData {
 

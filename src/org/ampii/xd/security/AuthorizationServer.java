@@ -15,7 +15,7 @@ import org.ampii.xd.server.*;
  * <p>
  * It supports POST with body parameters (preferred) and GET with URI parameters (NOT recommended because secrets could get logged)
  *
- * @author drobin
+ * @author daverobin
  */
 public class AuthorizationServer {
 

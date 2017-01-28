@@ -20,7 +20,7 @@ import java.util.List;
  * It's a lot yuckier than the JSON generator because of the need to handle ugly things like {@code<Extensions>} and things
  * that have two forms like {@code displayName/<DisplayName>} and {@code value/<Value>}.
  *
- * @author drobin
+ * @author daverobin
  */
 public class XMLGenerator extends Generator {
 

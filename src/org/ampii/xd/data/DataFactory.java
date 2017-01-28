@@ -8,7 +8,7 @@ import org.ampii.xd.data.basetypes.*;
 /**
  * We need a factory to make a specific runtime class given a base type identifier.
  *
- * @author drobin
+ * @author daverobin
  */
 public class DataFactory {
 

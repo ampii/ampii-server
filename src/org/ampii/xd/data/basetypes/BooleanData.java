@@ -12,7 +12,7 @@ import org.ampii.xd.definitions.Builtins;
 /**
  * The implementation of the Boolean base type. Most behavior is provided by {@link AbstractData}
  *
- * @author drobin
+ * @author daverobin
  */
 public class BooleanData extends AbstractPrimitiveData {
 

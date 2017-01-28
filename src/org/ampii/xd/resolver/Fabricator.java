@@ -18,7 +18,7 @@ import org.ampii.xd.data.Context;
  * If you want to add a fabricator without changing this core AMPII file, make a {@link FabricatorHooks.External} and
  * inject it with {@link FabricatorHooks#registerExternal}.
  *
- * @author drobin
+ * @author daverobin
  */
 public class Fabricator {
 

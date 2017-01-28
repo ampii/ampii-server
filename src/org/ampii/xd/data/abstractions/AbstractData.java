@@ -30,7 +30,7 @@ import java.util.List;
  *  Where needed, it defers basetype-specific actions, like addChild() or setValue(), and of course, getBase() to the
  *  derived classes.
  *
- *  @author drobin
+ *  @author daverobin
  */
 public abstract class AbstractData implements Data {
 

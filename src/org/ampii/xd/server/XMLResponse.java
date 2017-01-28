@@ -4,7 +4,7 @@ package org.ampii.xd.server;
 /**
  *  An HTTP response containing XML data.
  *
- *  @author drobin
+ *  @author daverobin
  */
 public class XMLResponse extends Response {
 

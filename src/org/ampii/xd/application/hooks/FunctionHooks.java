@@ -12,7 +12,7 @@ import org.ampii.xd.functions.Functions;
  * If you want to add a custom fundtion without changing the core AMPII files, create a {@link FunctionHooks.External}
  * interface and inject it with {@link FunctionHooks#registerExternal}.
  *
- * @author drobin
+ * @author daverobin
  */
 public class FunctionHooks {
 

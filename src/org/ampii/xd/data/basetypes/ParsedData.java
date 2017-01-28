@@ -7,7 +7,7 @@ import org.ampii.xd.common.XDException;
  * ParsedData adds parsing info (line, column, source name) to {@link PolyData}.
  * It is only for parsed data; it is not a base type and is not transmitted or stored in the datastore.
  *
- * @author drobin
+ * @author daverobin
  */
 public class ParsedData extends PolyData {
 

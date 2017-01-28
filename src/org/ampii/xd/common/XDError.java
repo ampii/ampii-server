@@ -7,7 +7,7 @@ import org.ampii.xd.data.Context;
 /**
  * XDError is just an Error wrapper for an XDException that is used to throw unexpected internal errors.
  *
- * @author drobin
+ * @author daverobin
  */
 public class XDError extends Error {
 

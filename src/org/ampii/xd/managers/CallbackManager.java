@@ -16,7 +16,7 @@ import org.ampii.xd.data.Meta;
  * application, not just a simulator/tester. In fact, the subscription tests actually provide their <b>own</b> callback
  * target, not this default "/callback"
  *
- * @author drobin
+ * @author daverobin
  */
 public class CallbackManager {
 

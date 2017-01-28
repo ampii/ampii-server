@@ -36,7 +36,7 @@ import java.util.logging.Level;
  * with command line arguments.
  * <p>
  *
- * @author drobin
+ * @author daverobin
  */
 public class Application {
 

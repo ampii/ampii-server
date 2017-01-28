@@ -15,7 +15,7 @@ import org.ampii.xd.database.DataStore;
  * it is committed immediately and an instance can be made from it.
  * TODO evaluate use cases for where we might want to make this a little more flexible
  *
- * @author drobin
+ * @author daverobin
  */
 public class Definitions {
 

@@ -22,7 +22,7 @@ import static org.ampii.xd.data.Meta.*;
 /**
  * Nonstandard extension - Manages the data under /client and the operations that occur on it.
  *
- * @author drobin
+ * @author daverobin
  */
 public class ClientManager {
 

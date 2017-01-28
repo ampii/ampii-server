@@ -18,7 +18,7 @@ import org.ampii.xd.data.basetypes.StringData;
  * builtin as their prototype when they are constructed. This is how the existing "create optional item" mechanism is
  * leveraged since that looks to the prototype to know what is possible.
  *
- * @author drobin
+ * @author daverobin
  */
 public class Builtins {
 

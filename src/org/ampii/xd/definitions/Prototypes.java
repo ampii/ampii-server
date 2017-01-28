@@ -19,7 +19,7 @@ import org.ampii.xd.resolver.Path;
  * This is a <b>very useful</b> layer to have because the inheritance chain for things like $namedValues can get pretty
  * harry otherwise. Several coding attempts were made for "life without prototypes" and all failed, buried in complexity.
  *
- * @author drobin
+ * @author daverobin
  */
 public class Prototypes {
 

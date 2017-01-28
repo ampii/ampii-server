@@ -7,7 +7,7 @@ import java.util.function.Consumer;
 /**
  * The environment parameters (timeouts, etc) established by the {@link Tester} for the individual {@link Test} instances to use.
  *
- * @author drobin
+ * @author daverobin
  */
 public class TestEnvironment {
 

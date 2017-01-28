@@ -13,7 +13,7 @@ import java.util.Calendar;
  * <p>
  * See {@link org.ampii.xd.security.AuthManager} or search for the many uses of {@link Binding} for examples.
  *
- * @author drobin
+ * @author daverobin
  */
 public interface Binding {
     void         preread(Data target)                   throws XDException;

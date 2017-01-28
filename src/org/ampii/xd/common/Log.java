@@ -15,7 +15,7 @@ import java.util.logging.*;
  * The all-static Log object provides logging services for all AMPII classes. It is initialized by the {@link Application}
  * class and the log file locations and names can be configured with command line arguments.
  *
- * @author drobin
+ * @author daverobin
  */
 public class Log {
 

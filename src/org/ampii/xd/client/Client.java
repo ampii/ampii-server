@@ -24,7 +24,7 @@ import java.util.Map;
 /**
  * Home for some basic client-side helpers.
  *
- * @author drobin
+ * @author daverobin
  */
 public class Client {
 

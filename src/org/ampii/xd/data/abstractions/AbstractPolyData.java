@@ -8,7 +8,7 @@ import org.ampii.xd.data.basetypes.*;
 /**
  * This is the abstract base for {@link PolyData} and {@link ParsedData}.
  **
- * @author drobin
+ * @author daverobin
  */
 public class AbstractPolyData extends AbstractConstructedData {
 

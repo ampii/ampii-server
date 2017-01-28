@@ -14,7 +14,7 @@ import java.util.Calendar;
  * If you want to add a custom history handling without changing the core AMPII files, create a {@link HistoryHooks.External}
  * interface and inject it with {@link HistoryHooks#registerExternal}.
  *
- * @author drobin
+ * @author daverobin
  */
 public class HistoryHooks {
 

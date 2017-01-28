@@ -13,7 +13,7 @@ import org.ampii.xd.security.Authorizer;
 /**
  * Workhorse class for evaluating path expressions, including function calls.
  *
- * @author drobin
+ * @author daverobin
  */
 public class Eval {
 

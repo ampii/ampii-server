@@ -10,7 +10,7 @@ import org.ampii.xd.definitions.Builtins;
  * This is the "placeholder" base type Any.  It's used by definitions to indicate that the actual type will be added at
  * runtime and is changeable. It is not suitable for instances except in rare exceptions like /.multi.
  *
- * @author drobin
+ * @author daverobin
  */
 public class AnyData extends AbstractData /* implements Data - NOT! see note below */ {
 

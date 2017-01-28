@@ -22,7 +22,7 @@ import org.ampii.xd.bindings.DefaultBindingPolicy;
  * the binding gets first crack at finding the policy.  This allows you to set individual policies, as fine grained as
  * bindings, without having to modify this system-wide policy.
  *
- * @author drobin
+ * @author daverobin
  */
 public class PolicyHooks {
 

@@ -14,7 +14,7 @@ import org.ampii.xd.definitions.Builtins;
 /**
  * The implementation of the DatePattern base type. This handles parsing but most other behavior is provided by {@link AbstractData}
  *
- * @author drobin
+ * @author daverobin
  */
 public class DatePatternData extends AbstractPatternData {
 

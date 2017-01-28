@@ -6,7 +6,7 @@ package org.ampii.xd.server;
 /**
  * An HTTP response containing plain unformatted text.
  *
- * @author drobin
+ * @author daverobin
  */
 public class TextResponse extends Response {
 

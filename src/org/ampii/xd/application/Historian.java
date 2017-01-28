@@ -16,7 +16,7 @@ import java.util.Calendar;
 /**
  * Responsible for finding and processing histories (can be extended with hooks and bindings).
  *
- * @author drobin
+ * @author daverobin
  */
 public class Historian {
 

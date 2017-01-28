@@ -15,7 +15,7 @@ import org.ampii.xd.definitions.Builtins;
  * The implementation of the WeekNDayData base type.
  * This parses the value string but most other behavior is provided by super classes and {@link AbstractData}
  *
- * @author drobin
+ * @author daverobin
  */
 public class WeekNDayData  extends AbstractPatternData {
 

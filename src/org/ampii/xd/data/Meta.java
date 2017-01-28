@@ -4,7 +4,7 @@ package org.ampii.xd.data;
 /**
  * This is the list of standard Metadata names (to prevent typos!).
  *
- * @author drobin
+ * @author daverobin
  */
 public class Meta {
     

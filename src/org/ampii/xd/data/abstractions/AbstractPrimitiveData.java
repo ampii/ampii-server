@@ -9,7 +9,7 @@ import org.ampii.xd.data.basetypes.*;
  * Keep in mind that things like {@link StringSetData} and {@link BitStringData} are composed of multiple string components,
  * and StringData can have multiple localized values, but they are all nonetheless considered "primitive" base types.
  *
- * @author drobin
+ * @author daverobin
  */
 public abstract class AbstractPrimitiveData extends AbstractData {
 

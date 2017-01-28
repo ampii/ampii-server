@@ -13,7 +13,7 @@ import org.ampii.xd.data.Context;
  * to be an Object and other text types like  {@link EnumeratedData} require it to only be a single String.
  * But in this subclass, it can be either a String or a {@link LocalizedStrings} object.
  *
- * @author drobin
+ * @author daverobin
  */
 public class StringData extends AbstractTextData {
 

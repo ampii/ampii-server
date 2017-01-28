@@ -12,7 +12,7 @@ import org.ampii.xd.resolver.Fabricator;
  * If you want to add a custom fabricator without changing the core AMPII files, create a {@link FabricatorHooks.External}
  * interface and inject it with {@link FabricatorHooks#registerExternal}.
  *
- * @author drobin
+ * @author daverobin
  */
 public class FabricatorHooks {
 

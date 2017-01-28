@@ -10,7 +10,7 @@ import org.ampii.xd.definitions.Builtins;
 /**
  * The implementation of the Real base type. Most behavior is provided by super classes and {@link AbstractData}
  *
- * @author drobin
+ * @author daverobin
  */
 public class RealData extends AbstractFloatingPointData {
 

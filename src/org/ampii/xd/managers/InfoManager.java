@@ -12,7 +12,7 @@ import org.ampii.xd.database.Session;
  * This is rather silly class at the moment. It just makes /.info/software-version dynamic from Application class so
  * we don't have to update the config XML file or make a Binding just for this.  Maybe it will do more in the future.
  *
- * @author drobin
+ * @author daverobin
  */
 public class InfoManager {
 

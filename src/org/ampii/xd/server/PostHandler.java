@@ -18,7 +18,7 @@ import java.util.UUID;
 /**
  * Handles the HTTP POST method - called from {@link Worker}.
  *
- * @author drobin
+ * @author daverobin
  */
 public class PostHandler {
 

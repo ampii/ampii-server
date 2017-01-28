@@ -10,7 +10,7 @@ import org.ampii.xd.definitions.Builtins;
  * The implementation of the Bit base type. BitData has neither value nor children.
  * Most behavior is provided by {@link AbstractData}
  *
- * @author drobin
+ * @author daverobin
  */
 public class BitData extends AbstractData {
 

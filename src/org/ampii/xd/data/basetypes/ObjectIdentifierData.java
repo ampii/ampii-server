@@ -13,7 +13,7 @@ import org.ampii.xd.definitions.Builtins;
  * The implementation of the ObjectIdentifier base type.
  * This provides value parsing but most other behavior is provided by super classes and {@link AbstractData}
  *
- * @author drobin
+ * @author daverobin
  */
 public class ObjectIdentifierData extends AbstractTextData {
 

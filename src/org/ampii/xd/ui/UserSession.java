@@ -17,7 +17,7 @@ import java.util.GregorianCalendar;
  * Everything here is static since there can be only one "user session" at a time.
  * This has nothing to do with data sessions defined by {@link Session}.
  *
- * @author drobin
+ * @author daverobin
  */
 public class UserSession {
 

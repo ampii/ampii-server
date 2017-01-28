@@ -10,7 +10,7 @@ import org.ampii.xd.definitions.Builtins;
 /**
  * The implementation of the Sequence base type. Most behavior is provided by super classes and {@link AbstractData}
  *
- * @author drobin
+ * @author daverobin
  */
 public class SequenceData extends AbstractConstructedData {
 

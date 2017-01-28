@@ -23,7 +23,7 @@ import java.io.StringWriter;
 /**
  * Handles the HTTP GET method - called from {@link Worker}.
  *
- * @author drobin
+ * @author daverobin
  */
 public class GetHandler {
 

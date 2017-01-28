@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * A holder for mulitiple {@link LocalizedString} objects. This is useful as the "value" of a StringData since it is
  * localizable and can simultaneously contains values for multiple locales.
  *
- * @author drobin
+ * @author daverobin
  */
 public class LocalizedStrings extends ArrayList<LocalizedString> {
 

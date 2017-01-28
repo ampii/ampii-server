@@ -16,7 +16,7 @@ import java.util.Calendar;
 /**
  * The implementation of the Date base type. Most behavior is provided by {@link AbstractData}
  *
- * @author drobin
+ * @author daverobin
  */
 public class DateData extends AbstractCalendarData {
 

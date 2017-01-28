@@ -16,7 +16,7 @@ import org.ampii.xd.data.abstractions.AbstractPolyData;
  * Since it has no rules checking, it is really only for temporary purposes like freshly parsed data from XML or JSON
  * that will be later assigned to real base types. And that is actually handled by the {@link ParsedData} extension.
  *
- * @author drobin
+ * @author daverobin
  */
 public class PolyData extends AbstractPolyData {
 

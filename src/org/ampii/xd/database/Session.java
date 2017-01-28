@@ -138,7 +138,7 @@ import org.ampii.xd.resolver.Path;
  * try/catch/finally logic. HOWEVER, note that the atomic put and post methods STILL need to create a write session,
  * so they can't be called within an active write session (until we implement multiple write sessions).
  *
- * @author drobin
+ * @author daverobin
  */
 public class Session {
 

@@ -15,7 +15,7 @@ import java.net.URL;
 /**
  * Parses JSON text into {@link ParsedData} items.
  *
- * @author drobin
+ * @author daverobin
  */
 public class JSONParser extends Parser {
 

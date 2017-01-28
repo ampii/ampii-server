@@ -14,7 +14,7 @@ import org.ampii.xd.test.Test;
  * system-wide list.  Or you can make up your own, like the "rejector" {@link DataParser#definitionRejector} or the
  * temporary client-side collector in {@link Test}.
  *
- * @author drobin
+ * @author daverobin
  */
 public interface DefinitionCollector {
     void addDefinition(Data definition) throws XDException;

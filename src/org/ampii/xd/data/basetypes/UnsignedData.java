@@ -11,7 +11,7 @@ import org.ampii.xd.definitions.Builtins;
 /**
  * The implementation of the Unsigned base type. Most behavior is provided by super classes and {@link AbstractData}
  *
- * @author drobin
+ * @author daverobin
  */
 public class UnsignedData extends AbstractWholeNumberData {
 

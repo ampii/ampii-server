@@ -16,7 +16,7 @@ import org.ampii.xd.data.basetypes.LinkData;
  * If you want to add an alias without changing this core AMPII file, make an {@link AliasHooks.External} and inject it with
  * {@link AliasHooks#registerExternal}.
  *
- * @author drobin
+ * @author daverobin
  */
 public class Alias {
 

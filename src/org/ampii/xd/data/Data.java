@@ -18,7 +18,7 @@ import java.util.Calendar;
  * of behavior is pretty extensive and all of that is already handed by AbstractData and it's derivatives.
  * See {@link Session} for a description of interactions with data using sessions and shadows.
  *
- * @author drobin
+ * @author daverobin
  */
 public interface Data {
 

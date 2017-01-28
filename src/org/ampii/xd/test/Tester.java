@@ -18,7 +18,7 @@ import java.util.List;
  * Runs all the tests in the List "test-list" in the xml or json file specified by Application.testDefinitionFile, using
  * the "test-pars" found in that same file.
  *
- * @author drobin
+ * @author daverobin
  */
 public class Tester {
 

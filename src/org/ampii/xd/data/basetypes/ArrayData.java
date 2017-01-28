@@ -10,7 +10,7 @@ import org.ampii.xd.data.abstractions.AbstractData;
 /**
  * The implementation of the Array base type. Most behavior is provided by {@link AbstractData}
  *
- * @author drobin
+ * @author daverobin
  */
 public class ArrayData extends AbstractConstructedData {
 

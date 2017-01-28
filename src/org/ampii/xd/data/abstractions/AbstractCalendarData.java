@@ -10,7 +10,7 @@ import java.util.GregorianCalendar;
 /**
  * This abstract class provides the common behavior for time-based data like {@link DateData}, {@link TimeData}, etc.
  *
- * @author drobin
+ * @author daverobin
  */
 public abstract class AbstractCalendarData extends AbstractPrimitiveData {
 

@@ -7,7 +7,7 @@ import org.ampii.xd.data.basetypes.*;
 /**
  * This abstract class provides the common behavior for constructed data types like {@link CollectionData}, {@link ObjectData}, etc.
  *
- * @author drobin
+ * @author daverobin
  */
 public abstract class AbstractConstructedData extends AbstractData {
 

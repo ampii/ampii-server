@@ -15,7 +15,7 @@ import java.net.URLDecoder;
  * This class has a hard-coded lists of built-in function names, but external code can inject new functions by
  * using {@link FunctionHooks}.
  *
- * @author drobin
+ * @author daverobin
  */
 public class Functions {
     public static Data invoke(Data target, String function, String argString, Context context) throws XDException {

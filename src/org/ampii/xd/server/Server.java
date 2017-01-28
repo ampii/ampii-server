@@ -10,7 +10,7 @@ import java.net.*;
 /**
  * Static methods to manage the HTTP server and its listening ports.
  *
- * @author drobin
+ * @author daverobin
  */
 public class Server
 {

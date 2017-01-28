@@ -16,7 +16,7 @@ import org.ampii.xd.security.Authorizer;
 /**
  * Handles the HTTP DELETE method - called from {@link Worker}.
  *
- * @author drobin
+ * @author daverobin
  */
 public class DeleteHandler {
 

@@ -19,7 +19,7 @@ import java.io.File;
  * <p>
  * Connections to live data under the /.bacnet tree can be done with a {@link Binding}.
  *
- * @author drobin
+ * @author daverobin
  */
 public class BACnetManager {
 

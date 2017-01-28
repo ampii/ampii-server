@@ -9,7 +9,7 @@ import org.ampii.xd.test.TestException;
  * <p>
  * Add this class to the config file indicated by Application.testDefinitionFile if you want these tests to run.
  *
- * @author drobin
+ * @author daverobin
  */
 public class BindingTests {
 

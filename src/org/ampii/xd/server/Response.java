@@ -11,7 +11,7 @@ import java.util.TimeZone;
 /**
  * The base class for an object containing the information that will be an HTTP response - see JSONResponse, ErrorResponse, etc.
  *
- * @author drobin
+ * @author daverobin
  */
 public class Response
 {

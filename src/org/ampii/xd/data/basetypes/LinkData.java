@@ -12,7 +12,7 @@ import org.ampii.xd.server.Server;
 /**
  * The implementation of the Link base type. Most behavior is provided by super classes and {@link AbstractData}
  *
- * @author drobin
+ * @author daverobin
  */
 public class LinkData extends AbstractTextData {
 

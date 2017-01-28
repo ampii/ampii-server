@@ -8,7 +8,7 @@ import org.ampii.xd.data.basetypes.*;
 /**
  * This abstract class provides the common behavior for data that is based on string patterns that are parsed into a set of numbers, like {@link DatePatternData} and {@link WeekNDayData}.
  *
- * @author drobin
+ * @author daverobin
  */
 public abstract class AbstractPatternData extends AbstractPrimitiveData {
 

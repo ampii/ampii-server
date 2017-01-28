@@ -17,7 +17,7 @@ import org.ampii.xd.security.Authorizer;
 /**
  * Handles the HTTP PUT method - called from {@link Worker}.
  *
- * @author drobin
+ * @author daverobin
  */
 public class PutHandler {
 

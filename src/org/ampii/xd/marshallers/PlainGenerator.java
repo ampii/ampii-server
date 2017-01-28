@@ -9,7 +9,7 @@ import java.io.Writer;
 /**
  * Outputs values in plain text for alt=plain.
  *
- * @author drobin
+ * @author daverobin
  */
 public class PlainGenerator  extends Generator {
 

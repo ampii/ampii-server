@@ -12,7 +12,7 @@ import org.ampii.xd.resolver.Alias;
  * If you want to add an alias without changing this core AMPII file, create an {@link AliasHooks.External} interface and
  * inject it with {@link #registerExternal}
  *
- * @author drobin
+ * @author daverobin
  */
 public class AliasHooks {
 

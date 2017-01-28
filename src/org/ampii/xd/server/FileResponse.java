@@ -11,7 +11,7 @@ import java.util.Scanner;
 /**
  * An HTTP response containing a file's contents (either binary or textual).
  *
- * @author drobin
+ * @author daverobin
  */
 public class FileResponse extends Response {
 

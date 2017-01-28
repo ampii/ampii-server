@@ -17,7 +17,7 @@ import java.util.List;
  * and provides the information needed to make a correct HTTP error response to the client along with some hopefully helpful
  * human readable text.
  *
- * @author drobin
+ * @author daverobin
  */
 public class XDException extends Exception {
 

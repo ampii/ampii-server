@@ -30,7 +30,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  * <p>
  * It's an example of data-to-native-to-data binding code.
  *
- * @author drobin
+ * @author daverobin
  */
 public class SubsManager {
 

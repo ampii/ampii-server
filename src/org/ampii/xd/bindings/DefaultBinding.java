@@ -18,7 +18,7 @@ import java.util.Calendar;
  * Note that the DefaultBinding returns a very restrictive {@link Policy} that doesn't allow storing any metadata.
  * Override if you <i>do</i> allow it.
  *
- * @author drobin
+ * @author daverobin
  */
 public class DefaultBinding implements Binding {
     @Override public void         preread(Data target)                 throws XDException { }

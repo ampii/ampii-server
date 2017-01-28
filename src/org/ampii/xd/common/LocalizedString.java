@@ -7,7 +7,7 @@ import org.ampii.xd.database.DataStore;
  * This is just a wrapper to hold a single string and its locale.
  * {@link LocalizedStrings} can be used to hold a collection of these and provide lookups.
  *
- * @author drobin
+ * @author daverobin
  */
 public class LocalizedString {
 

@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * This is primarily for Data-to-JSON, but there is a little bonus utility to generate JSON from simple name-value pairs.
  *
- * @author drobin
+ * @author daverobin
  */
 public class JSONGenerator extends Generator {
 

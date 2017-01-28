@@ -15,7 +15,7 @@ import java.net.URL;
  * These all have two formats, one with a declared DefinitionsCollector and one without. The ones without a collector
  * will throw exceptions if definitions are encountered.
  *
- * @author drobin
+ * @author daverobin
  */
 public class DataParser {
 

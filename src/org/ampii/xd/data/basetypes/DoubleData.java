@@ -10,7 +10,7 @@ import org.ampii.xd.definitions.Builtins;
 /**
  * The implementation of the Double base type. Most behavior is provided by {@link AbstractData}
  *
- * @author drobin
+ * @author daverobin
  */
 public class DoubleData extends AbstractFloatingPointData {
 

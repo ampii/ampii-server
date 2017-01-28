@@ -17,7 +17,7 @@ import java.util.Calendar;
  * The implementation of the TimeData base type.
  * This checks or special string values but most other behavior is provided by super classes and {@link AbstractData}
  *
- * @author drobin
+ * @author daverobin
  */
 public class TimeData extends AbstractCalendarData {
 

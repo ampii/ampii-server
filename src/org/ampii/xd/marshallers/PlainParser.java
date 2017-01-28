@@ -10,7 +10,7 @@ import java.net.URL;
 /**
  * This is pretty simple, but it was jealous of XMLGenerator and JSONGenerator, so it gets its own formal class.
  *
- * @author drobin
+ * @author daverobin
  */
 public class PlainParser extends Parser {
 

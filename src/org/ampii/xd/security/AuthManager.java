@@ -16,7 +16,7 @@ import java.util.*;
 /**
  * Manages the authorization data, including mapping between the internal native representation and the external "/.auth" data.
  *
- * @author drobin
+ * @author daverobin
  */
 public class AuthManager {
 

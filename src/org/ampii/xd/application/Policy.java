@@ -10,7 +10,7 @@ import org.ampii.xd.data.Data;
  * the item or if the item should not be removable for some reason.  Policies can be dynamic and the default policy can
  * be overridden by bindings or hooks.
  *
- * @author drobin
+ * @author daverobin
  */
 public interface Policy {
     boolean allowCreate(Data target, String name, String type, Base base);

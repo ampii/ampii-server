@@ -15,7 +15,7 @@ import org.ampii.xd.data.Data;
  * If you want to add an binding type without changing {@link Bindings}, create an {@link BindingHooks.External} interface and
  * inject it with {@link #registerExternal}
  *
- * @author drobin
+ * @author daverobin
  */
 public class BindingHooks {
 

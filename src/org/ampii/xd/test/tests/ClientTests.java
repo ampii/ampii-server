@@ -7,7 +7,7 @@ import org.ampii.xd.test.TestException;
 /**
  * ??? Client Experiments
  *
- * @author drobin
+ * @author daverobin
  */
 public class ClientTests {
 

@@ -11,7 +11,7 @@ import org.ampii.xd.application.hooks.PolicyHooks;
  * See comment in {@link PolicyHooks} about methods to make application-wide or instance-specific extensions to this
  * boring default policy.
  *
- * @author drobin
+ * @author daverobin
  */
 public class DataStorePolicy implements Policy {
 

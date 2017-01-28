@@ -25,7 +25,7 @@ import org.ampii.xd.security.AuthManager;
  * If you want to n binding type without changing this file, create a {@link BindingHooks.External} interface and
  * inject it with {@link BindingHooks#registerExternal}
  *
- * @author drobin
+ * @author daverobin
  */
 public class Bindings {
 

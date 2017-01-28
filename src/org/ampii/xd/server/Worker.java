@@ -16,7 +16,7 @@ import java.util.StringTokenizer;
 /**
  * A worker thread that listens for incoming HTTP connections and dispatches to GetHandler, PutHandler, etc.
  *
- * @author drobin
+ * @author daverobin
  */
 public class Worker implements Runnable
 {

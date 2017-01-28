@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * Makes instances of defined types.  These are made from prototypes, which are made from definitions.
  *
- * @author drobin
+ * @author daverobin
  */
 public class Instances {
 

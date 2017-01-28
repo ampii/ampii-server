@@ -8,7 +8,7 @@ import org.ampii.xd.common.XDException;
 /**
  * An HTTP response containing an error code and a possibly helpful explanation.
  *
- * @author drobin
+ * @author daverobin
  */
 public class ErrorResponse extends Response {
 

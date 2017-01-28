@@ -11,7 +11,7 @@ import org.ampii.xd.data.basetypes.*;
 /**
  * This abstract class provides the common behavior for the integer-based data {@link IntegerData} and {@link UnsignedData}.
  *
- * @author drobin
+ * @author daverobin
  */
 public abstract class AbstractWholeNumberData extends AbstractPrimitiveData {
 

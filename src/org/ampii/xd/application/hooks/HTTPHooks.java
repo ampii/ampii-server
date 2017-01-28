@@ -15,7 +15,7 @@ import org.ampii.xd.ui.Playground;
  * If you want to add a custom URI pattern handler without changing the core AMPII files, create a {@link HTTPHooks.External}
  * interface and inject it with {@link HTTPHooks#registerExternal}.
  *
- * @author drobin
+ * @author daverobin
  */
 public class HTTPHooks {
 

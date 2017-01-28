@@ -26,7 +26,7 @@ import static org.ampii.xd.data.Meta.*;
  * <p>
  * It's an example of data-to-native-to-data binding code.
  *
- * @author drobin
+ * @author daverobin
  */
 public class MultiManager {
 

@@ -19,7 +19,7 @@ import java.util.Map;
 /**
  * An object containing the information from an HTTP request.
  *
- * @author drobin
+ * @author daverobin
  */
 public class Request {
     public String                 method;

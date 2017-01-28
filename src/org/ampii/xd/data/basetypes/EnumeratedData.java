@@ -15,7 +15,7 @@ import org.ampii.xd.definitions.Builtins;
  * The implementation of the Enumerated base type.
  * This handles value checking but most other behavior is provided by {@link AbstractData}
  *
- * @author drobin
+ * @author daverobin
  */
 public class EnumeratedData extends AbstractTextData {
 

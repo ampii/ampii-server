@@ -32,7 +32,7 @@ import java.util.concurrent.TimeUnit;
  *  <p>
  *  See {@link Session} for a description of interactions with data in this datastore using sessions and shadows.
  *
- *  @author drobin
+ *  @author daverobin
  */
 public class DataStore {
 

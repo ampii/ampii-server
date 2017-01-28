@@ -118,7 +118,7 @@ import java.util.*;
  *     public Data   getServerData()
  * }</pre><p>
  *
- * @author drobin
+ * @author daverobin
  */
 public class Test {
 

@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * This is the list of standard base types, and methods for going to/from string representations
  *
- * @author drobin
+ * @author daverobin
  */
 public enum Base {
     // indexes are shown just to make sure they match up with things like the toString array

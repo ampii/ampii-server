@@ -11,7 +11,7 @@ import javax.xml.bind.DatatypeConverter;
 /**
  * This abstract class provides the common behavior for {@link OctetStringData} and {@link RawData}.
  *
- * @author drobin
+ * @author daverobin
  */
 public abstract class AbstractBinaryData extends AbstractPrimitiveData {
 

@@ -19,7 +19,7 @@ import java.util.*;
  * Code that knows what it is doing can temporarily enter god mode, with enterGodMode(), for certain operations to
  * override the normal permission checks without needing to save/restore the real user's context.
  *
- * @author drobin
+ * @author daverobin
  */
 public class Authorizer {
 
