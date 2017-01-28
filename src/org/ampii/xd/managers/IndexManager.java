@@ -20,7 +20,7 @@ import java.util.function.BiConsumer;
  * will want to maintain these lists persistently, not make them on the fly, and should include "watcher" hooks to
  * notice when changes have happened that affect the persistent indexes.
  *
- * @author daverobin
+ * @author drobin
  */
 public class IndexManager {
 
