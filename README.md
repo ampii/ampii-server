@@ -65,10 +65,9 @@ start TLS.
 Implemented Features
 --------------------
 
-Everything related to servers in the published standard is implemented here, except as noted below. (this is a loooong list of features, so it is not included in this document - go read the standard :-)
+Everything related to servers in the published standard 135-2016 and Addendum 135-2016bp is implemented here, except as noted below. (this is a loooong list of features, so it is not included in this document - go read the standard :-)
 
-This code makes no attempt to allow multiple server instances in one JVM (as
-the use of static constants in the Application class indicates).
+This code makes no attempt to allow multiple server instances in one JVM (as the use of static constants in the Application class indicates).
 
 The XML parsing/generation is the minimum needed for conformance to the BACnet/WS standard. It does not support general namespaces or entities beyond the required ones (`&quot;` etc).
 
@@ -92,25 +91,18 @@ Non-implemented Features
 
 Known Issues / Bugs
 -------------------
-    
-- Changes made by Addendum 135-2016bp are only partially implemented at this point. Updates to come.
 
-- Root certificates:
-    /.auth/root-cert-pend is not used to validate the /.auth/dev-cert-pend.
+- This code implements the changes made by Addendum 135-2016bp. That addendum is still pending final publication. The last public review version is here: http://www.bacnet.org/Addenda/Add-135-2016bp-ppr1-draft-3_chair_approved.pdf. No substantive changes were made after the public review and it is currently awaiting final publication at ashrae.org.
+- Root certificates: /.auth/root-cert-pend is not used to validate the /.auth/dev-cert-pend.
 
 ToDo
 ----
 
 There are several items that are planned but not completed yet.
 
-- Finish implementing Addendum 135-2016bp.
-
 - It would be useful to make console logs available through the web interface for remote testers.
 
-
-- Client.java uses HttpURLConnection.
-    It would be helpful for language portability to remove dependency on this
-    library functionality and implement on raw sockets like the server side does.
+- Client.java uses HttpURLConnection. It would be helpful for language portability to remove dependency on this library functionality and implement on raw sockets like the server side does.
 
 
 
