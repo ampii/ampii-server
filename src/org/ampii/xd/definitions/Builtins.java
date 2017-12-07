@@ -39,6 +39,7 @@ public class Builtins {
         addOptional(builtin,
                 makeBuiltin(Base.STRING,     Meta.ID),
                 makeBuiltin(Base.STRING,     Meta.TYPE),
+                makeBuiltin(Base.STRING,     Meta.EFFECTIVETYPE),
                 makeBuiltin(Base.STRING,     Meta.EXTENDS),
                 makeBuiltin(Base.STRING,     Meta.OVERLAYS),
                 makeBuiltin(Base.ENUMERATED, Meta.NODETYPE, makeBuiltin(Base.STRING, Meta.TYPE, "0-BACnetNodeType")),
@@ -489,7 +490,9 @@ public class Builtins {
 
         addCommonMetadata(linkPrototype);
         addOptional(linkPrototype,
-                makeBuiltin(Base.STRING, Meta.MEDIATYPE)
+                makeBuiltin(Base.STRING, Meta.MEDIATYPE),
+                makeBuiltin(Base.STRING, Meta.REPRESENTS),
+                makeBuiltin(Base.STRING, Meta.REL)
         );
 
         addCommonMetadata(stringSetPrototype);

@@ -71,6 +71,7 @@ public interface Data {
     int          PUT_OPTION_GIVEN_PARTIAL    = 0x00000004;  // pretend $partial is present
     int          PUT_OPTION_FORCE_WRITE      = 0x00000008;  // play god with unwritable things, like definitions
     int          PUT_OPTION_USE_POST_RULES   = 0x00000010;  // this put is part of a post (e.g. allow $subscriptions)
+    int          PUT_OPTION_NO_NAME_CHECK    = 0x00000020;  // hope you know what you're doing (e.g., .multi write uses this)
 
     Data         put(Data given)               throws XDException;  // puts given data item on top of this; calls binding; follows rules
     Data         put(Data given, int options)  throws XDException;  // puts given data item on top of this; calls binding; follows rules modified by 'options'

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-           xmlns="http://bacnet.org/csml/1.2"
-           targetNamespace="http://bacnet.org/csml/1.2"
+           xmlns="http://bacnet.org/CSML/1.3"
+           targetNamespace="http://bacnet.org/CSML/1.3"
            elementFormDefault="qualified" >
 
     <!-- THIS IS NOT AN OFFICIAL SCHEMA. It may be helpful for HUMAN development but it slightly broken against the current spec.  -->

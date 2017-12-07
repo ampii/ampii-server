@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<CSML defaultLocale="en-US" xmlns="http://bacnet.org/csml/1.2"   >
+<CSML defaultLocale="en-US" xmlns="http://bacnet.org/CSML/1.3"   >
 
     <Collection name="metadata">
         <Real name="real" value="75.5" error="666" description="Can't write value, but can write to displayName (and displayName's maxLength!)" writable="true" displayName="write me!" units="1000" tags="foo;bar">

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<CSML xmlns="http://bacnet.org/csml/1.2">
+<CSML xmlns="http://bacnet.org/CSML/1.3">
     <Definitions>
     <Sequence name="Ei.ApplicationSpecificContextBaseType" extends="Ei.ApplicationSpecificExtensionBaseType" documentation="The Application Specific Context Base is an abstract class to exchange invariant or setup information with an Application running on the other side of an interaction. They are not defined in Energy Interoperation, although there are specific conformance rules that must be followed">
     </Sequence>

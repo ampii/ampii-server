@@ -35,7 +35,7 @@ public class Instances {
     }
 
     public static Data makeInstance(String type, Object... initializers) throws XDException {
-        return makeInstance(type,"..new",initializers);
+        return makeInstance(type,".anonymous",initializers);
     }
 
     public static Data makeInstance(String type, String name, Object... initializers) throws XDException {

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<CSML xmlns="http://bacnet.org/csml/1.2">
+<CSML xmlns="http://bacnet.org/CSML/1.3">
     <Definitions>
     <Sequence name="Fsgim.ComponentElement" extends="Fsgim.FSGIMIdentifiedObject" documentation="This class is an abstract class representing the top level class of one of the four FSGIM model components or a Collection of these top level classes. Note that the parts of a Collection instance inherit the tag attribute values of its parent collection ComponentElement instance.">
         <!-- associations -->

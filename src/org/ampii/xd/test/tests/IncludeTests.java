@@ -18,14 +18,14 @@ public class IncludeTests { // add this class to the config file indicated by Ap
            public void execute() throws TestException {
                serverFile("include-test-outer.xml",
                        "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
-                       "<CSML xmlns=\"http://bacnet.org/csml/1.2\" defaultLocale=\"en-US\">\n" +
+                       "<CSML xmlns=\"http://bacnet.org/CSML/1.3\" defaultLocale=\"en-US\">\n" +
                        "   <Includes>\n" +
                        "       <Link value=\""+ getServerBaseHttpURI()+ getServerTestFilePath()+"/include-test-inner.json\"/>\n" +
                        "   </Includes>\n" +
                        "</CSML>");
                serverFile("include-test-inner.xml",
                        "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
-                       "<CSML xmlns=\"http://bacnet.org/csml/1.2\" defaultLocale=\"en-US\">\n" +
+                       "<CSML xmlns=\"http://bacnet.org/CSML/1.3\" defaultLocale=\"en-US\">\n" +
                        "   <String name=\"include-test-inner-xml\" value=\"from xml\"/>\n" +
                        "</CSML>");
                serverFile("include-test-outer.json",

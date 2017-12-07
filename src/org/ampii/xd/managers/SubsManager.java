@@ -62,12 +62,12 @@ public class SubsManager {
     public static Binding  getBinding()  { return theBinding; }
 
     private static Binding theBinding = new DefaultBinding() {
-        @Override public void         preread(Data data)               throws XDException {        SubsManager.preread(data); }
-        @Override public Data         prefind(Data data, String name)  throws XDException { return SubsManager.prefind(data, name); }
-        @Override public DataList getContextualizedChildren(Data data)             throws XDException { return SubsManager.prefilter(data); }
-        @Override public Data         prepost(Data target, Data given) throws XDException { return SubsManager.prepost(given);}
-        @Override public boolean      commit(Data data)                throws XDException { return SubsManager.commit(data); }
-        @Override public Policy getPolicy()                      { return thePolicy; }
+        @Override public Integer      getTotalCount()                                         { return SubsManager.getTotalCount(); }
+        @Override public Data         prefind(Data data, String name)      throws XDException { return SubsManager.prefind(data, name); }
+        @Override public DataList     getContextualizedChildren(Data data) throws XDException { return SubsManager.getContextualizedChildren(data); }
+        @Override public Data         prepost(Data target, Data given)     throws XDException { return SubsManager.prepost(given);}
+        @Override public boolean      commit(Data data)                    throws XDException { return SubsManager.commit(data); }
+        @Override public Policy       getPolicy()                                             { return thePolicy; }
     };
 
     private static Policy thePolicy = new DefaultBindingPolicy() {
@@ -76,7 +76,7 @@ public class SubsManager {
         }
     };
 
-    private static DataList prefilter(Data data) throws XDException {
+    private static DataList getContextualizedChildren(Data data) throws XDException {
         Context context = data.getContext();
         if (!context.isTarget(data)) return new DataList(true,false,null); // if we're not the target level, just return a truncated list
         List<SubsRecord> recordList = new ArrayList<>(records);         // get a separate list so we can reverse it
@@ -88,8 +88,8 @@ public class SubsManager {
         }, context.isTarget(data));
     }
 
-    private static void    preread(Data data) throws XDException {
-        data.set(COUNT,records.size()); // always set the $count metadata to the actual number of records we have (won't match local children present)
+    private static Integer    getTotalCount()  {
+        return records.size();
     }
 
     private static Data    prefind(Data data, String name) throws XDException {
@@ -265,9 +265,7 @@ public class SubsManager {
             record.lifetime -= elapsed;
             if (record.lifetime <= 0) toRemove.add(record);
         }
-        for (SubsRecord record : toRemove) {
-            records.remove(record);
-        }
+        records.removeAll(toRemove);
     }
 
     static class QueueWatcher implements Runnable {

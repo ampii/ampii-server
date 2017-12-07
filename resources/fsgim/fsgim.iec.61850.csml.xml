@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<CSML xmlns="http://bacnet.org/csml/1.2">
+<CSML xmlns="http://bacnet.org/CSML/1.3">
     <Definitions>
     <Sequence name="Iec61850.ChargeStatusENS" documentation="The ChargeStatusENS class is an FSGIM class derived from the 61850 ENS class. The ChargeStatusENS class attributes are exactly the same as those in the ENS class except the status value attribute references the DRCS.ChaSt.ING enumeration class rather than the ENS class.">
         <String name="description" optional="true" documentation="Textual description of the data."/>

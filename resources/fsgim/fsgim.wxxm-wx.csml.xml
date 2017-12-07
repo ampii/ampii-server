@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<CSML xmlns="http://bacnet.org/csml/1.2">
+<CSML xmlns="http://bacnet.org/CSML/1.3">
     <Definitions>
     <Sequence name="WXXM-WX.AbstractMeasure" documentation="Abstract measurement class. Each measurment has a unit of measure, uom. WXXM allows more than one uom -- e.g., F/C/K for temperature. FSGIM only allows one choice of uom for a physical quantity.">
         <Real name="value" documentation="The value of the measure."/>

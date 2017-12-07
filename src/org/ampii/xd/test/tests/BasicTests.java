@@ -25,6 +25,7 @@ public class BasicTests {
                     step("PUT value");
                     clientData("<String value='changed'/>");
                     put();
+                    expectSuccessCode();
                     step("Confirm PUT");
                     clientData("<String/>");
                     get();

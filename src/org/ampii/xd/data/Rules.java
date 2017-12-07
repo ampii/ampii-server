@@ -139,9 +139,7 @@ public class Rules
 
     public static void    validatePostDataRequestOptions(Request request) throws XDException {
         // TODO much more can be done here...
-        // SPEC_PROBLEM: The spec is in conflict where it requires BAD_METHOD for "plain" POST, but also requires a plain POST to /.auth/ca-certs
-        if (request.getParameter("alt","json").equals("plain") && !request.path.endsWith("/.auth/ca-certs-pend"))
-            throw new XDException(Errors.BAD_METHOD,"Can't POST using 'alt=plain' query parameter");
+        if (request.hasParameter("max-results") || request.hasParameter("skip")) throw new XDException(Errors.INCONSISTENT_VALUES,"Can't include query parameter 'max-results' or 'skip' for a PUT");
     }
 
     public static void validateDeleteDataRequestOptions(Request request) throws XDException {

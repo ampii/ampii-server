@@ -122,6 +122,7 @@ public class Meta {
     public static final String VIAEXTERNAL                    = "$viaExternal";
     public static final String VIAMAP                         = "$viaMap";
     public static final String REL                            = "$rel";
+    public static final String EFFECTIVETYPE                  = "$effectiveType";
 
     // these are for internal use only.
     // starting with '..' means they won't leak out of the box (and we don't have to prefix them with 'org.ampii')

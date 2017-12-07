@@ -43,7 +43,7 @@ public class Functions {
             if (arg.contains("=")) {
                 doingPositional = false;
                 String[] pair = arg.split("=");
-                if (pair.length!=2) throw new XDException(Errors.ARG_SYNTAX,"In function call, malformed argument: '"+arg+"'");
+                if (pair.length!=2) throw new XDException(Errors.ARG_BAD_SYNTAX,"In function call, malformed argument: '"+arg+"'");
                 String argName = unencode(pair[0].trim());
                 String argValue = unencode(pair[1].trim());
                 boolean found = false;
@@ -57,15 +57,15 @@ public class Functions {
                 if (!found) throw new XDException(Errors.ARG_NOT_SUPPORTED,"In function call, named argument '"+argName+"' not valid");
             }
             else if (doingPositional) {
-                if (position >= argData.length) throw new XDException(Errors.ARG_SYNTAX,"Too many arguments for function");
+                if (position >= argData.length) throw new XDException(Errors.ARG_BAD_SYNTAX,"Too many arguments for function");
                 argData[position++].setValue(unencode(arg.trim()));
             }
-            else throw new XDException(Errors.ARG_SYNTAX,"In function call, found positional argument '" + arg + "' after named argument(s)");
+            else throw new XDException(Errors.ARG_BAD_SYNTAX,"In function call, found positional argument '" + arg + "' after named argument(s)");
         }
     }
 
     private static String unencode(String string) throws XDException {
         try { return URLDecoder.decode(string,"UTF-8"); }
-        catch (Exception e) { throw new XDException(Errors.ARG_SYNTAX,"bad % encoding in argument"); }
+        catch (Exception e) { throw new XDException(Errors.ARG_BAD_SYNTAX,"bad % encoding in argument"); }
     }
 }

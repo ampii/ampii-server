@@ -103,6 +103,12 @@ public class Application {
                     case "--configFile":
                         configFile = args[++i];
                         break;
+                    case "--dataPrefix":
+                        dataPrefix = args[++i];
+                        break;
+                    case "--filePrefix":
+                        filePrefix = args[++i];
+                        break;
                     case "--authFile":
                         authFile = args[++i];
                         break;

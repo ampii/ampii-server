@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<CSML defaultLocale="en-US" xmlns="http://bacnet.org/csml/1.2"  >
+<CSML defaultLocale="en-US" xmlns="http://bacnet.org/CSML/1.3"  >
 
     <Collection name="misc">
 

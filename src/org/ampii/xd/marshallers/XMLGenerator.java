@@ -24,7 +24,7 @@ import java.util.List;
  */
 public class XMLGenerator extends Generator {
 
-    static String CSML_NAMESPACE = "http://bacnet.org/csml/1.2";
+    static String CSML_NAMESPACE = "http://bacnet.org/CSML/1.3";
     List<String> definitionNames = new ArrayList<String>();
     String defaultLocale;
 
@@ -63,33 +63,21 @@ public class XMLGenerator extends Generator {
                 }
             }
         }
-        // We have to decide when to output $type (and possibly $extends based on whether an Any is from a defined Any
-        // member of a Sequence/Object/Composition).  So, getEffectiveType() is the magic sauce here because it will
-        // return blank for children of collections that don't have a $memberType or $memberTypeDefinition (truly
-        // "no definition" items), and non-blank for an Any child of a Sequence/Object/Composition definition
-        // (i.e., a "defined Any"), which is the special case where we output its $type as "$extends" at the top level
-        // because we also have to output the 'effective type' as "$type"
         // We always output type info, at any level, if we're 'replaceable', i.e., 'from Any' or 'from nothing', i.e. the
         // client *can't* know our type. Even if the client has read us before and thinks it doesn't want type info, our
         // type could have changed, so we always have to return it!
         // If the client *does* want type info, we will always include it at the top level. But at lower levels, we will
         // only include it where it's not already implied by something above (e.g., we're replaceable)
         // Finally, we will always output type info, at all levels, if we're a definition.
-        if (data.isFromAny() || data.isFromNothing() || context.canIncludeType() || data.isDefinition()) {
-            Data localType = data.find(Meta.TYPE);
-            if (context.cur_depth==1) { // at the top level, we have to output "effective type" as $type
-                String effectiveType = data.getEffectiveType();
-                if (effectiveType.isEmpty() || data.isDefinition()) { // if there is no effective type, or we're a definition, then we can just output $type as is.
-                    if (localType != null) emitXMLAttribute("type", localType.stringValue());
-                }
-                else { // else we have to output effective type as $type, and a local $type turns into $extends
-                    emitXMLAttribute("type", effectiveType);
-                    // if the local type is different from the effective type, then we output it as $extends
-                    if (localType != null && !localType.stringValue().equals(effectiveType))  emitXMLAttribute("extends",localType.stringValue());
-                }
+        if (context.canIncludeType() || data.isFromAny() || data.isFromNothing() || data.isDefinition()) {
+            String localType = data.stringValueOf(Meta.TYPE,"");
+            if (!localType.isEmpty()) { // emit local type if we are at the top level or it is not already implied
+                if (context.cur_depth == 1 || data.isFromAny() || data.isFromNothing()) emitXMLAttribute("type", localType);
             }
-            else {  // we're not at the top level, so we don't worry about "effective type", just output $type normally if it is not implied
-                if (localType != null && (data.isFromAny() || data.isFromNothing()) ) emitXMLAttribute("type", localType.stringValue());
+            if (context.cur_depth == 1) { // at the top level, also output $effectiveType if applicable
+                String effectiveType = data.getEffectiveType();
+                // output effective type if it is not empty and is different from localtype
+                if (!effectiveType.isEmpty() && (!effectiveType.equals(localType))) emitXMLAttribute("effectiveType", effectiveType);
             }
         }
         emitRestOfData(tag, data, doingMetadata, doingExtensions);

@@ -60,7 +60,7 @@ public class XMLParser extends Parser {
         Base base;
         mark();
 
-        Data info =  makeParsedData("anonymous");
+        Data info =  makeParsedData(".anonymous");
 
         // <CSML> is not a real base like <String>, so we have to handle is explicitly. <CSML> becomes a Collection.
         // And we name it with a reserved name so the consumer will know to unwrap the Collection's members
@@ -124,16 +124,18 @@ public class XMLParser extends Parser {
                 while ((grandChildTag = getChildTag(childTag)) != null) {
                     Data extension = consumeRestOfDataElement(grandChildTag, definitionCollector, isDefinition);
                     String extensionName = extension.getName();
-                    // first see if this is a standard metadata name by turning DisplayName into $displayName and looking up
-                    String metaName = "$"+extensionName;
-                    if (Rules.isStandardMetadata(metaName)) {
+                    // be lenient... if we got a $ prefix already, then ignore, else add one
+                    if (!extensionName.startsWith("$")) {
+                        extensionName = "$" + extensionName;
+                        extension.setName(extensionName);
+                    }
+                    // first see if this is a standard metadata name by turning displayName into $displayName and looking up
+                    if (Rules.isStandardMetadata(extensionName)) {
                         // we "merge" rather then "replace" because the metadata value might already exist as attribute
-                        // e.g., we already got a displayName attribute and now have a DisplayName extension
-                        info.getOrCreate(metaName, null, Base.fromString(grandChildTag)).put(extension);
+                        // e.g., we already got a displayName attribute and now have a displayName extension
+                        info.getOrCreate(extensionName, null, Base.fromString(grandChildTag)).put(extension);
                     }
                     else { // If it's not a standard name, then it's a proprietary extension, and we just add the whole thing as is
-                        extensionName = "$"+extensionName;
-                        extension.setName(extensionName);
                         info.addLocal(extension);
                     }
                 }

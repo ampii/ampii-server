@@ -18,12 +18,12 @@ public class  Generator {
     Context     context;
     int         indentLevel;
     boolean     first;
-    ArrayList   newline;
+    ArrayList<Boolean> newline;
 
     void begin(Writer writer, Context context) {
         this.writer = writer;
         this.context = context;
-        newline = new ArrayList();
+        newline = new ArrayList<>();
         setNewline(false);
         indentLevel = 0;
         context.cur_depth = 0;
@@ -54,7 +54,7 @@ public class  Generator {
     }
 
     boolean checkNewline()  {
-        return (Boolean)newline.get(indentLevel);
+        return newline.get(indentLevel);
     }
 
 }

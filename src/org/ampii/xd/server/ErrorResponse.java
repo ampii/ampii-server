@@ -36,7 +36,7 @@ public class ErrorResponse extends Response {
             case Errors.OAUTH_INVALID_REQUEST:
                 header.put("WWW-Authenticate","Bearer realm=\"bacnet\", error=\"invalid_request\", error_description=\""+e.getErrorText()+"\"");
                 break;
-            case Errors.OAUTH_INSUFFICIENT_SCOPE:
+            case Errors.INSUFFICIENT_SCOPE:
                 header.put("WWW-Authenticate","Bearer realm=\"bacnet\", error=\"insufficient_scope\"");
                 break;
             case Errors.NOT_AUTHORIZED:

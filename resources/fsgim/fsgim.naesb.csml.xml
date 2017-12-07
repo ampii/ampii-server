@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<CSML xmlns="http://bacnet.org/csml/1.2">
+<CSML xmlns="http://bacnet.org/CSML/1.3">
     <Definitions>
     <Sequence name="NAESB.BaseCIM_CombinedVersion" documentation="The combined version denotes the versions of the subpackages that have been combined into the total CIM model. This is a convenience instead of having to look at each subpackage.">
         <DateTime name="date" documentation="Form is YYYY-MM-DD for example for January 5, 2009 it is 2009-01-05."/>

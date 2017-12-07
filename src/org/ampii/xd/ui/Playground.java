@@ -64,7 +64,7 @@ public class Playground {
     }
 
     private static Response startSession(Request request) throws XDException {
-        String nick = request.getParameter("nick", "anonymous");
+        String nick = request.getParameter("nick", ".anonymous");
         String sid = nick + " on " + request.peerAddress.toString() + " (" + UUID.randomUUID().toString() + ")";
         UserSession.startSession(sid);
         Response response = new JSONResponse(HTTP.HTTP_200_OK,

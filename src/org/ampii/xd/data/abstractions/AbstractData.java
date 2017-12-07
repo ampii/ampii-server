@@ -39,7 +39,7 @@ public abstract class AbstractData implements Data {
     protected Data         parent;         // null if parentless (i.e. root or simply free-floating data)
     protected Data         prototype;      // null if no prototype. in which case, getPrototype() will return a Builtin
     protected DataList     subs;           // metadata and/or children
-    protected Session      session;        // only a session root will have this, so look up the chain to find it
+    protected Session      session;        // only a session root will have this as non-null, so look up the chain to find it
     protected Context      context;        // generally only on the root of a tree of nodes, so look up the chain to find it
     protected Data         original;       // used when this is a shadow for a Data item in the database
     protected Binding      binding;        // used to bind to live/backend data
@@ -83,7 +83,7 @@ public abstract class AbstractData implements Data {
 
     @Override public boolean  hasParent()            { return parent != null; }
 
-    @Override public Data     getParent()            { return parent != null? parent : null; }
+    @Override public Data     getParent()            { return parent; }
 
     @Override public void     setParent(Data newParent) {
         if (parent != newParent) {
@@ -151,14 +151,13 @@ public abstract class AbstractData implements Data {
 
 
     @Override public void     commit() throws XDException {
-        // see usage note in Bindings interface.
         if (!isShadow()) throw new XDError("Attempting to commit() a non-shadow",this);
         if (getBase() == Base.POLY) throw new XDError("Attempting to commit() a POLY",this);
+        // first, give the binding a chance to handle it entirely
+        Binding binding = findBinding();
+        if (binding != null && binding.commit(this)) return; // if binding says it handled it completely, we have to trust it (nervously)
+        // otherwise, do it ourselves, from here down
         if (isDirty()) {
-            // first, give the binding a chance to handle it entirely
-            Binding binding = findBinding();
-            if (binding != null && binding.commit(this)) return; // if binding says it handled it completely, we have to trust it (nervously)
-            // otherwise, do it ourselves
             // first, set things that are not subs or value
             original.setPersistentFlags(getFlags());
             original.setPrototype(prototype);
@@ -249,7 +248,7 @@ public abstract class AbstractData implements Data {
         return getContext().makeContextualizedValue(this);
     }
 
-    protected  Data prefind(String name) throws XDException {
+    private  Data prefind(String name) throws XDException {
         Binding binding = findBinding();
         if (binding != null) return binding.prefind(this, name); // the binding can either return it here (fabricated) or add it locally
         return null; // either the binding did nothing or it made it locally
@@ -507,7 +506,13 @@ public abstract class AbstractData implements Data {
             Authorizer authorizer = target.getContext().getAuthorizer();
             if (!target.isWritable() && !authorizer.inGodMode()) throw new XDException(Errors.NOT_WRITABLE, target, "Data is not writable");
             if (!authorizer.checkWrite(target)) throw new XDException(Errors.NOT_AUTHORIZED, target, "Data is not writable with given authorization");
-
+            // If the provided data has a name and that name is not equal to ".anonymous", then that name shall match the target data
+            // item's name. If it does not match, the server shall return a WS_ERR_INCONSISTENT_VALUES error response.
+            String givenName = given.getName();
+            if (!(givenName.isEmpty() || givenName.equals(".anonymous") || target.getName().isEmpty() || target.getName().equals(".anonymous")))  {
+               if ((options&Data.PUT_OPTION_NO_NAME_CHECK)==0 && !givenName.equals(target.getName()))
+                   throw new XDException(Errors.INCONSISTENT_VALUES, target, given, "Given name does not match target name");
+            }
             // compatible base types?
             Base givenBase = given.getBase();
             Base targetBase = target.getBase();
@@ -539,9 +544,9 @@ public abstract class AbstractData implements Data {
             if (givenType != null && givenExtends != null) throw new XDException(Errors.VALUE_FORMAT, target, given, "Given both $type and $extends");
             if (givenExtends != null && givenOverlays != null) throw new XDException(Errors.VALUE_FORMAT, target, given, "Given both $extends and $overlays");
             if (givenOverlays != null && givenType != null) throw new XDException(Errors.VALUE_FORMAT, target, given, "Given both $type and $overlays");
-            if (givenTypeName != null && givenTypeName.isEmpty()) throw new XDException(Errors.VALUE_FORMAT, target, given, "Given $type name is empty");;
-            if (givenExtendsName != null && givenExtendsName.isEmpty()) throw new XDException(Errors.VALUE_FORMAT, target, given, "Given $extends name is empty");;
-            if (givenOverlaysName != null && givenOverlaysName.isEmpty()) throw new XDException(Errors.VALUE_FORMAT, target, given, "Given $overlays name is empty");;
+            if (givenTypeName != null && givenTypeName.isEmpty()) throw new XDException(Errors.VALUE_FORMAT, target, given, "Given $type name is empty");
+            if (givenExtendsName != null && givenExtendsName.isEmpty()) throw new XDException(Errors.VALUE_FORMAT, target, given, "Given $extends name is empty");
+            if (givenOverlaysName != null && givenOverlaysName.isEmpty()) throw new XDException(Errors.VALUE_FORMAT, target, given, "Given $overlays name is empty");
             // check given against target
             if (givenType != null) {
                 if (targetType != null && !targetTypeName.equals(givenTypeName)) throw new XDException(Errors.VALUE_FORMAT, target, given, "Given $type does not match target $type");
@@ -751,7 +756,7 @@ public abstract class AbstractData implements Data {
             if (value != null) target.setValue(value);
         }
         else if (context.isTarget(target) && context.hasPriority()) {
-            // weird rule! do nothing if we are given a priority and we're not commandable
+            // weird BACnet-ism! do nothing if we are given a priority and we're not commandable
         }
         else if (given.hasValue()) target.setValue(given.getValue());
     }
@@ -761,7 +766,7 @@ public abstract class AbstractData implements Data {
         for (int i=1 ; i<=16; i++) {   // make sure all slots are initialized
             String name = String.valueOf(i);
             Data slot = priorityArray.find(name);
-            if (slot == null) slot = priorityArray.post(Instances.makeInstance("0-BACnetPriorityValue",name,new NullData("null")));
+            if (slot == null) priorityArray.post(Instances.makeInstance("0-BACnetPriorityValue",name,new NullData("null")));
         }
         return priorityArray;
     }
@@ -1192,7 +1197,7 @@ public abstract class AbstractData implements Data {
         //if (isOptional())   { results.append("O"); prefix=true; } // this causes prereads and causes trouble in the debugger if you use toString for visualization
         //if (isWritable())   { results.append("W"); prefix=true; } // this causes prereads and causes trouble in the debugger if you use toString for visualization
         if (prefix) results.append("-");
-        if (isPoly() && getBase()!= Base.POLY) results.append("("+Base.toString(getBase())+")"); // show a poly's assigned base in parentheses
+        if (isPoly() && getBase()!= Base.POLY) results.append("(").append(Base.toString(getBase())).append(")"); // show a poly's assigned base in parentheses
         else results.append(Base.toString(getBase()));
         results.append("]");
         results.append(Path.toPath(this,true)); // true = annotateFakeParents for human consumption

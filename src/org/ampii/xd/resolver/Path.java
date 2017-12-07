@@ -50,7 +50,7 @@ public class Path {
     public static boolean isDataPath(String path) throws XDException {
         // if there is no data prefix, then data owns the root and files are subjugated to needing a prefix
         // but if there *is* a data prefix, then files own the root and data is subjugated to a prefix
-        if (Application.dataPrefix.isEmpty()) return !(path.startsWith(Application.filePrefix + "/"));
+        if (Application.dataPrefix.isEmpty()) return !(path.equals(Application.filePrefix) || path.startsWith(Application.filePrefix + "/"));
         else return path.equals(Application.dataPrefix) || path.startsWith(Application.dataPrefix + "/");
     }
 

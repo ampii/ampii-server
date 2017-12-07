@@ -66,7 +66,7 @@ public class TypeTests  {
                     expectResponseDataItemValue("x4/1/$type","org.ampii.tests.Y");
                 }
             },
-            new Test("Test of presence of $extends on Any children of Sequence/Object/Composition") {
+            new Test("Test of presence of $type on Any children of Sequence/Object/Composition") {
                 public void execute() throws TestException {
                     definition("" +
                             "<Composition name='org.ampii.tests.X'>\n" +
@@ -91,13 +91,13 @@ public class TypeTests  {
                     expectResponseDataItemPresent("x2");
                     expectResponseDataItemValue("x2/$type", "org.ampii.tests.Y");
 
-                    step("metadata=all should return effective type in $type and declared type in $extends");
+                    step("metadata=all should return effective type in $effectiveType and declared type in $type");
                     query("metadata=all");
                     pathAdd("/x2");
                     get();
                     expectResponseData();
-                    expectResponseDataItemValue("$type", "org.ampii.tests.X/x2");     // this is the effective type
-                    expectResponseDataItemValue("$extends", "org.ampii.tests.Y");  // this is the declared type
+                    expectResponseDataItemValue("$effectiveType", "org.ampii.tests.X/x2");   // this is the effective type
+                    expectResponseDataItemValue("$type", "org.ampii.tests.Y");           // this is the declared type
                 }
             },
             new Test("Test replacement of Any") {

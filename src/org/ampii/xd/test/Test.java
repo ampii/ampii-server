@@ -382,9 +382,12 @@ public class Test {
         if (!responseText.equals(body)) fail("expectResponseText(" + limitedText(body) + "): found '" + limitedText(responseText) + "'");
     }
 
-    public void expectResponseTextContains(String fragment) throws TestException{
+    public void expectResponseTextContains(String fragment) throws TestException {
         expectResponseText();
         if (!responseText.contains(fragment)) fail("expectResponseTextContains(" + limitedText(fragment) + ")");
+    }
+    public void expectAmpiiErrorTextContains(String fragment) throws TestException {
+        if (env.expectAmpiiErrorText) expectResponseTextContains(fragment);
     }
 
     public void expectResponseTextStartsWith(String fragment) throws TestException {
@@ -394,6 +397,12 @@ public class Test {
 
     public void expectErrorNumber(int number) throws TestException {
         expectResponseTextStartsWith("? " + number);
+    }
+    public void expectErrorNumbers(int... numbers) throws TestException {
+        for (int i : numbers) {
+            if (responseText.startsWith("? " + i)) return;
+        }
+        fail("expectErrorNumbers(...) did not match" );
     }
 
     public void allowResponseDefinitions() {   // if you don't call this first, any definitions in the response data will be an error
@@ -451,7 +460,7 @@ public class Test {
     public void expectClientData() throws TestException { // expects that clientData can be updated by a valid responseData
         expectResponseData();
         try { // be lenient - if clientData() was not called, set clientData to an Any
-            if (clientData == null) clientData = alt.equals("plain")? new StringData("..clientData") : new AnyData("..clientData");
+            if (clientData == null) clientData = alt.equals("plain")? new StringData(".anonymous") : new AnyData(".anonymous");
             clientData = clientData.put(responseData,Data.PUT_OPTION_USE_CLIENT_RULES);
         } catch (XDException e) { fail("expectClientData()", e);}
     }

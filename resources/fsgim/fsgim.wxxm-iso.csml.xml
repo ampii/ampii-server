@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<CSML xmlns="http://bacnet.org/csml/1.2">
+<CSML xmlns="http://bacnet.org/CSML/1.3">
     <Definitions>
     <Sequence name="WXXM-ISO.AbstractFeature" extends="WXXM-ISO.AbstractGML" documentation="
             Abstract class representing all classes stereotyped &lt;&lt;FeatureType>> i.e., classes that realize GF_FeatureType, representing features of all types from all application schemas. This class may be used as a &quot;wildcard&quot; when it is necessary to refer to a feature of any type. 

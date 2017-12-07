@@ -77,7 +77,7 @@ public class Authorizer {
         }
         if (!scopesMatch(getWriteScopesFor(data))) {
             if (required) {
-                if (authorizationProvided) throw new XDException(Errors.OAUTH_INSUFFICIENT_SCOPE, data, "Insufficient scope provided");
+                if (authorizationProvided) throw new XDException(Errors.INSUFFICIENT_SCOPE, data, "Insufficient scope provided");
                 else throw new XDException(Errors.NOT_AUTHORIZED, data, "Authorization required");
             }
             else return false;
@@ -98,7 +98,7 @@ public class Authorizer {
         }
         if (!scopesMatch(getReadScopesFor(data))) {
             if (required) {
-                if (authorizationProvided) throw new XDException(Errors.OAUTH_INSUFFICIENT_SCOPE, data, "Insufficient scope provided");
+                if (authorizationProvided) throw new XDException(Errors.INSUFFICIENT_SCOPE, data, "Insufficient scope provided");
                 else throw new XDException(Errors.NOT_AUTHORIZED, data, "Authorization required");
             }
             else return false;

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<CSML xmlns="http://bacnet.org/csml/1.2"  defaultLocale="en-US" >
+<CSML xmlns="http://bacnet.org/CSML/1.3"  defaultLocale="en-US" >
 
     <!-- parameters for the test environment used by Test.java of java classes containing tests -->
 
     <Composition name="test-pars" type="org.ampii.types.TestEnvironment">
+        <Boolean   name="expectAmpiiErrorText"        value="true" /> <!-- setting this allows specific checks for error response text -->
         <Unsigned  name="covCallbackFailTime"        value="1100" units="msec" />
         <Unsigned  name="logCallbackFailTime"        value="1100" units="msec" />
         <Unsigned  name="subsRecordRemovalFailTime"  value="1100" units="msec" />
@@ -13,7 +14,7 @@
     <!-- list of java classes containing tests to run -->
 
     <List name="test-list">
-        <!--<String value="org.ampii.xd.test.tests.ClientTests"/>-->
+        <String value="org.ampii.xd.test.tests.PlainTests"/>
         <String value="org.ampii.xd.test.tests.BasicTests"/>
         <String value="org.ampii.xd.test.tests.PriorityTests"/>
         <String value="org.ampii.xd.test.tests.SelectTests"/>
@@ -26,10 +27,12 @@
         <String value="org.ampii.xd.test.tests.RangeTests"/>
         <String value="org.ampii.xd.test.tests.SkipTests"/>
         <String value="org.ampii.xd.test.tests.DefinitionsTests"/>
+        <String value="org.ampii.xd.test.tests.ErrorTests"/>
         <String value="org.ampii.xd.test.tests.LinkTests"/>
         <String value="org.ampii.xd.test.tests.LocalizationTests"/>
         <String value="org.ampii.xd.test.tests.MultiTests"/>
         <String value="org.ampii.xd.test.tests.SubscriptionTests"/>
+        <!--<String value="org.ampii.xd.test.tests.ClientTests"/>-->
     </List>
 
 

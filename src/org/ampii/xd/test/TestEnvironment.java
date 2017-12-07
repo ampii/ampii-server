@@ -12,6 +12,7 @@ import java.util.function.Consumer;
 public class TestEnvironment {
 
     public String          defaultFormat;
+    public boolean         expectAmpiiErrorText;  // set true if testing an AMPII server so specific error message contents can be checked
     public int             covCallbackFailTime;
     public int             logCallbackFailTime;
     public int             subsRecordRemovalFailTime;
@@ -24,6 +25,7 @@ public class TestEnvironment {
         this.logCallbackFailTime         = (int)testPars.longValueOf("logCallbackFailTime", 1100);
         this.subsRecordRemovalFailTime   = (int)testPars.longValueOf("subsRecordRemovalFailTime", 1100);
         this.multiRecordRemovalFailTime  = (int)testPars.longValueOf("multiRecordRemovalFailTime", 1100);
+        this.expectAmpiiErrorText         = testPars.booleanValueOf("expectAmpiiErrorText", false); // setting true gives better self test
         this.stepCallback                = step;
     }
 

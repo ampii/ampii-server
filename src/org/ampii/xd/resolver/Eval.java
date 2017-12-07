@@ -62,7 +62,7 @@ public class Eval {
 
             // is it a function?
             if (segment.contains("(")) {
-                if (!segment.endsWith(")")) throw new XDException(Errors.ARG_SYNTAX,"Function invocation does not end with ')'");
+                if (!segment.endsWith(")")) throw new XDException(Errors.ARG_BAD_SYNTAX,"Function invocation does not end with ')'");
                 int leftParen = segment.indexOf("(");
                 String function  = segment.substring(0,leftParen);
                 String argString = segment.substring(leftParen+1, segment.length() - 1);

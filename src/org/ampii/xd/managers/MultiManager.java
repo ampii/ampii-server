@@ -34,7 +34,7 @@ public class MultiManager {
      * The native class that holds the info for each /.multi record
      */
     private static class MultiRecord {
-        public String       name = "..new";   // name gets assigned to a GUID if persisted
+        public String       name = ".anonymous";   // name gets assigned to a GUID if persisted
         public int          lifetime;
         public List<String> paths = new ArrayList<>();
     }
@@ -44,11 +44,11 @@ public class MultiManager {
     public static Binding   getBinding()            { return theBinding; }
 
     private static Binding theBinding = new DefaultBinding() {
-        @Override public void         preread(Data data)               throws XDException {        MultiManager.preread(data); }
-        @Override public Data         prefind(Data data, String name)  throws XDException { return MultiManager.prefind(data, name); }
-        @Override public DataList getContextualizedChildren(Data data)  throws XDException { return MultiManager.prefilter(data); }
-        @Override public Data         prepost(Data target, Data given) throws XDException { return MultiManager.prepost(target, given);}
-        @Override public boolean      commit(Data data)                throws XDException { return MultiManager.commit(data); }
+        @Override public Integer      getTotalCount()                                         { return MultiManager.getTotalCount(); }                       // true count of children for sparse bindings, or null
+        @Override public Data         prefind(Data data, String name)      throws XDException { return MultiManager.prefind(data, name); }
+        @Override public DataList     getContextualizedChildren(Data data) throws XDException { return MultiManager.getContextualizedChildren(data); }
+        @Override public Data         prepost(Data target, Data given)     throws XDException { return MultiManager.prepost(target, given);}
+        @Override public boolean      commit(Data data)                    throws XDException { return MultiManager.commit(data); }
         @Override public Policy getPolicy()                      { return thePolicy; }
     };
 
@@ -58,20 +58,8 @@ public class MultiManager {
         }
     };
 
-    private static DataList prefilter(Data data) throws XDException {
-        Context context = data.getContext();
-        if (!context.isTarget(data)) return new DataList(true,false,null); // if we're not the target level, just return a truncated list
-        List<MultiRecord> recordList = new ArrayList<>(records);           // get a separate list so we can reverse it
-        if (context.getReverse()) Collections.reverse(recordList);
-        Iterator<MultiRecord> iterator = recordList.iterator();            // then get an iterator for that list of records,
-        return context.filterChildren(new Iterator<Data>() {    // and use it to generate a stream of Data items for the records.
-            @Override public boolean hasNext() { return iterator.hasNext(); }
-            @Override public Data    next()    { return recordToData(iterator.next(), data.getContext()); }
-        }, context.isTarget(data));
-    }
-
-    private static void    preread(Data data) throws XDException {
-        data.set(COUNT,records.size()); // always set the $count metadata to the actual number of records we have (won't match local children present)
+    private static Integer    getTotalCount()  {
+        return records.size();
     }
 
     private static Data    prefind(Data data, String name) throws XDException {
@@ -82,6 +70,18 @@ public class MultiManager {
             return recordData;
         }
         return null;
+    }
+
+    private static DataList getContextualizedChildren(Data data) throws XDException {
+        Context context = data.getContext();
+        if (!context.isTarget(data)) return new DataList(true,false,null); // if we're not the target level, just return a truncated list
+        List<MultiRecord> recordList = new ArrayList<>(records);           // get a separate list so we can reverse it
+        if (context.getReverse()) Collections.reverse(recordList);
+        Iterator<MultiRecord> iterator = recordList.iterator();            // then get an iterator for that list of records,
+        return context.filterChildren(new Iterator<Data>() {    // and use it to generate a stream of Data items for the records.
+            @Override public boolean hasNext() { return iterator.hasNext(); }
+            @Override public Data    next()    { return recordToData(iterator.next(), data.getContext()); }
+        }, context.isTarget(data));
     }
 
     private static MultiRecord findRecord(String name) {
@@ -148,7 +148,7 @@ public class MultiManager {
                     String path = one.getLocal(Meta.VIA).stringValue(); // will throw if $via is missing
                     if (path.length() == 0) throw new XDException(Errors.METADATA_NOT_FOUND, one, "The 'via' metadata is empty");
                     Data referent = Eval.eval(subsession.getRoot(),path);
-                    referent.put(one);
+                    referent.put(one,Data.PUT_OPTION_NO_NAME_CHECK);
                     subsession.commit(); // if the put succeeded, then commit it.
                 }
                 catch (XDException e) {

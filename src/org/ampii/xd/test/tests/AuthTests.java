@@ -149,19 +149,19 @@ public class AuthTests {
                     //
                     step("use token to write new values to user/pass/id/secret");
                     requestHeader("Authorization", "Bearer " + token);
-                    clientData("<String name='data' value='joe'/>");
+                    clientData("<String name='user' value='joe'/>");
                     path("/.auth/int/user");
                     put();
                     expectSuccessCode();
-                    clientData("<String name='data' value='letmein'/>");
+                    clientData("<String name='pass' value='letmein'/>");
                     path("/.auth/int/pass");
                     put();
                     expectSuccessCode();
-                    clientData("<String name='data' value='CLIENT1234'/>");
+                    clientData("<String name='id' value='CLIENT1234'/>");
                     path("/.auth/int/id");
                     put();
                     expectSuccessCode();
-                    clientData("<String name='data' value='super-secret'/>");
+                    clientData("<String name='secret' value='super-secret'/>");
                     path("/.auth/int/secret");
                     put();
                     expectSuccessCode();

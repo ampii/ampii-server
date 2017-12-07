@@ -17,7 +17,7 @@ public class PlainParser extends Parser {
     // this is comically overkill for this task, but it's nicely symmetric with the other parsers
     public Data parse(Reader reader, URL sourceURL, String sourceName, int options, DefinitionCollector definitionCollector) throws XDException {
         begin(reader, sourceURL, sourceName, 0);
-        Data info = makeParsedData("{plaintext}");
+        Data info = makeParsedData(".anonymous");
         info.setValue(consumeUntilEnd());  // consume the whole body literally. no quoting or escaping is used for alt=plain
         finish();
         return info;

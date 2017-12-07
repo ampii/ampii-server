@@ -37,6 +37,10 @@ public class Request {
         header     = new HashMap<String,String>();
     }
 
+    public boolean hasParameter(String name)  {
+        return parameters.get(name) != null;
+    }
+
     public String getParameter(String name)  {
         return parameters.get(name);
     }
@@ -83,7 +87,7 @@ public class Request {
         if (alt.equals("media")) {
             String mediaType = getHeader("Content-Type");
             if (mediaType == null || mediaType.isEmpty()) throw new XDException(Errors.MISSING_PARAMETER, "The 'Content-Type' header is missing or blank for alt=media operation");
-            return new OctetStringData("..new",body,new StringData(Meta.MEDIATYPE,mediaType)); // we return octetSTRing for now because we don't know if it's
+            return new OctetStringData(".anonymous",body,new StringData(Meta.MEDIATYPE,mediaType)); // we return octetSTRing for now because we don't know if it's
         }
         else {
             return DataParser.parse(getBodyAsString(),alt);

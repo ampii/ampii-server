@@ -25,7 +25,7 @@ public class JSONParser extends Parser {
      */
     public Data parse(Reader reader, URL sourceURL, String sourceName, int options, DefinitionCollector definitionCollector) throws XDException {
         begin(reader, sourceURL, sourceName, options);
-        Data result = consumeObject("anonymous", definitionCollector, hasOption(OPTION_IS_DEFINITION));
+        Data result = consumeObject(".anonymous", definitionCollector, hasOption(OPTION_IS_DEFINITION));
         finish();
         return result;
     }

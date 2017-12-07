@@ -18,7 +18,6 @@ public class FileResponse extends Response {
     public FileResponse(String basePath, String filePath)  {
         this.status = HTTP.HTTP_200_OK;
         this.fromFile = true;
-        if (filePath.equals("/")) filePath = "/index.html";
         String filePathLower = filePath.toLowerCase();
         boolean text = true;
         // yes, we could make this data-driven with config files, something like .htaccess, etc.

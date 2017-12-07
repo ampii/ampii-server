@@ -51,27 +51,25 @@ public class Errors {
     public static final int EXPIRED_CONTEXT           = 44;
     public static final int NOT_ATOMIC                = 45;
     public static final int CANNOT_FOLLOW             = 46;
+    public static final int FUNCTION_NAME             = 47;
+    public static final int FUNCTION_TARGET           = 48;
+    public static final int ARG_BAD_SYNTAX            = 49;
+    public static final int ARG_NOT_SUPPORTED         = 50;
+    public static final int ARG_VALUE_FORMAT          = 51;
+    public static final int ARG_OUT_OF_RANGE          = 52;
+    public static final int TARGET_DATATYPE           = 53;
+    public static final int CANNOT_HAVE_CHILDREN      = 54;
+    public static final int CANNOT_HAVE_VALUE         = 55;
+    public static final int OAUTH_INVALID_REQUEST     = 56;
+    public static final int OAUTH_INVALID_TOKEN       = 57;
+    public static final int INSUFFICIENT_SCOPE        = 58;
+    public static final int CALLBACK_FAILED           = 59;
+    public static final int CLIENT_ACTION_FAILED      = 60;
     // WHEN ADDING NEW... update all the functions below too!
-
     // End of standard errors
-
     public static final int INTERNAL_TIMEOUT          = 1024;
     public static final int INTERNAL_ERROR            = 1025;
-    public static final int FUNCTION_NAME             = 1026;
-    public static final int FUNCTION_TARGET           = 1027;
-    public static final int ARG_SYNTAX                = 1028;
-    public static final int ARG_NOT_SUPPORTED         = 1029;
-    public static final int ARG_VALUE_FORMAT          = 1030;
-    public static final int ARG_OUT_OF_RANGE          = 1031;
-    public static final int TARGET_DATATYPE           = 1032;
-    public static final int CANNOT_HAVE_CHILDREN      = 1033;
     public static final int BAD_LINK_TARGET           = 1034;
-    public static final int OAUTH_INVALID_REQUEST     = 1035;
-    public static final int OAUTH_INVALID_TOKEN       = 1036;
-    public static final int OAUTH_INSUFFICIENT_SCOPE  = 1037;
-    public static final int CALLBACK_FAILED           = 1038;
-    public static final int CLIENT_ACTION_FAILED      = 1039;
-    public static final int CANNOT_HAVE_VALUE         = 1040;
     public static final int TEST_FAILURE              = 1041;
     // WHEN ADDING NEW... update all the functions below, and "AMPII Definitions.xml"
 
@@ -123,27 +121,26 @@ public class Errors {
             case EXPIRED_CONTEXT:        return HTTP.HTTP_403_FORBIDDEN;
             case NOT_ATOMIC:             return HTTP.HTTP_403_FORBIDDEN;
             case CANNOT_FOLLOW:          return HTTP.HTTP_403_FORBIDDEN;
-
+            case FUNCTION_NAME:          return HTTP.HTTP_403_FORBIDDEN;
+            case FUNCTION_TARGET:        return HTTP.HTTP_403_FORBIDDEN;
+            case ARG_BAD_SYNTAX:         return HTTP.HTTP_400_BADREQUEST;
+            case ARG_NOT_SUPPORTED:      return HTTP.HTTP_403_FORBIDDEN;
+            case ARG_VALUE_FORMAT:       return HTTP.HTTP_403_FORBIDDEN;
+            case ARG_OUT_OF_RANGE:       return HTTP.HTTP_403_FORBIDDEN;
+            case TARGET_DATATYPE:        return HTTP.HTTP_403_FORBIDDEN;
+            case CANNOT_HAVE_CHILDREN:   return HTTP.HTTP_403_FORBIDDEN;
+            case CANNOT_HAVE_VALUE:      return HTTP.HTTP_403_FORBIDDEN;
+            case OAUTH_INVALID_REQUEST:  return HTTP.HTTP_403_FORBIDDEN;
+            case OAUTH_INVALID_TOKEN:    return HTTP.HTTP_401_UNAUTHORIZED;
+            case INSUFFICIENT_SCOPE:     return HTTP.HTTP_401_UNAUTHORIZED;
+            case CALLBACK_FAILED:        return HTTP.HTTP_500_INTERNALERROR; // shouldn't get this in a response
+            case CLIENT_ACTION_FAILED:   return HTTP.HTTP_500_INTERNALERROR; // shouldn't get this in a response
             // end of standard errors
             case INTERNAL_TIMEOUT:         return HTTP.HTTP_500_INTERNALERROR;
             case INTERNAL_ERROR:           return HTTP.HTTP_500_INTERNALERROR;
-            case FUNCTION_NAME:            return HTTP.HTTP_400_BADREQUEST;
-            case FUNCTION_TARGET:          return HTTP.HTTP_403_FORBIDDEN;
-            case ARG_SYNTAX:               return HTTP.HTTP_400_BADREQUEST;
-            case ARG_NOT_SUPPORTED:        return HTTP.HTTP_403_FORBIDDEN;
-            case ARG_VALUE_FORMAT:         return HTTP.HTTP_400_BADREQUEST;
-            case ARG_OUT_OF_RANGE:         return HTTP.HTTP_403_FORBIDDEN;
-            case TARGET_DATATYPE:          return HTTP.HTTP_403_FORBIDDEN;
-            case CANNOT_HAVE_CHILDREN:     return HTTP.HTTP_403_FORBIDDEN;
             case BAD_LINK_TARGET:          return HTTP.HTTP_403_FORBIDDEN;
-            case OAUTH_INVALID_REQUEST:    return HTTP.HTTP_400_BADREQUEST;
-            case OAUTH_INVALID_TOKEN:      return HTTP.HTTP_401_UNAUTHORIZED;
-            case OAUTH_INSUFFICIENT_SCOPE: return HTTP.HTTP_403_FORBIDDEN;
-            case CALLBACK_FAILED:          return HTTP.HTTP_500_INTERNALERROR; // shouldn't get this in a response
-            case CLIENT_ACTION_FAILED:     return HTTP.HTTP_500_INTERNALERROR; // shouldn't get this in a response
-            case CANNOT_HAVE_VALUE:        return HTTP.HTTP_403_FORBIDDEN;
             case TEST_FAILURE:             return HTTP.HTTP_403_FORBIDDEN;     // shouldn't get this in a response
-
+            //
             default:                       return HTTP.HTTP_500_INTERNALERROR;
         }
     }
@@ -195,27 +192,26 @@ public class Errors {
             case EXPIRED_CONTEXT:        return 403;
             case NOT_ATOMIC:             return 403;
             case CANNOT_FOLLOW:          return 403;
-
+            case FUNCTION_NAME:          return 403;
+            case FUNCTION_TARGET:        return 403;
+            case ARG_BAD_SYNTAX:         return 400;
+            case ARG_NOT_SUPPORTED:      return 403;
+            case ARG_VALUE_FORMAT:       return 403;
+            case ARG_OUT_OF_RANGE:       return 403;
+            case TARGET_DATATYPE:        return 403;
+            case CANNOT_HAVE_CHILDREN:   return 403;
+            case CANNOT_HAVE_VALUE:      return 403;
+            case OAUTH_INVALID_REQUEST:  return 403;
+            case OAUTH_INVALID_TOKEN:    return 401;
+            case INSUFFICIENT_SCOPE:     return 401;
+            case CALLBACK_FAILED:        return 500; // shouldn't get this in a response
+            case CLIENT_ACTION_FAILED:   return 500; // shouldn't get this in a response
             // end of standard errors
             case INTERNAL_TIMEOUT:         return 500;
             case INTERNAL_ERROR:           return 500;
-            case FUNCTION_NAME:            return 400;
-            case FUNCTION_TARGET:          return 403;
-            case ARG_SYNTAX:               return 400;
-            case ARG_NOT_SUPPORTED:        return 403;
-            case ARG_VALUE_FORMAT:         return 400;
-            case ARG_OUT_OF_RANGE:         return 403;
-            case TARGET_DATATYPE:          return 403;
-            case CANNOT_HAVE_CHILDREN:     return 403;
             case BAD_LINK_TARGET:          return 403;
-            case OAUTH_INVALID_REQUEST:    return 400;
-            case OAUTH_INVALID_TOKEN:      return 401;
-            case OAUTH_INSUFFICIENT_SCOPE: return 403;
-            case CALLBACK_FAILED:          return 500; // shouldn't get this in a response
-            case CLIENT_ACTION_FAILED:     return 500; // shouldn't get this in a response
-            case CANNOT_HAVE_VALUE:        return 403;
             case TEST_FAILURE:             return 403; // shouldn't get this in a response
-
+            //
             default:                       return 500;
         }
     }
@@ -267,26 +263,26 @@ public class Errors {
             case EXPIRED_CONTEXT:          return "Expired Context";
             case NOT_ATOMIC:               return "Not Atomic";
             case CANNOT_FOLLOW:            return "Cannot Follow";
-            // end of standard errors
-            case INTERNAL_TIMEOUT:         return "Internal Timeout";
-            case INTERNAL_ERROR:           return "Internal Error";
             case FUNCTION_NAME:            return "Invalid function name";
             case FUNCTION_TARGET:          return "Invalid target for function";
-            case ARG_SYNTAX:               return "Bad function argument syntax";
+            case ARG_BAD_SYNTAX:           return "Bad syntax for function argument";
             case ARG_NOT_SUPPORTED:        return "Function argument not supported";
             case ARG_VALUE_FORMAT:         return "Bad function argument format";
             case ARG_OUT_OF_RANGE:         return "Function argument out of range";
             case TARGET_DATATYPE:          return "Inappropriate target datatype";
             case CANNOT_HAVE_CHILDREN:     return "Cannot have children";
-            case BAD_LINK_TARGET:          return "Bad or unsupported Link target";
+            case CANNOT_HAVE_VALUE:        return "Cannot have Value";
             case OAUTH_INVALID_REQUEST:    return "OAuth request is malformed";
             case OAUTH_INVALID_TOKEN:      return "OAuth token is expired, malformed, or invalid";
-            case OAUTH_INSUFFICIENT_SCOPE: return "OAuth token does not have sufficient scope for the data";
+            case INSUFFICIENT_SCOPE:       return "OAuth token does not have sufficient scope for the data";
             case CALLBACK_FAILED:          return "Callback Failed";
             case CLIENT_ACTION_FAILED:     return "Client Action Failed";
-            case CANNOT_HAVE_VALUE:        return "Cannot have Value";
+            // end of standard errors
+            case INTERNAL_TIMEOUT:         return "Internal Timeout";
+            case INTERNAL_ERROR:           return "Internal Error";
+            case BAD_LINK_TARGET:          return "Bad or unsupported Link target";
             case TEST_FAILURE:             return "Test Failure";
-
+            //
             default:                       return "Unknown Error";
         }
     }
