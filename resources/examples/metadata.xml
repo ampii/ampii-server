@@ -8,9 +8,9 @@
                 <Real name="maxxed" value="100.0"/>
             </NamedValues>
             <Links>
-                <Link name="doc"    value="/users-manual" mediaType="application/pdf"/>
-                <Link name="friend" value="/jimmy"/>
-                <Link name="enemy" value="/freddy"/>
+                <Link value="/users-manual" mediaType="application/pdf"/>
+                <Link value="/jimmy"/>
+                <Link value="/freddy"/>
             </Links>
             <Extensions>
                 <Collection name="namedValues" writable="true" />
