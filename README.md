@@ -1,6 +1,6 @@
 # Server
 
-The **AMPII** project contains open source code for  implementations of the **BACnet/WS** (RESTful Web Services) protocol as defined in **ANSI/ASHRAE Standard 135-2016** *"BACnet® A Data Communication Protocol for Building Automation and Control Networks"*.
+The **AMPII** project contains open source code for implementations of the **BACnet/WS** (RESTful Web Services) protocol as defined in **ANSI/ASHRAE Standard 135-2016** *"BACnet® A Data Communication Protocol for Building Automation and Control Networks"*.
 
 The "ampii-server" sub-project is the full Simulator/Server/Stack, implementing most every aspect of the protocol, including complex metadata and full support for security and fine-grained authorization.  It has some client functionality, but only enough to perform self tests. The list of things that is does *not* support is listed later in this file.
 
@@ -89,11 +89,39 @@ Non-implemented Features
     The data in the /.bacnet tree is "dead". It is not tied to any kind of
     communications back-end. There is also no local "behavior". e.g., writing Out Of Service to true doesn't make Present Value writable.
 
+
+Additional Features
+--------------------
+
+To aid in the construction and validation of CSML data files and for exploring the 
+BACnet XD data model in general, this server also hosts a "playground" web interface. Using this interface, you can post CSML files and snippets in either XML or JSON and manipulate the data and copy the modified data back out in XML or JSON.
+
+Just point your browser at the root of the server e.g., `http://localhost:8080` and /index.html will redirect you to the real page at /ui/playground.html to get you started.
+
+
+Self Testing
+--------------------
+
+To test new features and to prevent regressions, there is a testing framework and reasonable number of tests to test most of the features of the protocol.  More tests are always welcomed, of course. Tests can be run in either XML or JSON formats so they only have to be written once.
+
+The tests are invoked in the order specified in the `resources/tests/test.xml` file (this file can be changed with --testDefinitionFile). By default, all the tests are located in the `org.ampii.xd.test.tests` package, but they can be anywhere since the test definition file can invoke tests from anywhere.
+
+The tests can be invoked with command line arguments like these: 
+
+    --doTests true 
+    --testFormat xml 
+    --testDefinitionFile my-resources/my-test-list.xml
+    --configFile resources/config/config-with-defs.xml 
+    --authFile resources/config/auth-factory-defaults.xml
+
+
+
 Known Issues / Bugs
 -------------------
 
 - This code implements the changes made by Addendum 135-2016bp. That addendum is still pending final publication. The last public review version is here: http://www.bacnet.org/Addenda/Add-135-2016bp-ppr1-draft-3_chair_approved.pdf. No substantive changes were made after the public review and it is currently awaiting final publication at ashrae.org.
 - Root certificates: /.auth/root-cert-pend is not used to validate the /.auth/dev-cert-pend.
+
 
 ToDo
 ----
@@ -104,6 +132,7 @@ There are several items that are planned but not completed yet.
 
 - Client.java uses HttpURLConnection. It would be helpful for language portability to remove dependency on this library functionality and implement on raw sockets like the server side does.
 
+- At the moment, the test framework is designed mostly for self testing.  But you *can* write tests that act on external servers, so future development could turn this into a more generalized testing tool.
 
 
 
