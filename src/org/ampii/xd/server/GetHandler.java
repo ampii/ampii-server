@@ -31,8 +31,15 @@ public class GetHandler {
         // first check for special resolver, like "/.well-known/ashrae" and OAuth token endpoint
         Response response = HTTPHooks.hook(request);
         if (response != null) return response;
-        if (Path.isDataPath(request.path)) return getData(request);
-        else return new FileResponse(Application.baseDir+"/"+Application.webroot+"/",request.path);
+        if (Path.isDataPath(request.path)) {
+            return getData(request);
+        }
+        else if (Path.isFilePath(request.path)) {
+            return new FileResponse(Path.makeWebrootFilePath(Path.removeFilePrefix(request.path)));
+        }
+        else {
+            return new TextResponse(HTTP.HTTP_404_NOTFOUND,"The requested path does not match the prefix for files or data on this server");
+        }
     }
 
     private static Response getData(Request request) throws XDException {

@@ -46,13 +46,52 @@ public class Path {
 
     private static boolean isFakeSub(Data data) { return data.hasParent() && (data.getParent().findLocal(data.getName())==null); }
 
-    public static boolean isFilePath(String path) throws XDException { return !isDataPath(path); }
-    public static boolean isDataPath(String path) throws XDException {
-        // if there is no data prefix, then data owns the root and files are subjugated to needing a prefix
-        // but if there *is* a data prefix, then files own the root and data is subjugated to a prefix
-        if (Application.dataPrefix.isEmpty()) return !(path.equals(Application.filePrefix) || path.startsWith(Application.filePrefix + "/"));
-        else return path.equals(Application.dataPrefix) || path.startsWith(Application.dataPrefix + "/");
+    public static boolean isFilePath(String path) throws XDException {
+        // if server has no file prefix, everything is a file, except for "{dataPrefix}" (the data root) or "{dataPrefix}/..."
+        // but if there *is* a file prefix, files must be either "{filePrefix}" or "{filePrefix}/..."
+        if (Application.filePrefix.isEmpty())
+            return !(path.equals(Application.dataPrefix) || path.startsWith(Application.dataPrefix + "/"));
+        else
+            return (path.equals(Application.filePrefix) || path.startsWith(Application.filePrefix + "/"));
     }
+
+    public static String removeFilePrefix(String path) throws XDException {
+        // if server has no file prefix, there's nothing to do
+        // but if there *is* a file prefix, we turn "{filePrefix}" into "/" and "{filePrefix}/..." into "/..."
+        if (!Application.filePrefix.isEmpty()) {
+            if (path.equals(Application.filePrefix)) // "{prefix}" becomes "/"
+                path = "/";
+            else if (path.startsWith(Application.filePrefix + "/")) // "{prefix}/..." becomes   "/..."
+                path = path.substring(Application.filePrefix.length());
+        }
+        return path;
+    }
+    public static String makeWebrootFilePath(String path) throws XDException {
+        return Application.baseDir + "/" + Application.webroot + path;   // path must start with "/", basedir and webroot do not end with "/"
+    }
+
+    public static boolean isDataPath(String path) throws XDException {
+        // if server has no data prefix, everything is data, except for "{filePrefix}" or "{filePrefix}/..."
+        // but if there *is* a data prefix, data must be at either "{dataPrefix}" (the root) or "{dataPrefix}/..."
+        if (Application.dataPrefix.isEmpty()) // server has no data prefix so data owns the root, except for "{filePrefix}" or "{filePrefix}/..."
+            return !(path.equals(Application.filePrefix) || path.startsWith(Application.filePrefix + "/"));
+        else
+            return  (path.equals(Application.dataPrefix) || path.startsWith(Application.dataPrefix + "/"));
+    }
+
+    // // This is not used since the handling of prefixes is doen in the eval method.
+    // // this makes creation of things like "self" and "next" safer
+    // public static String removeDataPrefix(String path) throws XDException {
+    //    // if server has no data prefix, there's nothing to do
+    //    // but if there *is* a data prefix, we turn "/{prefix}" into "/" and "/{prefix}/..." into "/..."
+    //    if (!Application.dataPrefix.isEmpty()) {
+    //        if (path.equals("/" + Application.dataPrefix)) // "/{prefix}" becomes "/"
+    //            path = "/"+path.substring(Application.dataPrefix.length()+1);
+    //        else if (path.startsWith("/" + Application.dataPrefix + "/")) // "/{prefix}/..." becomes   "/..."
+    //            path = "/"+path.substring(Application.dataPrefix.length()+2);
+    //    }
+    //    return path;
+    //}
 
     public static String makeLegalPathName(String candidate) {
         StringBuilder result = new StringBuilder(candidate.length());

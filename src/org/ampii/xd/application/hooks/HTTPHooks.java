@@ -37,7 +37,7 @@ public class HTTPHooks {
                 if (request.path.equals("/.well-known/ashrae"))                      return Server.generateWellknownAshraeResponse();
                 if (request.path.equals(Application.dataPrefix +"/.auth/int/token")) return AuthorizationServer.get(request);
             case "POST":
-                if (request.path.equals("/ui/rpc"))                                  return Playground.rpc(request);
+                if (request.path.equals("/ui/rpc")) return Playground.rpc(request);
                 if (request.path.equals(Application.dataPrefix +"/.auth/int/token")) return AuthorizationServer.post(request);
         }
         return null;

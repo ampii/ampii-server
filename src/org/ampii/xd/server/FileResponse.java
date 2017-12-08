@@ -15,9 +15,14 @@ import java.util.Scanner;
  */
 public class FileResponse extends Response {
 
-    public FileResponse(String basePath, String filePath)  {
+    public FileResponse(String filePath)  {
         this.status = HTTP.HTTP_200_OK;
         this.fromFile = true;
+        File file = new File(filePath);
+        if (file.isDirectory()) { // we can't return a directory, so do the normal trick of trying to turn it into index.html
+            filePath = filePath + "/index.html";
+            file = new File(filePath);
+        }
         String filePathLower = filePath.toLowerCase();
         boolean text = true;
         // yes, we could make this data-driven with config files, something like .htaccess, etc.
@@ -31,8 +36,7 @@ public class FileResponse extends Response {
         else if (filePathLower.endsWith(".jpg"))  { text = false; this.contentType = "image/jpeg"; }
         else                                      { text = false; this.contentType = null; } // rather than aborting, we'll just leave it out and let the client figure it out
         try {
-            File file = new File(basePath+"/"+filePath);
-            if (text) this.body = new Scanner(file).useDelimiter("\\Z").next();
+            if (text) this.body = new String(Files.readAllBytes(file.toPath()));
             else      this.body = Files.readAllBytes(file.toPath());
         }
         catch (FileNotFoundException e) {

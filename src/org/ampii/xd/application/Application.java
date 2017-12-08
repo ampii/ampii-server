@@ -42,17 +42,17 @@ public class Application {
 
     public static String  version = "0.42"; // an automatic build number gets appended to this at runtime
     public static String  hostName = "localhost"; // change for real deployments so the server knows how to refer to itself
-    public static String  baseDir = ".";         // defaults to current working directory
-    public static String  logDir = "./logs";
+    public static String  baseDir = ".";         // name of dir, not ending with "/" - defaults to current working directory
+    public static String  logDir = "./logs";     // name of dir, not ending with "/"
     public static String  logFileGeneral = "ampii-log.txt";
     public static String  logFileHttp = "ampii-log-http.txt";
-    public static boolean useDatedLogFiles = false;        // true will append date to log file name
+    public static boolean useDatedLogFiles = false;  // true will append date to log file name
     public static String  configFile = "resources/config/config-with-examples.xml";
     public static String  authFile = "resources/config/auth-with-tls.xml";
     public static String  deviceFile = "resources/config/bacnet-device-object.xml"; // if this contains the default values for the system BACnet Device object
-    public static String  webroot = "resources/webroot";
-    public static String  dataPrefix = "/bws";       // data prefix, i.e. "/bws/.info"; /.well-known/ashrae is fabricated to match
-    public static String  filePrefix = "";           // file prefix (only used if dataPrefix is empty)
+    public static String  webroot = "resources/webroot"; // name of dir, relative to baseDir, not ending with "/"
+    public static String  dataPrefix = "/bws";     // data prefix, e.g., prefix of "/bws" gives "/bws/.info"; the /.well-known/ashrae file is fabricated to match
+    public static String  filePrefix = ""; // (WARNING: breaks UI) file prefix, e.g., prefix of "/files" gives "/files/something";
     public static String  wordsFile = "resources/webroot/ui/words.txt";  // for generating random strings!  see UI.populateWithRandomValues()
     public static int     tcpPort = 8080;
     public static int     tlsPort = 4443;
@@ -105,9 +105,11 @@ public class Application {
                         break;
                     case "--dataPrefix":
                         dataPrefix = args[++i];
+                        if (dataPrefix.equals("/") || dataPrefix.equals("\"\"")) dataPrefix = "";
                         break;
                     case "--filePrefix":
                         filePrefix = args[++i];
+                        if (filePrefix.equals("/") || filePrefix.equals("\"\"")) filePrefix = "";
                         break;
                     case "--authFile":
                         authFile = args[++i];
